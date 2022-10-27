@@ -1,0 +1,48 @@
+{
+  "name": "tdp-editor-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "dev:dev": "vite --mode development",
+    "dev:uat": "vite --mode uat",
+    "build": "run-p type-check build-only",
+    "preview": "vite preview --port 4173",
+    "test:unit": "vitest --environment jsdom",
+    "test:e2e": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress open --e2e'",
+    "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress run --e2e'",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path ../../.eslintignore"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.30.1",
+    "tdp-editor": "workspace:*",
+    "vue": "^3.2.37",
+    "vue-router": "^4.0.16"
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.4",
+    "@types/vue-color": "^2.4.3",
+    "@types/vuedraggable": "^2.24.0",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vitejs/plugin-vue-jsx": "^1.3.10",
+    "@vue/test-utils": "^2.0.0",
+    "less": "^4.1.3",
+    "npm-run-all": "^4.1.5",
+    "start-server-and-test": "^1.14.0",
+    "typescript": "~4.7.4",
+    "vite": "^2.9.12",
+    "vitest": "^0.15.1",
+    "vue-tsc": "^0.38.1"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}

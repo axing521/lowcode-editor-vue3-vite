@@ -1,0 +1,59 @@
+@import url("../../styles/var/index.less");
+.editor-main-box {
+    position: relative;
+    height: 100%;
+    flex: 1;
+    #designer-main-action-box {
+        position: absolute;
+        display: none;
+        z-index: 1;
+        transition: all 0.3s;
+        width: 30px;
+        height: 26px;
+        overflow: hidden;
+        .action-title {
+            float: left;
+            background-color: @primary-color;
+            color: #fff;
+            padding: 0 10px;
+            opacity: .8;
+        }
+        .action-bars {
+            float: right;
+            height: 100%;
+            background-color: azure;
+            i.iconfont {
+                z-index: 100;
+                color: @primary-color;
+                float: right;
+                cursor: pointer;
+            }
+        }
+    }
+    .main-panel-container {
+        min-height: 100%;
+        position: relative;
+        padding-bottom: 20px;
+        .editor-designer-comp {
+            position: relative;
+            border: 1px dashed #c8c8c8;
+            &:hover {
+                border-color: @primary-color;
+            }
+        }
+        /* 选中的组件 */
+        .editor-designer-component-ck {
+            border: 1px solid @primary-color !important;
+            > .fd-layout.editor-designer-comp {
+                border: 0;
+            }
+        }
+        .editor-designer-component-ck.editor-designer-comp {
+            border: 0;
+        }
+
+        .sortable-chosen.sortable-ghost {
+            border-top: 2px solid @primary-color !important;
+        }
+    }
+}

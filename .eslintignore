@@ -1,0 +1,7 @@
+packages/**/*.config.js
+tsdist
+packages/**/*.less
+packages/**/*.svg
+packages/**/*.MD
+packages/**/*.jpg
+packages/**/*.png

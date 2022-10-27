@@ -1,0 +1,36 @@
+.DS_Store
+node_modules
+/tsdist
+/packages/tdp-editor/dist
+/packages/tdp-editor-components/dist
+
+/packages/tdp-editor-vuex/dist
+
+/packages/tdp-editor-server/public/uploads/
+/packages/tdp-editor-server/logs
+/packages/tdp-editor-server/dist
+/packages/tdp-editor-server/lib
+
+/packages/tdp-editor-types/dist
+
+/packages/tdp-editor-utils/dist
+
+/packages/tdp-editor/src/libs
+
+# local env files
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

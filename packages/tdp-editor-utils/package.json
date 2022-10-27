@@ -1,0 +1,19 @@
+{
+  "name": "tdp-editor-utils",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "lyc",
+  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "pinia": "^2.0.14",
+    "tdp-editor-types": "workspace:*",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "typescript": "~4.7.4"
+  }
+}
