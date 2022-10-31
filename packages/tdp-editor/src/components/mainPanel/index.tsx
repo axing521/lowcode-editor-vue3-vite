@@ -26,9 +26,10 @@ export default defineComponent({
         };
     },
     computed: {
-        ...mapState(useEditorStore, ['selectedPage', 'selectedComponent']),
+        ...mapState(useEditorStore, ['selectedComponent']),
         ...mapState(useAppStore, {
             appMode: 'mode',
+            selectedPage: 'activePage',
         }),
     },
     data() {

@@ -85,13 +85,12 @@ export interface IPageStoreState extends IDesignerComponent<IPageProps> {
 // App Module对象定义
 export interface IAppStoreState {
     mode: EnumAppMode;
+    pages: IPageStoreState[]; // 所有页面
+    pageForms: Map<string, IPageForm>;
+    activePage?: IPageStoreState; // 当前显示页面
 }
 
 export interface IEditorStoreState {
-    menus: any[];
-    pages: IPageStoreState[]; // 所有页面
-    pageForms: Map<string, IPageForm>;
-    selectedPage?: IPageStoreState; // 当前显示页面
     // selectedPageComponentList: IDesignerComponent[]; // 当前页面所有组件列表
     selectedComponent?: IDesignerComponent; // 当前页面所选择的组件
     dragComponent?: IDesignerComponent;

@@ -15,6 +15,7 @@ import {
 import classnames from 'classnames';
 import { useEditorStore } from '../../stores/editorStore';
 import { useLeftMenuStore } from '../../stores/leftMenuStore';
+import { useAppStore } from '../../stores/appStore';
 import DesignerComponentList from './componentList';
 import './index.less';
 
@@ -33,11 +34,13 @@ export default defineComponent({
     computed: {
         ...mapState(useEditorStore, {
             selectedComponent: 'selectedComponentGetter',
-            pages: 'pages',
-            selectedPage: 'selectedPage',
         }),
         ...mapState(useLeftMenuStore, {
             menus: 'menusGetter',
+        }),
+        ...mapState(useAppStore, {
+            pages: 'pages',
+            selectedPage: 'activePage',
         }),
         __treeData(): any[] {
             if (this.selectedPage) {
@@ -202,8 +205,8 @@ export default defineComponent({
             useLeftMenuStore().setSelectMenu({ menu });
         },
         selectPage(pageId: string): void {
-            const editorStore = useEditorStore();
-            editorStore.setSelectPage({ pageId });
+            const appStore = useAppStore();
+            appStore.setSelectPage({ pageId });
         },
         addPage(): void {
             this.showAddPageShadow = true;

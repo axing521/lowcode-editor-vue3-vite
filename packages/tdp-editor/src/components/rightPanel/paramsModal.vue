@@ -106,8 +106,8 @@ import type { PropType } from 'vue';
 import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
-import { useEditorStore } from '../../stores/editorStore';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import { useAppStore } from '../../stores/appStore';
 
 enum EnumParamType {
     params = 'params',
@@ -131,8 +131,8 @@ export default defineComponent({
         }, 10000);
     },
     computed: {
-        ...mapState(useEditorStore, {
-            selectedPage: 'selectedPage',
+        ...mapState(useAppStore, {
+            selectedPage: 'activePage',
         }),
         paramsList(): any[] {
             const result = [];

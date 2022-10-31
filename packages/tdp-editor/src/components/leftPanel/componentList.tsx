@@ -7,6 +7,7 @@ import './componentList.less';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import { useEditorStore } from '../../stores/editorStore';
+import { useAppStore } from '../../stores/appStore';
 import { utils } from 'tdp-editor-utils';
 
 const delayError = utils.$getDelayFunction((message: string) => {
@@ -25,7 +26,8 @@ export default defineComponent({
         PlusCircleOutlined,
     },
     computed: {
-        ...mapState(useEditorStore, ['componentList', 'selectedComponent', 'selectedPage']),
+        ...mapState(useEditorStore, ['componentList', 'selectedComponent']),
+        ...mapState(useAppStore, ['activePage']),
         componentGroup() {
             const group = [] as componentMenu[];
             this.componentList.forEach(c => {
@@ -103,7 +105,7 @@ export default defineComponent({
         },
         // 双击向选中组件中添加组件
         doubleClickComponent(originData: IDesignerComponent) {
-            const parent = this.selectedComponent ? this.selectedComponent : this.selectedPage;
+            const parent = this.selectedComponent ? this.selectedComponent : this.activePage;
             const newComponent = this.dragCloneData(originData);
             useEditorStore().doubleAddComponent({
                 parent: parent as any,

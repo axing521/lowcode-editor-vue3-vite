@@ -5,40 +5,34 @@ import {
     EnumPropsValueType,
 } from 'tdp-editor-types/enum/components';
 
-import type { IPageForm } from 'tdp-editor-types/interface/designer/pageForm';
 import type { IPageStoreState } from 'tdp-editor-types/interface/designer';
 import type { IDesignerComponent, IEditorStoreState } from 'tdp-editor-types/interface/designer';
 
 import { utils } from 'tdp-editor-utils';
 import { apps, forms } from 'tdp-editor-utils/service';
 import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
+import { useAppStore } from './appStore';
 
 export const useEditorStore = defineStore('editorStore', {
     state: (): IEditorStoreState => {
         return {
-            menus: [],
-            pages: [],
-            pageForms: new Map(),
-            selectedPage: undefined,
             selectedComponent: undefined,
             componentList: [],
+            dragComponent: undefined, // 正在拖动的组件
         };
     },
     getters: {
-        pagesGetter: state => state.pages || [],
         componentListGetter: state => state.componentList || [],
-        selectedPageGetter: state => state.selectedPage,
         selectedComponentGetter: state => state.selectedComponent,
         dragComponentGetter: state => state.dragComponent,
-        pageFormsGetter: state => state.pageForms,
-        pageForm: state => (key: string) => state.pageForms.get(key),
     },
     actions: {
         // 导入配置文件
         importConfig(payload: { pages: IPageStoreState[] }) {
-            this.pages = payload.pages;
-            if (this.pages && this.pages.length) {
-                this.selectedPage = this.pages[0];
+            const appStore = useAppStore();
+            appStore.pages = payload.pages;
+            if (appStore.pages && appStore.pages.length) {
+                appStore.activePage = appStore.pages[0];
             }
         },
         // 初始化editor的组件列表
@@ -55,44 +49,39 @@ export const useEditorStore = defineStore('editorStore', {
         },
         // 添加页面
         addPage(payload?: { page?: IPageStoreState }) {
-            const newPage = getDefaultPageModule(this.$state);
+            const appStore = useAppStore();
+            const newPage = getDefaultPageModule(appStore.pages, this.componentList);
             if (payload && payload.page) {
                 const _page = { ...newPage, ...payload.page };
-                this.pages.push(_page);
+                appStore.pages.push(_page);
             } else {
-                const newPage = getDefaultPageModule(this.$state);
-                this.pages.push(newPage);
+                const newPage = getDefaultPageModule(appStore.pages, this.componentList);
+                appStore.pages.push(newPage);
             }
         },
         // 删除页面
         deletePage(payload: { pageKey: string }) {
-            const index = this.pages.findIndex(p => p.key === payload.pageKey);
+            const appStore = useAppStore();
+            const index = appStore.pages.findIndex(p => p.key === payload.pageKey);
             console.log('pagekey', payload.pageKey, index);
             if (index > -1) {
-                this.pages.splice(index, 1);
+                appStore.pages.splice(index, 1);
             }
         },
         initAppPages(payload: { pages: IPageStoreState[] }) {
-            this.pages = payload.pages;
+            const appStore = useAppStore();
+            appStore.pages = payload.pages;
             if (payload.pages.length) {
-                this.selectedPage = payload.pages[0];
+                appStore.activePage = payload.pages[0];
             }
         },
         // 初始化编辑器页面
         initDesignerPage() {
-            const newPage = getDefaultPageModule(this.$state);
+            const appStore = useAppStore();
+            const newPage = getDefaultPageModule(appStore.pages, this.componentList);
             newPage.selected = true;
-            this.pages.push(newPage);
-            this.selectedPage = newPage;
-        },
-        // 切换所选页面
-        setSelectPage(payload: { pageId: string }) {
-            this.pages.forEach(page => {
-                page.selected = page.key === payload.pageId;
-                if (page.key === payload.pageId) {
-                    this.selectedPage = page;
-                }
-            });
+            appStore.pages.push(newPage);
+            appStore.activePage = newPage;
         },
         // 设计面板拖入组件
         dragAddComponent(payload: { parent: IDesignerComponent; component: IDesignerComponent }) {
@@ -136,16 +125,19 @@ export const useEditorStore = defineStore('editorStore', {
         // 删除选中的组件
         deleteComponent(payload: { id: string }) {
             const componentId = payload.id;
-            if (this.selectedPage && this.selectedPage.list) {
+            const appStore = useAppStore();
+            const activePage = appStore.activePage;
+            if (activePage && activePage.list) {
                 // 从当前页面组件列表中查找要删除的组件
-                utils.$deleteTreeItem(this.selectedPage.list, componentId);
+                utils.$deleteTreeItem(activePage.list, componentId);
                 this.selectedComponent = undefined;
             }
         },
         // 导入csv文件的组件
         importCsvData(payload: { pageName: string; pageCode: string; data: any }) {
+            const appStore = useAppStore();
             const newPage = {
-                ...getDefaultPageModule(this.$state),
+                ...getDefaultPageModule(appStore.pages, this.componentList),
                 ...{ label: payload.pageName, code: payload.pageCode },
             };
             const rowState = this.componentList.find(c => c.type === EnumComponentType.row);
@@ -181,27 +173,18 @@ export const useEditorStore = defineStore('editorStore', {
                 }
                 if (newPage.list && newPage.list.length) {
                     newPage.list[0].list!.push(newRow);
-                    this.pages.push(newPage);
+                    appStore.pages.push(newPage);
                     return newPage.key;
                 }
             }
             return '';
         },
-        // 给pageForm赋值
-        setPageForm(payload: { pageForm: IPageForm }) {
-            if (this.pageForms.has(payload.pageForm.key)) {
-                const oldPageForm = this.pageForms.get(payload.pageForm.key)!;
-                oldPageForm.column = payload.pageForm.column;
-                oldPageForm.formId = payload.pageForm.formId;
-            } else {
-                this.pageForms.set(payload.pageForm.key, payload.pageForm);
-            }
-        },
         // 导入csv文件数据
         importCsvDataAsync(payload: { pageName: string; pageCode: string; data: any }) {
             this.importCsvData(payload);
-            this.setSelectPage({
-                pageId: this.pages[this.pages.length - 1].key,
+            const appStore = useAppStore();
+            appStore.setSelectPage({
+                pageId: appStore.pages[appStore.pages.length - 1].key,
             });
         },
         // 保存页面json数据
@@ -242,11 +225,14 @@ export const useEditorStore = defineStore('editorStore', {
 });
 
 // 生成一个默认的page配置
-const getDefaultPageModule = (state: IEditorStoreState): IPageStoreState => {
+const getDefaultPageModule = (
+    pages: IPageStoreState[],
+    componentList: IDesignerComponent[]
+): IPageStoreState => {
     const newPage: IPageStoreState = {
         key: utils.$getUUID(EnumComponentType.page),
         code: '',
-        label: '表单' + (state.pages.length + 1),
+        label: '表单' + (pages.length + 1),
         icon: 'flex',
         type: EnumComponentType.page,
         group: EnumComponentGroup.page,
@@ -282,7 +268,7 @@ const getDefaultPageModule = (state: IEditorStoreState): IPageStoreState => {
     //     };
     //     newPage.list!.push(newForm);
     // }
-    const layoutState = state.componentList.find(c => c.type === EnumComponentType.layout);
+    const layoutState = componentList.find(c => c.type === EnumComponentType.layout);
     if (layoutState) {
         const Key = utils.$getUUID(EnumComponentType.layout);
         const newForm: IDesignerComponent = {
