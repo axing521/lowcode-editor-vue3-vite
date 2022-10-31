@@ -1,5 +1,5 @@
-import { IComponentState } from './index';
-import { EnumComponentType } from '../../enum/components';
+import type { IComponentState } from './index';
+import type { EnumComponentType } from '../../enum/components';
 
 export interface IPageState extends IComponentState<IPageProps> {
     type: EnumComponentType.page;

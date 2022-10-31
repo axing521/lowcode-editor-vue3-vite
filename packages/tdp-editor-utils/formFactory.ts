@@ -1,6 +1,6 @@
 import { EnumRuleType } from 'tdp-editor-types/enum/components/form';
-import { IComponentState } from 'tdp-editor-types/interface/components';
-import {
+import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type {
     IFieldCallbackRule,
     IFormInfo,
     IFormRules,

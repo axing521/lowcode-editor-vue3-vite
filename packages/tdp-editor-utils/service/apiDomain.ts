@@ -3,11 +3,12 @@
  */
 import { EnumAppEnv } from 'tdp-editor-types/enum';
 
-const __domain = {
+const __domain: Record<EnumAppEnv, any> = {
     [EnumAppEnv.local]: '',
     [EnumAppEnv.dev]: 'https://xxx.com',
     [EnumAppEnv.tst]: 'https://xxx.com',
     [EnumAppEnv.production]: 'https://xxx.com',
+    [EnumAppEnv.uat]: 'https://xxx.com',
 };
 
 // 读取环境变量 VUE_APP_ENV

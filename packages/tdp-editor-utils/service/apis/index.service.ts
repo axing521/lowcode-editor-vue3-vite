@@ -1,6 +1,6 @@
 import API_Domain from '../apiDomain';
 import { $fetch } from '../../request';
-import {
+import type {
     IDataModlerApiDetail,
     IDataModlerApiResponse,
 } from 'tdp-editor-types/interface/request/api';

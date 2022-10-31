@@ -1,13 +1,13 @@
-import { ComponentPublicInstance } from 'vue';
-import { EnumHttpMethod } from '../../enum';
-import {
+import type { ComponentPublicInstance } from 'vue';
+import type { EnumHttpMethod } from '../../enum';
+import type {
     EnumComponentType,
     EnumComponentGroup,
     EnumApiType,
     EnumEventType,
     EnumPropsValueType,
 } from '../../enum/components';
-import { IFormInfo } from './form';
+import type { IFormInfo } from './form';
 
 // setup中公共部分props的定义
 export interface ISetupBaseProps {

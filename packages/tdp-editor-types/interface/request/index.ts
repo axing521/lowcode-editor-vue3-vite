@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from 'axios';
-import { EnumServiceResultStatus } from '../../enum/request';
+import type { AxiosRequestConfig } from 'axios';
+import type { EnumServiceResultStatus } from '../../enum/request';
 //接口返回的原始数据结构
 export interface IServerResponse<DATA> {
     code: string | number;

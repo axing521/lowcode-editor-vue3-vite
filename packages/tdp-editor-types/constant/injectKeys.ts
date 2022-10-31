@@ -1,6 +1,6 @@
-import { InjectionKey, ComponentInternalInstance, ComponentPublicInstance } from 'vue';
-import { EnumAppMode } from '../enum';
-import { IFormField } from '../interface/components/form';
+import type { InjectionKey, ComponentInternalInstance, ComponentPublicInstance } from 'vue';
+import type { EnumAppMode } from '../enum';
+import type { IFormField } from '../interface/components/form';
 
 // 向页面注册组件
 export const addComponent = Symbol('addComponent') as InjectionKey<

@@ -1,11 +1,11 @@
-import { VNode } from 'vue';
-import { IComponentProps, IComponentState } from '../components';
-import { IPageProps } from '../components/page';
-import { IPageForm } from './pageForm';
+import type { VNode } from 'vue';
+import type { IComponentProps, IComponentState } from '../components';
+import type { IPageProps } from '../components/page';
+import type { IPageForm } from './pageForm';
 
-import { EnumAppMode } from '../../enum';
-import { EnumCssProerty, EnumPropsSelector } from '../../enum/designer';
-import { EnumPropsValueType } from '../../enum/components';
+import type { EnumAppMode } from '../../enum';
+import type { EnumCssProerty, EnumPropsSelector } from '../../enum/designer';
+import type { EnumPropsValueType } from '../../enum/components';
 
 // 设计模式下组件的属性
 export interface IDesignerComponent<P = any, C = Record<string, string>>

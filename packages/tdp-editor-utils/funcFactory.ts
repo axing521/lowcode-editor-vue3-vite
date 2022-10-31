@@ -1,5 +1,5 @@
 import type { Store } from 'pinia';
-import { IEditorStoreState } from 'tdp-editor-types/interface/designer';
+import type { IEditorStoreState, IAppStoreState } from 'tdp-editor-types/interface/designer';
 import { $findTreeItem } from './utils';
 
 export interface IAppInfo {
@@ -18,19 +18,21 @@ export interface IUserInfo {
     name: string;
 }
 type editoStoreType = Store<'editorStore', IEditorStoreState>;
+type appStoreType = Store<'appStore', IAppStoreState>;
 // @ts-nocheck
 export default class FunctionFactory {
-    private $editorStore?: Store<'editorStore', IEditorStoreState> = undefined;
-    constructor($editorStore: editoStoreType) {
+    private readonly $editorStore?: editoStoreType = undefined;
+    private readonly $appStore?: appStoreType = undefined;
+    constructor($editorStore?: editoStoreType, $appStore?: appStoreType) {
         this.$editorStore = $editorStore;
     }
-    static init($editorStore?: editoStoreType): FunctionFactory {
+    static init($editorStore?: editoStoreType, $appStore?: appStoreType): FunctionFactory {
         // @ts-ignore
         if (window.$fd && window.$fd.funcFactory) {
             // @ts-ignore
             return window.$fd.funcFactory;
         } else {
-            const funcFactory = new FunctionFactory($editorStore);
+            const funcFactory = new FunctionFactory($editorStore, $appStore);
             // @ts-ignore
             if (window.$fd) {
                 // @ts-ignore
@@ -45,8 +47,8 @@ export default class FunctionFactory {
         }
     }
     getCompState = (compId: string) => {
-        if (this.$editorStore) {
-            const page = this.$editorStore.selectedPage;
+        if (this.$appStore) {
+            const page = this.$appStore.activePage;
             if (page && page.list) {
                 const list = $findTreeItem(page.list, compId) || [];
                 if (list.length > 0) {
