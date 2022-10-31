@@ -1,6 +1,6 @@
 <template>
     <div v-if="json" class="template-page" :id="json.key" :style="json.css" data-app>
-        <fd-layout class="fd-page-layout" :state="json" parentId=""></fd-layout>
+        <fd-layout :state="json" parentId=""></fd-layout>
     </div>
 </template>
 

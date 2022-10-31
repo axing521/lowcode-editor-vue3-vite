@@ -3,6 +3,9 @@
         <!--设计时渲染拖拽组件-->
         <Draggable
             class="fd-layout layout-drag"
+            :class="{
+                'fd-page-layout': props.state.type === EnumComponentType.page,
+            }"
             :data-drag-id="props.state.key"
             :data-drag-type="props.state.type"
             :itemKey="getDragableItemKey"

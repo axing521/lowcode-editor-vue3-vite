@@ -1,7 +1,7 @@
 <template>
     <component
         :is="allProps.state.type"
-        class="editor-designer-comp"
+        :class="{ 'editor-designer-comp': c_isDesignMode }"
         :key="allProps.state.key"
         :state="allProps.state"
         :parentId="allProps.parentId"
@@ -12,7 +12,6 @@
         :css="c_Css"
         :events="c_Events"
     ></component>
-    <!-- <component :is="allProps.state.type" v-bind="componentAllProps"></component> -->
 </template>
 <script lang="ts" setup>
 import type { IComponentState } from 'tdp-editor-types/interface/components';
@@ -26,7 +25,7 @@ const allProps = defineProps<{
     parentId: string;
 }>();
 
-const { c_Props, c_Css, c_Events } = useBases.useBase(allProps);
+const { c_Props, c_Css, c_Events, c_isDesignMode } = useBases.useBase(allProps);
 useBaseLifecycle(allProps);
 useBaseWatch(allProps);
 if (allProps.state.isFormer) {
