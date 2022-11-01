@@ -1,5 +1,5 @@
 <template>
-    <input :placeholder="allProps.props.placeholder || 'input something'" />
+    <a-input :placeholder="allProps.props.placeholder || 'input something'" />
 </template>
 <script lang="ts" setup>
 import type { IComponentState } from 'tdp-editor-types/interface/components';

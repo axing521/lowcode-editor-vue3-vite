@@ -16,6 +16,8 @@ import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../../plugins';
 import { useEditorStore } from '../../stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
+import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 
 // @ts-ignore
 self.MonacoEnvironment = {
@@ -62,8 +64,17 @@ export const createEditor = (options: ICreateEditorOptions) => {
     app.mount(options.container);
     return {
         editor: app,
-        addCustomComponent: () => {
-            console.log('addCustomComponent');
+        addCustomComponent: (components: IDesignerComponent[]) => {
+            if (Array.isArray(components) && components.length) {
+                app.config.globalProperties.$custom_componentList = components;
+                components.forEach(c => {
+                    if (c.group === EnumComponentGroup.custom) {
+                        app.component(c.type, c.sfc!);
+                    }
+                });
+                useEditorStore().addComponents({ list: components });
+                console.log('editor app >>>>>>>>>>', app);
+            }
         },
     };
 };

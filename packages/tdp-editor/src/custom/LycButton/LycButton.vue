@@ -1,5 +1,5 @@
 <template>
-    <button type="button">{{ prop_text }}</button>
+    <a-button type="button">{{ prop_text }}</a-button>
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue';
