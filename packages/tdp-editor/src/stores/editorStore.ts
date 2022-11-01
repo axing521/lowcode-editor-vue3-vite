@@ -183,7 +183,7 @@ export const useEditorStore = defineStore('editorStore', {
         importCsvDataAsync(payload: { pageName: string; pageCode: string; data: any }) {
             this.importCsvData(payload);
             const appStore = useAppStore();
-            appStore.setSelectPage({
+            appStore.setActivePage({
                 pageId: appStore.pages[appStore.pages.length - 1].key,
             });
         },

@@ -153,15 +153,15 @@ div.tdp-editor-container {
 import { onMounted, provide, ref, computed } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import fileSaver from 'file-saver';
-import { useEditorStore } from './stores/editorStore';
-import { useAppStore } from './stores/appStore';
+import { useEditorStore } from '../../stores/editorStore';
+import { useAppStore } from '../../stores/appStore';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
-import DesignerLeft from './components/leftPanel';
-import DesignerRight from './components/rightPanel';
-import DesignerMain from './components/mainPanel';
+import DesignerLeft from '../../components/leftPanel';
+import DesignerRight from '../../components/rightPanel';
+import DesignerMain from '../../components/mainPanel';
 import Preview from 'tdp-editor-components/src/page.vue';
 
 // import type FdComponent from 'tdp-editor-components/src/component';
@@ -184,9 +184,10 @@ onMounted(() => {
 });
 
 // 编辑器的所有页面
-const pages = editorStore.pages;
+const pages = appStore.pages;
 // 编辑器当前选中的页面
-const selectedPage = editorStore.selectedPage;
+const selectedPage = appStore.activePage;
+console.log('selectedPage', selectedPage);
 // 编辑器模式，预览 | 设计 | 浏览
 const editorMode = appStore.mode;
 

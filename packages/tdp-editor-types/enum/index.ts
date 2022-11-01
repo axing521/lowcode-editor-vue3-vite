@@ -16,7 +16,7 @@ export enum EnumHttpMethod {
 export enum EnumAppMode {
     design = 'design',
     preview = 'preview',
-    view = 'view',
+    runtime = 'runtime',
     add = 'add',
     edit = 'edit',
 }

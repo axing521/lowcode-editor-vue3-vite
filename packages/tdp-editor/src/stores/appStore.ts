@@ -36,7 +36,7 @@ export const useAppStore = defineStore('appStore', {
             }
         },
         // 切换所选页面
-        setSelectPage(payload: { pageId: string }) {
+        setActivePage(payload: { pageId: string }) {
             this.pages.forEach(page => {
                 page.selected = page.key === payload.pageId;
                 if (page.key === payload.pageId) {

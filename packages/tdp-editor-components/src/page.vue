@@ -39,7 +39,7 @@ const props = defineProps({
     appMode: {
         required: true,
         type: String as PropType<EnumAppMode>,
-        default: () => EnumAppMode.view,
+        default: () => EnumAppMode.runtime,
     },
 });
 

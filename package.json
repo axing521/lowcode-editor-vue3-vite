@@ -3,7 +3,8 @@
   "version": "3.2.38",
   "packageManager": "pnpm@7.1.0",
   "scripts": {
-    "dev": "pnpm -F tdp-editor-demo dev",
+    "dev": "pnpm -F tdp-editor editor",
+    "dev:runtime": "pnpm -F tdp-editor runtime",
     "editor": "pnpm -F tdp-editor",
     "components": "pnpm -F tdp-editor-components",
     "editor:build": "pnpm -F tdp-editor build",

@@ -206,7 +206,7 @@ export default defineComponent({
         },
         selectPage(pageId: string): void {
             const appStore = useAppStore();
-            appStore.setSelectPage({ pageId });
+            appStore.setActivePage({ pageId });
         },
         addPage(): void {
             this.showAddPageShadow = true;

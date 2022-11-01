@@ -1,4 +1,8 @@
 import Vue, { VNode } from 'vue';
+import { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type AppVarController from '../controller/AppVarController';
+import type AppController from '../controller/AppController';
+import type EditorController from '../controller/EditorController';
 
 declare global {
     namespace JSX {
@@ -24,5 +28,9 @@ declare module 'vue/types/options' {
 declare module 'vue' {
     interface ComponentCustomProperties {
         $clipboard: (text: string) => void;
+        $default_componentList: IDesignerComponent[];
+        $AppController: AppController;
+        $AppVarController: AppVarController;
+        $EditorController: EditorController;
     }
 }

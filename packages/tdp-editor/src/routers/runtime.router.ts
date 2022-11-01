@@ -3,14 +3,15 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
     {
-        name: 'form_designer_index',
+        name: 'runtime_index',
         path: '/',
         meta: {
-            className: 'tdp-editor-eidtor-demo',
-            label: '模板设计器实例',
-            title: '通过json文件，生成对应的模板文件',
+            className: 'tdp-editor-runtime-index',
+            label: '运行时首页',
+            title: '运行时首页',
         },
-        component: () => import(/* webpackChunkName: "form_designer_index" */ '../App.vue'),
+        component: () =>
+            import(/* webpackChunkName: "runtime_index" */ '../pages/runtime/runtimeIndex.vue'),
     },
 ];
 

@@ -5,12 +5,12 @@ import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
-import Editor from './EditorWrapper.vue';
+import EditorWrapper from './EditorWrapper.vue';
 // 自定义组件样式
 import 'tdp-editor-components/src/styles/index.less';
 import registerDirectives from 'tdp-editor-components/src/directives';
-import usePlugin from './plugins';
-import { useEditorStore } from './stores/editorStore';
+import usePlugin from '../../plugins';
+import { useEditorStore } from '../../stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
 
 // @ts-ignore
@@ -35,9 +35,12 @@ self.MonacoEnvironment = {
 interface ICreateEditorOptions {
     container: string | Element;
 }
-console.info('tdp editor version: ' + import.meta.env.VITE_APP_VERSION);
-const createEditor = (options: ICreateEditorOptions) => {
-    const app = createApp(Editor);
+
+export const version = import.meta.env.VITE_APP_VERSION;
+console.info('tdp editor version: ' + version);
+
+export const createEditor = (options: ICreateEditorOptions) => {
+    const app = createApp(EditorWrapper);
     // 注册指令
     registerDirectives(app);
     // 注册插件
@@ -53,10 +56,10 @@ const createEditor = (options: ICreateEditorOptions) => {
     });
     console.log('editor app', app);
     app.mount(options.container);
-    return app;
-};
-
-export default {
-    createEditor,
-    version: import.meta.env.VITE_APP_VERSION,
+    return {
+        editor: app,
+        addCustomComponent: () => {
+            console.log('addCustomComponent');
+        },
+    };
 };

@@ -2,14 +2,16 @@
   "name": "tdp-editor",
   "version": "0.1.0",
   "private": true,
-  "main": "dist/tdp-editor.umd.min.js",
+  "main": "dist/tdp-editor.umd.js",
+  "module": "dist/tdp-editor.es.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "vite --mode localhost",
-    "dev:dev": "vite --mode development",
-    "dev:uat": "vite --mode uat",
+    "editor": "vite --mode localhost --config vite.config.editor.ts",
+    "editor:dev": "vite --mode development --config vite.config.editor.ts",
+    "editor:uat": "vite --mode uat --config vite.config.editor.ts",
+    "runtime": "vite --mode localhost --config vite.config.runtime.ts",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
