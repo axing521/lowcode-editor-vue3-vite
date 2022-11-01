@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import { message } from 'ant-design-vue';
+import { message } from 'ant-design-vue/es';
 
 import './index.less';
 import { EnumApiType } from 'tdp-editor-types/enum/components';

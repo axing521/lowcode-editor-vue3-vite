@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
 import Draggable from 'vuedraggable';
-import { message as $message } from 'ant-design-vue';
+import { message as $message } from 'ant-design-vue/es';
 import { PlusCircleOutlined } from '@ant-design/icons-vue';
 import './componentList.less';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
