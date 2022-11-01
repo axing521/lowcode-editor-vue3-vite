@@ -4,16 +4,19 @@
  */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import type { IAppStoreState, IDesignerComponent } from 'tdp-editor-types/interface/designer';
+
 // 自定义组件样式
 import 'tdp-editor-components/src/styles/index.less';
 import registerDirectives from 'tdp-editor-components/src/directives';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
+import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 
 import usePlugin from '../../plugins';
 // import createRouter from '../routers/runtime.router';
 import RuntimeWrapper from './RuntimeWrapper.vue';
 import { createController } from '../../controller';
-import type { IAppStoreState } from 'tdp-editor-types/interface/designer';
+import { useEditorStore } from '../../stores/editorStore';
 
 interface ICreateEditorOptions {
     container: string | Element;
@@ -41,6 +44,18 @@ export const createRuntime = (options: ICreateEditorOptions) => {
         runtime: app,
         setRuntimeJson: (runtimeJson: IAppStoreState) => {
             controllers.appController.initApp(runtimeJson);
+        },
+        addCustomComponents(components: IDesignerComponent[]) {
+            if (Array.isArray(components) && components.length) {
+                app.config.globalProperties.$custom_componentList = components;
+                components.forEach(c => {
+                    if (c.group === EnumComponentGroup.custom) {
+                        app.component(c.type, c.sfc!);
+                    }
+                });
+                useEditorStore().addComponents({ list: components });
+                console.log('runtime app >>>>>>>>>>', app);
+            }
         },
     };
 };

@@ -10,6 +10,7 @@ import type { EnumPropsValueType } from '../../enum/components';
 // 设计模式下组件的属性
 export interface IDesignerComponent<P = any, C = Record<string, string>>
     extends IComponentState<P, C> {
+    sfc?: any;
     order?: number;
     label: string;
     icon?: string;

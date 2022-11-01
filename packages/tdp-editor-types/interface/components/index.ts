@@ -40,7 +40,7 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
 export interface IComponentState<P = any, C = Record<string, string | undefined>> {
     key: string;
     code: string /* 别名，一般用于用户给组件定义，方便调用 */;
-    type: EnumComponentType;
+    type: EnumComponentType | string;
     group: EnumComponentGroup;
     list?: IComponentState[];
     apis?: IComponentApi[];

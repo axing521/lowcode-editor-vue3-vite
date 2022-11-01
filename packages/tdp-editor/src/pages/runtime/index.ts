@@ -1,4 +1,8 @@
+/**
+ * 演示如何使用tdp-editor-runtime
+ */
 import { createRuntime } from './runtime';
+import { customList } from '../../custom';
 
 const testData = {
     appStore: {
@@ -172,6 +176,7 @@ const testData = {
 const tdpRuntime = createRuntime({
     container: '#app',
 });
+tdpRuntime.addCustomComponents(customList);
 
 setTimeout(() => {
     tdpRuntime.setRuntimeJson(testData.appStore as any);
