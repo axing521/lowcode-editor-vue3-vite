@@ -48,7 +48,7 @@ export default defineComponent({
 
 <script lang="ts" setup>
 import { inject } from 'vue';
-import useBases from '../../composables/base';
+import { useBase } from '../../composables/base';
 import Draggable from 'vuedraggable';
 
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
@@ -61,7 +61,7 @@ const props = defineProps<{
     parentId: string;
 }>();
 
-const { c_isDesignMode } = useBases.useBase(props);
+const { c_isDesignMode } = useBase(props);
 const dragAddComponent = inject(
     'dragAddComponent',
     (component: IDesignerComponent, parent: IDesignerComponent) => {}

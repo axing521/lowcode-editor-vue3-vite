@@ -5,10 +5,11 @@ import { apiFactory, eventFactory, propsFactory, request } from 'tdp-editor-util
 import type { IServiceResult } from 'tdp-editor-types/interface/request';
 import apiDomain from 'tdp-editor-utils/service/apiDomain';
 import { EnumAppMode } from 'tdp-editor-types/enum';
-
-import useBaseWatch from './baseWatch';
 import useBaseInject from './baseInject';
-import useBaseLifecycle from './baseLifecycle';
+
+export { default as useBaseWatch } from './baseWatch';
+export { default as useBaseInject } from './baseInject';
+export { default as useBaseLifecycle } from './baseLifecycle';
 
 function useBaseIndex(props: ISetupBaseProps) {
     const injects = useBaseInject();
@@ -146,10 +147,4 @@ function useBaseIndex(props: ISetupBaseProps) {
     };
 }
 
-const useBases = {
-    useBase: useBaseIndex,
-    useBaseWatch,
-    useBaseLifecycle,
-    useBaseInject,
-};
-export default useBases;
+export const useBase = useBaseIndex;

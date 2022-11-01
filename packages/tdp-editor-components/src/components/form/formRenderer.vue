@@ -22,8 +22,8 @@ export default defineComponent({
 </script>
 <script lang="ts" setup>
 import { provide, reactive, ref, getCurrentInstance } from 'vue';
-import useBases from '../../composables/base';
-import useForms from '../../composables/form';
+import { useBaseInject } from '../../composables/base';
+import { useFormInject } from '../../composables/form';
 import { getFdFormRef, getFdFormFields } from 'tdp-editor-types/constant/injectKeys';
 import { forms } from 'tdp-editor-utils/service';
 import { funcFactory, propsFactory, utils } from 'tdp-editor-utils';
@@ -42,8 +42,8 @@ const allProps = defineProps<{
     css: Record<string, any>;
     events: Record<string, any>;
 }>();
-const { getAppMode } = useBases.useBaseInject();
-const { formSubmited } = useForms.useFormInject();
+const { getAppMode } = useBaseInject();
+const { formSubmited } = useFormInject();
 // 存储所有字段信息
 const formFields = reactive<IFormField[]>([]);
 // form提交数据是否校验通过

@@ -4,6 +4,8 @@ import type { IFieldCallbackRule } from 'tdp-editor-types/interface/components/f
 import type { ISetupBaseProps } from 'tdp-editor-types/interface/components';
 import useFormInject from './formInject';
 
+export { default as useFormInject } from './formInject';
+
 function useFormIndex(props: ISetupBaseProps) {
     const injects = useFormInject();
     // 创建组件时，添加对应的field字段
@@ -54,9 +56,4 @@ function useFormIndex(props: ISetupBaseProps) {
     };
 }
 
-const useForms = {
-    useForm: useFormIndex,
-    useFormInject,
-};
-
-export default useForms;
+export const useForm = useFormIndex;

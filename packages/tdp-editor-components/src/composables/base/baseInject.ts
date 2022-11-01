@@ -33,7 +33,7 @@ export default function useBaseInject() {
         }),
         getAppMode: inject(getAppMode, () => {
             console.log('inject default: getAppMode ------------->');
-            return EnumAppMode.view as EnumAppMode;
+            return EnumAppMode.runtime;
         }),
         pageData: inject(pageData, () => {
             console.log('inject default: pageData ------------->');

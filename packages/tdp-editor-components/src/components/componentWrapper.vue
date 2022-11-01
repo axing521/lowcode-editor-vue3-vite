@@ -15,21 +15,21 @@
 </template>
 <script lang="ts" setup>
 import type { IComponentState } from 'tdp-editor-types/interface/components';
-import useBases from '../composables/base';
-import useForms from '../composables/form';
-import useBaseLifecycle from '../composables/base/baseLifecycle';
-import useBaseWatch from '../composables/base/baseWatch';
+import { useBase } from '../composables/base';
+import { useForm } from '../composables/form';
+import { useBaseLifecycle } from '../composables/base';
+import { useBaseWatch } from '../composables/base';
 
 const allProps = defineProps<{
     state: IComponentState;
     parentId: string;
 }>();
 
-const { c_Props, c_Css, c_Events, c_isDesignMode } = useBases.useBase(allProps);
+const { c_Props, c_Css, c_Events, c_isDesignMode } = useBase(allProps);
 useBaseLifecycle(allProps);
 useBaseWatch(allProps);
 if (allProps.state.isFormer) {
-    useForms.useForm(allProps);
+    useForm(allProps);
 }
 // const componentAllProps = {
 //     class: 'editor-designer-comp',
