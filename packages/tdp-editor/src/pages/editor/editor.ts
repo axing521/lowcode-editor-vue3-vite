@@ -1,3 +1,7 @@
+/**
+ * editor类库入口文件
+ * 暴露createEditor方法提供给第三方调用
+ */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';

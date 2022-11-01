@@ -27,14 +27,15 @@ export default defineConfig({
         ],
     },
     build: {
+        outDir: 'dist/editor',
         lib: {
-            entry: path.resolve(__dirname, 'pages/editor/editor.ts'),
+            entry: path.resolve(__dirname, 'src/pages/editor/editor.ts'),
             name: 'TDPEditor',
             fileName: format => `tdp-editor.${format}.js`,
         },
         rollupOptions: {
             input: {
-                index: path.resolve(__dirname, 'pages/editor/index.html'),
+                index: path.resolve(__dirname, 'index.html'),
             },
         },
     },

@@ -1,3 +1,7 @@
+/**
+ * runtime类库入口文件
+ * 暴露createRuntime方法提供给第三方调用
+ */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 // 自定义组件样式
@@ -32,7 +36,6 @@ export const createRuntime = (options: ICreateEditorOptions) => {
     app.config.globalProperties.$default_componentList = componentList;
     const controllers = createController(app);
     controllers.editorController.initComponentList(componentList);
-    console.log('runtime app', app);
     app.mount(options.container);
     return {
         runtime: app,

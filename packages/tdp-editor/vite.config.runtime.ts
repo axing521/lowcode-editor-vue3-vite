@@ -16,6 +16,7 @@ export default defineConfig({
         },
     },
     build: {
+        outDir: 'dist/runtime',
         lib: {
             entry: path.resolve(__dirname, 'src/pages/runtime.ts'),
             name: 'TDPEditorRuntime',
