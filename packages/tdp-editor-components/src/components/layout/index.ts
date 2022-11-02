@@ -14,7 +14,7 @@ export const register: registerComponentFunc = function () {
         key: '',
         code: '',
         label: '卡片',
-        icon: 'Cards',
+        icons: 'Cards',
         group: EnumComponentGroup.layout,
         type: EnumComponentType.layout,
         order: 100,

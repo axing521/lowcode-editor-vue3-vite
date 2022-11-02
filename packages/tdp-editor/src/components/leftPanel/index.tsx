@@ -18,6 +18,7 @@ import { useLeftMenuStore } from '../../stores/leftMenuStore';
 import { useAppStore } from '../../stores/appStore';
 import DesignerComponentList from './componentList';
 import './index.less';
+import NewPageModal from './newPageModal.vue';
 
 export default defineComponent({
     name: 'editor-left-panel',
@@ -29,6 +30,7 @@ export default defineComponent({
         FormOutlined,
         PlusCircleFilled,
         ClusterOutlined,
+        NewPageModal,
     },
     inject: ['selectComponent'],
     computed: {
@@ -169,37 +171,14 @@ export default defineComponent({
             return [firstMenu, secondMenu];
         },
         treeSlots_title(node: IDesignerComponent) {
-            const title = (node.props && (node.props as any)!['label']) || node.label;
-            return <span title={node.key}>{title}</span>;
+            console.log('node >>>>>>>>>>>>>>>>>>>>>', node);
+            const title = node.label;
+            return <span title={title}>{title}</span>;
         },
         treeSlots_icon(node: IDesignerComponent) {
             console.log('icon-----------', node);
-            const icon = (node.props && (node.props as any)!['icon']) || '';
-            return <i class={`iconfont ${icon}`} />;
-        },
-        loopTreeData(nodes?: IDesignerComponent[]): VNode[] | null {
-            if (nodes && nodes.length && nodes[0]) {
-                return nodes.map(node => {
-                    return (
-                        <a-tree-node
-                            key={node.key}
-                            v-slots={{
-                                title: () => (
-                                    <span title={node.key}>
-                                        {(node.props && (node.props as any)!['label']) ||
-                                            node.label}
-                                    </span>
-                                ),
-                                icon: () => <i class={`iconfont ${node.icon}`} />,
-                            }}
-                        >
-                            {this.loopTreeData(node.list as any[])}
-                        </a-tree-node>
-                    );
-                });
-            } else {
-                return null;
-            }
+            const icon = node.icons || '';
+            return <i class={`iconfont ${icon}`}></i>;
         },
         selectFirstMenu(menu: IMenus): void {
             useLeftMenuStore().setSelectMenu({ menu });
@@ -231,6 +210,11 @@ export default defineComponent({
         },
     },
     render(): VNode {
-        return <div class="editor-left-panel">{this.renderMenus()}</div>;
+        return (
+            <div class="tdp-editor-panel-left editor-left-panel">
+                {this.renderMenus()}
+                <new-page-modal v-model:visible={this.showAddPageShadow}></new-page-modal>
+            </div>
+        );
     },
 });

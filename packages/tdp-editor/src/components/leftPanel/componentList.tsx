@@ -123,7 +123,7 @@ export default defineComponent({
                     title={c.label}
                 >
                     <div class="comp-icon">
-                        <i class={`iconfont ${c.icon}`} />
+                        <i class={`iconfont ${c.icons}`} />
                     </div>
                     <div class="comp-name">
                         {c.label}

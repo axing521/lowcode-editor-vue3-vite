@@ -46,7 +46,7 @@
             :afterClose="previewDialogClosed"
             :footer="null"
         >
-            <Preview :json="selectedPage" :appMode="EnumAppMode.preview"></Preview>
+            <Preview :json="selectedPage!" :appMode="EnumAppMode.preview"></Preview>
         </a-modal>
     </div>
 </template>

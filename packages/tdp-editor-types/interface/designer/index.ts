@@ -13,7 +13,7 @@ export interface IDesignerComponent<P = any, C = Record<string, string>>
     sfc?: any;
     order?: number;
     label: string;
-    icon?: string;
+    icons?: string;
     listGroup?: 'normal' | 'business' | 'high';
     propsConfigs?: IPropsConfig<P>[];
     cssConfigs?: EnumCssProerty[];

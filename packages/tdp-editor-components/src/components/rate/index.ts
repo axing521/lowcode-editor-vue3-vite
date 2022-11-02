@@ -16,7 +16,7 @@ export const register: registerComponentFunc = function () {
         key: '',
         code: '',
         label: '评分',
-        icon: 'Ratings',
+        icons: 'Ratings',
         group: EnumComponentGroup.form,
         type: EnumComponentType.rate,
         isFormer: true,

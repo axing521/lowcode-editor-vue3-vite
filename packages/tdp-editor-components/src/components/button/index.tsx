@@ -19,7 +19,7 @@ export const register: registerComponentFunc = function () {
         key: '',
         code: '',
         label: '按钮',
-        icon: 'button',
+        icons: 'button',
         group: EnumComponentGroup.form,
         type: EnumComponentType.button,
         isFormer: true,
