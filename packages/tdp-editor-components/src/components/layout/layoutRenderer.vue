@@ -18,11 +18,7 @@
             @change="dragChangeHandler"
         >
             <template #item="{ element }">
-                <ComponentWrapper
-                    :key="props.state.key + 'wrapper'"
-                    :state="element"
-                    :parentId="props.state.key"
-                ></ComponentWrapper>
+                <ComponentWrapper :state="element" :parentId="props.state.key"></ComponentWrapper>
             </template>
         </Draggable>
     </template>
@@ -30,7 +26,7 @@
         <!--运行时渲染实际组件-->
         <ComponentWrapper
             v-for="child in props.state.list"
-            :key="child.key + 'wrapper'"
+            :key="child.key + '_wrapper'"
             :state="child"
             :parentId="props.state.key"
         ></ComponentWrapper>

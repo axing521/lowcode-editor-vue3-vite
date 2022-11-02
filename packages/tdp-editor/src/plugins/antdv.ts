@@ -7,6 +7,7 @@ import {
     Card,
     Checkbox,
     Col,
+    Collapse,
     ConfigProvider,
     DatePicker,
     Divider,
@@ -25,6 +26,7 @@ import {
     Switch,
     Tabs,
     Tree,
+    Upload,
 } from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 export default function useAntdV(app: App) {
@@ -35,6 +37,7 @@ export default function useAntdV(app: App) {
     app.use(Card);
     app.use(Checkbox);
     app.use(Col);
+    app.use(Collapse);
     app.use(ConfigProvider);
     app.use(DatePicker);
     app.use(Divider);
@@ -53,4 +56,5 @@ export default function useAntdV(app: App) {
     app.use(Switch);
     app.use(Tabs);
     app.use(Tree);
+    app.use(Upload);
 }
