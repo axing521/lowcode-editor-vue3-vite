@@ -4,5 +4,7 @@
 ### 使用步骤
 ```
 1.pnpm i  // 安装依赖包
-2.yarn dev // 运行demo
+2.yarn dev // 运行editor  访问localhost:3000
+
+yarn dev:runtime  // 运行tdp-editor-runtime  访问localhost:3000/runtime.html
 ```
