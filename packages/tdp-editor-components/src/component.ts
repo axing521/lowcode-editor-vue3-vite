@@ -1,23 +1,21 @@
-import type { ComponentInternalInstance, ComponentPublicInstance } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 import type { EnumCssProerty } from 'tdp-editor-types/enum/designer';
 
 import type { IComponentState } from 'tdp-editor-types/interface/components';
 
 import { propsFactory, cssFactory } from 'tdp-editor-utils';
 export default class FdComponent {
-    constructor(key: string, componentInstance: ComponentInternalInstance | undefined) {
+    constructor(key: string, componentInstance: ComponentPublicInstance | undefined) {
         this.$key = key;
-        this.internalInstance = componentInstance;
         // @ts-ignore
-        this.$$ref = componentInstance?.proxy;
-        if (componentInstance && componentInstance.props) {
-            this.$state = componentInstance.props.state as IComponentState;
+        this.$$ref = componentInstance;
+        if (componentInstance && componentInstance.$props) {
+            this.$state = (componentInstance.$props as any).state as IComponentState;
         }
     }
     readonly $key?: string;
     readonly $state?: IComponentState;
     readonly $$ref?: ComponentPublicInstance;
-    readonly internalInstance?: ComponentInternalInstance;
     // 获取组件属性
     public getProps = (name: string): any => {
         if (this.$$ref && this.$state) {

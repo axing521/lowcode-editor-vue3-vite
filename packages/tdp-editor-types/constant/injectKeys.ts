@@ -1,10 +1,10 @@
-import type { InjectionKey, ComponentInternalInstance, ComponentPublicInstance } from 'vue';
+import type { InjectionKey, ComponentPublicInstance } from 'vue';
 import type { EnumAppMode } from '../enum';
 import type { IFormField } from '../interface/components/form';
 
 // 向页面注册组件
 export const addComponent = Symbol('addComponent') as InjectionKey<
-    (key: string, componentInstance: ComponentInternalInstance) => void
+    (key: string, componentInstance: ComponentPublicInstance) => void
 >;
 // 从页面中删除组件
 export const removeComponent = Symbol('removeComponent') as InjectionKey<(key: string) => void>;
@@ -18,7 +18,7 @@ export const getPageInstance = Symbol('getPageInstance') as InjectionKey<
 >;
 
 // 获取form的实例
-type getFdFormRefType = () => ComponentInternalInstance | undefined | null;
+type getFdFormRefType = () => ComponentPublicInstance | undefined | null;
 export const getFdFormRef = Symbol('getFdFormRef') as InjectionKey<getFdFormRefType>;
 
 // 获取form所有字段对象

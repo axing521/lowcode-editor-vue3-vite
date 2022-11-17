@@ -29,8 +29,14 @@ declare module 'vue' {
     interface ComponentCustomProperties {
         $clipboard: (text: string) => void;
         $default_componentList: IDesignerComponent[];
+        $custom_componentList: IDesignerComponent[];
         $AppController: AppController;
         $AppVarController: AppVarController;
         $EditorController: EditorController;
+    }
+    interface AppConfig {
+        globalProperties: {
+            $default_componentList: IDesignerComponent[];
+        };
     }
 }

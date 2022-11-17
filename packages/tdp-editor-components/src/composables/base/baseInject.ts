@@ -10,14 +10,14 @@ import {
 } from 'tdp-editor-types/constant/injectKeys';
 
 import { inject } from 'vue';
-import type { ComponentInternalInstance } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 
 export default function useBaseInject() {
     return {
         // 向页面注册组件
         addComponent: inject(
             addComponent,
-            (key: string, componentInstance: ComponentInternalInstance) => {
+            (key: string, componentInstance: ComponentPublicInstance) => {
                 console.log('inject default: addComponent ------------->', key, componentInstance);
             }
         ),

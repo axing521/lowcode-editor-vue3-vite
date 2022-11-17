@@ -7,8 +7,8 @@ export default function useBaseLifecycle(props: ISetupBaseProps) {
     onMounted(() => {
         const internalInstance = getCurrentInstance();
         // 组件挂载后向页面中注册组件实例
-        if (addComponent && internalInstance) {
-            addComponent(props.state.key, internalInstance);
+        if (internalInstance && internalInstance.proxy) {
+            addComponent(props.state.key, internalInstance.proxy);
         }
     });
     onBeforeUnmount(() => {
