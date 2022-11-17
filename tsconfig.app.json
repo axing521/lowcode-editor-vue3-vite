@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "packages/*/src/**/*", "packages/*/src/**/*.vue"],
+  "include": ["env.d.ts", "packages/*/src/**/*", "packages/*/src/**/*.vue", "packages/tdp-editor-types/**/*.ts"],
   "exclude": ["packages/*/src/**/__tests__/*"],
   "compilerOptions": {
     "composite": true,
