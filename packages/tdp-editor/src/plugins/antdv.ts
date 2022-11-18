@@ -21,6 +21,7 @@ import {
     Menu,
     Modal,
     Pagination,
+    Popover,
     Rate,
     Row,
     Select,
@@ -53,6 +54,7 @@ export default function useAntdV(app: App) {
     app.use(Menu);
     app.use(Modal);
     app.use(Pagination);
+    app.use(Popover);
     app.use(Rate);
     app.use(Row);
     app.use(Select);

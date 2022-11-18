@@ -171,12 +171,10 @@ export default defineComponent({
             return [firstMenu, secondMenu];
         },
         treeSlots_title(node: IDesignerComponent) {
-            console.log('node >>>>>>>>>>>>>>>>>>>>>', node);
             const title = node.label;
             return <span title={title}>{title}</span>;
         },
         treeSlots_icon(node: IDesignerComponent) {
-            console.log('icon-----------', node);
             const icon = node.icons || '';
             return <i class={`iconfont ${icon}`}></i>;
         },

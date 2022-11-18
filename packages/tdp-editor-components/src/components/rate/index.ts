@@ -1,5 +1,5 @@
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import type { ISliderSelectorOptions } from 'tdp-editor-types/interface/designer/selector';
+import type { ISelectorSliderOptions } from 'tdp-editor-types/interface/designer/selector';
 import {
     EnumComponentGroup,
     EnumComponentType,
@@ -45,7 +45,7 @@ export const register: registerComponentFunc = function () {
                     options: {
                         max: 5,
                         min: 1,
-                    } as ISliderSelectorOptions,
+                    } as ISelectorSliderOptions,
                 },
             },
         ],

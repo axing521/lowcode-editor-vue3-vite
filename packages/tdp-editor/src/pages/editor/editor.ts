@@ -4,6 +4,9 @@
  */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import type { TSelector } from 'tdp-editor-types/interface/designer/selector';
+import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+// monaco配置
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
@@ -16,8 +19,9 @@ import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../../plugins';
 import { useEditorStore } from '../../stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
+import SelectorManager from '../../selectors/SelectorManager';
+import propSelectors from '../../selectors/propSelectors';
 
 // @ts-ignore
 self.MonacoEnvironment = {
@@ -60,11 +64,14 @@ export const createEditor = (options: ICreateEditorOptions) => {
     editorStore.initComponentList({
         list: componentList,
     });
-    console.log('editor app', app);
+    // 注册selector
+    const selectorManager = new SelectorManager(propSelectors);
+    app.config.globalProperties.$selectorManager = selectorManager;
+    // 渲染editor
     app.mount(options.container);
     return {
         editor: app,
-        addCustomComponent: (components: IDesignerComponent[]) => {
+        addCustomComponent(components: IDesignerComponent[]) {
             if (Array.isArray(components) && components.length) {
                 app.config.globalProperties.$custom_componentList = components;
                 components.forEach(c => {
@@ -73,8 +80,10 @@ export const createEditor = (options: ICreateEditorOptions) => {
                     }
                 });
                 useEditorStore().addComponents({ list: components });
-                console.log('editor app >>>>>>>>>>', app);
             }
+        },
+        addSelectors(selectors: TSelector) {
+
         },
     };
 };

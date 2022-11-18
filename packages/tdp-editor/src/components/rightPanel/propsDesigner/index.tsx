@@ -10,7 +10,6 @@ import type {
     IPropsConfig,
     IPropsSelectorObj,
 } from 'tdp-editor-types/interface/designer';
-import selector from '../../../selectors/index';
 import { propsFactory } from 'tdp-editor-utils';
 import pm from '../paramsModal.vue';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
@@ -77,7 +76,7 @@ export default defineComponent({
             }
         },
         // 渲染属性选择器
-        renderPropsSelector(props: IPropsConfig<{ k: any }>): VNode | undefined | VNode[] {
+        renderPropsSelector(props: IPropsConfig): VNode | undefined | VNode[] {
             const other = {
                 showParamsModal: this.showParamsModal,
             };
@@ -108,15 +107,18 @@ export default defineComponent({
             // 直接指定的selector的name
             else if (typeof props.selector === 'string') {
                 const selectorName = props.selector as EnumSelectorName;
-                const _selector = (selector as any)[selectorName];
+                const _selector = this.$selectorManager.getSelector(selectorName);
                 return _selector ? _selector(this.element!, props, other) : undefined;
             }
             // 指定的selector对象，包含options
             else if (typeof props.selector === 'object' && 'name' in props.selector) {
                 const selectorObj = props.selector as IPropsSelectorObj;
-                const _selector = (selector as any)[selectorObj.name];
+                const selectorName = props.selector.name;
+                const _selector = this.$selectorManager.getSelector(selectorName);
                 const _selectorOptions = selectorObj.options || {};
-                return _selector(this.element!, props, { ..._selectorOptions, ...other });
+                return _selector
+                    ? _selector(this.element!, props, { ..._selectorOptions, ...other })
+                    : undefined;
             }
             // 开发者自定义选择器函数
             else if (typeof props.selector === 'function') {

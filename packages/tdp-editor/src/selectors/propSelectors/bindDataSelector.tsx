@@ -1,32 +1,29 @@
+import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
+import type { TSelectorRender } from 'tdp-editor-types/interface/designer/selector';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import propsFactory from 'tdp-editor-utils/propsFactory';
 
-export default function bindDataSelector(
-    element: IDesignerComponent,
-    props: IPropsConfig<{ k: any }>,
-    other: {
-        showParamsModal: (pmPropKey: string, pmPropValueType: EnumPropsValueType) => void;
-    }
-) {
+export const name = EnumSelectorName.bindData;
+export const render: TSelectorRender = (element, prop, options) => {
     return (
         <div>
             <a-input
                 prefix="{{"
                 suffix="}}"
-                value={propsFactory.getPropsValue(element, props.key)}
+                value={propsFactory.getPropsValue(element, prop.key)}
                 onChange={(e: any) => {
                     propsFactory.setPropsValue(
                         element,
-                        props.key,
+                        prop.key,
                         e.target.value,
                         EnumPropsValueType.expression
                     );
                 }}
                 onPressEnter={() => {
-                    other.showParamsModal(props.key, EnumPropsValueType.expression);
+                    options.showParamsModal &&
+                        options.showParamsModal(prop.key, EnumPropsValueType.expression);
                 }}
             ></a-input>
         </div>
     );
-}
+};

@@ -3,6 +3,7 @@ import { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import type AppVarController from '../controller/AppVarController';
 import type AppController from '../controller/AppController';
 import type EditorController from '../controller/EditorController';
+import type SelectorManager from '../selectors/SelectorManager';
 
 declare global {
     namespace JSX {
@@ -33,6 +34,7 @@ declare module 'vue' {
         $AppController: AppController;
         $AppVarController: AppVarController;
         $EditorController: EditorController;
+        $selectorManager: SelectorManager;
     }
     interface AppConfig {
         globalProperties: {

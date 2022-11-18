@@ -2,13 +2,15 @@ import type { VNode } from 'vue';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import propsFactory from 'tdp-editor-utils/propsFactory';
 import { DeleteFilled } from '@ant-design/icons-vue';
+import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
+import type { TSelectorRender } from 'tdp-editor-types/interface/designer/selector';
 
 // 数组数据选择器
 function arrayDataPropsSelector(
     element: IDesignerComponent,
-    props: IPropsConfig<{ k: string }>
+    prop: IPropsConfig
 ): VNode[] | undefined {
-    const data: any = propsFactory.getPropsValue(element, props.key);
+    const data: any = propsFactory.getPropsValue(element, prop.key);
     if (data && data instanceof Array && data.length) {
         return data.map((d: any, index) => {
             return (
@@ -24,7 +26,7 @@ function arrayDataPropsSelector(
                         onChange={(e: any) => (d.label = e.target.value)}
                     ></a-input>
                     <DeleteFilled
-                        onClick={() => propsFactory.removePropsValue(element, props.key, index)}
+                        onClick={() => propsFactory.removePropsValue(element, prop.key, index)}
                     />
                 </li>
             );
@@ -34,18 +36,16 @@ function arrayDataPropsSelector(
     }
 }
 
-export default function arrayDataSelector(
-    element: IDesignerComponent,
-    props: IPropsConfig<{ k: any }>
-) {
+export const name = EnumSelectorName.arrayData;
+export const render: TSelectorRender = (element, prop) => {
     return (
         <div class="selector-array-data">
-            <ul>{arrayDataPropsSelector(element, props)}</ul>
+            <ul>{arrayDataPropsSelector(element, prop)}</ul>
             <a-button
                 type="primary"
                 onClick={() => {
-                    const data = (propsFactory.getPropsValue(element, props.key) || []) as any[];
-                    propsFactory.pushPropsValue(element, props.key, {
+                    const data = (propsFactory.getPropsValue(element, prop.key) || []) as any[];
+                    propsFactory.pushPropsValue(element, prop.key, {
                         key: `item${data.length}`,
                         label: `item${data.length}`,
                     });
@@ -55,4 +55,4 @@ export default function arrayDataSelector(
             </a-button>
         </div>
     );
-}
+};

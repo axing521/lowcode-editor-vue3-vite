@@ -11,7 +11,7 @@ import type {
 import type { IButtonProps } from './interface';
 
 import Button from './buttonRenderer.vue';
-import type { ISelectSelectorOptions } from '@/tdp-editor-types/interface/designer/selector';
+import type { ISelectorSelectOptions } from '@/tdp-editor-types/interface/designer/selector';
 
 export default Button;
 
@@ -62,7 +62,7 @@ export const register: registerComponentFunc = function () {
                             { key: 'danger', label: 'danger' },
                             { key: 'link', label: 'link' },
                         ],
-                    } as ISelectSelectorOptions,
+                    } as ISelectorSelectOptions,
                 },
             },
             {
@@ -76,7 +76,7 @@ export const register: registerComponentFunc = function () {
                             { key: 'submit', label: '提交按钮' },
                             { key: 'button', label: '普通按钮' },
                         ],
-                    } as ISelectSelectorOptions,
+                    } as ISelectorSelectOptions,
                 },
             },
             {
