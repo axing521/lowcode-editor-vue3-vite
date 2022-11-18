@@ -42,12 +42,22 @@ export const register: registerComponentFunc = function () {
             {
                 key: 'text',
                 label: '按钮文本',
-                selector: [EnumSelectorName.input],
+                selector: EnumSelectorName.input,
             },
             {
                 key: 'ghost',
                 label: '幽灵模式',
                 selector: EnumSelectorName.switch,
+            },
+            {
+                key: 'abc',
+                label: 'abc',
+                selector: EnumSelectorName.arrayData,
+            },
+            {
+                key: 'bbc',
+                label: 'bbc',
+                selector: EnumSelectorName.bindData,
             },
             {
                 key: 'type',

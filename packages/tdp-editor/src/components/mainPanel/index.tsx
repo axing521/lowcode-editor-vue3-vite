@@ -7,8 +7,8 @@ import { EnumAppMode } from 'tdp-editor-types/enum';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import PageView from 'tdp-editor-components/src/page.vue';
 import { utils } from 'tdp-editor-utils';
-import { useEditorStore } from '../../stores/editorStore';
-import { useAppStore } from '../../stores/appStore';
+import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 
 export default defineComponent({
     name: 'editor-main-panel',

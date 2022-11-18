@@ -13,9 +13,9 @@ import {
     ClusterOutlined,
 } from '@ant-design/icons-vue';
 import classnames from 'classnames';
-import { useEditorStore } from '../../stores/editorStore';
-import { useLeftMenuStore } from '../../stores/leftMenuStore';
-import { useAppStore } from '../../stores/appStore';
+import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useLeftMenuStore } from 'tdp-editor-utils/stores/leftMenuStore';
+import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import DesignerComponentList from './componentList';
 import './index.less';
 import NewPageModal from './newPageModal.vue';

@@ -1,9 +1,9 @@
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
-import { useEditorStore } from '../../stores/editorStore';
+import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import './index.less';
 import DesignerUXPanel from './UXDesigner';
-import DesignerPropsPanel from './propsDesigner';
+import DesignerPropsPanel from './propsDesigner/index.vue';
 import DesignerDataPanel from './dataDesigner';
 
 export default defineComponent({

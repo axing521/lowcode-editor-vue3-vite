@@ -1,10 +1,14 @@
-import type { DefineComponent } from 'vue';
+import type { DefineComponent, Component } from 'vue';
 import type { EnumPropsValueType } from '../../enum/components';
 import type { IDesignerComponent, IPropsConfig } from '.';
 import type { EnumCssProerty, EnumSelectorName } from '../../enum/designer';
 
 // Selector对象定义
-export type TSelector = { name: EnumSelectorName | string; render: TSelectorRender };
+export type TSelector = {
+    name: EnumSelectorName | string;
+    render: Component;
+    type?: 'tsx' | 'vue';
+};
 // css Selector对象定义
 export type TCssSelector = { name: EnumCssProerty | string; render: DefineComponent };
 // 选择器渲染方法定义

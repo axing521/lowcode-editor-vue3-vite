@@ -9,7 +9,7 @@ import { cssFactory } from 'tdp-editor-utils';
 import CssBoxDesigner from '../cssBoxDesigner.vue';
 import CssWidthSelector from '../../../../selectors/cssSelectors/widthSelector';
 import CssColorSelector from '../../../../selectors/cssSelectors/colorSelector';
-import { useEditorStore } from '../../../../stores/editorStore';
+import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
 

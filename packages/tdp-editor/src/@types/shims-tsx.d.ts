@@ -36,9 +36,4 @@ declare module 'vue' {
         $EditorController: EditorController;
         $selectorManager: SelectorManager;
     }
-    interface AppConfig {
-        globalProperties: {
-            $default_componentList: IDesignerComponent[];
-        };
-    }
 }

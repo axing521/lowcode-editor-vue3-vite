@@ -14,4 +14,6 @@ export interface IButtonProps {
     shape?: 'circle' | 'round';
     type?: 'primary' | 'dashed' | 'danger' | 'link';
     scheme?: Record<string, string>;
+    abc?: string[];
+    bbc?: string;
 }

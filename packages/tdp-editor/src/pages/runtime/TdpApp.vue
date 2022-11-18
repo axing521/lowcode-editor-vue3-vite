@@ -14,12 +14,11 @@
 import { onMounted, computed } from 'vue';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import RuntimePage from 'tdp-editor-components/src/page.vue';
-import { getAppController } from '../../controller';
-const appController = getAppController();
-appController.setMode(EnumAppMode.runtime);
+import { useAppControler } from '../../controller';
 onMounted(() => {
     console.log('RuntimeWrapper onMounted');
 });
+const appController = useAppControler();
 // 监听当前页面数据切换
 const pageJson = computed(() => {
     return appController.getActivePage();

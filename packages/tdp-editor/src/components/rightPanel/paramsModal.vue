@@ -107,7 +107,7 @@ import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import { useAppStore } from '../../stores/appStore';
+import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 
 enum EnumParamType {
     params = 'params',

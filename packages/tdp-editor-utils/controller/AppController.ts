@@ -1,10 +1,12 @@
-import type { EnumAppMode } from '@/tdp-editor-types/enum';
+import type { App } from 'vue';
+import type { EnumAppMode } from 'tdp-editor-types/enum';
 import type { IAppStoreState } from '@/tdp-editor-types/interface/designer';
 import { useAppStore } from '../stores/appStore';
 export default class AppController {
-    private readonly $appStore;
-    constructor() {
-        this.$appStore = useAppStore();
+    private readonly $appStore = useAppStore();
+    private readonly $app: App;
+    constructor(app: App) {
+        this.$app = app;
     }
     initApp(appJson: IAppStoreState) {
         this.$appStore.pages = appJson.pages;

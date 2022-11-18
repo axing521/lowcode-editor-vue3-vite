@@ -1,5 +1,6 @@
+import type { App } from 'vue';
 import type { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import type { TSelectorRender, TSelector } from 'tdp-editor-types/interface/designer/selector';
+import type { TSelector } from 'tdp-editor-types/interface/designer/selector';
 
 type TSelectorMapKey = EnumSelectorName | string;
 
@@ -7,8 +8,10 @@ type TSelectorMapKey = EnumSelectorName | string;
  * 选择器管理
  */
 export default class SelectorManager {
-    private readonly selectorMap: Map<TSelectorMapKey, TSelectorRender> = new Map();
-    constructor(selectors?: TSelector[]) {
+    private readonly selectorMap: Map<TSelectorMapKey, TSelector> = new Map();
+    private readonly app: App;
+    constructor(app: App, selectors?: TSelector[]) {
+        this.app = app;
         this.addSelectors(selectors);
     }
 
@@ -30,7 +33,8 @@ export default class SelectorManager {
                 if (this.selectorMap.has(s.name)) {
                     console.warn(`selector '${s.name}' allready exits`);
                 } else {
-                    this.selectorMap.set(s.name, s.render);
+                    this.selectorMap.set(s.name, s);
+                    this.app.component(s.name, s.render);
                 }
             });
         }

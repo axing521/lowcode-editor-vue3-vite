@@ -153,8 +153,8 @@ div.tdp-editor-container {
 import { onMounted, provide, ref, computed } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import fileSaver from 'file-saver';
-import { useEditorStore } from '../../stores/editorStore';
-import { useAppStore } from '../../stores/appStore';
+import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 
 import { EnumAppMode } from 'tdp-editor-types/enum';

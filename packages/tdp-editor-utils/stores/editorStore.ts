@@ -8,8 +8,8 @@ import {
 import type { IPageStoreState } from 'tdp-editor-types/interface/designer';
 import type { IDesignerComponent, IEditorStoreState } from 'tdp-editor-types/interface/designer';
 
-import { utils } from 'tdp-editor-utils';
-import { apps, forms } from 'tdp-editor-utils/service';
+import { utils } from '../';
+import { apps, forms } from '../service';
 import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
 import { useAppStore } from './appStore';
 

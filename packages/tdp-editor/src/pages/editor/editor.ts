@@ -17,7 +17,7 @@ import EditorWrapper from './EditorWrapper.vue';
 import 'tdp-editor-components/src/styles/index.less';
 import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../../plugins';
-import { useEditorStore } from '../../stores/editorStore';
+import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import SelectorManager from '../../selectors/SelectorManager';
@@ -65,7 +65,7 @@ export const createEditor = (options: ICreateEditorOptions) => {
         list: componentList,
     });
     // 注册selector
-    const selectorManager = new SelectorManager(propSelectors);
+    const selectorManager = new SelectorManager(app, propSelectors);
     app.config.globalProperties.$selectorManager = selectorManager;
     // 渲染editor
     app.mount(options.container);
