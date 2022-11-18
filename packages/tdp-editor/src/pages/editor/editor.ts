@@ -82,8 +82,8 @@ export const createEditor = (options: ICreateEditorOptions) => {
                 useEditorStore().addComponents({ list: components });
             }
         },
-        addSelectors(selectors: TSelector) {
-
+        addSelectors(selectors: TSelector[]) {
+            selectorManager.addSelectors(selectors);
         },
     };
 };
