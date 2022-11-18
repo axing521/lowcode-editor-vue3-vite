@@ -1,5 +1,5 @@
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
-import { EnumPropsSelector } from 'tdp-editor-types/enum/designer';
+import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import type {
     IDesignerComponent,
     registerComponentFunc,
@@ -23,8 +23,8 @@ export const register: registerComponentFunc = function () {
         order: 200,
         list: [],
         propsConfigs: [
-            { key: 'name', label: '表单名', selector: EnumPropsSelector.input },
-            { key: 'topTitle', label: 'title上方显示', selector: EnumPropsSelector.switch },
+            { key: 'name', label: '表单名', selector: EnumSelectorName.input },
+            { key: 'topTitle', label: 'title上方显示', selector: EnumSelectorName.switch },
         ],
     };
     return form;

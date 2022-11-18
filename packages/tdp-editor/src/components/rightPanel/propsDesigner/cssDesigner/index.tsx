@@ -7,8 +7,8 @@ import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { EnumCssProerty } from 'tdp-editor-types/enum/designer';
 import { cssFactory } from 'tdp-editor-utils';
 import CssBoxDesigner from '../cssBoxDesigner.vue';
-import CssWidthSelector from '../../../selector/widthSelector';
-import CssColorSelector from '../../../selector/colorSelector';
+import CssWidthSelector from '../../../../selectors/widthSelector';
+import CssColorSelector from '../../../../selectors/colorSelector';
 import { useEditorStore } from '../../../../stores/editorStore';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;

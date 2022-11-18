@@ -1,5 +1,5 @@
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
-import { EnumCssProerty, EnumPropsSelector } from 'tdp-editor-types/enum/designer';
+import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import type {
     IDesignerComponent,
     registerComponentFunc,
@@ -20,9 +20,7 @@ export const register: registerComponentFunc = function () {
         order: 100,
         listGroup: 'normal',
         showInList: false,
-        propsConfigs: [
-            { key: 'showShadow', label: '显示阴影', selector: EnumPropsSelector.switch },
-        ],
+        propsConfigs: [{ key: 'showShadow', label: '显示阴影', selector: EnumSelectorName.switch }],
         cssConfigs: [EnumCssProerty.position, EnumCssProerty.width, EnumCssProerty.height],
     };
     return layout;

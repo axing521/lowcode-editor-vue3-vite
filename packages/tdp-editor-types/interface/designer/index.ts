@@ -4,7 +4,7 @@ import type { IPageProps } from '../components/page';
 import type { IPageForm } from './pageForm';
 
 import type { EnumAppMode } from '../../enum';
-import type { EnumCssProerty, EnumPropsSelector } from '../../enum/designer';
+import type { EnumCssProerty, EnumSelectorName } from '../../enum/designer';
 import type { EnumPropsValueType } from '../../enum/components';
 
 // 设计模式下组件的属性
@@ -23,10 +23,6 @@ export interface IDesignerComponent<P = any, C = Record<string, string>>
 }
 
 export type propsValueType<P> = P[keyof P] | undefined | null;
-type selectOptions = {
-    key: string;
-    label: string;
-};
 
 // 属性渲染工厂定义
 export interface IPropsRenderFactory {
@@ -63,16 +59,18 @@ export type IPropsSelectorRender<P> = (
     propsFactory: IPropsRenderFactory
 ) => VNode;
 
-export type propsSelectorType<P> = EnumPropsSelector | IPropsSelectorRender<P>;
+// 需要给selector传递参数的对象
+export type IPropsSelectorObj<O = {}> = {
+    name: EnumSelectorName;
+    options?: O;
+};
+export type propsSelectorType<P> = EnumSelectorName | IPropsSelectorRender<P> | IPropsSelectorObj;
 
 // 属性配置定义
 export type IPropsConfig<P = any> = {
     key: keyof P;
     label: string;
     selector: propsSelectorType<P> | propsSelectorType<P>[];
-    selectOptions?: selectOptions[];
-    sliderMin?: number;
-    sliderMax?: number;
 };
 
 export type registerComponentFunc<P = any> = () => IDesignerComponent<P> | IDesignerComponent<P>[];

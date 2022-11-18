@@ -1,4 +1,4 @@
-export enum EnumPropsSelector {
+export enum EnumSelectorName {
     input = 'inputSelector',
     select = 'selectSelector',
     switch = 'switchSelector',

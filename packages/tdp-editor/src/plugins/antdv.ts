@@ -17,6 +17,7 @@ import {
     Form,
     Image,
     Input,
+    InputNumber,
     Menu,
     Modal,
     Pagination,
@@ -24,6 +25,7 @@ import {
     Row,
     Select,
     Switch,
+    Slider,
     Tabs,
     Tree,
     Upload,
@@ -47,6 +49,7 @@ export default function useAntdV(app: App) {
     app.use(Form);
     app.use(Image);
     app.use(Input);
+    app.use(InputNumber);
     app.use(Menu);
     app.use(Modal);
     app.use(Pagination);
@@ -54,6 +57,7 @@ export default function useAntdV(app: App) {
     app.use(Row);
     app.use(Select);
     app.use(Switch);
+    app.use(Slider);
     app.use(Tabs);
     app.use(Tree);
     app.use(Upload);

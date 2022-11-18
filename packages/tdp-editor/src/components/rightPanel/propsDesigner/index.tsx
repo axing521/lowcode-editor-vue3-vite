@@ -5,11 +5,16 @@ import { useEditorStore } from '../../../stores/editorStore';
 import './index.less';
 import DesignerCssPanel from './cssDesigner';
 import DesignerFormPanel from './formDesigner';
-import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
-import selector from '../../selector/index';
+import type {
+    IDesignerComponent,
+    IPropsConfig,
+    IPropsSelectorObj,
+} from 'tdp-editor-types/interface/designer';
+import selector from '../../../selectors/index';
 import { propsFactory } from 'tdp-editor-utils';
 import pm from '../paramsModal.vue';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
+import type { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import { DownOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({
@@ -100,10 +105,18 @@ export default defineComponent({
                     </div>
                 );
             }
-            // @ts-ignore
-            else if (typeof props.selector === 'string' && selector[props.selector]) {
-                // @ts-ignore
-                return selector[props.selector](this.element!, props, other);
+            // 直接指定的selector的name
+            else if (typeof props.selector === 'string') {
+                const selectorName = props.selector as EnumSelectorName;
+                const _selector = (selector as any)[selectorName];
+                return _selector ? _selector(this.element!, props, other) : undefined;
+            }
+            // 指定的selector对象，包含options
+            else if (typeof props.selector === 'object' && 'name' in props.selector) {
+                const selectorObj = props.selector as IPropsSelectorObj;
+                const _selector = (selector as any)[selectorObj.name];
+                const _selectorOptions = selectorObj.options || {};
+                return _selector(this.element!, props, { ..._selectorOptions, ...other });
             }
             // 开发者自定义选择器函数
             else if (typeof props.selector === 'function') {

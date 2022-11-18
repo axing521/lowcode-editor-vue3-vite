@@ -1,3 +1,5 @@
+import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
+import type { ISliderSelectorOptions } from 'tdp-editor-types/interface/designer/selector';
 import {
     EnumComponentGroup,
     EnumComponentType,
@@ -34,6 +36,19 @@ export const register: registerComponentFunc = function () {
                 },
             };
         },
+        propsConfigs: [
+            {
+                key: 'count',
+                label: 'star总数',
+                selector: {
+                    name: EnumSelectorName.slider,
+                    options: {
+                        max: 5,
+                        min: 1,
+                    } as ISliderSelectorOptions,
+                },
+            },
+        ],
     };
     return rate;
 };

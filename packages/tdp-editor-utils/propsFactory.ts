@@ -1,5 +1,5 @@
 import type { IPropsRenderFactory } from 'tdp-editor-types/interface/designer';
-import { EnumPropsSelector } from 'tdp-editor-types/enum/designer';
+import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 
 const PropsFactory: IPropsRenderFactory = {
@@ -52,7 +52,7 @@ const PropsFactory: IPropsRenderFactory = {
                 state.props = {
                     [propertyName]: {
                         value: [value],
-                        selector: EnumPropsSelector.select,
+                        selector: EnumSelectorName.select,
                     },
                 };
             }

@@ -1,5 +1,5 @@
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-// import { EnumCssProerty, EnumPropsSelector } from 'tdp-editor-types/enum/designer';
+// import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
 // import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import LycButton from './LycButton';
 import LycInput from './LycInput';
@@ -13,10 +13,10 @@ export const customList: IDesignerComponent[] = [
     //     type: 'ASelect',
     //     listGroup: 'high',
     //     propsConfigs: [
-    //         { key: 'placeholder', label: '默认文字', selector: EnumPropsSelector.input },
-    //         { key: 'disabled', label: '禁用', selector: EnumPropsSelector.switch },
-    //         { key: 'options', label: '静态数据', selector: EnumPropsSelector.arrayData },
-    //         { key: 'allowClear', label: '支持清空', selector: EnumPropsSelector.switch },
+    //         { key: 'placeholder', label: '默认文字', selector: EnumSelectorName.input },
+    //         { key: 'disabled', label: '禁用', selector: EnumSelectorName.switch },
+    //         { key: 'options', label: '静态数据', selector: EnumSelectorName.arrayData },
+    //         { key: 'allowClear', label: '支持清空', selector: EnumSelectorName.switch },
     //     ],
     //     cssConfigs: [EnumCssProerty.width],
     // },
@@ -29,11 +29,11 @@ export const customList: IDesignerComponent[] = [
     //     type: 'ADivider',
     //     listGroup: 'high',
     //     propsConfigs: [
-    //         { key: 'dashed', label: '虚线', selector: EnumPropsSelector.switch },
+    //         { key: 'dashed', label: '虚线', selector: EnumSelectorName.switch },
     //         {
     //             key: 'type',
     //             label: '方向',
-    //             selector: EnumPropsSelector.select,
+    //             selector: EnumSelectorName.select,
     //             selectOptions: [
     //                 { key: 'horizontal', label: '水平' },
     //                 { key: 'vertical', label: '垂直' },

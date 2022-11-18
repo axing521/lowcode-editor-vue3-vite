@@ -7,4 +7,5 @@ export interface IRateState extends IComponentState<IRateState> {
 export interface IRateProps extends IBaseFormItemProps {
     value?: number;
     defaultValue?: number;
+    count?: number;
 }
