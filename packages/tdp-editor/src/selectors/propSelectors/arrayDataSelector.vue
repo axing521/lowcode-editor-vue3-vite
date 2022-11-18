@@ -29,22 +29,29 @@ const _props = defineProps<{
     prop: IPropsConfig;
 }>();
 // 数组数据选择器
-const arrayData = computed(() => {
-    const data: TItem[] = propsFactory.getPropsValue(_props.element, _props.prop.key);
-    if (data && data instanceof Array) {
-        return data;
-    } else {
-        return [];
-    }
+const arrayData = computed({
+    get(): TItem[] {
+        const data: TItem[] = propsFactory.getPropsValue(_props.element, _props.prop.key);
+        if (data && data instanceof Array) {
+            return data;
+        } else {
+            return [];
+        }
+    },
+    set(items) {
+        propsFactory.setPropsValue(_props.element, _props.prop.key, items);
+    },
 });
 
 const onAddItem = () => {
     const data = (propsFactory.getPropsValue(_props.element, _props.prop.key) || []) as TItem[];
     console.log('data', data);
-    propsFactory.pushPropsValue(_props.element, _props.prop.key, {
+    const newData = {
         key: `item${data.length}`,
         label: `item${data.length}`,
-    });
+    };
+    data.push(newData);
+    arrayData.value = data;
 };
 
 const onDeleteItem = (index: number) => {
