@@ -3,7 +3,6 @@ import type { TSelector } from 'tdp-editor-types/interface/designer/selector';
 // 遍历所有组件信息
 const allSelectors = import.meta.globEager('./*Selector.(tsx|vue)');
 const propSelectors: TSelector[] = [];
-console.log('allSelectors', allSelectors);
 
 // 自动加载propSelector
 for (const key in allSelectors) {
@@ -34,5 +33,4 @@ for (const key in allSelectors) {
         }
     }
 }
-console.log('propSelectors', propSelectors);
 export default propSelectors;
