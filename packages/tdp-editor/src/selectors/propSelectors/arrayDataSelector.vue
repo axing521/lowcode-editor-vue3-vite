@@ -19,7 +19,7 @@ export default defineComponent({
 <script lang="ts" setup>
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
+import { usePropsProxy } from 'tdp-editor-utils/factory/propsFactory.js';
 import { DeleteFilled } from '@ant-design/icons-vue';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 

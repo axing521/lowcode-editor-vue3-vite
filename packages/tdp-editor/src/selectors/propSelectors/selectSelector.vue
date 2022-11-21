@@ -16,7 +16,7 @@ import { computed } from 'vue';
 import type { ISelectorSelectOptions } from 'tdp-editor-types/interface/designer/selector';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
+import { usePropsProxy } from 'tdp-editor-utils/factory/propsFactory.js';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 
 const _props = defineProps<{

@@ -13,7 +13,7 @@ export default defineComponent({
 <script lang="ts" setup>
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
+import { usePropsProxy } from 'tdp-editor-utils/factory/propsFactory.js';
 
 const _props = defineProps<{
     state: IDesignerComponent;

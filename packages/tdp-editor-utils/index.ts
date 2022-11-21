@@ -1,10 +1,10 @@
 import * as utils from './utils';
-import apiFactory from './apiFactory';
-import cssFactory from './cssFactory';
-import eventFactory from './eventFactory';
-import formFactory from './formFactory';
-import funcFactory from './funcFactory';
-import propsFactory from './propsFactory';
+import apiFactory from './factory/apiFactory';
+import cssFactory from './factory/cssFactory';
+import eventFactory from './factory/eventFactory';
+import formFactory from './factory/formFactory';
+import funcFactory from './factory/funcFactory';
+import propsFactory from './factory/propsFactory';
 import * as request from './request';
 
 export {
