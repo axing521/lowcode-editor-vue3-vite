@@ -90,19 +90,26 @@ const PropsFactory: IPropsRenderFactory = {
         };
     },
 };
-type TUsePropsProxyValue<T extends object> = string | number | boolean | T[] | T;
 
-export function usePropsProxy<T extends object>(
+/**
+ * 创建组件属性的响应式变量
+ * @param state 组件state
+ * @param propertyName 属性名
+ * @param defaultValue 默认属性，当组件本身没有此属性时创建默认值
+ * @param type 属性值的类型，EnumPropsValueType
+ * @returns 返回一个Ref对象
+ */
+export function usePropsProxy<T = unknown>(
     state: IComponentState,
     propertyName: string,
-    defaultValue: TUsePropsProxyValue<T>,
+    defaultValue: T,
     type = EnumPropsValueType.string
 ): Ref<T> {
     const propValue = PropsFactory.getPropsValue(state, propertyName) as T;
     let value: unknown = propValue;
     if (!propValue) {
         if (typeof defaultValue === 'object') {
-            value = reactive(defaultValue as T);
+            value = reactive(defaultValue as unknown as object);
         } else if (Array.isArray(defaultValue)) {
             value = reactive(defaultValue as T[]);
         } else {
