@@ -30,7 +30,12 @@ const _props = defineProps<{
 }>();
 
 // 创建属性数据
-const arrayData = usePropsProxy<TItem[]>(_props.element, _props.prop.key as string, [], EnumPropsValueType.array);
+const arrayData = usePropsProxy<TItem[]>(
+    _props.element,
+    _props.prop.key as string,
+    [],
+    EnumPropsValueType.array
+);
 
 // 添加选项
 const onAddItem = () => {

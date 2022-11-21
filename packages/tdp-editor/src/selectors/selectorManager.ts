@@ -1,3 +1,4 @@
+import { warn } from 'vue';
 import type { App } from 'vue';
 import type { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import type { TSelector } from 'tdp-editor-types/interface/designer/selector';
@@ -31,7 +32,7 @@ export default class SelectorManager {
         if (selectors) {
             selectors.forEach(s => {
                 if (this.selectorMap.has(s.name)) {
-                    console.warn(`selector '${s.name}' allready exits`);
+                    warn(`selector '${s.name}' allready exits`);
                 } else {
                     this.selectorMap.set(s.name, s);
                     this.app.component(s.name, s.render);
