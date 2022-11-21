@@ -29,6 +29,7 @@ export const createController = (app: App) => {
     app.config.globalProperties.$AppController = controllers.appController;
     app.config.globalProperties.$AppVarController = controllers.appVarController;
     app.config.globalProperties.$EditorController = controllers.editorController;
+    controllerMap.set(app, controllers);
     return controllers;
 };
 

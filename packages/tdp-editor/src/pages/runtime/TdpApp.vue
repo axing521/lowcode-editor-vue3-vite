@@ -14,7 +14,7 @@
 import { onMounted, computed } from 'vue';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import RuntimePage from 'tdp-editor-components/src/page.vue';
-import { useAppControler } from '../../controller';
+import { useAppControler } from 'tdp-editor-utils/controller';
 onMounted(() => {
     console.log('RuntimeWrapper onMounted');
 });

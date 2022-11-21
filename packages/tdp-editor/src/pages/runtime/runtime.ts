@@ -19,28 +19,31 @@ import { createController } from 'tdp-editor-utils/controller';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
-interface ICreateEditorOptions {
+interface ICreateRuntimeOptions {
     container: string | Element;
 }
 
 export const version = import.meta.env.VITE_APP_VERSION;
 console.info('tdp editor runtime version: ' + version);
 
-export const createRuntime = (options: ICreateEditorOptions) => {
+export const createRuntime = (options: ICreateRuntimeOptions) => {
     const app = createApp(App);
-    // const router = createRouter();
     // 注册指令
     registerDirectives(app);
     // 注册插件
     usePlugin(app);
+
     app.use(createPinia());
+    // const router = createRouter();
     // app.use(router);
+
     // 注册默认组件
     const componentList = componentRegister(app);
     app.config.globalProperties.$default_componentList = componentList;
+    // 注册controller
     const controllers = createController(app);
     controllers.appController.setMode(EnumAppMode.runtime);
-    // controllers.editorController.initComponentList(componentList); // 不需要关心组件列表
+    // 渲染应用
     app.mount(options.container);
     return {
         runtime: app,

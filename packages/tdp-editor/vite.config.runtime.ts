@@ -27,7 +27,6 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 runtime: path.resolve(__dirname, 'runtime.html'),
-                // editor: path.resolve(__dirname, 'index.html'),
             },
         },
     },
