@@ -43,11 +43,12 @@ const onAddItem = () => {
         key: `item${arrayData.value.length}`,
         label: `item${arrayData.value.length}`,
     };
-    arrayData.value.push(newData);
+    arrayData.value = [...arrayData.value, ...[newData]];
 };
 
 // 删除选项
 const onDeleteItem = (index: number) => {
     arrayData.value.splice(index, 1);
+    arrayData.value = [...arrayData.value];
 };
 </script>
