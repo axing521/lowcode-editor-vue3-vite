@@ -15,11 +15,11 @@ import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 
 const _props = defineProps<{
-    element: IDesignerComponent;
+    state: IDesignerComponent;
     prop: IPropsConfig;
 }>();
 const inputValue = usePropsProxy(
-    _props.element,
+    _props.state,
     _props.prop.key as string,
     '',
     EnumPropsValueType.string

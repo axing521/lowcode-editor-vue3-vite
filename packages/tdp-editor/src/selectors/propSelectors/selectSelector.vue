@@ -20,13 +20,13 @@ import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 
 const _props = defineProps<{
-    element: IDesignerComponent;
+    state: IDesignerComponent;
     prop: IPropsConfig;
     options?: ISelectorSelectOptions;
 }>();
 
 const selectData = usePropsProxy(
-    _props.element,
+    _props.state,
     _props.prop.key as string,
     '',
     EnumPropsValueType.string

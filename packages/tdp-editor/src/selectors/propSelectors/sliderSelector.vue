@@ -28,7 +28,7 @@ import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 
 const _props = defineProps<{
-    element: IDesignerComponent;
+    state: IDesignerComponent;
     prop: IPropsConfig;
     options?: ISelectorSliderOptions;
 }>();
@@ -41,7 +41,7 @@ const max = computed(() => {
 });
 
 const sliderValue = usePropsProxy(
-    _props.element,
+    _props.state,
     _props.prop.key as string,
     min.value,
     EnumPropsValueType.number

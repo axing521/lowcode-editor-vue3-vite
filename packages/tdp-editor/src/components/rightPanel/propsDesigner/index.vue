@@ -51,7 +51,7 @@
                                 <template v-if="typeof prop.selector === 'string'">
                                     <component
                                         :is="prop.selector"
-                                        :element="element"
+                                        :state="element"
                                         :prop="prop"
                                     ></component>
                                 </template>
@@ -62,7 +62,7 @@
                                 >
                                     <component
                                         :is="prop.selector.name"
-                                        :element="element"
+                                        :state="element"
                                         :prop="prop"
                                         :options="prop.selector.options"
                                     ></component>

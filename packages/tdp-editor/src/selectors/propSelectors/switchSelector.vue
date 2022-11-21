@@ -14,12 +14,12 @@ import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
 
 const _props = defineProps<{
-    element: IDesignerComponent;
+    state: IDesignerComponent;
     prop: IPropsConfig;
 }>();
 
 const switchValue = usePropsProxy(
-    _props.element,
+    _props.state,
     _props.prop.key as string,
     false,
     EnumPropsValueType.boolean

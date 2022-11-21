@@ -25,13 +25,13 @@ import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 
 type TItem = { key: string; label: string };
 const _props = defineProps<{
-    element: IDesignerComponent;
+    state: IDesignerComponent;
     prop: IPropsConfig;
 }>();
 
 // 创建属性数据
 const arrayData = usePropsProxy<TItem[]>(
-    _props.element,
+    _props.state,
     _props.prop.key as string,
     [],
     EnumPropsValueType.array
