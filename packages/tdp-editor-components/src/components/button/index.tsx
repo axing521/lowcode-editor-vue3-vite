@@ -11,7 +11,7 @@ import type {
 import type { IButtonProps } from './interface';
 
 import Button from './buttonRenderer.vue';
-import type { ISelectorSelectOptions } from '@/tdp-editor-types/interface/designer/selector';
+import type { ISelectorSelectOptions } from 'tdp-editor-types/interface/designer/selector';
 
 export default Button;
 
