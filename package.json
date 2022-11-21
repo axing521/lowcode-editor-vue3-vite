@@ -4,7 +4,8 @@
   "packageManager": "pnpm@7.1.0",
   "scripts": {
     "dev": "pnpm -F tdp-editor editor",
-    "dev:runtime": "pnpm -F tdp-editor runtime",
+    "dev:app": "pnpm app runtime",
+    "app": "pnpm -F tdp-app-runtime",
     "editor": "pnpm -F tdp-editor",
     "components": "pnpm -F tdp-editor-components",
     "editor:build": "pnpm -F tdp-editor build",

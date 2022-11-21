@@ -1,6 +1,6 @@
-import { useAppStore } from './stores/appStore';
-import { useEditorStore } from './stores/editorStore';
-import { $findTreeItem } from './utils';
+import { useAppStore } from '../stores/appStore';
+import { useEditorStore } from '../stores/editorStore';
+import { $findTreeItem } from '../utils';
 
 export interface IAppInfo {
     appId: string;

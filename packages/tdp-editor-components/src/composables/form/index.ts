@@ -1,5 +1,5 @@
 import { getCurrentInstance, onBeforeUnmount, computed } from 'vue';
-import formFactory from 'tdp-editor-utils/formFactory';
+import formFactory from 'tdp-editor-utils/factory/formFactory';
 import type { IFieldCallbackRule } from 'tdp-editor-types/interface/components/form';
 import type { ISetupBaseProps } from 'tdp-editor-types/interface/components';
 import useFormInject from './formInject';
@@ -15,7 +15,7 @@ function useFormIndex(props: ISetupBaseProps) {
         $fields.push({
             key: props.state.key,
             name: props.state.code,
-            type: props.state.type,
+            type: props.state.type as any,
             state: props.state,
             instance: internalInstance.proxy,
             rules: [],

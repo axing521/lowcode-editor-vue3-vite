@@ -2,6 +2,7 @@
 node_modules
 /tsdist
 /packages/tdp-editor/dist
+/packages/tdp-app-runtime/dist
 /packages/tdp-editor-components/dist
 
 /packages/tdp-editor-vuex/dist
