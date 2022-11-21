@@ -1,5 +1,4 @@
 import type { DefineComponent, Component } from 'vue';
-import type { EnumPropsValueType } from '../../enum/components';
 import type { IDesignerComponent, IPropsConfig } from '.';
 import type { EnumCssProerty, EnumSelectorName } from '../../enum/designer';
 
@@ -19,7 +18,7 @@ export type TSelectorRender<P = unknown, O extends ISelectorBaseOptions = ISelec
 ) => JSX.Element;
 
 export interface ISelectorBaseOptions {
-    showParamsModal?: (propKey: string, propValueType: EnumPropsValueType) => void;
+    defaultValue: unknown;
 }
 
 // 拖动选择器选项定义

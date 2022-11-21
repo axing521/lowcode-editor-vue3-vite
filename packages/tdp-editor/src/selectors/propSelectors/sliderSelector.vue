@@ -1,10 +1,15 @@
 <template>
     <a-row>
         <a-col :span="12">
-            <a-slider v-model:value="_value" :min="min" :max="max" />
+            <a-slider v-model:value="sliderValue" :min="min" :max="max" />
         </a-col>
         <a-col :span="6">
-            <a-input-number v-model:value="_value" :min="min" :max="max" style="marginleft: 5px" />
+            <a-input-number
+                v-model:value="sliderValue"
+                :min="min"
+                :max="max"
+                style="marginleft: 5px"
+            />
         </a-col>
     </a-row>
 </template>
@@ -19,7 +24,7 @@ import { computed } from 'vue';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import type { ISelectorSliderOptions } from 'tdp-editor-types/interface/designer/selector';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import { propsFactory } from 'tdp-editor-utils';
+import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 
 const _props = defineProps<{
@@ -35,17 +40,10 @@ const max = computed(() => {
     return _props.options?.max || 20;
 });
 
-const _value = computed({
-    get(): number {
-        return propsFactory.getPropsValue(_props.element, _props.prop.key) || max.value;
-    },
-    set(value: string | number) {
-        propsFactory.setPropsValue(
-            _props.element,
-            _props.prop.key,
-            Number(value || max.value),
-            EnumPropsValueType.number
-        );
-    },
-});
+const sliderValue = usePropsProxy(
+    _props.element,
+    _props.prop.key as string,
+    min.value,
+    EnumPropsValueType.number
+);
 </script>

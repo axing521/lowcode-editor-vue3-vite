@@ -107,7 +107,7 @@ export function usePropsProxy<T = unknown>(
 ): Ref<T> {
     const propValue = PropsFactory.getPropsValue(state, propertyName) as T;
     let value: unknown = propValue;
-    if (!propValue) {
+    if (propValue === undefined) {
         if (typeof defaultValue === 'object') {
             value = reactive(defaultValue as unknown as object);
         } else if (Array.isArray(defaultValue)) {
