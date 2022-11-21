@@ -1,5 +1,5 @@
-import type { Store } from 'pinia';
-import type { IEditorStoreState, IAppStoreState } from 'tdp-editor-types/interface/designer';
+import { useAppStore } from './stores/appStore';
+import { useEditorStore } from './stores/editorStore';
 import { $findTreeItem } from './utils';
 
 export interface IAppInfo {
@@ -17,22 +17,17 @@ export interface IUserInfo {
     id: string;
     name: string;
 }
-type editoStoreType = Store<'editorStore', IEditorStoreState>;
-type appStoreType = Store<'appStore', IAppStoreState>;
 // @ts-nocheck
 export default class FunctionFactory {
-    private readonly $editorStore?: editoStoreType = undefined;
-    private readonly $appStore?: appStoreType = undefined;
-    constructor($editorStore?: editoStoreType, $appStore?: appStoreType) {
-        this.$editorStore = $editorStore;
-    }
-    static init($editorStore?: editoStoreType, $appStore?: appStoreType): FunctionFactory {
+    private readonly $editorStore = useEditorStore();
+    private readonly $appStore = useAppStore();
+    static init(): FunctionFactory {
         // @ts-ignore
         if (window.$fd && window.$fd.funcFactory) {
             // @ts-ignore
             return window.$fd.funcFactory;
         } else {
-            const funcFactory = new FunctionFactory($editorStore, $appStore);
+            const funcFactory = new FunctionFactory();
             // @ts-ignore
             if (window.$fd) {
                 // @ts-ignore
