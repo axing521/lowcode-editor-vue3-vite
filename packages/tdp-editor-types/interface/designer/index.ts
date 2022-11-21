@@ -1,4 +1,4 @@
-import type { VNode } from 'vue';
+import type { VNode, Ref, UnwrapRef } from 'vue';
 import type { IComponentProps, IComponentState } from '../components';
 import type { IPageProps } from '../components/page';
 import type { IPageForm } from './pageForm';
@@ -33,7 +33,7 @@ export interface IPropsRenderFactory {
     setPropsValue: <P, K extends keyof P>(
         state: IComponentState<P>,
         propertyName: K,
-        value: P[K] | undefined,
+        value: P[K] | unknown | undefined,
         type?: EnumPropsValueType
     ) => void;
     pushPropsValue: <P, K extends keyof P>(

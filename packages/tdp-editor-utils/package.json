@@ -1,12 +1,17 @@
 {
   "name": "tdp-editor-utils",
   "version": "0.1.0",
-  "main": "index.js",
   "author": "lyc",
   "license": "MIT",
   "scripts": {
     "tsc": "tsc"
   },
+  "main": "./index.ts",
+  "files": [
+    "es",
+    "lib",
+    "dist"
+  ],
   "dependencies": {
     "axios": "^0.24.0",
     "pinia": "^2.0.14",

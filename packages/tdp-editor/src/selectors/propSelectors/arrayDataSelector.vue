@@ -17,9 +17,9 @@ export default defineComponent({
 });
 </script>
 <script lang="ts" setup>
-import { computed } from 'vue';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
-import propsFactory from 'tdp-editor-utils/propsFactory';
+import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
+import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
 import { DeleteFilled } from '@ant-design/icons-vue';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 
@@ -28,33 +28,21 @@ const _props = defineProps<{
     element: IDesignerComponent;
     prop: IPropsConfig;
 }>();
-// 数组数据选择器
-const arrayData = computed({
-    get(): TItem[] {
-        const data: TItem[] = propsFactory.getPropsValue(_props.element, _props.prop.key);
-        if (data && data instanceof Array) {
-            return data;
-        } else {
-            return [];
-        }
-    },
-    set(items) {
-        propsFactory.setPropsValue(_props.element, _props.prop.key, items);
-    },
-});
 
+// 创建属性数据
+const arrayData = usePropsProxy<TItem[]>(_props.element, _props.prop.key as string, [], EnumPropsValueType.array);
+
+// 添加选项
 const onAddItem = () => {
-    const data = (propsFactory.getPropsValue(_props.element, _props.prop.key) || []) as TItem[];
-    console.log('data', data);
     const newData = {
-        key: `item${data.length}`,
-        label: `item${data.length}`,
+        key: `item${arrayData.value.length}`,
+        label: `item${arrayData.value.length}`,
     };
-    data.push(newData);
-    arrayData.value = data;
+    arrayData.value.push(newData);
 };
 
+// 删除选项
 const onDeleteItem = (index: number) => {
-    propsFactory.removePropsValue(_props.element, _props.prop.key, index);
+    arrayData.value.splice(index, 1);
 };
 </script>

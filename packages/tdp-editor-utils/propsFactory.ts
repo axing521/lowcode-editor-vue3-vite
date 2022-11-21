@@ -1,4 +1,7 @@
+import { customRef, reactive, ref } from 'vue';
+import type { Ref } from 'vue';
 import type { IPropsRenderFactory } from 'tdp-editor-types/interface/designer';
+import type { IComponentState } from 'tdp-editor-types/interface/components';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 
@@ -87,5 +90,35 @@ const PropsFactory: IPropsRenderFactory = {
         };
     },
 };
+type TUsePropsProxyValue<T extends object> = string | number | boolean | T[] | T;
+
+export function usePropsProxy<T extends object>(state: IComponentState,
+    propertyName: string,
+    defaultValue: TUsePropsProxyValue<T>,
+    type = EnumPropsValueType.string
+): Ref<T> {
+    const propValue = PropsFactory.getPropsValue(state, propertyName) as T;
+    let value = 
+        !propValue
+            ? typeof defaultValue === 'object'
+                ? reactive<T>(defaultValue as T)
+                : Array.isArray(defaultValue)
+                    ? reactive<T[]>(defaultValue as T[])
+                    : defaultValue
+            : propValue;
+    return customRef((track, trigger) => {
+        return {
+            get() {
+                track();
+                return value as T;
+            },
+            set(newValue) {
+                value = newValue;
+                PropsFactory.setPropsValue(state, propertyName, newValue, type);
+                trigger();
+            }
+        }
+    })
+}
 
 export default PropsFactory;
