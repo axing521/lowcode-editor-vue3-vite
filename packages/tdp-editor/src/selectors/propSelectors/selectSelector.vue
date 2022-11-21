@@ -1,5 +1,5 @@
 <template>
-    <a-select v-model:value="_value">
+    <a-select v-model:value="selectData">
         <a-select-option v-for="option in items" :key="option.key" :value="option.key">
             {{ option.label }}
         </a-select-option>
@@ -16,7 +16,7 @@ import { computed } from 'vue';
 import type { ISelectorSelectOptions } from 'tdp-editor-types/interface/designer/selector';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import propsFactory from 'tdp-editor-utils/propsFactory';
+import { usePropsProxy } from 'tdp-editor-utils/propsFactory';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 
 const _props = defineProps<{
@@ -25,19 +25,12 @@ const _props = defineProps<{
     options?: ISelectorSelectOptions;
 }>();
 
-const _value = computed<string>({
-    get(): string {
-        return propsFactory.getPropsValue(_props.element, _props.prop.key) || '';
-    },
-    set(value: string) {
-        propsFactory.setPropsValue(
-            _props.element,
-            _props.prop.key,
-            value || '',
-            EnumPropsValueType.string
-        );
-    },
-});
+const selectData = usePropsProxy(
+    _props.element,
+    _props.prop.key as string,
+    '',
+    EnumPropsValueType.string
+);
 const items = computed(() => {
     return _props.options?.items || [];
 });
