@@ -1,6 +1,6 @@
 // 引入editor
 import { createEditor } from './editor';
-import { customList } from '../custom';
+import { customList } from '../../custom';
 import './index.less';
 console.log('tdp-editor-debug');
 

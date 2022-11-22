@@ -29,7 +29,7 @@ export default defineConfig({
     build: {
         outDir: 'dist/lib',
         lib: {
-            entry: path.resolve(__dirname, 'src/editor/editor.ts'),
+            entry: path.resolve(__dirname, 'src/pages/editor/editor.ts'),
             name: 'TDPEditor',
             fileName: format => `tdp-editor.${format}.js`,
         },
