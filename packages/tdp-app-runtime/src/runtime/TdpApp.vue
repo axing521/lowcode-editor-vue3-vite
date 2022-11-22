@@ -1,38 +1,39 @@
 <template>
-    <div
-        :class="{
-            'tdp-editor-runtime-wrapper': true,
-        }"
-    >
-        <RuntimePage v-if="pageJson" :json="pageJson" :appMode="EnumAppMode.runtime"></RuntimePage>
+    <div class="tdp-app">
+        <router-view></router-view>
     </div>
 </template>
 <style lang="less">
-@blueColor: #1890ff;
-html,
-body {
-    overflow: hidden;
-    #app {
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        color: #2c3e50;
-        width: 100%;
-        overflow: hidden;
-    }
+.tdp-app-page {
+    position: relative;
 }
 </style>
 <script lang="ts" setup>
-import { onMounted, computed } from 'vue';
-import { EnumAppMode } from 'tdp-editor-types/enum';
-import RuntimePage from 'tdp-editor-components/src/page.vue';
-import { useAppControler } from 'tdp-editor-utils/controller';
+import { onMounted, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { RouterConfig } from 'tdp-editor-utils/constants/router';
+
+const router = useRouter();
+const route = router.currentRoute;
+watch(route, (newPage, oldPage) => {
+    // 新跳转的路由是页面
+    const pushToPage = newPage.name === RouterConfig.AppPage.name && oldPage.name !== newPage.name;
+    // 不同页面间的跳转
+    const pageChange =
+        newPage.name === RouterConfig.AppPage.name &&
+        oldPage.name === newPage.name &&
+        newPage.params !== oldPage.params;
+    if (pushToPage || pageChange) {
+        console.log('应该要切换页面数据了');
+        // 1.检查缓存数据有没有，有的话直接切换到缓存数据
+        // 2.没有的话，发送接口，请求当前页面得数据，并缓存
+    }
+});
 onMounted(() => {
-    console.log('RuntimeWrapper onMounted');
+    console.log('tdp-app onMounted');
 });
-const appController = useAppControler();
-// 监听当前页面数据切换
-const pageJson = computed(() => {
-    return appController.getActivePage();
-});
+
+setTimeout(() => {
+    router.push('/app/pages/ccccc');
+}, 3000);
 </script>

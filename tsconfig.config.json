@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": ["packages/*/vite.config.*", "packages/*/vitest.config.*", "packages/*/cypress.config.*", "packages/tdp-editor/vite.config.runtime.ts", "packages/tdp-editor/vite.config.editor.ts"],
+  "include": ["packages/*/vite.config.*", "packages/*/vitest.config.*", "packages/*/cypress.config.*", "packages/tdp-editor/vite.config.web.ts", "packages/tdp-editor/vite.config.lib.ts"],
   "compilerOptions": {
     "composite": true,
     "types": ["node"]

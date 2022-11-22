@@ -3,13 +3,11 @@
   "version": "3.2.38",
   "packageManager": "pnpm@7.1.0",
   "scripts": {
-    "dev": "pnpm -F tdp-editor editor",
-    "dev:app": "pnpm app runtime",
     "app": "pnpm -F tdp-app-runtime",
     "editor": "pnpm -F tdp-editor",
     "components": "pnpm -F tdp-editor-components",
-    "editor:build": "pnpm -F tdp-editor build",
-    "demo:build": "pnpm -F tdp-editor-demo build",
+    "utils": "pnpm -F tdp-editor-utils",
+    "types": "pnpm -F tdp-editor-types",
     "lint": "eslint \"packages/*/src/**\" --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path ./.eslintignore"
   },
   "devDependencies": {

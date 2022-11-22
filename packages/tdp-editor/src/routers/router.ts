@@ -3,7 +3,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
     {
-        name: 'runtime_index',
+        name: 'index',
         path: '/',
         meta: {
             className: 'tdp-editor-runtime-index',
@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
             title: '运行时首页',
         },
         component: () =>
-            import(/* webpackChunkName: "runtime_index" */ '../pages/runtime/runtimeIndex.vue'),
+            import(/* webpackChunkName: "runtime_index" */ '../editor/EditorWrapper.vue'),
     },
 ];
 

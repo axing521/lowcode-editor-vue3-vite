@@ -13,7 +13,7 @@ import componentRegister from 'tdp-editor-components/src/utils/componentRegister
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 
 import usePlugin from '../plugins';
-// import createRouter from '../routers/runtime.router';
+import createRouter from '../routers/runtime.router';
 import App from './TdpApp.vue';
 import { createController } from 'tdp-editor-utils/controller';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
@@ -24,7 +24,7 @@ interface ICreateRuntimeOptions {
 }
 
 export const version = import.meta.env.VITE_APP_VERSION;
-console.info('tdp editor runtime version: ' + version);
+console.info('tdp app runtime version: ' + version);
 
 export const createRuntime = (options: ICreateRuntimeOptions) => {
     const app = createApp(App);
@@ -32,10 +32,10 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
     registerDirectives(app);
     // 注册插件
     usePlugin(app);
-
+    // 注册pinia
     app.use(createPinia());
-    // const router = createRouter();
-    // app.use(router);
+    // 注册router
+    app.use(createRouter());
 
     // 注册默认组件
     const componentList = componentRegister(app);
@@ -46,7 +46,7 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
     // 渲染应用
     app.mount(options.container);
     return {
-        runtime: app,
+        app,
         setRuntimeJson: (runtimeJson: IAppStoreState) => {
             controllers.appController.initApp(runtimeJson);
         },

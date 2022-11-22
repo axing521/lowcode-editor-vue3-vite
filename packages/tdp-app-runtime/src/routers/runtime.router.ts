@@ -1,17 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
+import { RouterConfig } from 'tdp-editor-utils/constants/router';
+import TdpAppIndexVue from '../pages/TdpAppIndex.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
-        name: 'runtime_index',
-        path: '/',
-        meta: {
-            className: 'tdp-editor-runtime-index',
-            label: '运行时首页',
-            title: '运行时首页',
+        ...RouterConfig.Index,
+        ...{ component: TdpAppIndexVue },
+    },
+    {
+        ...RouterConfig.AppIndex,
+        ...{ component: TdpAppIndexVue },
+    },
+    {
+        ...RouterConfig.AppPage,
+        ...{
+            component: () =>
+                import(/* webpackChunkName: "tdp_app_page" */ '../runtime/TdpPage.vue'),
         },
-        component: () =>
-            import(/* webpackChunkName: "runtime_index" */ '../pages/runtime/runtimeIndex.vue'),
     },
 ];
 

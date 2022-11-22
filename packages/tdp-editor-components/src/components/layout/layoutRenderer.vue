@@ -97,7 +97,6 @@ const dragAddHandler = () => {
     }
 };
 const dragChangeHandler = (e: any) => {
-    console.log('layout dragChangeHandler');
     if (e && e.added) {
         dragComponent = e.added.element;
     }

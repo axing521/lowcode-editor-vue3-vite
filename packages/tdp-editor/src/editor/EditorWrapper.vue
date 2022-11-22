@@ -159,9 +159,9 @@ import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-
 
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
-import DesignerLeft from '../../components/leftPanel';
-import DesignerRight from '../../components/rightPanel';
-import DesignerMain from '../../components/mainPanel';
+import DesignerLeft from '../components/leftPanel';
+import DesignerRight from '../components/rightPanel';
+import DesignerMain from '../components/mainPanel';
 import Preview from 'tdp-editor-components/src/page.vue';
 
 // import type FdComponent from 'tdp-editor-components/src/component';
