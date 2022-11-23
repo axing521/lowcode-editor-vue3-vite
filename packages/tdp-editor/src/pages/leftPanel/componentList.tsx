@@ -94,11 +94,11 @@ export default defineComponent({
                 };
             }
             // 设置默认属性
-            if (getDefaultProps && JSON.stringify(getDefaultProps()) !== '{}') {
+            if (getDefaultProps && typeof getDefaultProps === 'function') {
                 newComponent.props = getDefaultProps();
             }
             // 设置默认样式
-            if (getDefaultCss && JSON.stringify(getDefaultCss()) !== '{}') {
+            if (getDefaultCss && typeof getDefaultCss === 'function') {
                 newComponent.css = getDefaultCss();
             }
             return newComponent;
