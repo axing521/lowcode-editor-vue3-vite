@@ -2,6 +2,15 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
 import { RouterConfig } from 'tdp-editor-utils/constants/router';
 import TdpAppIndexVue from '../pages/TdpAppIndex.vue';
+import TdpPage404Vue from '../pages/TdpPage404.vue';
+
+declare module 'vue-router' {
+    interface RouteMeta {
+        className: string;
+        label?: string;
+        title?: string;
+    }
+}
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -15,10 +24,10 @@ const routes: Array<RouteRecordRaw> = [
     {
         ...RouterConfig.AppPage,
         ...{
-            component: () =>
-                import(/* webpackChunkName: "tdp_app_page" */ '../runtime/TdpPage.vue'),
+            component: () => import(/* webpackChunkName: "tdp_app_page" */ '../pages/TdpPage.vue'),
         },
     },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: TdpPage404Vue },
 ];
 
 const _createRouter = () => {
