@@ -12,7 +12,7 @@ const formFactory = {
         key: K
     ): IFormInfo[K] | undefined => {
         if (state && state.formInfo) {
-            if (Object.prototype.hasOwnProperty.call(state.formInfo, key)) {
+            if (state.formInfo[key]) {
                 return state.formInfo[key];
             } else return undefined;
         } else return undefined;
@@ -38,7 +38,7 @@ const formFactory = {
         if (state) {
             if (state.formInfo) {
                 // 如果已经有数据，直接push
-                if (Object.prototype.hasOwnProperty.call(state.formInfo, key)) {
+                if (state.formInfo[key]) {
                     // @ts-ignore
                     state.formInfo[key].push(value);
                 } else {

@@ -8,7 +8,7 @@ import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 const PropsFactory: IPropsRenderFactory = {
     getPropsValue: (state, propertyName) => {
         if (state && state.props) {
-            if (Object.prototype.hasOwnProperty.call(state.props, propertyName)) {
+            if (state.props[propertyName]) {
                 return state.props[propertyName].value;
             } else {
                 return undefined;
@@ -19,19 +19,17 @@ const PropsFactory: IPropsRenderFactory = {
     setPropsValue: (state, propertyName, value, type = EnumPropsValueType.string) => {
         if (state && propertyName) {
             if (state.props) {
-                // @ts-ignore
                 state.props[propertyName] = {
                     type,
-                    value,
+                    value: value as any,
                 };
             } else {
-                // @ts-ignore
                 state.props = {
                     [propertyName]: {
                         type,
-                        value,
+                        value: value,
                     },
-                };
+                } as any;
             }
         }
     },
@@ -40,7 +38,7 @@ const PropsFactory: IPropsRenderFactory = {
         if (state) {
             if (state.props) {
                 // 如果已经有数据，直接push
-                if (Object.prototype.hasOwnProperty.call(state.props, propertyName)) {
+                if (state.props[propertyName]) {
                     // @ts-ignore
                     state.props[propertyName].value.push(value);
                 } else {
@@ -129,6 +127,21 @@ export function usePropsProxy<T = unknown>(
             },
         };
     });
+}
+
+// 获取指定props中的属性值
+export function getPropValue<P, PK extends keyof P>(state: IComponentState<P>, key: PK) {
+    return PropsFactory.getPropsValue(state, key);
+}
+
+// 获取指定props中的属性值
+export function setPropValue<P, PK extends keyof P>(
+    state: IComponentState<P>,
+    key: PK,
+    value: unknown,
+    type = EnumPropsValueType.string
+) {
+    PropsFactory.setPropsValue(state, key, value, type);
 }
 
 export default PropsFactory;

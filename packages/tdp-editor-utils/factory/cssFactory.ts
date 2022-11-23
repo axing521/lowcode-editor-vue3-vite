@@ -8,7 +8,7 @@ const CssFactory = {
             return state.styleText;
         }
         if (state && state.css) {
-            if (Object.prototype.hasOwnProperty.call(state.css, propertyName)) {
+            if (state.css[propertyName]) {
                 return state.css[propertyName];
             } else {
                 return undefined;
