@@ -53,7 +53,7 @@ const formRef = ref<HTMLFormElement | null>(null);
 
 // 提供全局方法，获取form实例
 provide(getFdFormRef, () => {
-    return getCurrentInstance();
+    return getCurrentInstance()?.proxy;
 });
 // 提供全局方法，获取form的字段集合
 provide(getFdFormFields, () => {
@@ -99,3 +99,25 @@ const submitForm = async () => {
     }
 };
 </script>
+<style lang="less">
+@import '../../styles/var/index.less';
+
+@prefixName: ~'@{prefix-className}';
+.@{prefixName}-form {
+    position: relative;
+    text-align: left;
+    .error--text {
+        color: #ff5252 !important;
+    }
+    .col-submit {
+        margin: 12px auto;
+        text-align: center;
+        button {
+            margin-right: 10px;
+        }
+    }
+    .fd-form-layout > .layout-drag {
+        min-height: 200px;
+    }
+}
+</style>

@@ -24,18 +24,18 @@ export const register: registerComponentFunc = function () {
         isFormer: true,
         listGroup: 'business',
         order: 307,
-        getDefaultProps: () => {
-            return {
-                label: {
-                    type: EnumPropsValueType.string,
-                    value: '',
-                },
-                defaultValue: {
-                    type: EnumPropsValueType.number,
-                    value: 3,
-                },
-            };
-        },
+        // getDefaultProps: () => {
+        //     return {
+        //         label: {
+        //             type: EnumPropsValueType.string,
+        //             value: '',
+        //         },
+        //         defaultValue: {
+        //             type: EnumPropsValueType.number,
+        //             value: 3,
+        //         },
+        //     };
+        // },
         propsConfigs: [
             {
                 key: 'count',
@@ -47,6 +47,11 @@ export const register: registerComponentFunc = function () {
                         min: 1,
                     } as ISelectorSliderOptions,
                 },
+            },
+            {
+                key: 'label',
+                label: '标签',
+                selector: EnumSelectorName.input,
             },
         ],
     };

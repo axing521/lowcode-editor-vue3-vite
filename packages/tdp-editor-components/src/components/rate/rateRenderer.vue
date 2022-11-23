@@ -1,9 +1,15 @@
 <template>
-    <a-rate class="fd-rate" v-bind="allProps.props"></a-rate>
+    <div>
+        <p>{{ allProps.props.label }}</p>
+        <a-rate class="fd-rate" v-bind="allProps.props"></a-rate>
+    </div>
 </template>
 
 <style lang="less">
-.fd-rate {
+@import '/src/styles/var/index.less';
+
+@prefixName: ~'@{prefix-className}';
+.@{prefixName}-rate {
     position: relative;
 }
 </style>

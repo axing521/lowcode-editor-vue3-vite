@@ -16,4 +16,5 @@ export interface IButtonProps {
     scheme?: Record<string, string>;
     abc?: string[];
     bbc?: string;
+    ccc?: string;
 }

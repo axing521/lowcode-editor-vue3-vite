@@ -4,7 +4,6 @@ import type {
     IDesignerComponent,
     registerComponentFunc,
 } from 'tdp-editor-types/interface/designer';
-import './form.less';
 import type { IFormProps } from './interface';
 
 import Form from './formRenderer.vue';

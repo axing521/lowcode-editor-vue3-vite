@@ -45,6 +45,11 @@ export const register: registerComponentFunc = function () {
                 selector: EnumSelectorName.input,
             },
             {
+                key: 'ccc',
+                label: 'ccc',
+                selector: EnumSelectorName.input,
+            },
+            {
                 key: 'ghost',
                 label: '幽灵模式',
                 selector: EnumSelectorName.switch,

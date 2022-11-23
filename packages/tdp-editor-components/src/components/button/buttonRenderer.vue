@@ -31,3 +31,19 @@ const allProps = defineProps<{
     events: Record<string, any>;
 }>();
 </script>
+<style lang="less">
+@import '/src/styles/var/index.less';
+
+@prefixName: ~'@{prefix-className}';
+.@{prefixName}-button {
+    position: relative;
+}
+.@{prefixName}-button.large {
+    height: @button-large-height;
+    line-height: @button-large-height;
+}
+.@{prefixName}-button.mini {
+    height: @button-mini-height;
+    line-height: @button-mini-height;
+}
+</style>

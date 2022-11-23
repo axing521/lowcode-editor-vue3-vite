@@ -5,7 +5,6 @@ import type {
     registerComponentFunc,
 } from 'tdp-editor-types/interface/designer';
 import type { ILayoutProps } from './interface';
-import './layout.less';
 import Layout from './layoutRenderer.vue';
 export default Layout;
 
