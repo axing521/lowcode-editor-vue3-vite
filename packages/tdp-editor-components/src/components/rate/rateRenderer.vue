@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <p>{{ allProps.props.label }}</p>
-        <a-rate class="fd-rate" v-bind="allProps.props"></a-rate>
-    </div>
+    <a-rate class="fd-rate" v-bind="allProps.props"></a-rate>
 </template>
 
 <style lang="less">

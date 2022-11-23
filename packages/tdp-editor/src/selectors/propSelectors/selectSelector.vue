@@ -16,7 +16,7 @@ import { computed } from 'vue';
 import type { ISelectorSelectOptions } from 'tdp-editor-types/interface/designer/selector';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import { usePropsProxy } from 'tdp-editor-utils/factory/propsFactory.js';
+import { getPropValue, setPropValue } from 'tdp-editor-utils/factory/propsFactory.js';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 
 const _props = defineProps<{
@@ -25,13 +25,20 @@ const _props = defineProps<{
     options?: ISelectorSelectOptions;
 }>();
 
-const selectData = usePropsProxy(
-    _props.state,
-    _props.prop.key as string,
-    '',
-    EnumPropsValueType.string
-);
 const items = computed(() => {
     return _props.options?.items || [];
+});
+const selectData = computed<string>({
+    get() {
+        const propValue = getPropValue(_props.state, _props.prop.key);
+        if (propValue !== undefined) {
+            return propValue;
+        } else {
+            return '';
+        }
+    },
+    set(value) {
+        setPropValue(_props.state, _props.prop.key, value, EnumPropsValueType.string);
+    },
 });
 </script>

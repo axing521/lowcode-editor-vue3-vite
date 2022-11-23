@@ -11,7 +11,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 export default defineComponent({
     name: EnumSelectorName.arrayData,
 });
@@ -19,7 +19,7 @@ export default defineComponent({
 <script lang="ts" setup>
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import { usePropsProxy } from 'tdp-editor-utils/factory/propsFactory.js';
+import { getPropValue, setPropValue } from 'tdp-editor-utils/factory/propsFactory.js';
 import { DeleteFilled } from '@ant-design/icons-vue';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 
@@ -29,13 +29,19 @@ const _props = defineProps<{
     prop: IPropsConfig;
 }>();
 
-// 创建属性数据
-const arrayData = usePropsProxy<TItem[]>(
-    _props.state,
-    _props.prop.key as string,
-    [],
-    EnumPropsValueType.array
-);
+const arrayData = computed<TItem[]>({
+    get() {
+        const propValue = getPropValue(_props.state, _props.prop.key);
+        if (propValue !== undefined) {
+            return propValue;
+        } else {
+            return [];
+        }
+    },
+    set(value) {
+        setPropValue(_props.state, _props.prop.key, value, EnumPropsValueType.array);
+    },
+});
 
 // 添加选项
 const onAddItem = () => {
@@ -48,7 +54,6 @@ const onAddItem = () => {
 
 // 删除选项
 const onDeleteItem = (index: number) => {
-    arrayData.value.splice(index, 1);
-    arrayData.value = [...arrayData.value];
+    arrayData.value = arrayData.value.filter((c, i) => i !== index);
 };
 </script>

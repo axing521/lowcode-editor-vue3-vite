@@ -2,7 +2,7 @@
     <a-input v-model:value="inputValue"></a-input>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
     name: EnumSelectorName.input,
@@ -10,18 +10,24 @@ export default defineComponent({
 </script>
 <script lang="ts" setup>
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
-import { usePropsProxy } from 'tdp-editor-utils/factory/propsFactory.js';
+import { getPropValue, setPropValue } from 'tdp-editor-utils/factory/propsFactory.js';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-
 const _props = defineProps<{
     state: IDesignerComponent;
     prop: IPropsConfig;
 }>();
-const inputValue = usePropsProxy(
-    _props.state,
-    _props.prop.key as string,
-    '',
-    EnumPropsValueType.string
-);
+const inputValue = computed<string>({
+    get() {
+        const propValue = getPropValue(_props.state, _props.prop.key);
+        if (propValue !== undefined) {
+            return propValue;
+        } else {
+            return '';
+        }
+    },
+    set(value) {
+        setPropValue(_props.state, _props.prop.key, value, EnumPropsValueType.string);
+    },
+});
 </script>

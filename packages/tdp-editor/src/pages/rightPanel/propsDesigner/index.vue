@@ -89,7 +89,6 @@ import { defineComponent, inject } from 'vue';
 import type { PropType } from 'vue';
 import { mapState } from 'pinia';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
-import './index.less';
 import DesignerCssPanel from './cssDesigner';
 import DesignerFormPanel from './formDesigner';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
@@ -163,3 +162,54 @@ export default defineComponent({
     },
 });
 </script>
+<style lang="less">
+@import url('/src/styles/var/index.less');
+.designer-props-panel {
+    position: relative;
+    padding-bottom: 30px;
+    .multipleSelectors {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        .selector {
+            flex: 1;
+            padding: 0 10px;
+        }
+        .check-btn {
+            width: 30px;
+        }
+    }
+    .ant-collapse-header {
+        text-align: left;
+        font-weight: 600;
+    }
+    .ant-collapse-content-box {
+        padding: 0;
+    }
+    .selector-array-data {
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        li.data-item {
+            justify-content: flex-start !important;
+            margin: 10px auto;
+            .ant-input {
+                width: 40% !important;
+                margin-left: 10px;
+            }
+            .anticon-delete {
+                cursor: pointer;
+                color: @primary-color;
+            }
+            .anticon-delete:hover {
+                cursor: pointer;
+                color: red;
+            }
+        }
+    }
+}
+</style>
