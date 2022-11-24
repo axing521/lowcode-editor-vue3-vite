@@ -107,7 +107,7 @@ const getDragableItemKey = (a: IComponentState) => {
 };
 </script>
 <style lang="less">
-@import '/src/styles/var/index.less';
+@import '../../styles/var/index.less';
 
 @prefixName: ~'@{prefix-className}';
 .@{prefixName}-layout {
