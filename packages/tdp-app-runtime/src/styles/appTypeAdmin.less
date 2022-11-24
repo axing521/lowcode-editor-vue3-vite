@@ -1,0 +1,27 @@
+@appTypeAdmin: app-type-admin; // 管理后台类应用
+/* 管理后台类的app样式 */
+html.@{appTypeAdmin},
+body.@{appTypeAdmin} {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    #app {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        .tdp-app {
+            height: 100%;
+            overflow: hidden;
+            .tdp-app-left-side {
+                display: block;
+            }
+            .tdp-app-right-side {
+                display: block;
+            }
+        }
+    }
+}
