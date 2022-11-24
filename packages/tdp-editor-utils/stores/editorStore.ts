@@ -21,11 +21,6 @@ export const useEditorStore = defineStore('editorStore', {
             dragComponent: undefined, // 正在拖动的组件
         };
     },
-    getters: {
-        componentListGetter: state => state.componentList || [],
-        selectedComponentGetter: state => state.selectedComponent,
-        dragComponentGetter: state => state.dragComponent,
-    },
     actions: {
         // 导入配置文件
         importConfig(payload: { pages: IPageStoreState[] }) {

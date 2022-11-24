@@ -27,14 +27,13 @@ import {
 } from 'tdp-editor-types/constant/injectKeys';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import type { IPageState } from 'tdp-editor-types/interface/components/page';
-import type { IPageStoreState } from 'tdp-editor-types/interface/store';
 import FdComponent from './component';
 import moment from 'moment';
 
 const props = defineProps({
     json: {
         required: true,
-        type: Object as PropType<IPageState | IPageStoreState>,
+        type: Object as PropType<IPageState>,
     },
     appMode: {
         required: true,

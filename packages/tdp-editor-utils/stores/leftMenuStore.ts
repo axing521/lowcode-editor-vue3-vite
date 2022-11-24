@@ -40,10 +40,6 @@ export const useLeftMenuStore = defineStore('leftMenuStore', {
         };
     },
     getters: {
-        // 一级菜单列表
-        menusGetter: state => {
-            return state.menus;
-        },
         // 选中的一级菜单
         selectedMenu: state => {
             // 选中一级菜单

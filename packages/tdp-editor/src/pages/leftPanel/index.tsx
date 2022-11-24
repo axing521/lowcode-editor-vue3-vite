@@ -34,10 +34,10 @@ export default defineComponent({
     inject: ['selectComponent'],
     computed: {
         ...mapState(useEditorStore, {
-            selectedComponent: 'selectedComponentGetter',
+            selectedComponent: 'selectedComponent',
         }),
         ...mapState(useLeftMenuStore, {
-            menus: 'menusGetter',
+            menus: 'menus',
         }),
         ...mapState(useAppStore, {
             pages: 'pages',

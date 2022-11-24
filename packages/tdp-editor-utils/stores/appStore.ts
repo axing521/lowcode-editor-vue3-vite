@@ -12,11 +12,6 @@ export const useAppStore = defineStore('appStore', {
             activePage: undefined,
         };
     },
-    getters: {
-        pagesGetter: state => state.pages || [],
-        pageFormsGetter: state => state.pageForms,
-        activePageGetter: state => state.activePage,
-    },
     actions: {
         setMode(mode: EnumAppMode) {
             this.mode = mode;
