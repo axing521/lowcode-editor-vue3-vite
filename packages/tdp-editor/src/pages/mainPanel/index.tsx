@@ -9,6 +9,7 @@ import PageView from 'tdp-editor-components/src/page.vue';
 import { utils } from 'tdp-editor-utils';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
+import { useEditorControler } from 'tdp-editor-utils/controller';
 
 export default defineComponent({
     name: 'editor-main-panel',
@@ -177,7 +178,7 @@ export default defineComponent({
                 const id = this.selectedTargetHtmlElement.dataset.id || '';
                 this.actionBox.style.display = 'none';
                 this.selectedTargetHtmlElement = null;
-                useEditorStore().deleteComponent({ id });
+                useEditorControler().deleteComponent({ id });
             }
         },
     },

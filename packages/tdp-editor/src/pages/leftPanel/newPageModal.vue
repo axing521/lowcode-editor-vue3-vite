@@ -111,7 +111,7 @@
 <script lang="ts" setup>
 import { ref, reactive, computed } from 'vue';
 import type { IPageStoreState } from 'tdp-editor-types/interface/store';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useEditorControler } from 'tdp-editor-utils/controller';
 
 enum EnumPageType {
     emptyForm = 'emptyForm',
@@ -124,7 +124,6 @@ const props = defineProps<{
     visible?: boolean;
 }>();
 
-const editorStore = useEditorStore();
 const $csvRef = ref(null);
 const step = ref(-1);
 const pageName = ref('');
@@ -167,9 +166,10 @@ const clickPre = () => {
 };
 // 确定按钮点击事件
 const clickOk = () => {
+    const editorController = useEditorControler();
     // 创建空form
     if (pageType.value === EnumPageType.emptyForm) {
-        editorStore.addPage({
+        editorController.addPage({
             page: {
                 label: pageName.value,
                 code: pageCode.value,
@@ -185,7 +185,7 @@ const clickOk = () => {
         } else {
             if ($csvRef.value) {
                 const form = ($csvRef.value as any).getFormDesign();
-                editorStore.importCsvData({
+                editorController.importCsvData({
                     pageName: pageName.value,
                     pageCode: pageCode.value,
                     data: form,

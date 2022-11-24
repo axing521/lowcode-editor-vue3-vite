@@ -89,6 +89,7 @@ import { defineComponent, inject } from 'vue';
 import type { PropType } from 'vue';
 import { mapState } from 'pinia';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useEditorControler } from 'tdp-editor-utils/controller';
 import DesignerCssPanel from './cssDesigner';
 import DesignerFormPanel from './formDesigner';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
@@ -156,7 +157,8 @@ export default defineComponent({
         deleteComponent() {
             if (this.element) {
                 document.getElementById('designer-main-action-box')!.style.display = 'none';
-                useEditorStore().deleteComponent({ id: this.element.key });
+                const editorController = useEditorControler();
+                editorController.deleteComponent({ id: this.element.key });
             }
         },
     },

@@ -145,7 +145,6 @@ div.tdp-editor-container {
 import { onMounted, provide, ref, computed } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import fileSaver from 'file-saver';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import { useAppControler, useEditorControler } from 'tdp-editor-utils/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
@@ -158,13 +157,13 @@ import DesignerMain from '../pages/mainPanel';
 const appController = useAppControler();
 const editorController = useEditorControler();
 const appStore = useAppStore();
-const editorStore = useEditorStore();
 const showRight = ref(true); // 是否显示右侧面板
 const showLeft = ref(true); // 是否显示左侧面板
 const thisRefs = {} as any;
 
 onMounted(() => {
-    editorStore.initDesignerPage();
+    // editorStore.initDesignerPage();
+    editorController.initEditorAsync();
 });
 
 // 编辑器的所有页面
@@ -200,7 +199,7 @@ const importJson = (info: any) => {
     const response = file.response || {};
     if (file.status === 'done' && file.response.success) {
         const pages = response.data || [];
-        editorStore.importConfig({ pages: pages });
+        editorController.importConfig({ pages: pages });
     }
 };
 

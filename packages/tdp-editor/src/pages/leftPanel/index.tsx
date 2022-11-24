@@ -12,6 +12,7 @@ import {
     ClusterOutlined,
 } from '@ant-design/icons-vue';
 import classnames from 'classnames';
+import { useEditorControler } from 'tdp-editor-utils/controller';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { useLeftMenuStore } from 'tdp-editor-utils/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
@@ -202,8 +203,8 @@ export default defineComponent({
         },
         deletePage(e: any, pageKey: string) {
             e.stopPropagation();
-            const editorStore = useEditorStore();
-            editorStore.deletePage({ pageKey });
+            const editorController = useEditorControler();
+            editorController.deletePage({ pageKey });
         },
     },
     render(): VNode {

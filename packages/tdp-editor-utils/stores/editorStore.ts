@@ -1,3 +1,7 @@
+/**
+ * editorStore editor全局状态
+ * 只处理editor state的相关方法，如果需要处理其他store中的数据，则要将方法放到对应的EditorController中
+ */
 import { defineStore } from 'pinia';
 import {
     EnumComponentType,
@@ -11,7 +15,7 @@ import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { utils } from '../';
 import { apps, forms } from '../service';
 import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
-import { useAppStore } from './appStore';
+// import { useAppStore } from './appStore';
 
 export const useEditorStore = defineStore('editorStore', {
     state: (): IEditorStoreState => {
@@ -22,14 +26,6 @@ export const useEditorStore = defineStore('editorStore', {
         };
     },
     actions: {
-        // 导入配置文件
-        importConfig(payload: { pages: IPageStoreState[] }) {
-            const appStore = useAppStore();
-            appStore.pages = payload.pages;
-            if (appStore.pages && appStore.pages.length) {
-                appStore.activePage = appStore.pages[0];
-            }
-        },
         // 初始化editor的组件列表
         initComponentList(payload: { list: IDesignerComponent[] }) {
             this.componentList = payload.list;
@@ -42,41 +38,9 @@ export const useEditorStore = defineStore('editorStore', {
                 }
             });
         },
-        // 添加页面
-        addPage(payload?: { page?: IPageStoreState }) {
-            const appStore = useAppStore();
-            const newPage = getDefaultPageModule(appStore.pages, this.componentList);
-            if (payload && payload.page) {
-                const _page = { ...newPage, ...payload.page };
-                appStore.pages.push(_page);
-            } else {
-                const newPage = getDefaultPageModule(appStore.pages, this.componentList);
-                appStore.pages.push(newPage);
-            }
-        },
-        // 删除页面
-        deletePage(payload: { pageKey: string }) {
-            const appStore = useAppStore();
-            const index = appStore.pages.findIndex(p => p.key === payload.pageKey);
-            console.log('pagekey', payload.pageKey, index);
-            if (index > -1) {
-                appStore.pages.splice(index, 1);
-            }
-        },
-        initAppPages(payload: { pages: IPageStoreState[] }) {
-            const appStore = useAppStore();
-            appStore.pages = payload.pages;
-            if (payload.pages.length) {
-                appStore.activePage = payload.pages[0];
-            }
-        },
-        // 初始化编辑器页面
-        initDesignerPage() {
-            const appStore = useAppStore();
-            const newPage = getDefaultPageModule(appStore.pages, this.componentList);
-            newPage.selected = true;
-            appStore.pages.push(newPage);
-            appStore.activePage = newPage;
+        // 在editor中创建一个空的页面
+        createNewEmptyPage(pages: IPageStoreState[]) {
+            return getDefaultPageModule(pages, this.componentList);
         },
         // 设计面板拖入组件
         dragAddComponent(payload: { parent: IDesignerComponent; component: IDesignerComponent }) {
@@ -116,71 +80,6 @@ export const useEditorStore = defineStore('editorStore', {
         // 设置当前选中的组件
         setSelectedComponent(payload: { component: IDesignerComponent | undefined }) {
             this.selectedComponent = payload.component;
-        },
-        // 删除选中的组件
-        deleteComponent(payload: { id: string }) {
-            const componentId = payload.id;
-            const appStore = useAppStore();
-            const activePage = appStore.activePage;
-            if (activePage && activePage.list) {
-                // 从当前页面组件列表中查找要删除的组件
-                utils.$deleteTreeItem(activePage.list, componentId);
-                this.selectedComponent = undefined;
-            }
-        },
-        // 导入csv文件的组件
-        importCsvData(payload: { pageName: string; pageCode: string; data: any }) {
-            const appStore = useAppStore();
-            const newPage = {
-                ...getDefaultPageModule(appStore.pages, this.componentList),
-                ...{ label: payload.pageName, code: payload.pageCode },
-            };
-            const rowState = this.componentList.find(c => c.type === EnumComponentType.row);
-            if (rowState) {
-                // 创建行
-                const rowKey = utils.$getUUID(EnumComponentType.row);
-                const newRow: IDesignerComponent = {
-                    key: rowKey,
-                    code: '',
-                    label: rowState.label,
-                    icons: rowState.icons,
-                    group: rowState.group,
-                    type: rowState.type,
-                    list: [],
-                };
-                for (const k in payload.data) {
-                    const type = payload.data[k];
-                    const component = this.componentList.find(c => c.type === type);
-                    if (component) {
-                        newRow.list!.push({
-                            key: utils.$getUUID(component.type),
-                            code: '',
-                            group: component.group,
-                            type: component.type,
-                            label: component.label,
-                            icons: component.icons,
-                            props: {
-                                label: k,
-                                dense: true,
-                            },
-                        } as any);
-                    }
-                }
-                if (newPage.list && newPage.list.length) {
-                    newPage.list[0].list!.push(newRow);
-                    appStore.pages.push(newPage);
-                    return newPage.key;
-                }
-            }
-            return '';
-        },
-        // 导入csv文件数据
-        importCsvDataAsync(payload: { pageName: string; pageCode: string; data: any }) {
-            this.importCsvData(payload);
-            const appStore = useAppStore();
-            appStore.setActivePage({
-                pageId: appStore.pages[appStore.pages.length - 1].key,
-            });
         },
         // 保存页面json数据
         async savePage(payload: { appId: string; projectId: string; app: any }) {
