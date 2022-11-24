@@ -3,6 +3,8 @@ import type { App } from 'vue';
 import { useEditorStore } from '../stores/editorStore';
 import { useAppStore } from '../stores/appStore';
 import { EnumAppEnv } from 'tdp-editor-types/enum';
+import { openDBAsync, setDataAsync } from '../indexDBUtil';
+import { useAppControler } from './index';
 
 export default class EditorController {
     private readonly $app: App;
@@ -28,5 +30,14 @@ export default class EditorController {
         if (env === EnumAppEnv.local || env === EnumAppEnv.dev) {
             return `http://localhost:3031/preview/app/pages/${pageKey}`;
         }
+    }
+    async saveLocalData() {
+        const appController = useAppControler();
+        const db = await openDBAsync().catch();
+        const data = {
+            id: 'local',
+            data: appController.getSaveData(),
+        };
+        await setDataAsync(db, data).catch();
     }
 }

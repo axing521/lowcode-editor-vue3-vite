@@ -1,6 +1,9 @@
+import { toRaw } from 'vue';
 import type { App } from 'vue';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/enum';
-import type { IAppStoreState } from 'tdp-editor-types/interface/designer';
+import type { IAppStoreState } from 'tdp-editor-types/interface/store';
+import type { IAppSaveStruct } from 'tdp-editor-types/interface/app';
+
 import { useAppStore } from '../stores/appStore';
 export default class AppController {
     private readonly $appStore = useAppStore();
@@ -28,6 +31,12 @@ export default class AppController {
      */
     getEnv() {
         return import.meta.env.VITE_APP_ENV as EnumAppEnv;
+    }
+    getSaveData(): IAppSaveStruct {
+        return {
+            defaultPageKey: this.$appStore.pages[0].key,
+            pages: toRaw(this.$appStore.pages),
+        };
     }
     replacePage(pageId: string) {
         this.$appStore.setActivePage({ pageId });

@@ -4,7 +4,8 @@
  */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import type { IAppStoreState, IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IAppStoreState } from 'tdp-editor-types/interface/store';
+import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 
 // 自定义组件样式
 import 'tdp-editor-components/src/styles/index.less';

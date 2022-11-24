@@ -27,7 +27,7 @@ import {
 } from 'tdp-editor-types/constant/injectKeys';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import type { IPageState } from 'tdp-editor-types/interface/components/page';
-import type { IPageStoreState } from 'tdp-editor-types/interface/designer';
+import type { IPageStoreState } from 'tdp-editor-types/interface/store';
 import FdComponent from './component';
 import moment from 'moment';
 

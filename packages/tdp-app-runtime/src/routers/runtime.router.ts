@@ -41,6 +41,7 @@ const routes: Array<RouteRecordRaw> = [
                 ...componentNames,
             },
         },
+        props: true,
     },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: TdpPage404Vue },
 ];

@@ -62,7 +62,7 @@ export const createEditor = (options: ICreateEditorOptions) => {
     const editorStore = useEditorStore();
     // 注册controller
     const controllers = createController(app);
-    controllers.appController.setMode(EnumAppMode.runtime);
+    controllers.appController.setMode(EnumAppMode.design);
     // 注册默认组件
     const componentList = componentRegister(app);
     app.config.globalProperties.$default_componentList = componentList;

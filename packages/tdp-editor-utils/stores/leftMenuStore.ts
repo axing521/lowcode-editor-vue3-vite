@@ -1,4 +1,4 @@
-import type { IMenus, ILeftMenuStoreState } from 'tdp-editor-types/interface/designer/leftPanel';
+import type { IMenus, ILeftMenuStoreState } from 'tdp-editor-types/interface/store';
 import { defineStore } from 'pinia';
 
 export const useLeftMenuStore = defineStore('leftMenuStore', {

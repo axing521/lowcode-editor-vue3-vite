@@ -40,14 +40,6 @@
                 ref="designerRight"
             />
         </div>
-        <a-modal
-            dialogClass="preview-dialog"
-            v-model="showPreviewModal"
-            :afterClose="previewDialogClosed"
-            :footer="null"
-        >
-            <Preview :json="selectedPage!" :appMode="EnumAppMode.preview"></Preview>
-        </a-modal>
     </div>
 </template>
 <style lang="less" scoped>
@@ -157,37 +149,26 @@ import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import { useAppControler, useEditorControler } from 'tdp-editor-utils/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
-
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
 import DesignerLeft from '../pages/leftPanel';
 import DesignerRight from '../pages/rightPanel';
 import DesignerMain from '../pages/mainPanel';
-import Preview from 'tdp-editor-components/src/page.vue';
 
-// import type FdComponent from 'tdp-editor-components/src/component';
 const appController = useAppControler();
 const editorController = useEditorControler();
 const appStore = useAppStore();
 const editorStore = useEditorStore();
-const showPreviewModal = ref(false); // 是否显示预览弹窗
-/* eslint-disable-next-line */
-// const components = ref(new Map() as Map<string, FdComponent>); // 当前页面所有组件的实例集合
 const showRight = ref(true); // 是否显示右侧面板
 const showLeft = ref(true); // 是否显示左侧面板
 const thisRefs = {} as any;
 
 onMounted(() => {
     editorStore.initDesignerPage();
-    // const instance = getCurrentInstance();
-    // const comList = instance?.appContext.app.config.globalProperties || [];
 });
 
 // 编辑器的所有页面
 const pages = appStore.pages;
-// 编辑器当前选中的页面
-const selectedPage = appStore.activePage;
-console.log('selectedPage', selectedPage);
 // 编辑器模式，预览 | 设计 | 浏览
 const editorMode = appStore.mode;
 
@@ -225,17 +206,11 @@ const importJson = (info: any) => {
 
 // 页面预览
 const pagePreview = () => {
-    appStore.setMode(EnumAppMode.preview);
-    showPreviewModal.value = !showPreviewModal.value;
     // 1.保存本地数据
+    editorController.saveLocalData();
     // 2.打开预览地址
-    const url = editorController.getPreviewUrl(appController.getEnv());
-    window.open(url, '_blank');
-};
-
-// 预览弹窗关闭后事件
-const previewDialogClosed = () => {
-    appStore.setMode(EnumAppMode.design);
+    // const url = editorController.getPreviewUrl(appController.getEnv());
+    // window.open(url, '_blank');
 };
 
 const selectComponent = (componentKey: string) => {

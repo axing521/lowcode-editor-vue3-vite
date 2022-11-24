@@ -1,8 +1,7 @@
 import type { VNode } from 'vue';
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
-import type { IMenus } from 'tdp-editor-types/interface/designer/leftPanel';
-import type { IPageStoreState } from 'tdp-editor-types/interface/designer';
+import type { IMenus, IPageStoreState } from 'tdp-editor-types/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import {
     OrderedListOutlined,

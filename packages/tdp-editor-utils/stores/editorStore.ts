@@ -5,8 +5,8 @@ import {
     EnumPropsValueType,
 } from 'tdp-editor-types/enum/components';
 
-import type { IPageStoreState } from 'tdp-editor-types/interface/designer';
-import type { IDesignerComponent, IEditorStoreState } from 'tdp-editor-types/interface/designer';
+import type { IPageStoreState, IEditorStoreState } from 'tdp-editor-types/interface/store';
+import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 
 import { utils } from '../';
 import { apps, forms } from '../service';

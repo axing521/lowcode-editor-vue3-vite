@@ -1,9 +1,5 @@
 import type { VNode } from 'vue';
 import type { IComponentProps, IComponentState } from '../components';
-import type { IPageProps } from '../components/page';
-import type { IPageForm } from './pageForm';
-
-import type { EnumAppMode } from '../../enum';
 import type { EnumCssProerty, EnumSelectorName } from '../../enum/designer';
 import type { EnumPropsValueType } from '../../enum/components';
 
@@ -74,24 +70,3 @@ export type IPropsConfig<P = any> = {
 };
 
 export type registerComponentFunc<P = any> = () => IDesignerComponent<P> | IDesignerComponent<P>[];
-
-// page Module对象定义
-export interface IPageStoreState extends IDesignerComponent<IPageProps> {
-    submitState: 'unsaved' | 'saved' | 'submited';
-    selected?: boolean;
-}
-
-// App Module对象定义
-export interface IAppStoreState {
-    mode: EnumAppMode;
-    pages: IPageStoreState[]; // 所有页面
-    pageForms: Map<string, IPageForm>;
-    activePage?: IPageStoreState; // 当前显示页面
-}
-
-export interface IEditorStoreState {
-    // selectedPageComponentList: IDesignerComponent[]; // 当前页面所有组件列表
-    selectedComponent?: IDesignerComponent; // 当前页面所选择的组件
-    dragComponent?: IDesignerComponent;
-    componentList: IDesignerComponent[]; // 所有组件列表，用于左侧拖动面板展示
-}

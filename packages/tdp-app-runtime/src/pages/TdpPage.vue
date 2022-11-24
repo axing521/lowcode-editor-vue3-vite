@@ -12,23 +12,25 @@
 </style>
 <script lang="ts" setup>
 import { onMounted, computed, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import RuntimePage from 'tdp-editor-components/src/page.vue';
 import { useAppControler } from 'tdp-editor-utils/controller';
+const props = defineProps<{
+    pageId?: string;
+}>();
 const router = useRouter();
-const route = useRoute();
 const currentPageId = computed(() => {
-    return (route.params.pageId as string) || '';
+    return props.pageId || '';
 });
 onMounted(() => {
     console.log(`tdp-app-page ${currentPageId.value} onMounted`);
 });
 watch(
-    () => route.params.pageId,
+    () => props.pageId,
     (newPageId, oldPageId) => {
         if (newPageId !== oldPageId) {
-            console.log('应该要切换页面数据了', newPageId, currentPageId.value);
+            console.log('应该要切换页面数据了', oldPageId, currentPageId.value);
             // 1.检查有没有页面缓存数据，有的话直接切换到缓存数据
             // 2.没有的话，发送接口，请求当前页面得数据，并缓存
         }

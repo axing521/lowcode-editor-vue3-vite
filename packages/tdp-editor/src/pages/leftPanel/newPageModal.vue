@@ -110,7 +110,7 @@
 </style>
 <script lang="ts" setup>
 import { ref, reactive, computed } from 'vue';
-import type { IPageStoreState } from 'tdp-editor-types/interface/designer';
+import type { IPageStoreState } from 'tdp-editor-types/interface/store';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 
 enum EnumPageType {
