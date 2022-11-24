@@ -117,7 +117,7 @@ export default defineComponent({
                         this.unselect();
                     }
                 } else if (dataset.type === EnumComponentType.page) {
-                    console.log('page');
+                    console.info('page');
                 } else {
                     this.unselect();
                 }

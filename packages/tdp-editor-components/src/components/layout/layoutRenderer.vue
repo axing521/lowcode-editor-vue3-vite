@@ -83,7 +83,6 @@ let dragComponent: IDesignerComponent | undefined = undefined;
 // });
 
 const dragAddHandler = () => {
-    console.log('layout dragAddHandler');
     const targetComponent = props.state;
     if (targetComponent) {
         const isLayoutType =

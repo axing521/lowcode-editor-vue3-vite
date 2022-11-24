@@ -41,7 +41,6 @@ const props = defineProps({
         default: () => EnumAppMode.runtime,
     },
 });
-console.log('page props', props);
 
 // 当前页面所有组件的实例集合
 const components = reactive<Map<string, FdComponent>>(new Map());

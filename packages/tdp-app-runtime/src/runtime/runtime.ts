@@ -60,7 +60,6 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
                     }
                 });
                 useEditorStore().addComponents({ list: components });
-                console.log('runtime app >>>>>>>>>>', app);
             }
         },
     };

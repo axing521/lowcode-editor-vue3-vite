@@ -47,7 +47,6 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const _createRouter = () => {
-    console.log('env.BASE_URL', import.meta.env.BASE_URL);
     const router = createRouter({
         history: createWebHistory(import.meta.env.BASE_URL),
         routes,
@@ -56,7 +55,6 @@ const _createRouter = () => {
     router.beforeEach((to, from, next) => {
         const toClassName: string = (to.meta?.className as string) || '';
         const fromClassName: string = (from && (from.meta?.className as string)) || '';
-        console.log('fromClassName ------------', fromClassName);
         const html = document.querySelector('html');
         const body = document.querySelector('body');
         if (fromClassName === toClassName) {

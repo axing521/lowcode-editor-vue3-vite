@@ -13,7 +13,6 @@ export default function useBaseWatch(props: ISetupBaseProps) {
             newState => {
                 // 监听styleText，用户自定义样式字段
                 if (newState.styleText) {
-                    console.log('styleText watch', newState.styleText);
                     utils.$createDynamicStyle(props.state.key, newState.styleText);
                 }
             }
@@ -25,7 +24,6 @@ export default function useBaseWatch(props: ISetupBaseProps) {
         */
         watchEffect(() => {
             if (props.state.styleText) {
-                console.log('styleText watcheffect', props.state.key, props.state.styleText);
                 utils.$createDynamicStyle(props.state.key, props.state.styleText);
             }
         });

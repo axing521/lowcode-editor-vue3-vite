@@ -16,7 +16,6 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const _createRouter = () => {
-    console.log('env.BASE_URL', import.meta.env.BASE_URL);
     const router = createRouter({
         history: createWebHistory(import.meta.env.BASE_URL),
         routes,

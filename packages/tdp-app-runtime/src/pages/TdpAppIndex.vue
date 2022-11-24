@@ -14,7 +14,7 @@ const inputPageId = ref('');
 const router = useRouter();
 
 onMounted(() => {
-    console.log('tdp-app-index onMounted');
+    console.info('tdp-app-index onMounted');
     // 这个地方可以执行用户的应用初始化方法
 });
 

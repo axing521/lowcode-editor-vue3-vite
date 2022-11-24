@@ -15,7 +15,7 @@ export const openDBAsync = async (
     return new Promise((resolve, reject) => {
         const req = IndexedDB.open(dbName, version);
         req.onsuccess = function (event: any) {
-            console.log(`DB named ${dbName} open success, event:`, event);
+            console.info(`DB named ${dbName} open success, event:`, event);
             const db = event.target.result as IDBDatabase;
             resolve(db);
         };
@@ -24,7 +24,7 @@ export const openDBAsync = async (
             reject(event);
         };
         req.onupgradeneeded = function (event: any) {
-            console.log(`DB named ${dbName} upgradeneeded, event:`, event);
+            console.info(`DB named ${dbName} upgradeneeded, event:`, event);
             const db = event.target.result as IDBDatabase;
             openStore(db, storeName);
         };
@@ -47,7 +47,7 @@ export const addDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName, 'readwrite').objectStore(storeName).add(data);
         req.onsuccess = function (event: any) {
-            console.log(`store named ${storeName} [add data] success, event:`, event);
+            console.info(`store named ${storeName} [add data] success, event:`, event);
             resolve(req.result);
         };
         req.onerror = function (event) {
@@ -66,7 +66,7 @@ export const updateDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName, 'readwrite').objectStore(storeName).put(data);
         req.onsuccess = function (event: any) {
-            console.log(`store named ${storeName} [update data] success, event:`, event);
+            console.info(`store named ${storeName} [update data] success, event:`, event);
             resolve(req.result);
         };
         req.onerror = function (event) {
@@ -85,7 +85,7 @@ export const getDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName).objectStore(storeName).get(key);
         req.onsuccess = function (event: any) {
-            console.log(`store named ${storeName} [get data] success, event:`, event);
+            console.info(`store named ${storeName} [get data] success, event:`, event);
             resolve(req.result);
         };
         req.onerror = function (event) {
@@ -104,7 +104,7 @@ export const deleteDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName, 'readwrite').objectStore(storeName).delete(data);
         req.onsuccess = function (event: any) {
-            console.log(`store named ${storeName} [add data] success, event:`, event);
+            console.info(`store named ${storeName} [add data] success, event:`, event);
             resolve();
         };
         req.onerror = function (event) {

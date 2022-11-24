@@ -7,8 +7,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 // @ts-ignore
 import visualizer from 'rollup-plugin-visualizer';
 
-console.log('runtime vite config----------------');
-
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue(), vueJsx(), visualizer()],

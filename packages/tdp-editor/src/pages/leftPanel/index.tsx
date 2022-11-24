@@ -188,12 +188,6 @@ export default defineComponent({
         addPage(): void {
             this.showAddPageShadow = true;
         },
-        onTreeDragEnter() {
-            console.log('onTreeDragEnter');
-        },
-        onTreeDrop() {
-            console.log('onTreeDragEnter');
-        },
         onTreeSelect(selectedKeys: string[]) {
             // @ts-ignore
             if (this.selectComponent) {

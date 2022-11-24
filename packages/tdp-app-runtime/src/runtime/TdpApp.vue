@@ -73,7 +73,7 @@
 import { onMounted } from 'vue';
 
 onMounted(() => {
-    console.log('tdp-app onMounted');
+    console.info('tdp-app onMounted');
     // 这个地方可以执行用户的应用初始化方法
 });
 </script>

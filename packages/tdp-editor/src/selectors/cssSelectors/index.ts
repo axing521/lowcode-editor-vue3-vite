@@ -19,5 +19,4 @@ for (const key in allSelectors) {
         });
     }
 }
-console.log(cssSelectors);
 export default cssSelectors;
