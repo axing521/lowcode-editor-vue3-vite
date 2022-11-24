@@ -11,13 +11,13 @@
                 <div class="form-item">
                     <div class="label">页面名称:</div>
                     <div class="value">
-                        <a-input v-model="pageName"></a-input>
+                        <a-input v-model:value="pageName"></a-input>
                     </div>
                 </div>
                 <div class="form-item">
                     <div class="label">页面编码:</div>
                     <div class="value">
-                        <a-input v-model="pageCode"></a-input>
+                        <a-input v-model:value="pageCode"></a-input>
                     </div>
                 </div>
                 <div class="form-item">

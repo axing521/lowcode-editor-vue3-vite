@@ -34,7 +34,7 @@ export default class AppController {
     }
     getSaveData(): IAppSaveStruct {
         return {
-            defaultPageKey: this.$appStore.pages[0].key,
+            defaultPageKey: this.$appStore.activePage?.key || '',
             pages: toRaw(this.$appStore.pages),
         };
     }

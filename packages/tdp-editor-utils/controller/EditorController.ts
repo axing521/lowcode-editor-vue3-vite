@@ -44,13 +44,12 @@ export default class EditorController {
      * 使用本地数据初始化editor数据
      */
     initEditorByLocalData(localData: IAppSaveStruct) {
-        console.log('localData >>>>>>>>>>', localData);
         const appStore = useAppStore();
         appStore.pages = localData.pages.map(p => {
             return {
+                ...p,
                 submitState: 'saved',
                 selected: false,
-                ...p,
             } as IPageStoreState;
         });
         appStore.activePage = appStore.pages.find(c => c.key === localData.defaultPageKey);
@@ -118,7 +117,6 @@ export default class EditorController {
     deletePage(payload: { pageKey: string }) {
         const appStore = useAppStore();
         const index = appStore.pages.findIndex(p => p.key === payload.pageKey);
-        console.log('pagekey', payload.pageKey, index);
         if (index > -1) {
             appStore.pages.splice(index, 1);
         }

@@ -39,6 +39,7 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
 }
 export interface IComponentState<P = any, C = Record<string, string | undefined>> {
     key: string;
+    label: string /* 页面显示名称 */;
     code: string /* 别名，一般用于用户给组件定义，方便调用 */;
     type: EnumComponentType | string;
     group: EnumComponentGroup;

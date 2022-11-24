@@ -8,7 +8,6 @@ export interface IDesignerComponent<P = any, C = Record<string, string>>
     extends IComponentState<P, C> {
     sfc?: any;
     order?: number;
-    label: string;
     icons?: string;
     listGroup?: 'normal' | 'business' | 'high';
     propsConfigs?: IPropsConfig<P>[];
