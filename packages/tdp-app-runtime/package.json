@@ -12,9 +12,9 @@
     }
   },
   "scripts": {
-    "start": "vite --mode localhost",
-    "dev": "vite --mode development",
-    "tst": "vite --mode tst",
+    "start": "vite --mode localhost --port 3031",
+    "dev": "vite --mode development --port 3031",
+    "tst": "vite --mode tst --port 3031",
     "build-only": "vite build",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",

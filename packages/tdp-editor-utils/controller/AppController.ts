@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import type { EnumAppMode } from 'tdp-editor-types/enum';
+import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/enum';
 import type { IAppStoreState } from 'tdp-editor-types/interface/designer';
 import { useAppStore } from '../stores/appStore';
 export default class AppController {
@@ -22,6 +22,12 @@ export default class AppController {
         } else {
             return undefined;
         }
+    }
+    /**
+     * 获取app当前的运行环境
+     */
+    getEnv() {
+        return import.meta.env.VITE_APP_ENV as EnumAppEnv;
     }
     replacePage(pageId: string) {
         this.$appStore.setActivePage({ pageId });

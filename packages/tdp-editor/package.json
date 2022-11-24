@@ -8,9 +8,9 @@
     "dist"
   ],
   "scripts": {
-    "start": "vite --mode localhost --config vite.config.web.ts",
-    "dev": "vite --mode development --config vite.config.web.ts",
-    "tst": "vite --mode tst --config vite.config.web.ts",
+    "start": "vite --mode localhost --config vite.config.web.ts --port 3030",
+    "dev": "vite --mode development --config vite.config.web.ts --port 3030",
+    "tst": "vite --mode tst --config vite.config.web.ts --port 3030",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:web": "vite build --config vite.config.web.ts",
     "build:check": "run-p type-check build-only",
