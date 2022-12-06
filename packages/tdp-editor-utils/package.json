@@ -8,11 +8,6 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path ../../.gitignore"
   },
   "main": "./index.ts",
-  "files": [
-    "es",
-    "lib",
-    "dist"
-  ],
   "dependencies": {
     "axios": "^0.24.0",
     "pinia": "^2.0.14",

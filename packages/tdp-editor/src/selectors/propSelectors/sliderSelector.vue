@@ -24,7 +24,7 @@ import { computed } from 'vue';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import type { ISelectorSliderOptions } from 'tdp-editor-types/interface/designer/selector';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import { getPropValue, setPropValue } from 'tdp-editor-utils/factory/propsFactory.js';
+import { getPropValue, setPropValue } from 'tdp-editor-utils/factory/propsFactory';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
 
 const _props = defineProps<{
