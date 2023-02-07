@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
 import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import type {
@@ -5,8 +6,7 @@ import type {
     registerComponentFunc,
 } from 'tdp-editor-types/interface/designer';
 import type { ILayoutProps } from './interface';
-import Layout from './layoutRenderer.vue';
-export default Layout;
+export default defineAsyncComponent(() => import('./layoutRenderer.vue'));
 
 export const register: registerComponentFunc = function () {
     const layout: IDesignerComponent<ILayoutProps> = {

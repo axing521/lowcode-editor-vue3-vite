@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import type {
@@ -6,9 +7,7 @@ import type {
 } from 'tdp-editor-types/interface/designer';
 import type { IFormProps } from './interface';
 
-import Form from './formRenderer.vue';
-
-export default Form;
+export default defineAsyncComponent(() => import('./formRenderer.vue'));
 
 export const register: registerComponentFunc = function () {
     const form: IDesignerComponent<IFormProps> = {

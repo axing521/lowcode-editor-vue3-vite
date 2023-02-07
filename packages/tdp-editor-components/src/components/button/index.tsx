@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue';
 import {
     EnumComponentGroup,
     EnumComponentType,
@@ -10,10 +11,11 @@ import type {
 } from 'tdp-editor-types/interface/designer';
 import type { IButtonProps } from './interface';
 
-import Button from './buttonRenderer.vue';
 import type { ISelectorSelectOptions } from 'tdp-editor-types/interface/designer/selector';
 
-export default Button;
+export default defineAsyncComponent(() => {
+    return import('./buttonRenderer.vue');
+});
 
 export const register: registerComponentFunc = function () {
     const button: IDesignerComponent<IButtonProps> = {

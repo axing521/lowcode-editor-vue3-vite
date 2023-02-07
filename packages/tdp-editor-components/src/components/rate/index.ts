@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import type { ISelectorSliderOptions } from 'tdp-editor-types/interface/designer/selector';
 import {
@@ -10,8 +11,7 @@ import type {
     registerComponentFunc,
 } from 'tdp-editor-types/interface/designer';
 import type { IRateProps } from './interface';
-import Rate from './rateRenderer.vue';
-export default Rate;
+export default defineAsyncComponent(() => import('./rateRenderer.vue'));;
 
 export const register: registerComponentFunc = function () {
     const rate: IDesignerComponent<IRateProps> = {
