@@ -16,6 +16,7 @@ import { onMounted, computed, watch } from 'vue';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import RuntimePage from 'tdp-editor-components/src/page.vue';
 import { useAppControler } from 'tdp-editor-utils/controller';
+import type { IPageState } from 'tdp-editor-types/interface/components/page';
 const props = defineProps<{
     pageId?: string;
 }>();
@@ -40,7 +41,7 @@ const appController = useAppControler();
 // 监听当前页面数据切换
 const pageJson = computed(() => {
     return appController.getActivePage();
-});
+}) as unknown as IPageState;
 
 // setTimeout(() => {
 //     router.push('dddd');
