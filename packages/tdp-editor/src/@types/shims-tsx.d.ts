@@ -1,8 +1,8 @@
 import Vue, { VNode } from 'vue';
 import { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import type AppVarController from '../controller/AppVarController';
-import type AppController from '../controller/AppController';
-import type EditorController from '../controller/EditorController';
+import type AppVarController from 'tdp-editor-utils/controller/AppVarController';
+import type AppController from 'tdp-editor-utils/controller/AppController';
+import type EditorController from 'tdp-editor-utils/controller/EditorController';
 import type SelectorManager from '../selectors/SelectorManager';
 
 declare global {
@@ -31,9 +31,9 @@ declare module 'vue' {
         $clipboard: (text: string) => void;
         $default_componentList: IDesignerComponent[];
         $custom_componentList: IDesignerComponent[];
-        $AppController: AppController;
-        $AppVarController: AppVarController;
-        $EditorController: EditorController;
-        $selectorManager: SelectorManager;
+        $AppController: typeof AppController;
+        $AppVarController: typeof AppVarController;
+        $EditorController: typeof EditorController;
+        $selectorManager: typeof SelectorManager;
     }
 }

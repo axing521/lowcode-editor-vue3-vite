@@ -1,9 +1,8 @@
 import Vue, { VNode } from 'vue';
 import { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import type AppVarController from '../controller/AppVarController';
-import type AppController from '../controller/AppController';
-import type EditorController from '../controller/EditorController';
-import type SelectorManager from '../selectors/SelectorManager';
+import type AppVarController from 'tdp-editor-utils/controller/AppVarController';
+import type AppController from 'tdp-editor-utils/controller/AppController';
+import type EditorController from 'tdp-editor-utils/controller/EditorController';
 
 declare global {
     namespace JSX {
@@ -34,6 +33,5 @@ declare module 'vue' {
         $AppController: AppController;
         $AppVarController: AppVarController;
         $EditorController: EditorController;
-        $selectorManager: SelectorManager;
     }
 }
