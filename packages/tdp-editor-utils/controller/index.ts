@@ -20,7 +20,7 @@ const __createControllers = (app: App, pinia: Pinia) => {
 let activeApp: App;
 const controllerMap: WeakMap<App, TController> = new WeakMap();
 // document.addEventListener('dblclick', () => {
-//     console.log('controllerMap: ', controllerMap, activeApp);
+//     console.info('controllerMap: ', controllerMap, activeApp);
 // });
 
 // 应用初始化时调用，初始化contorller

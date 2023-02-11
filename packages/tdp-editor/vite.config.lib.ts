@@ -5,8 +5,6 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
-console.log('editor vite config----------------');
-
 // const prefix = 'monaco-editor/esm/vs';
 
 // https://vitejs.dev/config/

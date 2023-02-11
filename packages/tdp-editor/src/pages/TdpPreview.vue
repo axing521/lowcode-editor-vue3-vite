@@ -13,13 +13,11 @@ onMounted(async () => {
     const tdpRuntime = createRuntime({
         container: '#preview_box',
     });
-    console.log('tdpRuntime', tdpRuntime);
     const db = await openDBAsync().catch(e => console.error(e));
     if (!db) return;
     // 如果有本地数据，则使用本地数据渲染，如果没有，则初始化一个空的editor
     const localData = await getDataAsync(db, 'local').catch();
     if (localData) {
-        console.log('localData', localData.data);
         tdpRuntime.setRuntimeJson(localData.data);
     }
 });
