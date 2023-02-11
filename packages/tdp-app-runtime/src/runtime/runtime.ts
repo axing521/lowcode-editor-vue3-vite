@@ -17,7 +17,6 @@ import usePlugin from '../plugins';
 import createRouter from '../routers/runtime.router';
 import App from './TdpApp.vue';
 import { createController } from 'tdp-editor-utils/controller';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
 interface ICreateRuntimeOptions {
@@ -60,7 +59,6 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
                         app.component(c.type, c.sfc!);
                     }
                 });
-                useEditorStore().addComponents({ list: components });
             }
         },
     };
