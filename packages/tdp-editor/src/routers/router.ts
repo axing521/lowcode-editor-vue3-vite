@@ -1,17 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
+import TdpEditor from '../pages/TdpEditor.vue';
+import TdpPreview from '../pages/TdpPreview.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
         name: 'index',
         path: '/',
         meta: {
-            className: 'tdp-editor-runtime-index',
-            label: '运行时首页',
-            title: '运行时首页',
+            className: 'tdp-editor-index',
+            label: '编辑器首页',
+            title: '编辑器首页',
         },
-        component: () =>
-            import(/* webpackChunkName: "runtime_index" */ '../editor/EditorWrapper.vue'),
+        // component: () => import(/* webpackChunkName: "runtime_index" */ '../pages/TdpEditor.vue'),
+        component: TdpEditor,
+    },
+    {
+        name: 'preview',
+        path: '/app/pages/:pageId',
+        meta: {
+            className: 'tdp-editor-preview',
+            label: '编辑器预览',
+            title: '编辑器预览',
+        },
+        // component: () => import(/* webpackChunkName: "runtime_index" */ '../pages/TdpPreview.vue'),
+        component: TdpPreview,
     },
 ];
 

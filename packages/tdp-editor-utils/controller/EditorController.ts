@@ -77,7 +77,7 @@ export default class EditorController {
         const appStore = useAppStore();
         const pageKey = appStore.activePage?.key || '';
         if (env === EnumAppEnv.local || env === EnumAppEnv.dev) {
-            return `http://localhost:3031/preview/app/pages/${pageKey}`;
+            return `http://127.0.0.1:3030/app/pages/${pageKey}`;
         }
     }
     /**

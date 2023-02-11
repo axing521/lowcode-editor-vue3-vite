@@ -1,18 +1,8 @@
 {
   "name": "tdp-app-runtime",
   "version": "0.1.0",
-  "private": true,
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/tdp-app-runtime.umd.js",
-  "module": "./dist/tdp-app-runtime.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/tdp-app-runtime.es.js",
-      "require": "./dist/tdp-app-runtime.umd.js"
-    }
-  },
+  "main": "./src/runtime/index.ts",
+  "module": "./src/runtime/index.ts",
   "scripts": {
     "start": "vite --mode localhost --port 3031",
     "dev": "vite --mode development --port 3031",

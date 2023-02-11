@@ -150,9 +150,9 @@ import { useAppControler, useEditorControler } from 'tdp-editor-utils/controller
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
-import DesignerLeft from '../pages/leftPanel';
-import DesignerRight from '../pages/rightPanel';
-import DesignerMain from '../pages/mainPanel';
+import DesignerLeft from './leftPanel';
+import DesignerRight from './rightPanel';
+import DesignerMain from './mainPanel';
 
 const appController = useAppControler();
 const editorController = useEditorControler();
@@ -208,8 +208,8 @@ const pagePreview = () => {
     // 1.保存本地数据
     editorController.saveLocalData();
     // 2.打开预览地址
-    // const url = editorController.getPreviewUrl(appController.getEnv());
-    // window.open(url, '_blank');
+    const url = editorController.getPreviewUrl(appController.getEnv());
+    window.open(url, '_blank');
 };
 
 const selectComponent = (componentKey: string) => {

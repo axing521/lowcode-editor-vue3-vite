@@ -10,7 +10,7 @@
     </div>
 </template>
 <style lang="less">
-@import '/src/styles/index.less';
+@import '../styles/index.less';
 .tdp-app {
     position: relative;
     display: flex;
@@ -67,7 +67,7 @@
         background-color: aquamarine;
     }
 }
-@import '/src/styles/appTypeAdmin.less';
+@import '../styles/appTypeAdmin.less';
 </style>
 <script lang="ts" setup>
 import { onMounted } from 'vue';

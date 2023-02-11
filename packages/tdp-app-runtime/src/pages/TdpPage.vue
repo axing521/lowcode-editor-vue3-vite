@@ -12,14 +12,14 @@
 </style>
 <script lang="ts" setup>
 import { onMounted, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import RuntimePage from 'tdp-editor-components/src/page.vue';
 import { useAppControler } from 'tdp-editor-utils/controller';
 const props = defineProps<{
     pageId?: string;
 }>();
-const router = useRouter();
+// const router = useRouter();
 const currentPageId = computed(() => {
     return props.pageId || '';
 });
@@ -42,7 +42,7 @@ const pageJson = computed(() => {
     return appController.getActivePage();
 });
 
-setTimeout(() => {
-    router.push('dddd');
-}, 3000);
+// setTimeout(() => {
+//     router.push('dddd');
+// }, 3000);
 </script>
