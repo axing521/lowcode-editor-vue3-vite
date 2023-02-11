@@ -29,12 +29,13 @@ console.info('tdp app runtime version: ' + version);
 
 export const createRuntime = (options: ICreateRuntimeOptions) => {
     const app = createApp(App);
+    const pinia = createPinia();
     // 注册指令
     registerDirectives(app);
     // 注册插件
     usePlugin(app);
     // 注册pinia
-    app.use(createPinia());
+    app.use(pinia);
     // 注册router
     app.use(createRouter());
 
@@ -42,7 +43,7 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
     const componentList = componentRegister(app);
     app.config.globalProperties.$default_componentList = componentList;
     // 注册controller
-    const controllers = createController(app);
+    const controllers = createController(app, pinia);
     controllers.appController.setMode(EnumAppMode.runtime);
     // 渲染应用
     app.mount(options.container);

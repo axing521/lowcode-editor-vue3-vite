@@ -1,27 +1,31 @@
 import { toRaw } from 'vue';
 import type { App } from 'vue';
+import type { Pinia } from 'pinia';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/enum';
 import type { IAppStoreState } from 'tdp-editor-types/interface/store';
 import type { IAppSaveStruct } from 'tdp-editor-types/interface/app';
 
 import { useAppStore } from '../stores/appStore';
 export default class AppController {
-    private readonly $appStore = useAppStore();
     private readonly $app: App;
-    constructor(app: App) {
+    private readonly $pinia: Pinia;
+    constructor(app: App, pinia: Pinia) {
         this.$app = app;
+        this.$pinia = pinia;
     }
     initApp(appJson: IAppStoreState) {
-        this.$appStore.pages = appJson.pages;
-        this.$appStore.activePage = appJson.activePage || appJson.pages[0];
+        const appStore = useAppStore(this.$pinia);
+        appStore.pages = appJson.pages;
+        appStore.activePage = appJson.activePage || appJson.pages[0];
     }
     getActivePage() {
-        const activePage = this.$appStore.activePage;
+        const appStore = useAppStore(this.$pinia);
+        const activePage = appStore.activePage;
         if (activePage) {
             return activePage;
-        } else if (this.$appStore.pages.length) {
-            this.$appStore.activePage = this.$appStore.pages[0];
-            return this.$appStore.activePage;
+        } else if (appStore.pages.length) {
+            appStore.activePage = appStore.pages[0];
+            return appStore.activePage;
         } else {
             return undefined;
         }
@@ -33,15 +37,18 @@ export default class AppController {
         return import.meta.env.VITE_APP_ENV as EnumAppEnv;
     }
     getSaveData(): IAppSaveStruct {
+        const appStore = useAppStore(this.$pinia);
         return {
-            defaultPageKey: this.$appStore.activePage?.key || '',
-            pages: toRaw(this.$appStore.pages),
+            defaultPageKey: appStore.activePage?.key || '',
+            pages: toRaw(appStore.pages),
         };
     }
     replacePage(pageId: string) {
-        this.$appStore.setActivePage({ pageId });
+        const appStore = useAppStore(this.$pinia);
+        appStore.setActivePage({ pageId });
     }
     setMode(mode: EnumAppMode) {
-        this.$appStore.mode = mode;
+        const appStore = useAppStore(this.$pinia);
+        appStore.mode = mode;
     }
 }

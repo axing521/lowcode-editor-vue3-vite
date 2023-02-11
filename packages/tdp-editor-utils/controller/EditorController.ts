@@ -4,6 +4,7 @@
  */
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import type { App } from 'vue';
+import type { Pinia } from 'pinia';
 import type { IAppSaveStruct } from 'tdp-editor-types/interface/app';
 import type { IPageStoreState } from 'tdp-editor-types/interface/store';
 
@@ -16,15 +17,17 @@ import { useAppControler } from './index';
 import { utils } from '../index';
 export default class EditorController {
     private readonly $app: App;
-    constructor(app: App) {
+    private readonly $pinia: Pinia;
+    constructor(app: App, pinia: Pinia) {
         this.$app = app;
+        this.$pinia = pinia;
     }
     addCustomerComponents(list: IDesignerComponent[]) {
-        const $editorStore = useEditorStore();
+        const $editorStore = useEditorStore(this.$pinia);
         $editorStore.addComponents({ list });
     }
     initComponentList(list: IDesignerComponent[]) {
-        const $editorStore = useEditorStore();
+        const $editorStore = useEditorStore(this.$pinia);
         $editorStore.initComponentList({ list });
     }
     /**
@@ -44,7 +47,7 @@ export default class EditorController {
      * 使用本地数据初始化editor数据
      */
     initEditorByLocalData(localData: IAppSaveStruct) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         appStore.pages = localData.pages.map(p => {
             return {
                 ...p,
@@ -61,8 +64,8 @@ export default class EditorController {
      * 初始化一个空的editor的数据
      */
     initEditorByEmpty() {
-        const appStore = useAppStore();
-        const editorStore = useEditorStore();
+        const appStore = useAppStore(this.$pinia);
+        const editorStore = useEditorStore(this.$pinia);
         const newPage = editorStore.createNewEmptyPage(appStore.pages);
         newPage.selected = true;
         appStore.pages.push(newPage);
@@ -74,7 +77,7 @@ export default class EditorController {
      * @returns 返回预览地址
      */
     getPreviewUrl(env: EnumAppEnv) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         const pageKey = appStore.activePage?.key || '';
         if (env === EnumAppEnv.local || env === EnumAppEnv.dev) {
             return `http://127.0.0.1:3030/app/pages/${pageKey}`;
@@ -94,7 +97,7 @@ export default class EditorController {
     }
     // 导入配置文件
     importConfig(payload: { pages: IPageStoreState[] }) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         appStore.pages = payload.pages;
         if (appStore.pages && appStore.pages.length) {
             appStore.activePage = appStore.pages[0];
@@ -102,8 +105,8 @@ export default class EditorController {
     }
     // 添加页面
     addPage(payload?: { page?: IPageStoreState }) {
-        const appStore = useAppStore();
-        const editorStore = useEditorStore();
+        const appStore = useAppStore(this.$pinia);
+        const editorStore = useEditorStore(this.$pinia);
         if (payload && payload.page) {
             const newPage = editorStore.createNewEmptyPage(appStore.pages);
             const _page = { ...newPage, ...payload.page };
@@ -115,14 +118,14 @@ export default class EditorController {
     }
     // 删除页面
     deletePage(payload: { pageKey: string }) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         const index = appStore.pages.findIndex(p => p.key === payload.pageKey);
         if (index > -1) {
             appStore.pages.splice(index, 1);
         }
     }
     initAppPages(payload: { pages: IPageStoreState[] }) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         appStore.pages = payload.pages;
         if (payload.pages.length) {
             appStore.activePage = payload.pages[0];
@@ -131,8 +134,8 @@ export default class EditorController {
     // 删除选中的组件
     deleteComponent(payload: { id: string }) {
         const componentId = payload.id;
-        const appStore = useAppStore();
-        const editorStore = useEditorStore();
+        const appStore = useAppStore(this.$pinia);
+        const editorStore = useEditorStore(this.$pinia);
         const activePage = appStore.activePage;
         if (activePage && activePage.list) {
             // 从当前页面组件列表中查找要删除的组件
@@ -142,8 +145,8 @@ export default class EditorController {
     }
     // 导入csv文件的组件
     importCsvData(payload: { pageName: string; pageCode: string; data: any }) {
-        const appStore = useAppStore();
-        const editorStore = useEditorStore();
+        const appStore = useAppStore(this.$pinia);
+        const editorStore = useEditorStore(this.$pinia);
         const newPage = {
             ...editorStore.createNewEmptyPage(appStore.pages),
             ...{ label: payload.pageName, code: payload.pageCode },
@@ -190,7 +193,7 @@ export default class EditorController {
     // 导入csv文件数据
     importCsvDataAsync(payload: { pageName: string; pageCode: string; data: any }) {
         this.importCsvData(payload);
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         appStore.setActivePage({
             pageId: appStore.pages[appStore.pages.length - 1].key,
         });

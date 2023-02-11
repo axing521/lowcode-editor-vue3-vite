@@ -19,7 +19,7 @@ export const initEditor = (app: App) => {
     app.use(createRouter());
     const editorStore = useEditorStore();
     // 注册controller
-    const controllers = createController(app);
+    const controllers = createController(app, pinia);
     controllers.appController.setMode(EnumAppMode.design);
     // 注册默认组件
     const componentList = componentRegister(app);

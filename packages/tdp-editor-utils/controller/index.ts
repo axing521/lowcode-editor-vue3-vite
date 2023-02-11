@@ -1,4 +1,5 @@
 import type { App } from 'vue';
+import type { Pinia } from 'pinia';
 import AppController from './AppController';
 import AppVarController from './AppVarController';
 import EditorController from './EditorController';
@@ -9,23 +10,26 @@ type TController = {
     editorController: EditorController;
 };
 
-const __createControllers = (app: App) => {
+const __createControllers = (app: App, pinia: Pinia) => {
     return {
-        appController: new AppController(app),
-        appVarController: new AppVarController(app),
-        editorController: new EditorController(app),
+        appController: new AppController(app, pinia),
+        appVarController: new AppVarController(app, pinia),
+        editorController: new EditorController(app, pinia),
     };
 };
 let activeApp: App;
 const controllerMap: WeakMap<App, TController> = new WeakMap();
+// document.addEventListener('dblclick', () => {
+//     console.log('controllerMap: ', controllerMap, activeApp);
+// });
 
 // 应用初始化时调用，初始化contorller
-export const createController = (app: App) => {
+export const createController = (app: App, pinia: Pinia) => {
     if (!app) {
         throw new Error('createController 报错，参数app不能为空');
     }
     activeApp = app;
-    const controllers = __createControllers(app);
+    const controllers = __createControllers(app, pinia);
     app.config.globalProperties.$AppController = controllers.appController;
     app.config.globalProperties.$AppVarController = controllers.appVarController;
     app.config.globalProperties.$EditorController = controllers.editorController;
