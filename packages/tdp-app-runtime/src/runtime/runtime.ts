@@ -13,6 +13,7 @@ import registerDirectives from 'tdp-editor-components/src/directives';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 
+import packageJson from '../../package.json';
 import usePlugin from '../plugins';
 import createRouter from '../routers/runtime.router';
 import App from './TdpApp.vue';
@@ -23,8 +24,7 @@ interface ICreateRuntimeOptions {
     container: string | Element;
 }
 
-export const version = import.meta.env.VITE_APP_VERSION;
-console.info('tdp app runtime version: ' + version);
+console.info('tdp app runtime version: ' + packageJson.version);
 
 export const createRuntime = (options: ICreateRuntimeOptions) => {
     const app = createApp(App);
