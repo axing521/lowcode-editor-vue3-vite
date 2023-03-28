@@ -6,7 +6,7 @@ const cssSelectors: TCssSelector[] = [];
 
 // 自动加载propSelector
 for (const key in allSelectors) {
-    const module = allSelectors[key];
+    const module = allSelectors[key] as unknown as any;
     if (!module.default) continue;
     const _vue = module.default;
     const selectorName = module.name as EnumCssProerty;

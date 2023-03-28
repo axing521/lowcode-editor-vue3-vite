@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import { mapState } from 'pinia';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import * as monaco from 'monaco-editor';
 import './index.less';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { EnumCssProerty } from 'tdp-editor-types/enum/designer';

@@ -43,7 +43,7 @@
                         </a-button>
                     </li>
                     <li>
-                        <a-button type="link">添加变量</a-button>
+                        <a-button type="link">添加方法</a-button>
                     </li>
                 </ul>
             </div>
@@ -104,7 +104,7 @@
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import { mapState } from 'pinia';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import * as monaco from 'monaco-editor';
 
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
@@ -126,9 +126,7 @@ export default defineComponent({
         },
     },
     mounted() {
-        setTimeout(() => {
-            //this.initMonaco();
-        }, 10000);
+        this.initMonaco();
     },
     computed: {
         ...mapState(useAppStore, {
@@ -157,7 +155,7 @@ export default defineComponent({
     },
     emits: {
         ['update:visible'](visible: boolean): boolean {
-            return visible;
+            return typeof visible === 'boolean';
         },
         paramChecked(paramInfo: { name: string; type: EnumParamType }) {
             return paramInfo;

@@ -145,6 +145,13 @@ div.tdp-editor-container {
 import { onMounted, provide, ref, computed } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import fileSaver from 'file-saver';
+
+// monaco配置
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import { useAppControler, useEditorControler } from 'tdp-editor-utils/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
@@ -153,6 +160,21 @@ import { EnumAppMode } from 'tdp-editor-types/enum';
 import DesignerLeft from './leftPanel';
 import DesignerRight from './rightPanel';
 import DesignerMain from './mainPanel';
+
+(window as any).MonacoEnvironment = {
+    getWorker(_: any, label: any) {
+        if (label === 'json') {
+            return new jsonWorker();
+        }
+        if (label === 'css' || label === 'scss' || label === 'less') {
+            return new cssWorker();
+        }
+        if (label === 'typescript' || label === 'javascript') {
+            return new tsWorker();
+        }
+        return new editorWorker();
+    },
+};
 
 const appController = useAppControler();
 const editorController = useEditorControler();

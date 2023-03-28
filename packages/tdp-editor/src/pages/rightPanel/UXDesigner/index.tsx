@@ -102,11 +102,10 @@ export default defineComponent({
                     添加
                 </a-button>
                 <pm
-                    visible={this.showPm}
+                    v-model:visible={this.showPm}
                     element={this.element}
                     forceRender={true}
                     onParamCheck={(info: any) => this.onParamCheck(info)}
-                    onVisibleChanged={(v: boolean) => (this.showPm = v)}
                 />
             </div>
         );

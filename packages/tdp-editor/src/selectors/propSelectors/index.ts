@@ -6,7 +6,7 @@ const propSelectors: TSelector[] = [];
 
 // 自动加载propSelector
 for (const key in allSelectors) {
-    const module = allSelectors[key];
+    const module = allSelectors[key] as unknown as any;
     const keys = Object.values(EnumSelectorName);
     if (key.lastIndexOf('.tsx') > 1000) {
         const selectorName = module.name as EnumSelectorName;
