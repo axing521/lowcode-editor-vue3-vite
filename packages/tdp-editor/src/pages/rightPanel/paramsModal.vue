@@ -108,7 +108,7 @@ import * as monaco from 'monaco-editor';
 
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
-
+monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
 enum EnumParamType {
     params = 'params',
     function = 'function',

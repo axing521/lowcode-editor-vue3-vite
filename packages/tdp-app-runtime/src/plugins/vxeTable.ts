@@ -6,3 +6,4 @@
 // export default function useVxeTable(app: Vue.App) {
 //     app.use(VXETable);
 // }
+export default {};

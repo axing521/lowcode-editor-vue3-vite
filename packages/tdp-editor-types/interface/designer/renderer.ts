@@ -1,12 +1,12 @@
-import { CreateElement, VNode } from 'vue';
-import { IComponentState } from '../components';
+import type { VNode } from 'vue';
+import type { IComponentState } from '../components';
 
 export type factoryRenderFunc = (
-    createElement: CreateElement,
+    createElement: any,
     element?: IComponentState
 ) => VNode | undefined;
 export type componentRenderFunc = (
-    createElement: CreateElement,
+    createElement: any,
     element: IComponentState,
     factory: factoryRenderFunc
 ) => VNode | undefined;

@@ -1,4 +1,4 @@
-import { IDesignerComponent } from './designer';
+import type { IDesignerComponent } from './designer';
 
 export interface IPageModuleState extends IDesignerComponent {
     selected?: boolean;

@@ -9,7 +9,7 @@ const components = import.meta.globEager('../components/*/index.(ts|tsx)');
 const register = (app: App): IDesignerComponent[] => {
     const componentList: IDesignerComponent[] = [];
     Object.keys(components).map(module => {
-        const componentFile = components[module];
+        const componentFile = components[module] as unknown as any;
         const register = componentFile.register;
         if (register) {
             const $register = register();
