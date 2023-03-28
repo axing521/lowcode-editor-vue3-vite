@@ -101,7 +101,7 @@
 }
 </style>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, nextTick } from 'vue';
 import type { PropType } from 'vue';
 import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor';
@@ -124,9 +124,6 @@ export default defineComponent({
             required: true,
             type: Boolean,
         },
-    },
-    mounted() {
-        this.initMonaco();
     },
     computed: {
         ...mapState(useAppStore, {
@@ -232,6 +229,15 @@ export default defineComponent({
         },
         clickCancel() {
             this.$emit('update:visible', false);
+        },
+    },
+    watch: {
+        visible(val: boolean, oldVal: boolean) {
+            if (val === true && val !== oldVal) {
+                nextTick(() => {
+                    this.initMonaco();
+                });
+            }
         },
     },
 });
