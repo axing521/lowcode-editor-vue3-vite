@@ -13,20 +13,18 @@
     </form>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
-
 export default defineComponent({
     name: EnumComponentType.form,
 });
 </script>
 <script lang="ts" setup>
-import { provide, reactive, ref, getCurrentInstance } from 'vue';
+import { provide, reactive, ref, getCurrentInstance, defineComponent } from 'vue';
 import { useBaseInject, useBaseLifecycle } from '../../composables/base';
 import { useFormInject } from '../../composables/form';
 import { getFdFormRef, getFdFormFields } from 'tdp-editor-types/constant/injectKeys';
 import { forms } from 'tdp-editor-utils/service';
 import { funcFactory, propsFactory, utils } from 'tdp-editor-utils';
+import { EnumComponentType } from 'tdp-editor-types/enum/components';
 import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 

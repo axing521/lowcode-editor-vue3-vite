@@ -34,22 +34,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
-
 export default defineComponent({
     name: EnumComponentType.layout,
 });
 </script>
 
 <script lang="ts" setup>
-import { inject } from 'vue';
+import { inject, defineComponent } from 'vue';
 import { useBase } from '../../composables/base';
 import Draggable from 'vuedraggable';
 
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import type { IComponentState } from 'tdp-editor-types/interface/app/components';
+import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+
+import { EnumComponentType } from 'tdp-editor-types/enum/components';
+import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import ComponentWrapper from '../componentWrapper.vue';
 
 const props = defineProps<{

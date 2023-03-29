@@ -12,18 +12,18 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
-import { useBaseLifecycle } from '../../composables/base';
-
 export default defineComponent({
     name: EnumComponentType.rate,
 });
 </script>
 
 <script lang="ts" setup>
+import { defineComponent } from 'vue';
 import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type { IRateProps } from './interface';
+import { EnumComponentType } from 'tdp-editor-types/enum/components';
+import { useBaseLifecycle } from '../../composables/base';
+
 const allProps = defineProps<{
     state: IComponentState<IRateProps>;
     parentId: string;
