@@ -4,7 +4,7 @@ import { DeleteOutlined } from '@ant-design/icons-vue';
 import './index.less';
 
 import type { IComponentState } from 'tdp-editor-types/interface/app/components';
-import { EnumEventType } from 'tdp-editor-types/enum/components';
+import { EnumEventName, EnumEventType } from 'tdp-editor-types/enum/components';
 
 import { eventFactory } from 'tdp-editor-utils';
 
@@ -26,11 +26,11 @@ export default defineComponent({
         return {
             showPm: false,
             eventTypeList: [
-                { key: EnumEventType.click, label: EnumEventType.click },
-                { key: EnumEventType.focus, label: EnumEventType.focus },
-                { key: EnumEventType.mouseOver, label: EnumEventType.mouseOver },
-                { key: EnumEventType.mouseLeave, label: EnumEventType.mouseLeave },
-                { key: EnumEventType.change, label: EnumEventType.change },
+                { key: EnumEventName.click, label: EnumEventName.click },
+                { key: EnumEventName.focus, label: EnumEventName.focus },
+                { key: EnumEventName.mouseOver, label: EnumEventName.mouseOver },
+                { key: EnumEventName.mouseLeave, label: EnumEventName.mouseLeave },
+                { key: EnumEventName.change, label: EnumEventName.change },
             ],
             eventIndex: 0,
         };
@@ -39,7 +39,8 @@ export default defineComponent({
         // 添加事件
         addEvent() {
             eventFactory.pushEvent(this.element!, {
-                eventType: this.eventTypeList[0].key,
+                eventName: this.eventTypeList[0].key,
+                eventType: EnumEventType.script,
                 funcName: '',
                 funcStr: '',
             });
@@ -67,7 +68,7 @@ export default defineComponent({
                     return (
                         <div class="item">
                             <div class="label">
-                                <a-select v-model={event.eventType}>
+                                <a-select v-model={event.eventName}>
                                     {this.eventTypeList.map(name => (
                                         <a-select-option value={name.key}>
                                             {name.label}

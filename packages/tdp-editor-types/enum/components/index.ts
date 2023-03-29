@@ -40,12 +40,16 @@ export enum EnumApiType {
     data = '2', //数据api，一个api列表里只有一个数据api，用于提供组件的动态数据源
 }
 
-export enum EnumEventType {
+export enum EnumEventName {
     click = 'click',
     mouseOver = 'mouseover',
     mouseLeave = 'mouseleave',
     focus = 'focus',
     change = 'change',
+}
+
+export enum EnumEventType {
+    script = 'script',
 }
 
 export enum EnumPropsValueType {

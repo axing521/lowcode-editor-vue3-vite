@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 <script lang="ts" setup>
 import { provide, reactive, ref, getCurrentInstance } from 'vue';
-import { useBaseInject } from '../../composables/base';
+import { useBaseInject, useBaseLifecycle } from '../../composables/base';
 import { useFormInject } from '../../composables/form';
 import { getFdFormRef, getFdFormFields } from 'tdp-editor-types/constant/injectKeys';
 import { forms } from 'tdp-editor-utils/service';
@@ -40,8 +40,9 @@ const allProps = defineProps<{
     parentId: string;
     props: IFormProps;
     css: Record<string, any>;
-    events: Record<string, any>;
 }>();
+// 注册公共声明周期事件
+useBaseLifecycle(allProps);
 const { getAppMode } = useBaseInject();
 const { formSubmited } = useFormInject();
 // 存储所有字段信息

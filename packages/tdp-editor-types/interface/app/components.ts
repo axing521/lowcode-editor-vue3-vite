@@ -4,8 +4,9 @@ import type {
     EnumComponentType,
     EnumComponentGroup,
     EnumApiType,
-    EnumEventType,
+    EnumEventName,
     EnumPropsValueType,
+    EnumEventType,
 } from '../../enum/components';
 import type { IFormInfo } from './form';
 
@@ -60,10 +61,27 @@ export interface IComponentApi {
     type: EnumApiType;
 }
 
+// 组件的事件描述对象
 export interface IComponentEvent {
+    eventName: EnumEventName;
     eventType: EnumEventType;
     funcName: string;
     funcStr: string;
 }
+
+// 将IComponentEvent处理后的事件对象
+export type TEventsMapRaw = Map<
+    EnumEventName,
+    {
+        func: TEventFunc;
+        eventType: EnumEventType;
+        funcName: string;
+    }[]
+>;
+
+// 将TEventsMapRaw处理后的事件对象，可直接绑定到组件v-on属性上
+export type TEventsMap = Map<EnumEventName, TEventFunc[]>;
+
+export type TEventFunc = ($event: any, $info: Record<string, any>) => void;
 
 export type IComponentEventFunction = ($event: Event, component: ComponentPublicInstance) => void;

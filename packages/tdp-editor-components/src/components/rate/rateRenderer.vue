@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { EnumComponentType } from 'tdp-editor-types/enum/components';
+import { useBaseLifecycle } from '../../composables/base';
 
 export default defineComponent({
     name: EnumComponentType.rate,
@@ -28,6 +29,7 @@ const allProps = defineProps<{
     parentId: string;
     props: IRateProps;
     css: Record<string, any>;
-    events: Record<string, any>;
 }>();
+// 注册公共声明周期事件
+useBaseLifecycle(allProps);
 </script>
