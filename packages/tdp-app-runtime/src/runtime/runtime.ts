@@ -4,7 +4,7 @@
  */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import type { IAppStoreState } from 'tdp-editor-types/interface/store';
+import type { IAppStore } from 'tdp-editor-types/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 
 // 自定义组件样式
@@ -48,7 +48,7 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
     app.mount(options.container);
     return {
         app,
-        setRuntimeJson: (runtimeJson: IAppStoreState) => {
+        setRuntimeJson: (runtimeJson: IAppStore) => {
             controllers.appController.initApp(runtimeJson);
         },
         addCustomComponents(components: IDesignerComponent[]) {

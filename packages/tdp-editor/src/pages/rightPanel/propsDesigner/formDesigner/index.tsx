@@ -5,7 +5,7 @@ import { EnumRuleType } from 'tdp-editor-types/enum/components/form';
 import { formFactory } from 'tdp-editor-utils';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
 import { DeleteFilled } from '@ant-design/icons-vue';
-import type { IFormRules } from 'tdp-editor-types/interface/components/form';
+import type { IFormRules } from 'tdp-editor-types/interface/app/form';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 
 export default defineComponent({

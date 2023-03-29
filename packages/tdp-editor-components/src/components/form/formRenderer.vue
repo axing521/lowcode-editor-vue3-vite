@@ -31,8 +31,8 @@ import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
 import type { IServiceResult } from 'tdp-editor-types/interface/request';
-import type { IFormField } from 'tdp-editor-types/interface/components/form';
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IFormField } from 'tdp-editor-types/interface/app/form';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type { IFormProps } from './interface';
 
 const allProps = defineProps<{

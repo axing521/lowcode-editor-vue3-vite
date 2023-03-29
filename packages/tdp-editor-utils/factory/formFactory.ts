@@ -1,10 +1,10 @@
 import { EnumRuleType } from 'tdp-editor-types/enum/components/form';
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type {
     IFieldCallbackRule,
     IFormInfo,
     IFormRules,
-} from 'tdp-editor-types/interface/components/form';
+} from 'tdp-editor-types/interface/app/form';
 
 const formFactory = {
     getFormInfoValue: <PropsType, K extends keyof IFormInfo>(

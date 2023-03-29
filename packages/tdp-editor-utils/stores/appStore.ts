@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { EnumAppMode } from 'tdp-editor-types/enum';
-import type { IAppStoreState } from 'tdp-editor-types/interface/store';
+import type { IAppStore } from 'tdp-editor-types/interface/store';
 import type { IPageForm } from 'tdp-editor-types/interface/designer/pageForm';
 
 export const useAppStore = defineStore('appStore', {
-    state(): IAppStoreState {
+    state(): IAppStore {
         return {
             mode: EnumAppMode.design,
             pages: [],

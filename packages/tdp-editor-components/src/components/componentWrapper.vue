@@ -14,7 +14,7 @@
     ></component>
 </template>
 <script lang="ts" setup>
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import { useBase } from '../composables/base';
 import { useForm } from '../composables/form';
 import { useBaseLifecycle } from '../composables/base';

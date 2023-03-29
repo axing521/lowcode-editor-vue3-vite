@@ -1,6 +1,6 @@
 import { computed, getCurrentInstance } from 'vue';
 import type { EnumApiType, EnumEventType } from 'tdp-editor-types/enum/components';
-import type { ISetupBaseProps } from 'tdp-editor-types/interface/components';
+import type { ISetupBaseProps } from 'tdp-editor-types/interface/app/components';
 import { apiFactory, eventFactory, propsFactory, request } from 'tdp-editor-utils';
 import type { IServiceResult } from 'tdp-editor-types/interface/request';
 import apiDomain from 'tdp-editor-utils/service/apiDomain';

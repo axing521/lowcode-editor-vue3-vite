@@ -1,5 +1,5 @@
 import type { VNode } from 'vue';
-import type { IComponentState } from '../components';
+import type { IComponentState } from '../app/components';
 
 export type factoryRenderFunc = (
     createElement: any,

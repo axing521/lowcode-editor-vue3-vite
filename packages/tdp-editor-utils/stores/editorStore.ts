@@ -9,7 +9,7 @@ import {
     EnumPropsValueType,
 } from 'tdp-editor-types/enum/components';
 
-import type { IPageStoreState, IEditorStoreState } from 'tdp-editor-types/interface/store';
+import type { IPageStore, IEditorStore } from 'tdp-editor-types/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 
 import { utils } from '../';
@@ -18,7 +18,7 @@ import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
 // import { useAppStore } from './appStore';
 
 export const useEditorStore = defineStore('editorStore', {
-    state: (): IEditorStoreState => {
+    state: (): IEditorStore => {
         return {
             selectedComponent: undefined,
             componentList: [],
@@ -39,7 +39,7 @@ export const useEditorStore = defineStore('editorStore', {
             });
         },
         // 在editor中创建一个空的页面
-        createNewEmptyPage(pages: IPageStoreState[]) {
+        createNewEmptyPage(pages: IPageStore[]) {
             return getDefaultPageModule(pages, this.componentList);
         },
         // 设计面板拖入组件
@@ -120,10 +120,10 @@ export const useEditorStore = defineStore('editorStore', {
 
 // 生成一个默认的page配置
 const getDefaultPageModule = (
-    pages: IPageStoreState[],
+    pages: IPageStore[],
     componentList: IDesignerComponent[]
-): IPageStoreState => {
-    const newPage: IPageStoreState = {
+): IPageStore => {
+    const newPage: IPageStore = {
         key: utils.$getUUID(EnumComponentType.page),
         code: '',
         label: '表单' + (pages.length + 1),

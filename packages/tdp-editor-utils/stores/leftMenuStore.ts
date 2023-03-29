@@ -1,8 +1,8 @@
-import type { IMenus, ILeftMenuStoreState } from 'tdp-editor-types/interface/store';
+import type { IMenusStore, ILeftMenuStore } from 'tdp-editor-types/interface/store';
 import { defineStore } from 'pinia';
 
 export const useLeftMenuStore = defineStore('leftMenuStore', {
-    state(): ILeftMenuStoreState {
+    state(): ILeftMenuStore {
         return {
             menus: [
                 {
@@ -52,7 +52,7 @@ export const useLeftMenuStore = defineStore('leftMenuStore', {
         },
     },
     actions: {
-        setSelectMenu(payload: { menu: IMenus }) {
+        setSelectMenu(payload: { menu: IMenusStore }) {
             const menu = payload.menu;
             this.menus.forEach(c => {
                 // 将当前菜单selected属性设为true

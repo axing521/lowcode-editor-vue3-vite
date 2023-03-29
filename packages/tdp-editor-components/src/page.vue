@@ -16,6 +16,7 @@
 <script lang="ts" setup>
 import { reactive, provide, ref } from 'vue';
 import type { PropType } from 'vue';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import {
     addComponent,
@@ -26,14 +27,13 @@ import {
     pageMethods,
 } from 'tdp-editor-types/constant/injectKeys';
 import { EnumAppMode } from 'tdp-editor-types/enum';
-import type { IPageState } from 'tdp-editor-types/interface/components/page';
 import FdComponent from './component';
 import moment from 'moment';
 
 const props = defineProps({
     json: {
         required: true,
-        type: Object as PropType<IPageState>,
+        type: Object as PropType<IComponentState>,
     },
     appMode: {
         required: true,

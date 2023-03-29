@@ -1,7 +1,7 @@
 import type { VNode } from 'vue';
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
-import type { IMenus, IPageStoreState } from 'tdp-editor-types/interface/store';
+import type { IMenusStore, IPageStore } from 'tdp-editor-types/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import {
     OrderedListOutlined,
@@ -112,7 +112,7 @@ export default defineComponent({
                                 display: MENUS[0].list![0].selected === true ? 'block' : 'none',
                             }}
                         >
-                            {(this.pages as IPageStoreState[]).map(c => {
+                            {(this.pages as IPageStore[]).map(c => {
                                 return (
                                     <li
                                         class={classnames({
@@ -178,7 +178,7 @@ export default defineComponent({
             const icon = node.icons || '';
             return <i class={`iconfont ${icon}`}></i>;
         },
-        selectFirstMenu(menu: IMenus): void {
+        selectFirstMenu(menu: IMenusStore): void {
             useLeftMenuStore().setSelectMenu({ menu });
         },
         selectPage(pageId: string): void {

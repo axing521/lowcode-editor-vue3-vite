@@ -2,7 +2,7 @@ import { toRaw } from 'vue';
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/enum';
-import type { IAppStoreState } from 'tdp-editor-types/interface/store';
+import type { IAppStore } from 'tdp-editor-types/interface/store';
 import type { IAppSaveStruct } from 'tdp-editor-types/interface/app';
 
 import { useAppStore } from '../stores/appStore';
@@ -13,7 +13,7 @@ export default class AppController {
         this.$app = app;
         this.$pinia = pinia;
     }
-    initApp(appJson: IAppStoreState) {
+    initApp(appJson: IAppStore) {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = appJson.pages;
         appStore.activePage = appJson.activePage || appJson.pages[0];

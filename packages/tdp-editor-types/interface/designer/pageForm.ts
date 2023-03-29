@@ -1,5 +1,5 @@
 import type { EnumComponentType } from '../../enum/components';
-import type { IFormRules } from '../components/form';
+import type { IFormRules } from '../app/form';
 
 export interface IPageForm {
     key: string;

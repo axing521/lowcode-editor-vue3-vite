@@ -6,7 +6,7 @@ import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IAppSaveStruct } from 'tdp-editor-types/interface/app';
-import type { IPageStoreState } from 'tdp-editor-types/interface/store';
+import type { IPageStore } from 'tdp-editor-types/interface/store';
 
 import { EnumComponentType } from 'tdp-editor-types/enum/components';
 import { useEditorStore } from '../stores/editorStore';
@@ -53,7 +53,7 @@ export default class EditorController {
                 ...p,
                 submitState: 'saved',
                 selected: false,
-            } as IPageStoreState;
+            } as IPageStore;
         });
         appStore.activePage = appStore.pages.find(c => c.key === localData.defaultPageKey);
         if (appStore.activePage) {
@@ -96,7 +96,7 @@ export default class EditorController {
         await setDataAsync(db, data).catch();
     }
     // 导入配置文件
-    importConfig(payload: { pages: IPageStoreState[] }) {
+    importConfig(payload: { pages: IPageStore[] }) {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = payload.pages;
         if (appStore.pages && appStore.pages.length) {
@@ -104,7 +104,7 @@ export default class EditorController {
         }
     }
     // 添加页面
-    addPage(payload?: { page?: IPageStoreState }) {
+    addPage(payload?: { page?: IPageStore }) {
         const appStore = useAppStore(this.$pinia);
         const editorStore = useEditorStore(this.$pinia);
         if (payload && payload.page) {
@@ -124,7 +124,7 @@ export default class EditorController {
             appStore.pages.splice(index, 1);
         }
     }
-    initAppPages(payload: { pages: IPageStoreState[] }) {
+    initAppPages(payload: { pages: IPageStore[] }) {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = payload.pages;
         if (payload.pages.length) {

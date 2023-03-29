@@ -7,7 +7,7 @@ import { EnumApiType } from 'tdp-editor-types/enum/components';
 import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
 import type { EnumHttpMethod } from 'tdp-editor-types/enum';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import type { IComponentApi } from 'tdp-editor-types/interface/components';
+import type { IComponentApi } from 'tdp-editor-types/interface/app/components';
 import type {
     IDataModlerApiDetail,
     IDataModlerApiResponse,

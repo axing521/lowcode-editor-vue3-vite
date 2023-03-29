@@ -1,38 +1,37 @@
 import type { EnumAppMode } from '../../enum';
-import type { IPageProps } from '../components/page';
 import type { IDesignerComponent } from '../designer';
 import type { IPageForm } from '../designer/pageForm';
 
 // page Module对象定义
-export interface IPageStoreState extends IDesignerComponent<IPageProps> {
+export interface IPageStore extends IDesignerComponent {
     submitState: 'unsaved' | 'saved' | 'submited';
     selected?: boolean;
 }
 
 // App Module对象定义
-export interface IAppStoreState {
+export interface IAppStore {
     mode: EnumAppMode;
-    pages: IPageStoreState[]; // 所有页面
+    pages: IPageStore[]; // 所有页面
     pageForms: Map<string, IPageForm>;
-    activePage?: IPageStoreState; // 当前显示页面
+    activePage?: IPageStore; // 当前显示页面
 }
 
-export interface IEditorStoreState {
+export interface IEditorStore {
     // selectedPageComponentList: IDesignerComponent[]; // 当前页面所有组件列表
     selectedComponent?: IDesignerComponent; // 当前页面所选择的组件
     dragComponent?: IDesignerComponent;
     componentList: IDesignerComponent[]; // 所有组件列表，用于左侧拖动面板展示
 }
 
-export interface IMenus {
+export interface IMenusStore {
     level: number;
     key: string;
     title: string;
     icon?: string;
-    list?: IMenus[];
+    list?: IMenusStore[];
     selected?: boolean;
 }
-export interface ILeftMenuStoreState {
-    menus: IMenus[];
+export interface ILeftMenuStore {
+    menus: IMenusStore[];
     selectedMenuId: string;
 }

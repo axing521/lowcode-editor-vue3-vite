@@ -49,7 +49,7 @@ import Draggable from 'vuedraggable';
 
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import ComponentWrapper from '../componentWrapper.vue';
 
 const props = defineProps<{

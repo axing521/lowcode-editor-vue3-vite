@@ -3,7 +3,7 @@ import type { PropType } from 'vue';
 import { DeleteOutlined } from '@ant-design/icons-vue';
 import './index.less';
 
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import { EnumEventType } from 'tdp-editor-types/enum/components';
 
 import { eventFactory } from 'tdp-editor-utils';

@@ -1,7 +1,7 @@
 import type { ComponentPublicInstance } from 'vue';
 import type { EnumComponentType } from '../../enum/components';
 import type { EnumRuleType } from '../../enum/components/form';
-import type { IComponentState } from './index';
+import type { IComponentState } from '../app/components';
 
 export interface IFormInfo {
     formFieldName: string;

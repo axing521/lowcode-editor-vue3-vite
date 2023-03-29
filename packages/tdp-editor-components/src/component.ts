@@ -1,7 +1,7 @@
 import type { ComponentPublicInstance } from 'vue';
 import type { EnumCssProerty } from 'tdp-editor-types/enum/designer';
 
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 
 import { propsFactory, cssFactory } from 'tdp-editor-utils';
 export default class FdComponent {
@@ -19,7 +19,7 @@ export default class FdComponent {
     // 获取组件属性
     public getProps = (name: string): any => {
         if (this.$$ref && this.$state) {
-            return propsFactory.getPropsValue(this.$state, name) || '';
+            return propsFactory.getPropsValue<any, string>(this.$state, name) || '';
         } else {
             return '';
         }
@@ -27,7 +27,7 @@ export default class FdComponent {
     // 设置组件属性
     public setProps = (name: string, value: any): void => {
         if (this.$$ref && this.$state) {
-            propsFactory.setPropsValue(this.$state, name, value);
+            propsFactory.setPropsValue<any, string>(this.$state, name, value);
         }
     };
     // 获取组件属性

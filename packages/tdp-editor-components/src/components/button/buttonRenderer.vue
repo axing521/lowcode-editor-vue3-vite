@@ -20,7 +20,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type { IButtonProps } from './interface';
 
 const allProps = defineProps<{

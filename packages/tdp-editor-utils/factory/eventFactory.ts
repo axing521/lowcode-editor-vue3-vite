@@ -1,4 +1,4 @@
-import type { IComponentState, IComponentEvent } from 'tdp-editor-types/interface/components';
+import type { IComponentState, IComponentEvent } from 'tdp-editor-types/interface/app/components';
 import type { EnumEventType } from 'tdp-editor-types/enum/components';
 
 const EventFactory = {

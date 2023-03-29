@@ -110,7 +110,7 @@
 </style>
 <script lang="ts" setup>
 import { ref, reactive, computed } from 'vue';
-import type { IPageStoreState } from 'tdp-editor-types/interface/store';
+import type { IPageStore } from 'tdp-editor-types/interface/store';
 import { useEditorControler } from 'tdp-editor-utils/controller';
 
 enum EnumPageType {
@@ -173,7 +173,7 @@ const clickOk = () => {
             page: {
                 label: pageName.value,
                 code: pageCode.value,
-            } as IPageStoreState,
+            } as IPageStore,
         });
         $emit('update:visible', false);
         resetForm();

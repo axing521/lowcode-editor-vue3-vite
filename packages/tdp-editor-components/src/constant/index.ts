@@ -1,4 +1,4 @@
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type { PropType } from 'vue';
 
 export const COMPONENTCOMMONPROPS = {

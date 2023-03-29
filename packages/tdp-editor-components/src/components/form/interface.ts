@@ -1,4 +1,4 @@
-import type { IComponentState } from 'tdp-editor-types/interface/components';
+import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type { EnumComponentType } from 'tdp-editor-types/enum/components';
 export interface IFormState extends IComponentState<IFormProps> {
     type: EnumComponentType.form;

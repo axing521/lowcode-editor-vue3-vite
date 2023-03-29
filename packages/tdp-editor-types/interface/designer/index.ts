@@ -1,5 +1,5 @@
 import type { VNode } from 'vue';
-import type { IComponentProps, IComponentState } from '../components';
+import type { IComponentProps, IComponentState } from '../app/components';
 import type { EnumCssProerty, EnumSelectorName } from '../../enum/designer';
 import type { EnumPropsValueType } from '../../enum/components';
 
