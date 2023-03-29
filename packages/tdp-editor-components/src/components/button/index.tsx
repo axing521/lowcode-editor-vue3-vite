@@ -2,6 +2,8 @@ import { defineAsyncComponent } from 'vue';
 import {
     EnumComponentGroup,
     EnumComponentType,
+    EnumEventName,
+    EnumEventType,
     EnumPropsValueType,
 } from 'tdp-editor-types/enum/components';
 import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
@@ -111,6 +113,7 @@ export const register: registerComponentFunc = function () {
                 },
             },
         ],
+        eventConfigs: [{ eventName: EnumEventName.click, eventTypes: [EnumEventType.script] }],
     };
     return button;
 };

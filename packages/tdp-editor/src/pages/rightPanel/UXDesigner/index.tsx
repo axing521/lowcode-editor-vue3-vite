@@ -1,14 +1,21 @@
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
+import type { IDesignerComponent } from '@/tdp-editor-types/interface/designer';
+
 import { DeleteOutlined } from '@ant-design/icons-vue';
 import './index.less';
 
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import { EnumEventName, EnumEventType } from 'tdp-editor-types/enum/components';
 
 import { eventFactory } from 'tdp-editor-utils';
 
 import pm from '../paramsModal.vue';
+
+type TEventList = {
+    key: EnumEventName,
+    label: EnumEventName,
+    types: EnumEventType[]
+};
 
 export default defineComponent({
     name: 'designer-ux-panel',
@@ -18,28 +25,40 @@ export default defineComponent({
     },
     props: {
         element: {
-            type: Object as PropType<IComponentState>,
+            type: Object as PropType<IDesignerComponent>,
             required: false,
         },
     },
     data() {
         return {
             showPm: false,
-            eventTypeList: [
-                { key: EnumEventName.click, label: EnumEventName.click },
-                { key: EnumEventName.focus, label: EnumEventName.focus },
-                { key: EnumEventName.mouseOver, label: EnumEventName.mouseOver },
-                { key: EnumEventName.mouseLeave, label: EnumEventName.mouseLeave },
-                { key: EnumEventName.change, label: EnumEventName.change },
-            ],
             eventIndex: 0,
         };
+    },
+    computed: {
+        eventList(): TEventList[] {
+            if (this.element && this.element.eventConfigs) {
+                const eventList: TEventList[] = [];
+                this.element.eventConfigs.forEach(config => {
+                    eventList.push({
+                        key: config.eventName,
+                        label: config.eventName,
+                        types: config.eventTypes
+                    });
+                });
+                return eventList;
+            }
+            else {
+                return [];
+            }
+        }
     },
     methods: {
         // 添加事件
         addEvent() {
+            if (!this.eventList.length) return false;
             eventFactory.pushEvent(this.element!, {
-                eventName: this.eventTypeList[0].key,
+                eventName: this.eventList[0].key,
                 eventType: EnumEventType.script,
                 funcName: '',
                 funcStr: '',
@@ -69,7 +88,7 @@ export default defineComponent({
                         <div class="item">
                             <div class="label">
                                 <a-select v-model={event.eventName}>
-                                    {this.eventTypeList.map(name => (
+                                    {this.eventList.map(name => (
                                         <a-select-option value={name.key}>
                                             {name.label}
                                         </a-select-option>
