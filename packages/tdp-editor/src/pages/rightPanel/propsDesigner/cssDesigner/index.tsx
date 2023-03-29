@@ -26,7 +26,6 @@ export default defineComponent({
             required: false,
         },
     },
-    monacoEditor: 123123,
     data() {
         return {
             showMonaco: false,

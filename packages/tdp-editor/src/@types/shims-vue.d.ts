@@ -16,5 +16,6 @@ interface Window {
 namespace NodeJS {
     interface ProcessEnv {
         VITE_APP_VERSION: string;
+        VITE_APP_ENV: 'localhost' | 'development' | 'uat' | 'production'
     }
 }

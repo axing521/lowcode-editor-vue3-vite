@@ -103,12 +103,13 @@
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import type { PropType } from 'vue';
+import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor';
 
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
-monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
+
+let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
 enum EnumParamType {
     params = 'params',
     function = 'function',
@@ -123,6 +124,10 @@ export default defineComponent({
         visible: {
             required: true,
             type: Boolean,
+        },
+        eventIndex: {
+            required: true,
+            type: Number,
         },
     },
     computed: {
@@ -158,35 +163,35 @@ export default defineComponent({
             return paramInfo;
         },
     },
+    beforeUnmount() {
+        if (monacoEditor) {
+            monacoEditor.dispose();
+        }
+    },
     data() {
         return {
             // 标识用户选中的是 [变量] 还是 [方法]
             checkedType: EnumParamType.params,
             // 标识用户选中的 变量 或者 方法 名
             checkedParamName: '',
-            monacoEditor: undefined as monaco.editor.IStandaloneCodeEditor | undefined,
         };
     },
     methods: {
         initMonaco() {
-            /* 设置提示信息
+            // 设置提示信息
             monaco.languages.typescript.typescriptDefaults.addExtraLib(
-                `declare var $event: Event;
-                declare class FdComponent {
-                    constructor(key: string, componentInstance: Vue | undefined);
-                    public readonly $key?: string;
-                    private readonly $state?: IComponentState;
-                    private readonly $$ref?: Vue;
-                    public getProps: (name: string) => any;
-                    public setProps: (name: string, value: any) => void;
-                    public getCss: (name: EnumCssProerty) => string;
-                    public setCss: (name: EnumCssProerty, value: string) => void;
+                `
+                interface IEvent {
+                    $g: Record<string, any>;
+                    $p: Record<string, any>;
                 }
-                declare var getComponent: (key: string) => FdComponent;`
+                declare var $event: IEvent;
+                declare var $info: Record<string, any>;
+                `
             );
-            */
-            if (!this.monacoEditor) {
-                this.monacoEditor = monaco.editor.create(
+
+            if (!monacoEditor) {
+                monacoEditor = monaco.editor.create(
                     document.getElementById('fd_designer_paramsmodal_monaco')!,
                     {
                         language: 'typescript',
@@ -202,23 +207,33 @@ export default defineComponent({
         },
         checkParam(name: string) {
             this.checkedParamName = name;
-            if (!this.monacoEditor) return;
+            if (!monacoEditor) return;
             if (this.checkedType === 'params') {
                 const param = this.paramsList.find(p => p.name === name);
-                this.monacoEditor.setValue(param!.value);
+                monacoEditor.setValue(param!.value);
             } else if (this.checkedType === 'function') {
                 const param = this.functionsList.find(f => f.name === name);
-                this.monacoEditor.setValue(param!.value);
+                monacoEditor.setValue(param!.value);
             }
         },
         saveParamValue() {
-            if (this.selectedPage && this.monacoEditor) {
-                const value = this.monacoEditor.getValue();
-                if (this.checkedType === 'params') {
-                    this.selectedPage.props!.pageData.value[this.checkedParamName] = value;
-                } else if (this.checkedType === 'function') {
-                    this.selectedPage.props!.pageMethods.value[this.checkedParamName] = value;
-                }
+            // if (this.selectedPage && this.monacoEditor) {
+            //     const value = this.monacoEditor.getValue();
+            //     if (this.checkedType === 'params') {
+            //         this.selectedPage.props!.pageData.value[this.checkedParamName] = value;
+            //     } else if (this.checkedType === 'function') {
+            //         this.selectedPage.props!.pageMethods.value[this.checkedParamName] = value;
+            //     }
+            // }
+            if (
+                monacoEditor &&
+                this.element &&
+                this.element.events &&
+                this.element.events[this.eventIndex]
+            ) {
+                const value = monacoEditor.getValue();
+                const eventInfo = this.element.events[this.eventIndex];
+                eventInfo.funcStr = value;
             }
         },
         setParam() {
@@ -237,6 +252,14 @@ export default defineComponent({
                 nextTick(() => {
                     this.initMonaco();
                 });
+            }
+        },
+        eventIndex(val: number, oldVal: number) {
+            if (this.element && val > -1 && val !== oldVal) {
+                if (monacoEditor && this.element.events && this.element.events[this.eventIndex]) {
+                    const eventInfo = this.element.events[this.eventIndex];
+                    monacoEditor.setValue(eventInfo.funcStr);
+                }
             }
         },
     },

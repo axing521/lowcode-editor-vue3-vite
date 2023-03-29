@@ -79,7 +79,7 @@ export default defineComponent({
         dragCloneData(originData: IDesignerComponent) {
             const newId = utils.$getUUID(originData.type);
             // eslint-disable-next-line
-            const { propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
+            const { eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
             const newComponent = {
                 ...newProps,
                 key: newId,

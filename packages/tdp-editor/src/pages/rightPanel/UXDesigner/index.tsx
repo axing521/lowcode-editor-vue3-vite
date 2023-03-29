@@ -1,15 +1,14 @@
 import { defineComponent } from 'vue';
+import { mapState } from 'pinia';
 import type { PropType } from 'vue';
-import type { IDesignerComponent } from '@/tdp-editor-types/interface/designer';
-
-import { DeleteOutlined } from '@ant-design/icons-vue';
+import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import './index.less';
 
+import { DeleteOutlined } from '@ant-design/icons-vue';
 import { EnumEventName, EnumEventType } from 'tdp-editor-types/enum/components';
-
 import { eventFactory } from 'tdp-editor-utils';
-
 import pm from '../paramsModal.vue';
+import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 
 type TEventList = {
     key: EnumEventName,
@@ -36,10 +35,19 @@ export default defineComponent({
         };
     },
     computed: {
+        ...mapState(useEditorStore, {
+            componentList: 'componentList',
+        }),
+        // 当前组件的所有属性
+        eventConfigs() {
+            if (!this.element) return [];
+            const comp = this.componentList.find(c => c.type === this.element!.type);
+            return (comp && comp.eventConfigs) || [];
+        },
         eventList(): TEventList[] {
-            if (this.element && this.element.eventConfigs) {
+            if (this.element && this.eventConfigs) {
                 const eventList: TEventList[] = [];
-                this.element.eventConfigs.forEach(config => {
+                this.eventConfigs.forEach(config => {
                     eventList.push({
                         key: config.eventName,
                         label: config.eventName,
@@ -87,7 +95,7 @@ export default defineComponent({
                     return (
                         <div class="item">
                             <div class="label">
-                                <a-select v-model={event.eventName}>
+                                <a-select v-model:value={event.eventName}>
                                     {this.eventList.map(name => (
                                         <a-select-option value={name.key}>
                                             {name.label}
@@ -124,6 +132,7 @@ export default defineComponent({
                 <pm
                     v-model:visible={this.showPm}
                     element={this.element}
+                    eventIndex={this.eventIndex}
                     forceRender={true}
                     onParamCheck={(info: any) => this.onParamCheck(info)}
                 />
@@ -131,3 +140,4 @@ export default defineComponent({
         );
     },
 });
+
