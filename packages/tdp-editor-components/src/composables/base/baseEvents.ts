@@ -15,6 +15,8 @@ type TExtendParams = () => Record<string, any>;
  * @returns 返回事件封装对象和方法等
  */
 export default function _useEvents(props: ISetupBaseProps, extendParams?: TExtendParams) {
+    const instance = getCurrentInstance();
+
     // 处理funcStr的原始事件map对象
     const eventsMapRaw = computed(() => {
         const _eventsMap: TEventsMapRaw = {} as TEventsMapRaw;
@@ -45,7 +47,6 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
     });
     // 可直接绑定到vue组件的事件对象
     const eventsMap = computed(() => {
-        const instance = getCurrentInstance();
         const _extendParams = extendParams ? extendParams() : undefined;
         return eventFactory.formatEventsMapRaw({
             eventsMapRaw: eventsMapRaw.value,
@@ -65,7 +66,6 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
         $event?: any; // vue事件原始$event对象
         extendParams?: Record<string, any>;
     }) => {
-        const instance = getCurrentInstance();
         eventFactory.triggerEvent({
             eventName: params.eventName,
             eventsMapRaw: eventsMapRaw.value,
