@@ -70,7 +70,7 @@ export interface IComponentEvent {
 }
 
 // 将IComponentEvent处理后的事件对象
-export type TEventsMapRaw = Map<
+export type TEventsMapRaw = Record<
     EnumEventName,
     {
         func: TEventFunc;
@@ -80,7 +80,7 @@ export type TEventsMapRaw = Map<
 >;
 
 // 将TEventsMapRaw处理后的事件对象，可直接绑定到组件v-on属性上
-export type TEventsMap = Map<EnumEventName, ($event: any) => void>;
+export type TEventsMap = Record<EnumEventName, ($event: any) => void>;
 
 export type TEventFunc = ($event: any, $info: Record<string, any>) => void;
 

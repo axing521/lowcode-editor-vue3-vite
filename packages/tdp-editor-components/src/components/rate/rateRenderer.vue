@@ -1,5 +1,5 @@
 <template>
-    <a-rate class="fd-rate" v-bind="allProps.props"></a-rate>
+    <a-rate class="fd-rate" v-bind="allProps.props" v-on="eventsMap"></a-rate>
 </template>
 
 <style lang="less">
@@ -22,7 +22,7 @@ import { defineComponent } from 'vue';
 import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type { IRateProps } from './interface';
 import { EnumComponentType } from 'tdp-editor-types/enum/components';
-import { useBaseLifecycle } from '../../composables/base';
+import { useBaseLifecycle, useBaseEvents } from '../../composables/base';
 
 const allProps = defineProps<{
     state: IComponentState<IRateProps>;
@@ -32,4 +32,6 @@ const allProps = defineProps<{
 }>();
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
+// 注册事件
+const { eventsMap } = useBaseEvents(allProps);
 </script>

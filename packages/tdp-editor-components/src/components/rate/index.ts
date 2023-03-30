@@ -4,6 +4,8 @@ import type { ISelectorSliderOptions } from 'tdp-editor-types/interface/designer
 import {
     EnumComponentGroup,
     EnumComponentType,
+    EnumEventName,
+    EnumEventType,
     EnumPropsValueType,
 } from 'tdp-editor-types/enum/components';
 import type {
@@ -11,7 +13,7 @@ import type {
     registerComponentFunc,
 } from 'tdp-editor-types/interface/designer';
 import type { IRateProps } from './interface';
-export default defineAsyncComponent(() => import('./rateRenderer.vue'));;
+export default defineAsyncComponent(() => import('./rateRenderer.vue'));
 
 export const register: registerComponentFunc = function () {
     const rate: IDesignerComponent<IRateProps> = {
@@ -48,6 +50,10 @@ export const register: registerComponentFunc = function () {
                     } as ISelectorSliderOptions,
                 },
             },
+        ],
+        eventConfigs: [
+            { eventName: EnumEventName.hoverChange, eventTypes: [EnumEventType.script] },
+            { eventName: EnumEventName.blur, eventTypes: [EnumEventType.script] },
         ],
     };
     return rate;

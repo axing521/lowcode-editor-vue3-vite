@@ -181,12 +181,15 @@ export default defineComponent({
             // 设置提示信息
             monaco.languages.typescript.typescriptDefaults.addExtraLib(
                 `
-                interface IEvent {
+                interface IInfo {
                     $g: Record<string, any>;
                     $p: Record<string, any>;
+                    e: any;
+                    comp: any;
+                    [key: string]: any;
                 }
-                declare var $event: IEvent;
-                declare var $info: Record<string, any>;
+                declare var $event: any;
+                declare var $info: IInfo;
                 `
             );
 

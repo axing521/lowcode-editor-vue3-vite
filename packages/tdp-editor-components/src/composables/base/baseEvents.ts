@@ -3,14 +3,21 @@ import type { EnumEventName } from 'tdp-editor-types/enum/components';
 import type {
     ISetupBaseProps,
     TEventFunc,
-    TEventsMap,
     TEventsMapRaw,
 } from 'tdp-editor-types/interface/app/components';
 import { computed, getCurrentInstance } from 'vue';
-export default function _useEvents(props: ISetupBaseProps) {
-    // 处理过的原始事件map对象
+
+type TExtendParams = () => Record<string, any>;
+/**
+ * 注册组件事件对象
+ * @param props 组件的属性
+ * @param extendParams 自定义事件扩展参数
+ * @returns 返回事件封装对象和方法等
+ */
+export default function _useEvents(props: ISetupBaseProps, extendParams?: TExtendParams) {
+    // 处理funcStr的原始事件map对象
     const eventsMapRaw = computed(() => {
-        const _eventsMap: TEventsMapRaw = new Map();
+        const _eventsMap: TEventsMapRaw = {} as TEventsMapRaw;
         if (props.state && !props.state.events) return _eventsMap;
         props.state.events!.forEach(eventInfo => {
             const eventFunc = new Function(
@@ -18,36 +25,35 @@ export default function _useEvents(props: ISetupBaseProps) {
                 '$info',
                 `try{${eventInfo.funcStr}}catch(e){console.warn(e);}`
             ) as TEventFunc;
-            if (_eventsMap.has(eventInfo.eventName)) {
-                _eventsMap.get(eventInfo.eventName)!.push({
+            if (_eventsMap[eventInfo.eventName]) {
+                _eventsMap[eventInfo.eventName].push({
                     func: eventFunc,
                     eventType: eventInfo.eventType,
                     funcName: eventInfo.funcName,
                 });
             } else {
-                _eventsMap.set(eventInfo.eventName, [
+                _eventsMap[eventInfo.eventName] = [
                     {
                         func: eventFunc,
                         eventType: eventInfo.eventType,
                         funcName: eventInfo.funcName,
                     },
-                ]);
+                ];
             }
         });
         return _eventsMap;
     });
-
+    // 可直接绑定到vue组件的事件对象
     const eventsMap = computed(() => {
-        const _eventsMap: TEventsMap = new Map();
         const instance = getCurrentInstance();
-        eventsMapRaw.value.forEach((value, key) => {
-            _eventsMap.set(key, function ($event: any) {
-                value.forEach(e => {
-                    e.func.call(instance, $event, { info: '额外信息' });
-                });
-            });
+        const _extendParams = extendParams ? extendParams() : undefined;
+        return eventFactory.formatEventsMapRaw({
+            eventsMapRaw: eventsMapRaw.value,
+            instance: instance,
+            $g: {},
+            $p: {},
+            extendParams: _extendParams,
         });
-        return _eventsMap;
     });
 
     /**

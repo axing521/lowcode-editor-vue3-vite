@@ -4,7 +4,7 @@
         :id="allProps.state.key"
         v-bind="allProps.props"
         :style="allProps.css"
-        :onClick="eventsMap.get(EnumEventName.click)"
+        v-on="eventsMap"
     >
         {{ allProps.props.text }}
     </a-button>
@@ -13,7 +13,7 @@
 import { defineComponent } from 'vue';
 import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import type { IButtonProps } from './interface';
-import { EnumComponentType, EnumEventName } from 'tdp-editor-types/enum/components';
+import { EnumComponentType } from 'tdp-editor-types/enum/components';
 import { useBaseEvents, useBaseLifecycle } from '../../composables/base';
 // 接收prop
 const allProps = defineProps<{
@@ -25,7 +25,11 @@ const allProps = defineProps<{
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 // 获取事件对象
-const { eventsMap } = useBaseEvents(allProps);
+const { eventsMap } = useBaseEvents(allProps, () => ({
+    click: {
+        text: allProps.props.text,
+    },
+}));
 </script>
 <script lang="ts">
 export default defineComponent({

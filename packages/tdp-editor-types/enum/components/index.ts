@@ -46,6 +46,8 @@ export enum EnumEventName {
     mouseLeave = 'mouseleave',
     focus = 'focus',
     change = 'change',
+    blur = 'blur',
+    hoverChange = 'hoverChange',
 }
 
 export enum EnumEventType {
