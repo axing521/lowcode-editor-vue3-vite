@@ -111,6 +111,70 @@ import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import { useVarControler } from 'tdp-editor-utils/controller';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
+// 设置提示信息
+monaco.languages.typescript.typescriptDefaults.addExtraLib(
+    `
+    interface IInfo {
+        $g: Record<string, any>;
+        $p: Record<string, any>;
+        e: any;
+        comp: any;
+        [key: string]: any;
+    }
+    declare var $event: any;
+    declare var $info: IInfo;
+    `
+);
+monaco.languages.registerCompletionItemProvider('typescript', {
+    provideCompletionItems(model, position) {
+        const varController = useVarControler();
+        const lineContent = model.getLineContent(position.lineNumber);
+        const range = {
+            startLineNumber: position.lineNumber,
+            endLineNumber: position.lineNumber,
+            startColumn: 1,
+            endColumn: 2,
+        };
+        console.log('lineContent', lineContent, lineContent.lastIndexOf('$info.$g.'));
+        const suggestions: monaco.languages.CompletionItem[] = [];
+        if (lineContent.lastIndexOf('$info.$g.') === lineContent.length - 9) {
+            const globalVars = varController.getGlobalVars();
+            for (const varKey in globalVars) {
+                if (Object.prototype.hasOwnProperty.call(globalVars, varKey)) {
+                    suggestions.push({
+                        label: varKey,
+                        range,
+                        kind: monaco.languages.CompletionItemKind['Property'],
+                        insertText: varKey,
+                    });
+                }
+            }
+        } else if (lineContent.lastIndexOf('$info.$p.') === lineContent.length - 8) {
+            const pageVars = varController.getCurrentPageVars();
+            for (const varKey in pageVars) {
+                if (Object.prototype.hasOwnProperty.call(pageVars, varKey)) {
+                    suggestions.push({
+                        label: varKey,
+                        range,
+                        kind: monaco.languages.CompletionItemKind['Property'],
+                        insertText: varKey,
+                    });
+                }
+            }
+        }
+        return {
+            suggestions: [
+                {
+                    label: 'test',
+                    kind: monaco.languages.CompletionItemKind['Property'],
+                    insertText: 'test',
+                    range,
+                },
+            ],
+        };
+    },
+    triggerCharacters: ['.', ' '],
+});
 enum EnumParamType {
     params = 'params',
     function = 'function',
@@ -181,21 +245,6 @@ export default defineComponent({
     },
     methods: {
         initMonaco() {
-            // 设置提示信息
-            monaco.languages.typescript.typescriptDefaults.addExtraLib(
-                `
-                interface IInfo {
-                    $g: Record<string, any>;
-                    $p: Record<string, any>;
-                    e: any;
-                    comp: any;
-                    [key: string]: any;
-                }
-                declare var $event: any;
-                declare var $info: IInfo;
-                `
-            );
-
             if (!monacoEditor) {
                 monacoEditor = monaco.editor.create(
                     document.getElementById('fd_designer_paramsmodal_monaco')!,
