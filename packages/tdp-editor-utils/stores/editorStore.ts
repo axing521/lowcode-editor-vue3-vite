@@ -3,11 +3,7 @@
  * 只处理editor state的相关方法，如果需要处理其他store中的数据，则要将方法放到对应的EditorController中
  */
 import { defineStore } from 'pinia';
-import {
-    EnumComponentType,
-    EnumComponentGroup,
-    EnumPropsValueType,
-} from 'tdp-editor-types/enum/components';
+import { EnumComponentType, EnumComponentGroup } from 'tdp-editor-types/enum/components';
 
 import type { IPageStore, IEditorStore } from 'tdp-editor-types/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
@@ -132,20 +128,6 @@ const getDefaultPageModule = (
         group: EnumComponentGroup.page,
         selected: false,
         submitState: 'unsaved',
-        props: {
-            pageData: {
-                type: EnumPropsValueType.object,
-                value: {
-                    text: 'testExpression',
-                },
-            },
-            pageMethods: {
-                type: EnumPropsValueType.object,
-                value: {
-                    setText: `this.pageData.text = new Date().toLocaleTimeString();`,
-                },
-            },
-        },
         list: [],
     };
     // const formState = state.componentList.find(c => c.type === EnumComponentType.form);

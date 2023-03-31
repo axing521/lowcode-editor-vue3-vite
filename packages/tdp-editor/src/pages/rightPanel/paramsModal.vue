@@ -108,6 +108,7 @@ import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor';
 
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
+import { useVarControler } from 'tdp-editor-utils/controller';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
 enum EnumParamType {
@@ -134,12 +135,14 @@ export default defineComponent({
         ...mapState(useAppStore, {
             selectedPage: 'activePage',
         }),
-        paramsList(): any[] {
-            const result = [];
-            if (this.selectedPage) {
-                const pageData = this.selectedPage.props?.pageData.value;
-                for (const key in pageData) {
-                    result.push({ name: key, value: pageData[key] });
+        paramsList(): { name: string; value: any }[] {
+            const result: { name: string; value: any }[] = [];
+            const vars = useVarControler().getCurrentPageVars();
+            if (!vars) return result;
+            for (const varKey in vars) {
+                if (Object.prototype.hasOwnProperty.call(vars, varKey)) {
+                    const element = vars[varKey];
+                    result.push({ name: varKey, value: element });
                 }
             }
             return result;
@@ -220,14 +223,6 @@ export default defineComponent({
             }
         },
         saveParamValue() {
-            // if (this.selectedPage && this.monacoEditor) {
-            //     const value = this.monacoEditor.getValue();
-            //     if (this.checkedType === 'params') {
-            //         this.selectedPage.props!.pageData.value[this.checkedParamName] = value;
-            //     } else if (this.checkedType === 'function') {
-            //         this.selectedPage.props!.pageMethods.value[this.checkedParamName] = value;
-            //     }
-            // }
             if (
                 monacoEditor &&
                 this.element &&

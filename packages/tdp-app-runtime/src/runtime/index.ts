@@ -16,13 +16,6 @@ const testData = {
                 group: '-1',
                 selected: true,
                 submitState: 'unsaved',
-                props: {
-                    pageData: { type: 'object', value: { text: 'testExpression' } },
-                    pageMethods: {
-                        type: 'object',
-                        value: { setText: 'this.pageData.text = new Date().toLocaleTimeString();' },
-                    },
-                },
                 list: [
                     {
                         key: 'FdForm_adNCEwuCQvmeXGHa',
@@ -98,13 +91,6 @@ const testData = {
             group: '-1',
             selected: true,
             submitState: 'unsaved',
-            props: {
-                pageData: { type: 'object', value: { text: 'testExpression' } },
-                pageMethods: {
-                    type: 'object',
-                    value: { setText: 'this.pageData.text = new Date().toLocaleTimeString();' },
-                },
-            },
             list: [
                 {
                     key: 'FdForm_adNCEwuCQvmeXGHa',

@@ -6,8 +6,6 @@ import {
     removeComponent,
     getComponentByKey,
     getAppMode,
-    pageData,
-    pageMethods,
 } from 'tdp-editor-types/constant/injectKeys';
 
 import { inject } from 'vue';
@@ -35,14 +33,6 @@ export default function useBaseInject() {
         getAppMode: inject(getAppMode, () => {
             warn('inject default: getAppMode ------------->');
             return EnumAppMode.runtime;
-        }),
-        pageData: inject(pageData, () => {
-            warn('inject default: pageData ------------->');
-            return {};
-        }),
-        pageMethods: inject(pageMethods, () => {
-            warn('inject default: pageMethods ------------->');
-            return {};
         }),
     };
 }

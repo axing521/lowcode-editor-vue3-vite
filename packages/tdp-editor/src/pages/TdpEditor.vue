@@ -153,13 +153,14 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
-import { useAppControler, useEditorControler } from 'tdp-editor-utils/controller';
+import { useAppControler, useEditorControler, useVarControler } from 'tdp-editor-utils/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
 import DesignerLeft from './leftPanel';
 import DesignerRight from './rightPanel';
 import DesignerMain from './mainPanel';
+import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/enum/app/vars';
 
 (window as any).MonacoEnvironment = {
     getWorker(_: any, label: any) {
@@ -183,9 +184,22 @@ const showRight = ref(true); // 是否显示右侧面板
 const showLeft = ref(true); // 是否显示左侧面板
 const thisRefs = {} as any;
 
-onMounted(() => {
+onMounted(async () => {
     // editorStore.initDesignerPage();
-    editorController.initEditorAsync();
+    await editorController.initEditorAsync();
+    const varController = useVarControler();
+    varController.addVar({
+        type: EnumAppVarType.Normal,
+        data: { itcode: 'liuyc14' },
+        name: 'app',
+        scope: EnumAppVarScope.Global,
+    });
+    varController.addVar({
+        type: EnumAppVarType.Normal,
+        data: { text: '变量中的text' },
+        name: 'button',
+        scope: EnumAppVarScope.Page,
+    });
 });
 
 // 编辑器的所有页面

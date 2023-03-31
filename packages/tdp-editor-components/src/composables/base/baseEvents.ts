@@ -1,11 +1,12 @@
-import { eventFactory } from 'tdp-editor-utils';
+import { computed, getCurrentInstance } from 'vue';
 import type { EnumEventName } from 'tdp-editor-types/enum/components';
 import type {
     ISetupBaseProps,
     TEventFunc,
     TEventsMapRaw,
 } from 'tdp-editor-types/interface/app/components';
-import { computed, getCurrentInstance } from 'vue';
+import { eventFactory } from 'tdp-editor-utils';
+import { useVarControler } from 'tdp-editor-utils/controller';
 
 type TExtendParams = () => Record<string, any>;
 /**
@@ -16,6 +17,7 @@ type TExtendParams = () => Record<string, any>;
  */
 export default function _useEvents(props: ISetupBaseProps, extendParams?: TExtendParams) {
     const instance = getCurrentInstance();
+    const varController = useVarControler();
 
     // 处理funcStr的原始事件map对象
     const eventsMapRaw = computed(() => {
@@ -51,8 +53,8 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
         return eventFactory.formatEventsMapRaw({
             eventsMapRaw: eventsMapRaw.value,
             instance: instance,
-            $g: {},
-            $p: {},
+            $g: varController.getGlobalVars(),
+            $p: varController.getCurrentPageVars(),
             extendParams: _extendParams,
         });
     });
@@ -70,8 +72,8 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
             eventName: params.eventName,
             eventsMapRaw: eventsMapRaw.value,
             instance: instance,
-            $g: {},
-            $p: {},
+            $g: varController.getGlobalVars(),
+            $p: varController.getCurrentPageVars(),
             $event: params.$event,
             extendParams: params.extendParams,
         });

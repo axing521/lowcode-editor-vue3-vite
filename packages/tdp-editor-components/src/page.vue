@@ -14,7 +14,7 @@
 </style>
 
 <script lang="ts" setup>
-import { reactive, provide, ref } from 'vue';
+import { reactive, provide } from 'vue';
 import type { PropType } from 'vue';
 import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
@@ -23,8 +23,6 @@ import {
     removeComponent,
     getAppMode,
     getComponentByKey,
-    pageData,
-    pageMethods,
 } from 'tdp-editor-types/constant/injectKeys';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import FdComponent from './component';
@@ -41,21 +39,9 @@ const props = defineProps({
         default: () => EnumAppMode.runtime,
     },
 });
-
 // 当前页面所有组件的实例集合
 const components = reactive<Map<string, FdComponent>>(new Map());
-// 当前页面所有的页面级变量
-const __pageData = reactive<Record<string, any>>(props.json!.props!.pageData.value);
-// 当前页面所有的方法
-const methods = props.json!.props!.pageMethods.value;
-const _methods: any = {};
-for (const key in methods) {
-    _methods[key] = new Function(methods[key]).bind(this);
-}
-const __pageMethods = ref(reactive<Record<string, any>>(_methods));
 
-provide(pageData, __pageData);
-provide(pageMethods, __pageMethods);
 provide(getAppMode, () => {
     return props.appMode;
 });

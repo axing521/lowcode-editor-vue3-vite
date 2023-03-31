@@ -15,6 +15,7 @@ import type { IComponentState } from 'tdp-editor-types/interface/app/components'
 import type { IButtonProps } from './interface';
 import { EnumComponentType } from 'tdp-editor-types/enum/components';
 import { useBaseEvents, useBaseLifecycle } from '../../composables/base';
+
 // 接收prop
 const allProps = defineProps<{
     state: IComponentState<IButtonProps>;

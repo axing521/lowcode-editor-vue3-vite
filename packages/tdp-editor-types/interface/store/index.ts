@@ -14,6 +14,12 @@ export interface IAppStore {
     pages: IPageStore[]; // 所有页面
     pageForms: Map<string, IPageForm>;
     activePage?: IPageStore; // 当前显示页面
+    header?: IDesignerComponent;
+    leftSide?: IDesignerComponent;
+    rightSide?: IDesignerComponent;
+    footer?: IDesignerComponent;
+    globalVars: Record<string, any>; // { 变量名：变量值 }
+    pageVars: Record<string, Record<string, any>>; // { 页面名: { 变量名：变量值 } }
 }
 
 export interface IEditorStore {

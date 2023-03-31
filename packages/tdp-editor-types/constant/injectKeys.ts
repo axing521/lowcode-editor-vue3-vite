@@ -28,8 +28,3 @@ export const getFdFormFields = Symbol('getFdFormFields') as InjectionKey<getFdFo
 // 表单提交方法
 type formSubmitedType = (success: boolean, message: string) => void;
 export const formSubmited = Symbol('formSubmited') as InjectionKey<formSubmitedType>;
-
-// 页面变量
-export const pageData = Symbol('pageData') as InjectionKey<Record<string, any>>;
-// 页面方法
-export const pageMethods = Symbol('pageMethods') as InjectionKey<Record<string, any>>;

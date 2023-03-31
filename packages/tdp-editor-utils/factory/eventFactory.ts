@@ -38,7 +38,7 @@ const EventFactory = {
         eventName: EnumEventName;
         eventsMapRaw: TEventsMapRaw;
         $g: Record<string, any>;
-        $p: Record<string, any>;
+        $p?: Record<string, any>;
         instance: ComponentInternalInstance | null;
         $event?: any;
         extendParams?: Record<string, any>;
@@ -71,7 +71,7 @@ const EventFactory = {
     formatEventsMapRaw(params: {
         eventsMapRaw: TEventsMapRaw;
         $g: Record<string, any>;
-        $p: Record<string, any>;
+        $p?: Record<string, any>;
         instance: ComponentInternalInstance | null;
         extendParams?: Record<string, any>;
     }) {

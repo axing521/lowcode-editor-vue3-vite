@@ -10,6 +10,8 @@ export const useAppStore = defineStore('appStore', {
             pages: [],
             pageForms: new Map(),
             activePage: undefined,
+            globalVars: {},
+            pageVars: {},
         };
     },
     actions: {

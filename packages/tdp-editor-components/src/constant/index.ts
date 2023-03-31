@@ -12,14 +12,4 @@ export const COMPONENTCOMMONPROPS = {
         required: true,
         default: () => '',
     },
-    pageData: {
-        type: Object,
-        required: true,
-        default: () => ({}),
-    },
-    pageMethod: {
-        type: Object,
-        required: true,
-        default: () => ({}),
-    },
 };
