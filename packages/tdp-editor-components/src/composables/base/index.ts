@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import type { ISetupBaseProps } from 'tdp-editor-types/interface/app/components';
 import { propsFactory } from 'tdp-editor-utils';
 import { EnumAppMode } from 'tdp-editor-types/enum';
@@ -14,7 +14,7 @@ export { default as useBaseWatch } from './baseWatch';
 
 function useBaseIndex(props: ISetupBaseProps) {
     const injects = useBaseInject();
-    const { getExpression, getFunction } = useVars();
+    const { getExpression } = useVars();
     // 处理后的css
     const c_Css = computed<Record<string, string>>(() => {
         return {
@@ -26,9 +26,11 @@ function useBaseIndex(props: ISetupBaseProps) {
         };
     });
 
-    // 处理后的组件属性
+    // 处理后的组件属性，返回一个reactive对象，用于动态改变组件内部属性
     const c_Props = computed<any>(() => {
-        return propsFactory.formatProps(props.state.props!, getExpression, getFunction);
+        return reactive(
+            propsFactory.formatProps(props.state.props!, getExpression, (() => {}) as any)
+        );
     });
 
     // 是否设计模式
