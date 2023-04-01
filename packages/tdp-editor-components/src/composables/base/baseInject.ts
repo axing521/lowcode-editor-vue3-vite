@@ -6,6 +6,7 @@ import {
     removeComponent,
     getComponentByKey,
     getAppMode,
+    getComponentsMap,
 } from 'tdp-editor-types/constant/injectKeys';
 
 import { inject } from 'vue';
@@ -33,6 +34,11 @@ export default function useBaseInject() {
         getAppMode: inject(getAppMode, () => {
             warn('inject default: getAppMode ------------->');
             return EnumAppMode.runtime;
+        }),
+        // 获取当前页面的组件Map对象
+        getPageComponentsMap: inject(getComponentsMap, () => {
+            warn('inject default: getPageComponentsMap ------------->');
+            return new Map<string, ComponentPublicInstance>();
         }),
     };
 }

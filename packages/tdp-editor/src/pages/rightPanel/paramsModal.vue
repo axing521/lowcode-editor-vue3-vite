@@ -135,7 +135,6 @@ monaco.languages.registerCompletionItemProvider('typescript', {
             startColumn: 1,
             endColumn: 2,
         };
-        console.log('lineContent', lineContent, lineContent.lastIndexOf('$info.$g.'));
         const suggestions: monaco.languages.CompletionItem[] = [];
         if (lineContent.lastIndexOf('$info.$g.') === lineContent.length - 9) {
             const globalVars = varController.getGlobalVars();

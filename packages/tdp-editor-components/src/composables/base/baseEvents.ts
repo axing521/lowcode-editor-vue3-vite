@@ -7,6 +7,7 @@ import type {
 } from 'tdp-editor-types/interface/app/components';
 import { eventFactory } from 'tdp-editor-utils';
 import { useVarControler } from 'tdp-editor-utils/controller';
+import useBaseInject from './baseInject';
 
 type TExtendParams = () => Record<string, any>;
 /**
@@ -18,6 +19,7 @@ type TExtendParams = () => Record<string, any>;
 export default function _useEvents(props: ISetupBaseProps, extendParams?: TExtendParams) {
     const instance = getCurrentInstance();
     const varController = useVarControler();
+    const { getPageComponentsMap } = useBaseInject();
 
     // 处理funcStr的原始事件map对象
     const eventsMapRaw = computed(() => {
@@ -52,6 +54,7 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
         const _extendParams = extendParams ? extendParams() : undefined;
         return eventFactory.formatEventsMapRaw({
             eventsMapRaw: eventsMapRaw.value,
+            comps: getPageComponentsMap(),
             instance: instance,
             $g: varController.getGlobalVars(),
             $p: varController.getCurrentPageVars(),
@@ -71,6 +74,7 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
         eventFactory.triggerEvent({
             eventName: params.eventName,
             eventsMapRaw: eventsMapRaw.value,
+            comps: getPageComponentsMap(),
             instance: instance,
             $g: varController.getGlobalVars(),
             $p: varController.getCurrentPageVars(),

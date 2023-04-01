@@ -1,4 +1,4 @@
-import type { ComponentInternalInstance } from 'vue';
+import type { ComponentInternalInstance, ComponentPublicInstance } from 'vue';
 import type {
     IComponentState,
     IComponentEvent,
@@ -39,6 +39,7 @@ const EventFactory = {
         eventsMapRaw: TEventsMapRaw;
         $g: Record<string, any>;
         $p?: Record<string, any>;
+        comps?: Map<string, ComponentPublicInstance>;
         instance: ComponentInternalInstance | null;
         $event?: any;
         extendParams?: Record<string, any>;
@@ -52,6 +53,7 @@ const EventFactory = {
         const $info = Object.assign(
             {},
             {
+                comps: params.comps || new Map(),
                 comp: instance,
                 $g: params.$g,
                 $p: params.$p,
@@ -72,6 +74,7 @@ const EventFactory = {
         eventsMapRaw: TEventsMapRaw;
         $g: Record<string, any>;
         $p?: Record<string, any>;
+        comps?: Map<string, ComponentPublicInstance>;
         instance: ComponentInternalInstance | null;
         extendParams?: Record<string, any>;
     }) {
@@ -91,6 +94,7 @@ const EventFactory = {
             const $info = Object.assign(
                 {},
                 {
+                    comps: params.comps || new Map(),
                     comp: instance,
                     $g: params.$g,
                     $p: params.$p,

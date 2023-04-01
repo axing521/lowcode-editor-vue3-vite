@@ -15,17 +15,20 @@
 
 <script lang="ts" setup>
 import { reactive, provide } from 'vue';
-import type { PropType } from 'vue';
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
+import type { PropType, ComponentPublicInstance } from 'vue';
+import type {
+    IComponentCommonProps,
+    IComponentState,
+} from 'tdp-editor-types/interface/app/components';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import {
     addComponent,
     removeComponent,
     getAppMode,
     getComponentByKey,
+    getComponentsMap,
 } from 'tdp-editor-types/constant/injectKeys';
 import { EnumAppMode } from 'tdp-editor-types/enum';
-import FdComponent from './component';
 import moment from 'moment';
 
 const props = defineProps({
@@ -40,44 +43,49 @@ const props = defineProps({
     },
 });
 // 当前页面所有组件的实例集合
-const components = reactive<Map<string, FdComponent>>(new Map());
+const componentsMap = reactive<Map<string, ComponentPublicInstance<IComponentCommonProps>>>(
+    new Map()
+);
 
 provide(getAppMode, () => {
     return props.appMode;
 });
 provide(addComponent, (key, componentInstance) => {
-    components.set(key, new FdComponent(key, componentInstance));
+    componentsMap.set(key, componentInstance as any);
 });
 provide(removeComponent, key => {
-    components.delete(key);
+    componentsMap.delete(key);
 });
 provide(getComponentByKey, key => {
-    return components.get(key);
+    return componentsMap.get(key);
+});
+provide(getComponentsMap, () => {
+    return componentsMap;
 });
 
 // 清空form组件的值
 const resetFormFields = () => {
-    components.forEach(component => {
+    componentsMap.forEach(component => {
         // 将form组件的value设置为空
-        if (component.$state && component.$state.group === EnumComponentGroup.form) {
-            component.setProps('value', null);
+        if (component.state && component.state.group === EnumComponentGroup.form) {
+            component.props.value = null;
         }
     });
 };
 // 根据给定的defaultData默认值，初始化表单数据
 const initFormFields = (defaultData: Record<string, any>) => {
-    components.forEach(component => {
+    componentsMap.forEach(component => {
         // 将form组件的value设置为空
-        if (component.$state && component.$state.group === EnumComponentGroup.form) {
-            const value = defaultData[component.$key || ''] || null;
-            if (component.$state.type === EnumComponentType.datePicker) {
+        if (component.state.group === EnumComponentGroup.form) {
+            const value = defaultData[component.state.key || ''] || null;
+            if (component.state.type === EnumComponentType.datePicker) {
                 if (value) {
-                    component.setProps('value', moment(value));
+                    component.props.value = moment(value);
                 } else {
-                    component.setProps('value', null);
+                    component.props.value = null;
                 }
             } else {
-                component.setProps('value', value);
+                component.props.value = value;
             }
         }
     });

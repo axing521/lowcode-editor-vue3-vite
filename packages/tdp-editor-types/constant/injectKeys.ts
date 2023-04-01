@@ -16,6 +16,10 @@ export const getAppMode = Symbol('getAppMode') as InjectionKey<() => EnumAppMode
 export const getPageInstance = Symbol('getPageInstance') as InjectionKey<
     () => ComponentPublicInstance | undefined
 >;
+// 获取当前页面组件的实例Map对象
+export const getComponentsMap = Symbol('getComponentsMap') as InjectionKey<
+    () => Map<string, ComponentPublicInstance>
+>;
 
 // 获取form的实例
 type getFdFormRefType = () => ComponentPublicInstance | undefined | null;
