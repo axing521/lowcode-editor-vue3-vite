@@ -80,7 +80,7 @@ export default class EditorController {
         const appStore = useAppStore(this.$pinia);
         const pageKey = appStore.activePage?.key || '';
         if (env === EnumAppEnv.local || env === EnumAppEnv.dev) {
-            return `http://127.0.0.1:3030/app/pages/${pageKey}`;
+            return `/app/pages/${pageKey}`;
         }
     }
     /**
