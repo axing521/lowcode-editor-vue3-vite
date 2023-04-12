@@ -35,6 +35,13 @@ export const useLeftMenuStore = defineStore('leftMenuStore', {
                     icon: 'zujian',
                     selected: false,
                 },
+                {
+                    level: 1,
+                    key: 'dataSourceList',
+                    title: '数据源列表',
+                    icon: 'zhengli',
+                    selected: false,
+                },
             ],
             selectedMenuId: 'pageList',
         };
