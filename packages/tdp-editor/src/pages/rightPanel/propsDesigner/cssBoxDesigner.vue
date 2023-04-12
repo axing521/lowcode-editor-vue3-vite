@@ -34,7 +34,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import { cssFactory } from 'tdp-editor-utils';
+import { cssFactory } from 'tdp-editor-common';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { EnumCssProerty } from 'tdp-editor-types/enum/designer';
 

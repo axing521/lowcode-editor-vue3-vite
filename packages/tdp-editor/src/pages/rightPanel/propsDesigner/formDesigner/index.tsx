@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import type { PropType, VNode } from 'vue';
 import './index.less';
 import { EnumRuleType } from 'tdp-editor-types/enum/components/form';
-import { formFactory } from 'tdp-editor-utils';
+import { formFactory } from 'tdp-editor-common';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
 import { DeleteFilled } from '@ant-design/icons-vue';
 import type { IFormRules } from 'tdp-editor-types/interface/app/form';

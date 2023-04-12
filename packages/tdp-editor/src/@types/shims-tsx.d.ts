@@ -1,8 +1,8 @@
 import Vue, { VNode } from 'vue';
 import { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import type AppVarController from 'tdp-editor-utils/controller/AppVarController';
-import type AppController from 'tdp-editor-utils/controller/AppController';
-import type EditorController from 'tdp-editor-utils/controller/EditorController';
+import type AppVarController from 'tdp-editor-common/controller/AppVarController';
+import type AppController from 'tdp-editor-common/controller/AppController';
+import type EditorController from 'tdp-editor-common/controller/EditorController';
 import type SelectorManager from '../selectors/SelectorManager';
 
 declare global {

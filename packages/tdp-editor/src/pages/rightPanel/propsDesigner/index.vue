@@ -94,8 +94,8 @@
 import { defineComponent, inject } from 'vue';
 import type { PropType } from 'vue';
 import { mapState } from 'pinia';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
-import { useEditorControler } from 'tdp-editor-utils/controller';
+import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
+import { useEditorControler } from 'tdp-editor-common/controller';
 import DesignerCssPanel from './cssDesigner';
 import DesignerFormPanel from './formDesigner';
 import DataSourcePanel from './DataSourcePanel.vue';

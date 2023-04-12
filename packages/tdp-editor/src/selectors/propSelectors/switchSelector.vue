@@ -11,7 +11,7 @@ export default defineComponent({
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
 import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import { getPropValue, setPropValue } from 'tdp-editor-utils/factory/propsFactory';
+import { getPropValue, setPropValue } from 'tdp-editor-common/factory/propsFactory';
 
 const _props = defineProps<{
     state: IDesignerComponent;

@@ -5,8 +5,8 @@ import type {
     TEventFunc,
     TEventsMapRaw,
 } from 'tdp-editor-types/interface/app/components';
-import { eventFactory } from 'tdp-editor-utils';
-import { useVarControler } from 'tdp-editor-utils/controller';
+import { eventFactory } from 'tdp-editor-common';
+import { useVarControler } from 'tdp-editor-common/controller';
 import useBaseInject from './baseInject';
 
 type TExtendParams = () => Record<string, any>;

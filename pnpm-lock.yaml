@@ -46,9 +46,9 @@ importers:
       dayjs: ^1.10.7
       pinia: ^2.0.14
       rollup-plugin-visualizer: ^5.8.3
+      tdp-editor-common: workspace:*
       tdp-editor-components: workspace:*
       tdp-editor-types: workspace:*
-      tdp-editor-utils: workspace:*
       vite: ^4.2.1
       vue: ^3.2.37
       vue-router: ^4.0.16
@@ -60,9 +60,9 @@ importers:
       core-js: registry.npmmirror.com/core-js/3.26.0
       dayjs: registry.npmmirror.com/dayjs/1.11.6
       pinia: registry.npmmirror.com/pinia/2.0.23_vue@3.2.41
+      tdp-editor-common: link:../tdp-editor-common
       tdp-editor-components: link:../tdp-editor-components
       tdp-editor-types: link:../tdp-editor-types
-      tdp-editor-utils: link:../tdp-editor-utils
       vue: registry.npmmirror.com/vue/3.2.41
       vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.41
     devDependencies:
@@ -94,9 +94,9 @@ importers:
       pinia: ^2.0.14
       rollup-plugin-visualizer: ^5.8.3
       tdp-app-runtime: workspace:*
+      tdp-editor-common: workspace:*
       tdp-editor-components: workspace:*
       tdp-editor-types: workspace:*
-      tdp-editor-utils: workspace:*
       vite: ^4.2.1
       vue: ^3.2.37
       vue-color: ^2.8.1
@@ -115,9 +115,9 @@ importers:
       monaco-editor-auto-typings: registry.npmmirror.com/monaco-editor-auto-typings/0.1.1
       pinia: registry.npmmirror.com/pinia/2.0.23_vue@3.2.41
       tdp-app-runtime: link:../tdp-app-runtime
+      tdp-editor-common: link:../tdp-editor-common
       tdp-editor-components: link:../tdp-editor-components
       tdp-editor-types: link:../tdp-editor-types
-      tdp-editor-utils: link:../tdp-editor-utils
       vue: registry.npmmirror.com/vue/3.2.41
       vue-color: registry.npmmirror.com/vue-color/2.8.1
       vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.41
@@ -132,20 +132,32 @@ importers:
       rollup-plugin-visualizer: registry.npmmirror.com/rollup-plugin-visualizer/5.8.3
       vite: registry.npmmirror.com/vite/4.2.1
 
+  packages/tdp-editor-common:
+    specifiers:
+      axios: ^0.24.0
+      pinia: ^2.0.14
+      tdp-editor-types: workspace:*
+      vue: ^3.2.37
+    dependencies:
+      axios: registry.npmmirror.com/axios/0.24.0
+      pinia: registry.npmmirror.com/pinia/2.0.23_vue@3.2.41
+      tdp-editor-types: link:../tdp-editor-types
+      vue: registry.npmmirror.com/vue/3.2.41
+
   packages/tdp-editor-components:
     specifiers:
       '@vue/test-utils': ^2.0.0
       classnames: ^2.3.1
       moment: ^2.29.1
+      tdp-editor-common: workspace:^0.1.0
       tdp-editor-types: workspace:*
-      tdp-editor-utils: workspace:^0.1.0
       vue: ^3.2.37
       vuedraggable: ^4.1.0
     dependencies:
       classnames: registry.npmmirror.com/classnames/2.3.2
       moment: registry.npmmirror.com/moment/2.29.4
+      tdp-editor-common: link:../tdp-editor-common
       tdp-editor-types: link:../tdp-editor-types
-      tdp-editor-utils: link:../tdp-editor-utils
       vue: registry.npmmirror.com/vue/3.2.41
       vuedraggable: registry.npmmirror.com/vuedraggable/4.1.0_vue@3.2.41
     devDependencies:
@@ -157,18 +169,6 @@ importers:
       vue: ^3.2.37
     dependencies:
       axios: registry.npmmirror.com/axios/0.24.0
-      vue: registry.npmmirror.com/vue/3.2.41
-
-  packages/tdp-editor-utils:
-    specifiers:
-      axios: ^0.24.0
-      pinia: ^2.0.14
-      tdp-editor-types: workspace:*
-      vue: ^3.2.37
-    dependencies:
-      axios: registry.npmmirror.com/axios/0.24.0
-      pinia: registry.npmmirror.com/pinia/2.0.23_vue@3.2.41
-      tdp-editor-types: link:../tdp-editor-types
       vue: registry.npmmirror.com/vue/3.2.41
 
 packages:

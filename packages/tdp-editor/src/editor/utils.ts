@@ -3,11 +3,11 @@ import { createPinia } from 'pinia';
 import createRouter from '../routers/router';
 import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../plugins';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
 import SelectorManager from '../selectors/SelectorManager';
 import propSelectors from '../selectors/propSelectors';
-import { createController } from 'tdp-editor-utils/controller';
+import { createController } from 'tdp-editor-common/controller';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 export const initEditor = (app: App) => {
     const pinia = createPinia();

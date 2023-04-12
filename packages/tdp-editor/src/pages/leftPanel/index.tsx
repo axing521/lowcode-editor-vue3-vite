@@ -12,10 +12,10 @@ import {
     ClusterOutlined,
 } from '@ant-design/icons-vue';
 import classnames from 'classnames';
-import { useEditorControler } from 'tdp-editor-utils/controller';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
-import { useLeftMenuStore } from 'tdp-editor-utils/stores/leftMenuStore';
-import { useAppStore } from 'tdp-editor-utils/stores/appStore';
+import { useEditorControler } from 'tdp-editor-common/controller';
+import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
+import { useLeftMenuStore } from 'tdp-editor-common/stores/leftMenuStore';
+import { useAppStore } from 'tdp-editor-common/stores/appStore';
 import DesignerComponentList from './componentList';
 import './index.less';
 import NewPageModal from './newPageModal.vue';

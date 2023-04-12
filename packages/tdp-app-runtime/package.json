@@ -26,7 +26,7 @@
     "pinia": "^2.0.14",
     "tdp-editor-components": "workspace:*",
     "tdp-editor-types": "workspace:*",
-    "tdp-editor-utils": "workspace:*",
+    "tdp-editor-common": "workspace:*",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },

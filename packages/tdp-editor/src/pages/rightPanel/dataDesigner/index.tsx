@@ -14,8 +14,8 @@ import type {
     IDataModlerApiRow,
 } from 'tdp-editor-types/interface/request/api';
 
-import { apiDomain, apis } from 'tdp-editor-utils/service';
-import { request, apiFactory } from 'tdp-editor-utils';
+import { apiDomain, apis } from 'tdp-editor-common/service';
+import { request, apiFactory } from 'tdp-editor-common';
 
 export default defineComponent({
     name: 'designer-data-panel',

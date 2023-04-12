@@ -37,7 +37,7 @@
     "tdp-app-runtime": "workspace:*",
     "tdp-editor-components": "workspace:*",
     "tdp-editor-types": "workspace:*",
-    "tdp-editor-utils": "workspace:*",
+    "tdp-editor-common": "workspace:*",
     "vue": "^3.2.37",
     "vue-color": "^2.8.1",
     "vue-router": "^4.0.16",

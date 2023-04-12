@@ -152,8 +152,8 @@ import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
-import { useAppStore } from 'tdp-editor-utils/stores/appStore';
-import { useAppControler, useEditorControler, useVarControler } from 'tdp-editor-utils/controller';
+import { useAppStore } from 'tdp-editor-common/stores/appStore';
+import { useAppControler, useEditorControler, useVarControler } from 'tdp-editor-common/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 

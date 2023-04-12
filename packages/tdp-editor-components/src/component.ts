@@ -3,7 +3,7 @@ import type { EnumCssProerty } from 'tdp-editor-types/enum/designer';
 
 import type { IComponentState } from 'tdp-editor-types/interface/app/components';
 
-import { propsFactory, cssFactory } from 'tdp-editor-utils';
+import { propsFactory, cssFactory } from 'tdp-editor-common';
 export default class FdComponent {
     constructor(key: string, componentInstance: ComponentPublicInstance | undefined) {
         this.$key = key;

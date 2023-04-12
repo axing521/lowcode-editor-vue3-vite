@@ -17,7 +17,7 @@ import packageJson from '../../package.json';
 import usePlugin from '../plugins';
 import createRouter from '../routers/runtime.router';
 import App from './TdpApp.vue';
-import { createController } from 'tdp-editor-utils/controller';
+import { createController } from 'tdp-editor-common/controller';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 
 interface ICreateRuntimeOptions {

@@ -107,8 +107,8 @@ import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor';
 
-import { useAppStore } from 'tdp-editor-utils/stores/appStore';
-import { useVarControler } from 'tdp-editor-utils/controller';
+import { useAppStore } from 'tdp-editor-common/stores/appStore';
+import { useVarControler } from 'tdp-editor-common/controller';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
 // 设置提示信息

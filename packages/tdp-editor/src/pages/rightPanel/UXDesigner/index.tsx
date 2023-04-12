@@ -6,9 +6,9 @@ import './index.less';
 
 import { DeleteOutlined } from '@ant-design/icons-vue';
 import { EnumEventName, EnumEventType } from 'tdp-editor-types/enum/components';
-import { eventFactory } from 'tdp-editor-utils';
+import { eventFactory } from 'tdp-editor-common';
 import pm from '../paramsModal.vue';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
 
 type TEventList = {
     key: EnumEventName,

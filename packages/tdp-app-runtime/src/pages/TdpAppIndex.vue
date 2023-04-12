@@ -6,7 +6,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { RouterConfig } from 'tdp-editor-utils/constants/router';
+import { RouterConfig } from 'tdp-editor-common/constants/router';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 

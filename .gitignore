@@ -14,7 +14,7 @@ node_modules
 
 /packages/tdp-editor-types/dist
 
-/packages/tdp-editor-utils/dist
+/packages/tdp-editor-common/dist
 
 /packages/tdp-editor/src/libs
 

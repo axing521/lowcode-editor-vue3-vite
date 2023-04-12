@@ -6,10 +6,10 @@ import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/com
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import PageView from 'tdp-editor-components/src/page.vue';
-import { utils } from 'tdp-editor-utils';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
-import { useAppStore } from 'tdp-editor-utils/stores/appStore';
-import { useEditorControler } from 'tdp-editor-utils/controller';
+import { utils } from 'tdp-editor-common';
+import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
+import { useAppStore } from 'tdp-editor-common/stores/appStore';
+import { useEditorControler } from 'tdp-editor-common/controller';
 
 export default defineComponent({
     name: 'editor-main-panel',

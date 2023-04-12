@@ -6,9 +6,9 @@ import { PlusCircleOutlined } from '@ant-design/icons-vue';
 import './componentList.less';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
-import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
-import { useAppStore } from 'tdp-editor-utils/stores/appStore';
-import { utils } from 'tdp-editor-utils';
+import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
+import { useAppStore } from 'tdp-editor-common/stores/appStore';
+import { utils } from 'tdp-editor-common';
 
 const delayError = utils.$getDelayFunction((message: string) => {
     $message.warn(message);
