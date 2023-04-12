@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
 import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
+import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import './index.less';
 import DesignerUXPanel from './UXDesigner';
 import DesignerPropsPanel from './propsDesigner/index.vue';
@@ -17,9 +18,12 @@ export default defineComponent({
         ...mapState(useEditorStore, {
             selectedComponent: 'selectedComponent',
         }),
+        ...mapState(useAppStore, {
+            activePage: 'activePage',
+        }),
     },
     render() {
-        const selectedComponent = this.selectedComponent;
+        const selectedComponent = this.selectedComponent || this.activePage;
         return (
             <a-tabs class="editor-right-box">
                 <a-tab-pane key="props" tab="属性">

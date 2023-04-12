@@ -17,7 +17,6 @@ import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { useLeftMenuStore } from 'tdp-editor-utils/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-utils/stores/appStore';
 import DesignerComponentList from './componentList';
-import DataSourceList from './DataSourceList.vue';
 import './index.less';
 import NewPageModal from './newPageModal.vue';
 
@@ -25,7 +24,6 @@ export default defineComponent({
     name: 'editor-left-panel',
     components: {
         DesignerComponentList,
-        DataSourceList,
         OrderedListOutlined,
         EditOutlined,
         DeleteOutlined,
@@ -169,9 +167,6 @@ export default defineComponent({
                             display: MENUS[1].selected === true ? 'block' : 'none',
                         }}
                     />
-                    <data-source-list
-                        style={{ display: MENUS[2].selected === true ? 'block' : 'none' }}
-                    ></data-source-list>
                 </div>
             );
             return [firstMenu, secondMenu];

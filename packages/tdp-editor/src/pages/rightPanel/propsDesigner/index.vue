@@ -8,17 +8,20 @@
                         <template #overlay>
                             <a-menu>
                                 <a-menu-item>
-                                    <a-button @click="copyComponentId" type="link" icon="copy">
+                                    <a-button @click="copyComponentId" type="link">
+                                        <template #icon><CopyOutlined /></template>
                                         copy ID
                                     </a-button>
                                 </a-menu-item>
-                                <a-menu-item>
-                                    <a-button @click="deleteComponent" type="link" icon="delete">
+                                <a-menu-item v-if="!isPage">
+                                    <a-button @click="deleteComponent" type="link">
+                                        <template #icon><DeleteFilled /></template>
                                         删除
                                     </a-button>
                                 </a-menu-item>
-                                <a-menu-item>
-                                    <a-button @click="unselectComponent" type="link" icon="undo">
+                                <a-menu-item v-if="!isPage">
+                                    <a-button @click="unselectComponent" type="link">
+                                        <template #icon><UndoOutlined /></template>
                                         取消选中
                                     </a-button>
                                 </a-menu-item>
@@ -75,11 +78,14 @@
                     </template>
                 </div>
             </a-collapse-panel>
-            <a-collapse-panel key="form" header="表单">
+            <a-collapse-panel key="form" header="表单" v-if="!isPage">
                 <DesignerFormPanel :element="element" />
             </a-collapse-panel>
             <a-collapse-panel key="css" header="外观">
                 <DesignerCssPanel :element="element" />
+            </a-collapse-panel>
+            <a-collapse-panel key="datasource" header="数据源" v-if="isPage">
+                <DataSourcePanel :element="element" />
             </a-collapse-panel>
         </a-collapse>
     </div>
@@ -92,9 +98,10 @@ import { useEditorStore } from 'tdp-editor-utils/stores/editorStore';
 import { useEditorControler } from 'tdp-editor-utils/controller';
 import DesignerCssPanel from './cssDesigner';
 import DesignerFormPanel from './formDesigner';
+import DataSourcePanel from './DataSourcePanel.vue';
 import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
-import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
-import { DownOutlined } from '@ant-design/icons-vue';
+import { EnumComponentType, EnumPropsValueType } from 'tdp-editor-types/enum/components';
+import { DownOutlined, CopyOutlined, DeleteFilled, UndoOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({
     name: 'designer-props-panel',
@@ -102,6 +109,10 @@ export default defineComponent({
         DesignerCssPanel,
         DesignerFormPanel,
         DownOutlined,
+        CopyOutlined,
+        DeleteFilled,
+        UndoOutlined,
+        DataSourcePanel,
     },
     props: {
         element: {
@@ -113,12 +124,16 @@ export default defineComponent({
         const unselectComponent = inject('unselectComponent');
         return {
             unselectComponent,
+            EnumComponentType,
         };
     },
     computed: {
         ...mapState(useEditorStore, {
             componentList: 'componentList',
         }),
+        isPage(): boolean {
+            return Boolean(this.element && this.element.type === EnumComponentType.page);
+        },
         // 组件ID
         componentId(): string {
             return this.element && this.element.key ? this.element.key : '';
