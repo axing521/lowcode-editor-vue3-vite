@@ -26,11 +26,15 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
         const _eventsMap: TEventsMapRaw = {} as TEventsMapRaw;
         if (props.state && !props.state.events) return _eventsMap;
         props.state.events!.forEach(eventInfo => {
-            const eventFunc = new Function(
-                '$event',
-                '$info',
-                `try{${eventInfo.funcStr}}catch(e){console.warn(e);}`
-            ) as TEventFunc;
+            let eventFunc: any = new Function();
+            if (eventInfo.funcStr && eventInfo.funcStr.startsWith('function')) {
+                eventFunc = new Function(
+                    '$event',
+                    '$info',
+                    `try{(${eventInfo.funcStr})($event, $info)}catch(e){console.warn(e);}`
+                );
+            }
+
             if (_eventsMap[eventInfo.eventName]) {
                 _eventsMap[eventInfo.eventName].push({
                     func: eventFunc,

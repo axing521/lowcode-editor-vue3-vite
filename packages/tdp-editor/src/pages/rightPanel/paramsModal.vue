@@ -111,21 +111,8 @@ import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useVarControler } from 'tdp-editor-common/src/controller';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
-// 设置提示信息
-monaco.languages.typescript.typescriptDefaults.addExtraLib(
-    `
-    interface IInfo {
-        $g: Record<string, any>;
-        $p: Record<string, any>;
-        e: any;
-        comp: any;
-        [key: string]: any;
-    }
-    declare var $event: any;
-    declare var $info: IInfo;
-    `
-);
-monaco.languages.registerCompletionItemProvider('typescript', {
+
+monaco.languages.registerCompletionItemProvider('javascript', {
     provideCompletionItems(model, position) {
         const varController = useVarControler();
         const lineContent = model.getLineContent(position.lineNumber);
@@ -248,7 +235,7 @@ export default defineComponent({
                 monacoEditor = monaco.editor.create(
                     document.getElementById('fd_designer_paramsmodal_monaco')!,
                     {
-                        language: 'typescript',
+                        language: 'javascript',
                         theme: 'vs',
                         value: '',
                         minimap: { enabled: true },
