@@ -10,6 +10,7 @@ import { utils } from 'tdp-editor-common/src';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useEditorControler } from 'tdp-editor-common/src/controller';
+import { $log } from 'tdp-editor-common/src/utils';
 
 export default defineComponent({
     name: 'editor-main-panel',
@@ -19,8 +20,7 @@ export default defineComponent({
     setup() {
         const setIndexRefs = inject(
             'setRefs',
-            (key: string, comInstance: ComponentPublicInstance) =>
-                console.info('setRefs', key, comInstance)
+            (key: string, comInstance: ComponentPublicInstance) => $log('setRefs', key, comInstance)
         );
         return {
             setIndexRefs,
@@ -117,7 +117,7 @@ export default defineComponent({
                         this.unselect();
                     }
                 } else if (dataset.type === EnumComponentType.page) {
-                    console.info('page');
+                    $log('page');
                 } else {
                     this.unselect();
                 }

@@ -4,7 +4,6 @@ export default function useVars() {
         try {
             result = eval(expression);
         } catch {
-            //console.error(e);
             result = null;
         }
         return result;

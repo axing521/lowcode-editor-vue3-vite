@@ -1,3 +1,5 @@
+import { $log, $warn } from './utils';
+
 const DBName = 'TDP_DB';
 const DBVersion = 1;
 const StoreName = 'TDP_DB_editor_data';
@@ -15,16 +17,16 @@ export const openDBAsync = async (
     return new Promise((resolve, reject) => {
         const req = IndexedDB.open(dbName, version);
         req.onsuccess = function (event: any) {
-            console.info(`DB named ${dbName} open success, event:`, event);
+            $log('%c %s', 'color: green', `DB named ${dbName} open success, event:`, event);
             const db = event.target.result as IDBDatabase;
             resolve(db);
         };
         req.onerror = function (event) {
-            console.error(`DB named ${dbName} open error, event:`, event);
+            $warn('%c %s', 'color: red', `DB named ${dbName} open error, event:`, event);
             reject(event);
         };
         req.onupgradeneeded = function (event: any) {
-            console.info(`DB named ${dbName} upgradeneeded, event:`, event);
+            $log('%c %s', 'color: green', `DB named ${dbName} upgradeneeded, event:`, event);
             const db = event.target.result as IDBDatabase;
             openStore(db, storeName);
         };
@@ -47,11 +49,21 @@ export const addDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName, 'readwrite').objectStore(storeName).add(data);
         req.onsuccess = function (event: any) {
-            console.info(`store named ${storeName} [add data] success, event:`, event);
+            $log(
+                '%c %s',
+                'color: green',
+                `store named ${storeName} [add data] success, event:`,
+                event
+            );
             resolve(req.result);
         };
         req.onerror = function (event) {
-            console.error(`store named ${storeName} [add data] error, event:`, event);
+            $warn(
+                '%c %s',
+                'color: red',
+                `store named ${storeName} [add data] error, event:`,
+                event
+            );
             reject(event);
         };
     });
@@ -66,11 +78,21 @@ export const updateDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName, 'readwrite').objectStore(storeName).put(data);
         req.onsuccess = function (event: any) {
-            console.info(`store named ${storeName} [update data] success, event:`, event);
+            $log(
+                '%c %s',
+                'color: green',
+                `store named ${storeName} [update data] success, event:`,
+                event
+            );
             resolve(req.result);
         };
         req.onerror = function (event) {
-            console.error(`store named ${storeName} [update data] error, event:`, event);
+            $warn(
+                '%c %s',
+                'color: red',
+                `store named ${storeName} [update data] error, event:`,
+                event
+            );
             reject(event);
         };
     });
@@ -85,11 +107,21 @@ export const getDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName).objectStore(storeName).get(key);
         req.onsuccess = function (event: any) {
-            console.info(`store named ${storeName} [get data] success, event:`, event);
+            $log(
+                '%c %s',
+                'color: green',
+                `store named ${storeName} [get data] success, event:`,
+                event
+            );
             resolve(req.result);
         };
         req.onerror = function (event) {
-            console.error(`store named ${storeName} [get data] error, event:`, event);
+            $warn(
+                '%c %s',
+                'color: red',
+                `store named ${storeName} [get data] error, event:`,
+                event
+            );
             reject(event);
         };
     });
@@ -104,11 +136,21 @@ export const deleteDataAsync = async (
     return new Promise((resolve, reject) => {
         const req = db.transaction(storeName, 'readwrite').objectStore(storeName).delete(data);
         req.onsuccess = function (event: any) {
-            console.info(`store named ${storeName} [add data] success, event:`, event);
+            $log(
+                '%c %s',
+                'color: green',
+                `store named ${storeName} [add data] success, event:`,
+                event
+            );
             resolve();
         };
         req.onerror = function (event) {
-            console.error(`store named ${storeName} [add data] error, event:`, event);
+            $warn(
+                '%c %s',
+                'color: red',
+                `store named ${storeName} [add data] error, event:`,
+                event
+            );
             reject(event);
         };
     });

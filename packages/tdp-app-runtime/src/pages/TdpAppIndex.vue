@@ -6,6 +6,7 @@
     </div>
 </template>
 <script lang="ts" setup>
+import { $log } from 'tdp-editor-common/src/utils';
 import { RouterConfig } from 'tdp-editor-common/src/constants/router';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -14,7 +15,7 @@ const inputPageId = ref('');
 const router = useRouter();
 
 onMounted(() => {
-    console.info('tdp-app-index onMounted');
+    $log('tdp-app-index onMounted');
     // 这个地方可以执行用户的应用初始化方法
 });
 

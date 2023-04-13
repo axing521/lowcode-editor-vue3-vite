@@ -4,7 +4,7 @@ import type { IAppVarConstructor } from 'tdp-editor-types/src/interface/app/vars
 import AppVar from './AppVar';
 import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
 import { useAppStore } from '../stores/appStore';
-import { $log } from '../utils';
+import { $error, $log } from '../utils';
 
 // 创建两个map，存放变量实例
 const GlobalVarMap: Map<string, AppVar> = new Map();
@@ -16,10 +16,6 @@ export default class AppVarController {
     constructor(app: App, pinia: Pinia) {
         this.$app = app;
         this.$pinia = pinia;
-        document.addEventListener('dblclick', () => {
-            this.SerializeGlobalVars();
-            this.SerializeCurrentPageVars();
-        });
     }
 
     /**
@@ -61,7 +57,7 @@ export default class AppVarController {
                 GlobalVarMap.set(varInstance.name, varInstance);
                 addResult.success = true;
             } else {
-                console.error(`${varInstance.name}变量已存在，不能重复添加`);
+                $error(`${varInstance.name}变量已存在，不能重复添加`);
                 addResult.msg = '变量已存在，不能重复添加';
                 return addResult;
             }
@@ -72,7 +68,7 @@ export default class AppVarController {
                 const pageVars = appStore.currentPageVars;
                 // 如果变量已经存在，则不能添加
                 if (pageVars[varInstance.name]) {
-                    console.error(`${varInstance.name}变量已存在，不能重复添加`);
+                    $error(`${varInstance.name}变量已存在，不能重复添加`);
                     addResult.msg = '变量已存在，不能重复添加';
                     return addResult;
                 }
@@ -169,7 +165,7 @@ export default class AppVarController {
         GlobalVarMap.forEach((value, key) => {
             result[key] = value.Serialize();
         });
-        $log('SerializeGlobalVars --------->', result);
+        $log('%c %s', 'color: green', 'SerializeGlobalVars --------->', result);
         return result;
     }
 
@@ -181,7 +177,7 @@ export default class AppVarController {
         currentPageVarMap.forEach((value, key) => {
             result[key] = value.Serialize();
         });
-        $log('SerializeCurrentPageVars --------->', result);
+        $log('%c %s', 'color: green', 'SerializeCurrentPageVars --------->', result);
         return result;
     }
 }

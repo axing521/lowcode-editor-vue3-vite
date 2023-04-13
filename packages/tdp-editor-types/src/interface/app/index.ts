@@ -4,4 +4,5 @@ import type { IComponentState } from './components';
 export interface IAppSaveStruct {
     defaultPageKey: string;
     pages: IComponentState[];
+    globarVars?: Record<string, any>;
 }

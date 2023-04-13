@@ -8,13 +8,16 @@ import type { Pinia } from 'pinia';
 import type { IAppSaveStruct } from 'tdp-editor-types/src/interface/app';
 import type { IPageStore } from 'tdp-editor-types/src/interface/store';
 
+import { toRaw } from 'vue';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { useEditorStore } from '../stores/editorStore';
 import { useAppStore } from '../stores/appStore';
 import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 import { openDBAsync, setDataAsync, getDataAsync } from '../indexDBUtil';
-import { useAppControler } from './index';
 import { utils } from '../index';
+import { useVarControler } from './index';
+import { $warn } from '../utils';
+
 export default class EditorController {
     private readonly $app: App;
     private readonly $pinia: Pinia;
@@ -87,13 +90,21 @@ export default class EditorController {
      * 保存editor的数据到本地
      */
     async saveLocalData() {
-        const appController = useAppControler();
         const db = await openDBAsync().catch();
         const data = {
             id: 'local',
-            data: appController.getSaveData(),
+            data: this.getSaveData(),
         };
-        await setDataAsync(db, data).catch();
+        await setDataAsync(db, data).catch(e => $warn(e));
+    }
+    getSaveData(): IAppSaveStruct {
+        const appStore = useAppStore(this.$pinia);
+        const varController = useVarControler(this.$app);
+        return {
+            defaultPageKey: appStore.activePage?.key || '',
+            pages: toRaw(appStore.pages),
+            globarVars: varController.SerializeGlobalVars(),
+        };
     }
     // 导入配置文件
     importConfig(payload: { pages: IPageStore[] }) {
