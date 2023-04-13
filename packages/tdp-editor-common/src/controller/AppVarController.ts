@@ -4,6 +4,7 @@ import type { IAppVarConstructor } from 'tdp-editor-types/src/interface/app/vars
 import AppVar from './AppVar';
 import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
 import { useAppStore } from '../stores/appStore';
+import { $log } from '../utils';
 
 // 创建两个map，存放变量实例
 const GlobalVarMap: Map<string, AppVar> = new Map();
@@ -15,6 +16,10 @@ export default class AppVarController {
     constructor(app: App, pinia: Pinia) {
         this.$app = app;
         this.$pinia = pinia;
+        document.addEventListener('dblclick', () => {
+            this.SerializeGlobalVars();
+            this.SerializeCurrentPageVars();
+        });
     }
 
     /**
@@ -153,6 +158,30 @@ export default class AppVarController {
             result.msg = '删除失败';
         }
         result.success = true;
+        return result;
+    }
+
+    /**
+     * 返回序列化后的全局变量集合
+     */
+    SerializeGlobalVars() {
+        const result: Record<string, any> = {};
+        GlobalVarMap.forEach((value, key) => {
+            result[key] = value.Serialize();
+        });
+        $log('SerializeGlobalVars --------->', result);
+        return result;
+    }
+
+    /**
+     * 返回序列化后的当前页面变量集合
+     */
+    SerializeCurrentPageVars() {
+        const result: Record<string, any> = {};
+        currentPageVarMap.forEach((value, key) => {
+            result[key] = value.Serialize();
+        });
+        $log('SerializeCurrentPageVars --------->', result);
         return result;
     }
 }
