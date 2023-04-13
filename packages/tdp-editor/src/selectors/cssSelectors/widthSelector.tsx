@@ -1,8 +1,8 @@
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import type { EnumCssProerty } from 'tdp-editor-types/enum/designer';
-import { cssFactory } from 'tdp-editor-common';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import type { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
+import { cssFactory } from 'tdp-editor-common/src';
 
 export default defineComponent({
     name: 'css-width-selector',

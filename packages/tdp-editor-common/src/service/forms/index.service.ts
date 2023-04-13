@@ -1,7 +1,11 @@
 import API_Domain from '../apiDomain';
 import { $fetch } from '../../request';
-import type { IFormDetail, IFormAdd, IFormUpdate } from 'tdp-editor-types/interface/service/form';
-import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
+import type {
+    IFormDetail,
+    IFormAdd,
+    IFormUpdate,
+} from 'tdp-editor-types/src/interface/service/form';
+import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
 
 type addFormResult = {
     formId: string;

@@ -4,13 +4,13 @@ import type {
     IFetchOptions,
     IServerResponse,
     IServiceResult,
-} from 'tdp-editor-types/interface/request';
+} from 'tdp-editor-types/src/interface/request';
 
 import {
     EnumContentTypeValue,
     EnumRequestHeadersKey,
     EnumServiceResultStatus,
-} from 'tdp-editor-types/enum/request';
+} from 'tdp-editor-types/src/enum/request';
 
 /**
  * fetch请求，并处理返回数据

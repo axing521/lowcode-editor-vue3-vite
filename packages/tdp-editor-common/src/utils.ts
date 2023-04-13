@@ -1,4 +1,4 @@
-import { EnumAppEnv } from 'tdp-editor-types/enum';
+import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 
 /* eslint-disable prettier/prettier */
 export const $getUUID = (prefix?: string): string => {

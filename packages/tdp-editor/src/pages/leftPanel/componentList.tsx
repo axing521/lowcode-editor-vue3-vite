@@ -4,12 +4,12 @@ import Draggable from 'vuedraggable';
 import { message as $message } from 'ant-design-vue/es';
 import { PlusCircleOutlined } from '@ant-design/icons-vue';
 import './componentList.less';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
-import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
-import { useAppStore } from 'tdp-editor-common/stores/appStore';
-import { utils } from 'tdp-editor-common';
-import { newComponentJson } from 'tdp-editor-common/stores/editorStore';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
+import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
+import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { utils } from 'tdp-editor-common/src';
+import { newComponentJson } from 'tdp-editor-common/src/stores/editorStore';
 
 const delayError = utils.$getDelayFunction((message: string) => {
     $message.warn(message);

@@ -94,13 +94,13 @@
 import { defineComponent, inject } from 'vue';
 import type { PropType } from 'vue';
 import { mapState } from 'pinia';
-import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
-import { useEditorControler } from 'tdp-editor-common/controller';
+import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
+import { useEditorControler } from 'tdp-editor-common/src/controller';
 import DesignerCssPanel from './cssDesigner';
 import DesignerFormPanel from './formDesigner';
 import DataSourcePanel from './DataSourcePanel.vue';
-import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
-import { EnumComponentType, EnumPropsValueType } from 'tdp-editor-types/enum/components';
+import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/src/interface/designer';
+import { EnumComponentType, EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
 import { DownOutlined, CopyOutlined, DeleteFilled, UndoOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({

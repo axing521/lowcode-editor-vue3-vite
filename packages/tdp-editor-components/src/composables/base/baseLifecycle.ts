@@ -1,4 +1,4 @@
-import type { ISetupBaseProps } from 'tdp-editor-types/interface/app/components';
+import type { ISetupBaseProps } from 'tdp-editor-types/src/interface/app/components';
 import { onMounted, onBeforeUnmount, getCurrentInstance } from 'vue';
 import useInject from './baseInject';
 

@@ -9,10 +9,10 @@ export default defineComponent({
 });
 </script>
 <script lang="ts" setup>
-import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/interface/designer';
-import { getPropValue, setPropValue } from 'tdp-editor-common/factory/propsFactory';
-import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
+import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/src/interface/designer';
+import { getPropValue, setPropValue } from 'tdp-editor-common/src/factory/propsFactory';
+import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import { EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
 const _props = defineProps<{
     state: IDesignerComponent;
     prop: IPropsConfig;

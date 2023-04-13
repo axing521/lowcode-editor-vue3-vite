@@ -4,22 +4,22 @@
  */
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import type { IAppStore } from 'tdp-editor-types/interface/store';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IAppStore } from 'tdp-editor-types/src/interface/store';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 // 自定义组件样式
 import 'tdp-editor-components/src/styles/index.less';
 import registerDirectives from 'tdp-editor-components/src/directives';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
-import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
+import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 
 import packageJson from '../../package.json';
 import usePlugin from '../plugins';
 import createRouter from '../routers/runtime.router';
 import App from './TdpApp.vue';
-import { createController } from 'tdp-editor-common/controller';
-import { EnumAppMode } from 'tdp-editor-types/enum';
-import { $log } from 'tdp-editor-common/utils';
+import { createController } from 'tdp-editor-common/src/controller';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
+import { $log } from 'tdp-editor-common/src/utils';
 
 interface ICreateRuntimeOptions {
     container: string | Element;

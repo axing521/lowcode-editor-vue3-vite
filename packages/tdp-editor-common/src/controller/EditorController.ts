@@ -2,16 +2,16 @@
  * EditorController 封装editor的逻辑
  * 需要同时访问editorStore和appStore的较复杂的逻辑方法放到此类中
  */
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
-import type { IAppSaveStruct } from 'tdp-editor-types/interface/app';
-import type { IPageStore } from 'tdp-editor-types/interface/store';
+import type { IAppSaveStruct } from 'tdp-editor-types/src/interface/app';
+import type { IPageStore } from 'tdp-editor-types/src/interface/store';
 
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { useEditorStore } from '../stores/editorStore';
 import { useAppStore } from '../stores/appStore';
-import { EnumAppEnv } from 'tdp-editor-types/enum';
+import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 import { openDBAsync, setDataAsync, getDataAsync } from '../indexDBUtil';
 import { useAppControler } from './index';
 import { utils } from '../index';

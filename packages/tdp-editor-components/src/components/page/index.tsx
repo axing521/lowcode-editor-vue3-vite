@@ -5,12 +5,12 @@ import {
     EnumEventName,
     EnumEventType,
     EnumPropsValueType,
-} from 'tdp-editor-types/enum/components';
-import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
+} from 'tdp-editor-types/src/enum/components';
+import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type {
     IDesignerComponent,
     registerComponentFunc,
-} from 'tdp-editor-types/interface/designer';
+} from 'tdp-editor-types/src/interface/designer';
 import type { IPageProps } from './interface';
 
 export default defineAsyncComponent(() => {

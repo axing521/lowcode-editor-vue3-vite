@@ -19,9 +19,9 @@ export default defineComponent({
 
 <script lang="ts" setup>
 import { defineComponent } from 'vue';
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 import type { IRateProps } from './interface';
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { useBaseLifecycle, useBaseEvents } from '../../composables/base';
 
 const allProps = defineProps<{

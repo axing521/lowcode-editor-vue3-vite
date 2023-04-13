@@ -2,7 +2,7 @@
 
 ## propSelector [属性选择器]
 
-##### 1. tdp-editor-types/enum/designer 下的 EnumSelectorName枚举添加一个新值
+##### 1. tdp-editor-types/src/enum/designer 下的 EnumSelectorName枚举添加一个新值
 ##### 2. 在propSelectors文件夹下创建一个与枚举值相同的vue组件
 ##### 3. 所有选择器的共有props有3个：state、prop、options
 state为组件的所有状态
@@ -17,4 +17,4 @@ const _props = defineProps<{
     options?: ISelectorSliderOptions;
 }>();
 ```
-如果选择器有选项，需要定义选项的interface, interface目录为 tdp-editor-types/interface/designer/selector.ts
+如果选择器有选项，需要定义选项的interface, interface目录为 tdp-editor-types/src/interface/designer/selector.ts

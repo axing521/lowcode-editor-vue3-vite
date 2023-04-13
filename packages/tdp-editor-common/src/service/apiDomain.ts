@@ -1,7 +1,7 @@
 /**
  * Created by liuyc14 on 2017/10/16.
  */
-import { EnumAppEnv } from 'tdp-editor-types/enum';
+import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 
 const __domain: Record<EnumAppEnv, any> = {
     [EnumAppEnv.local]: '',

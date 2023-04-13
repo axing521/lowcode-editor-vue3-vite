@@ -1,9 +1,9 @@
 import { customRef, reactive } from 'vue';
 import type { Ref } from 'vue';
-import type { IPropsRenderFactory } from 'tdp-editor-types/interface/designer';
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
-import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import { EnumPropsValueType } from 'tdp-editor-types/enum/components';
+import type { IPropsRenderFactory } from 'tdp-editor-types/src/interface/designer';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
+import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import { EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
 
 const PropsFactory: IPropsRenderFactory = {
     getPropsValue: (state, propertyName) => {

@@ -152,15 +152,19 @@ import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
-import { useAppStore } from 'tdp-editor-common/stores/appStore';
-import { useAppControler, useEditorControler, useVarControler } from 'tdp-editor-common/controller';
+import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import {
+    useAppControler,
+    useEditorControler,
+    useVarControler,
+} from 'tdp-editor-common/src/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
-import { EnumAppMode } from 'tdp-editor-types/enum';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
 
 import DesignerLeft from './leftPanel';
 import DesignerRight from './rightPanel';
 import DesignerMain from './mainPanel';
-import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/enum/app/vars';
+import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/vars';
 
 (window as any).MonacoEnvironment = {
     getWorker(_: any, label: any) {

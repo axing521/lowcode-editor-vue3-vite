@@ -1,7 +1,7 @@
 import API_Domain from '../apiDomain';
 import { $fetch } from '../../request';
 
-import type { IAppDetail, IAppUpdate } from 'tdp-editor-types/interface/service/apps';
+import type { IAppDetail, IAppUpdate } from 'tdp-editor-types/src/interface/service/apps';
 
 const service = {
     async getAppById(appId: string, projectId: string) {

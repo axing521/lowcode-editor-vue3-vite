@@ -19,16 +19,16 @@ import type { PropType, ComponentPublicInstance } from 'vue';
 import type {
     IComponentCommonProps,
     IComponentState,
-} from 'tdp-editor-types/interface/app/components';
-import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
+} from 'tdp-editor-types/src/interface/app/components';
+import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import {
     addComponent,
     removeComponent,
     getAppMode,
     getComponentByKey,
     getComponentsMap,
-} from 'tdp-editor-types/constant/injectKeys';
-import { EnumAppMode } from 'tdp-editor-types/enum';
+} from 'tdp-editor-types/src/constant/injectKeys';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import moment from 'moment';
 
 const props = defineProps({
@@ -95,7 +95,7 @@ provide('resetFormFields', resetFormFields);
 provide('initFormFields', initFormFields);
 </script>
 <script lang="ts">
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 export default {
     name: EnumComponentType.page,

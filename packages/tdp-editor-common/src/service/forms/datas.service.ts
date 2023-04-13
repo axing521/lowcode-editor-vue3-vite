@@ -1,10 +1,10 @@
-import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
-import type { IServiceResult } from 'tdp-editor-types/interface/request';
+import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
+import type { IServiceResult } from 'tdp-editor-types/src/interface/request';
 import type {
     IFormDataAdd,
     IFormDataQuery,
     IFormDataUpdate,
-} from 'tdp-editor-types/interface/service/form';
+} from 'tdp-editor-types/src/interface/service/form';
 import apiDomain from '../apiDomain';
 import { request } from '../../index';
 

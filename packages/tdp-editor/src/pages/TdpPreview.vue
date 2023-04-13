@@ -4,7 +4,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import { createRuntime } from 'tdp-app-runtime/src/runtime/runtime';
-import { getDataAsync, openDBAsync } from 'tdp-editor-common/indexDBUtil';
+import { getDataAsync, openDBAsync } from 'tdp-editor-common/src/indexDBUtil.js';
 const html = document.querySelector('html');
 const body = document.body;
 html?.classList.add('app-type-admin');

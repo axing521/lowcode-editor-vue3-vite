@@ -34,9 +34,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import { cssFactory } from 'tdp-editor-common';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import { EnumCssProerty } from 'tdp-editor-types/enum/designer';
+import { cssFactory } from 'tdp-editor-common/src';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
 
 export default defineComponent({
     name: 'css-box-designer',

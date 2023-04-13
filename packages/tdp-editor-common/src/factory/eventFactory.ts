@@ -4,8 +4,8 @@ import type {
     IComponentEvent,
     TEventsMapRaw,
     TEventsMap,
-} from 'tdp-editor-types/interface/app/components';
-import type { EnumEventName } from 'tdp-editor-types/enum/components';
+} from 'tdp-editor-types/src/interface/app/components';
+import type { EnumEventName } from 'tdp-editor-types/src/enum/components';
 
 const EventFactory = {
     getEventByIndex: (state: IComponentState, index: number) => {

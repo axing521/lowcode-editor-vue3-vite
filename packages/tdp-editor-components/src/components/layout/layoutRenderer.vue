@@ -44,11 +44,11 @@ import { inject, defineComponent } from 'vue';
 import { useBase } from '../../composables/base';
 import Draggable from 'vuedraggable';
 
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
-import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
+import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import ComponentWrapper from '../componentWrapper.vue';
 
 const props = defineProps<{

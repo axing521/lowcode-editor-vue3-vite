@@ -3,7 +3,7 @@ import { $fetch } from '../../request';
 import type {
     IDataModlerApiDetail,
     IDataModlerApiResponse,
-} from 'tdp-editor-types/interface/request/api';
+} from 'tdp-editor-types/src/interface/request/api';
 
 const service = {
     // 获取data modeler api列表

@@ -1,4 +1,4 @@
-import { IComponentState } from 'tdp-editor-types/interface/app/components';
+import { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 
 declare let $state: IComponentState;
 declare let $event: Event;

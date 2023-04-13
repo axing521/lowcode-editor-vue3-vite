@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { EnumAppEnv } from 'tdp-editor-types/enum';
+import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 interface ImportMetaEnv {
     readonly NODE_ENV: string;
     readonly VITE_APP_TITLE: string;

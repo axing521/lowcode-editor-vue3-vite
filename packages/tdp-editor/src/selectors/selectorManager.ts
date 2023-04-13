@@ -1,7 +1,7 @@
 import { warn } from 'vue';
 import type { App } from 'vue';
-import type { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import type { TSelector } from 'tdp-editor-types/interface/designer/selector';
+import type { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import type { TSelector } from 'tdp-editor-types/src/interface/designer/selector';
 
 type TSelectorMapKey = EnumSelectorName | string;
 

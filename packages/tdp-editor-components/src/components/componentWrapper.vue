@@ -13,7 +13,7 @@
     ></component>
 </template>
 <script lang="ts" setup>
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 import { useBase, useBaseWatch } from '../composables/base';
 
 const allProps = defineProps<{

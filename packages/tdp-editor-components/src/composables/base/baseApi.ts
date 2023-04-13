@@ -1,8 +1,8 @@
-import type { IServiceResult } from 'tdp-editor-types/interface/request';
-import type { EnumApiType } from 'tdp-editor-types/enum/components';
-import { apiFactory, request } from 'tdp-editor-common';
-import { apiDomain } from 'tdp-editor-common/service';
-import type { ISetupBaseProps } from 'tdp-editor-types/interface/app/components';
+import type { IServiceResult } from 'tdp-editor-types/src/interface/request';
+import type { EnumApiType } from 'tdp-editor-types/src/enum/components';
+import { apiFactory, request } from 'tdp-editor-common/src';
+import { apiDomain } from 'tdp-editor-common/src/service';
+import type { ISetupBaseProps } from 'tdp-editor-types/src/interface/app/components';
 
 export default function useBaseApi(props: ISetupBaseProps) {
     // 触发指定的api

@@ -4,13 +4,13 @@ import packageJson from '../../package.json';
 import createRouter from '../routers/router';
 import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../plugins';
-import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
+import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
 import SelectorManager from '../selectors/SelectorManager';
 import propSelectors from '../selectors/propSelectors';
-import { createController } from 'tdp-editor-common/controller';
-import { EnumAppMode } from 'tdp-editor-types/enum';
-import { $log } from 'tdp-editor-common/utils';
+import { createController } from 'tdp-editor-common/src/controller';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
+import { $log } from 'tdp-editor-common/src/utils';
 
 export const initEditor = (app: App) => {
     $log(

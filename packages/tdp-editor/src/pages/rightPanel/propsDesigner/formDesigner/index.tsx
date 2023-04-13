@@ -1,12 +1,12 @@
 import { defineComponent } from 'vue';
 import type { PropType, VNode } from 'vue';
 import './index.less';
-import { EnumRuleType } from 'tdp-editor-types/enum/components/form';
-import { formFactory } from 'tdp-editor-common';
-import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
+import { EnumRuleType } from 'tdp-editor-types/src/enum/components/form';
+import { formFactory } from 'tdp-editor-common/src';
+import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { DeleteFilled } from '@ant-design/icons-vue';
-import type { IFormRules } from 'tdp-editor-types/interface/app/form';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IFormRules } from 'tdp-editor-types/src/interface/app/form';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 export default defineComponent({
     name: 'designer-form-panel',

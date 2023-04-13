@@ -1,6 +1,6 @@
 import type { App } from 'vue';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 // 遍历所有组件信息 , '!../components/page/**'
 const components = import.meta.glob(['../components/*/index.(ts|tsx)'], {
     eager: true,

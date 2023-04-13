@@ -1,5 +1,5 @@
 import { warn } from 'vue';
-import { EnumAppMode } from 'tdp-editor-types/enum';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import type FdComponent from '../../component';
 import {
     addComponent,
@@ -7,7 +7,7 @@ import {
     getComponentByKey,
     getAppMode,
     getComponentsMap,
-} from 'tdp-editor-types/constant/injectKeys';
+} from 'tdp-editor-types/src/constant/injectKeys';
 
 import { inject } from 'vue';
 import type { ComponentPublicInstance } from 'vue';

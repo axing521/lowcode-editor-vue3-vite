@@ -1,8 +1,8 @@
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
-import type { IAppVarConstructor } from 'tdp-editor-types/interface/app/vars';
+import type { IAppVarConstructor } from 'tdp-editor-types/src/interface/app/vars';
 import AppVar from './AppVar';
-import { EnumAppVarScope } from 'tdp-editor-types/enum/app/vars';
+import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
 import { useAppStore } from '../stores/appStore';
 
 // 创建两个map，存放变量实例

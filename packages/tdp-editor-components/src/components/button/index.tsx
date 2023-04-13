@@ -5,15 +5,15 @@ import {
     EnumEventName,
     EnumEventType,
     EnumPropsValueType,
-} from 'tdp-editor-types/enum/components';
-import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
+} from 'tdp-editor-types/src/enum/components';
+import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type {
     IDesignerComponent,
     registerComponentFunc,
-} from 'tdp-editor-types/interface/designer';
+} from 'tdp-editor-types/src/interface/designer';
 import type { IButtonProps } from './interface';
 
-import type { ISelectorSelectOptions } from 'tdp-editor-types/interface/designer/selector';
+import type { ISelectorSelectOptions } from 'tdp-editor-types/src/interface/designer/selector';
 
 export default defineAsyncComponent(() => {
     return import('./buttonRenderer.vue');

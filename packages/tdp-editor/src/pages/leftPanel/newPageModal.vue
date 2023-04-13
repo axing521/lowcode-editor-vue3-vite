@@ -110,8 +110,8 @@
 </style>
 <script lang="ts" setup>
 import { ref, reactive, computed } from 'vue';
-import type { IPageStore } from 'tdp-editor-types/interface/store';
-import { useEditorControler } from 'tdp-editor-common/controller';
+import type { IPageStore } from 'tdp-editor-types/src/interface/store';
+import { useEditorControler } from 'tdp-editor-common/src/controller';
 
 enum EnumPageType {
     emptyForm = 'emptyForm',

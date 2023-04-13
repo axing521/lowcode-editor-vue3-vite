@@ -1,8 +1,8 @@
 import type { VNode } from 'vue';
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
-import type { IMenusStore, IPageStore } from 'tdp-editor-types/interface/store';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IMenusStore, IPageStore } from 'tdp-editor-types/src/interface/store';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import {
     OrderedListOutlined,
     EditOutlined,
@@ -12,10 +12,10 @@ import {
     ClusterOutlined,
 } from '@ant-design/icons-vue';
 import classnames from 'classnames';
-import { useEditorControler } from 'tdp-editor-common/controller';
-import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
-import { useLeftMenuStore } from 'tdp-editor-common/stores/leftMenuStore';
-import { useAppStore } from 'tdp-editor-common/stores/appStore';
+import { useEditorControler } from 'tdp-editor-common/src/controller';
+import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
+import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
+import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import DesignerComponentList from './componentList';
 import './index.less';
 import NewPageModal from './newPageModal.vue';

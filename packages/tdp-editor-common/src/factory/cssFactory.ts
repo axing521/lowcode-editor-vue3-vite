@@ -1,5 +1,5 @@
-import { EnumCssProerty } from 'tdp-editor-types/enum/designer';
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
+import { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 
 const CssFactory = {
     // 获取css值

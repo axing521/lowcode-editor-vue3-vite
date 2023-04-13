@@ -3,19 +3,19 @@ import type { PropType } from 'vue';
 import { message } from 'ant-design-vue/es';
 
 import './index.less';
-import { EnumApiType } from 'tdp-editor-types/enum/components';
-import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
-import type { EnumHttpMethod } from 'tdp-editor-types/enum';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import type { IComponentApi } from 'tdp-editor-types/interface/app/components';
+import { EnumApiType } from 'tdp-editor-types/src/enum/components';
+import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
+import type { EnumHttpMethod } from 'tdp-editor-types/src/enum';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import type { IComponentApi } from 'tdp-editor-types/src/interface/app/components';
 import type {
     IDataModlerApiDetail,
     IDataModlerApiResponse,
     IDataModlerApiRow,
-} from 'tdp-editor-types/interface/request/api';
+} from 'tdp-editor-types/src/interface/request/api';
 
-import { apiDomain, apis } from 'tdp-editor-common/service';
-import { request, apiFactory } from 'tdp-editor-common';
+import { apiDomain, apis } from 'tdp-editor-common/src/service';
+import { request, apiFactory } from 'tdp-editor-common/src';
 
 export default defineComponent({
     name: 'designer-data-panel',

@@ -2,14 +2,14 @@ import { defineComponent, inject } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import { mapState } from 'pinia';
 import './index.less';
-import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
-import { EnumAppMode } from 'tdp-editor-types/enum';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/src/enum/components';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import PageView from 'tdp-editor-components/src/components/page';
-import { utils } from 'tdp-editor-common';
-import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
-import { useAppStore } from 'tdp-editor-common/stores/appStore';
-import { useEditorControler } from 'tdp-editor-common/controller';
+import { utils } from 'tdp-editor-common/src';
+import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
+import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { useEditorControler } from 'tdp-editor-common/src/controller';
 
 export default defineComponent({
     name: 'editor-main-panel',

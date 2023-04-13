@@ -3,14 +3,14 @@
  * 只处理editor state的相关方法，如果需要处理其他store中的数据，则要将方法放到对应的EditorController中
  */
 import { defineStore } from 'pinia';
-import { EnumComponentType, EnumComponentGroup } from 'tdp-editor-types/enum/components';
+import { EnumComponentType, EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 
-import type { IPageStore, IEditorStore } from 'tdp-editor-types/interface/store';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IPageStore, IEditorStore } from 'tdp-editor-types/src/interface/store';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
-import { utils } from '../';
+import { utils } from '..';
 import { apps, forms } from '../service';
-import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
+import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
 import { $log } from '../utils';
 // import { useAppStore } from './appStore';
 

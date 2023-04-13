@@ -1,6 +1,6 @@
-import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
-import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
+import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 import LycInput from './LycInput.vue';
 export const componentConfig: IDesignerComponent = {

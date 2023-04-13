@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
-import { RouterConfig } from 'tdp-editor-common/constants/router';
+import { RouterConfig } from 'tdp-editor-common/src/constants/router';
 import TdpAppHeaderVue from '../pages/TdpAppHeader.vue';
 import TdpAppFooterVue from '../pages/TdpAppFooter.vue';
 import TdpAppLeftSideVue from '../pages/TdpAppLeftSide.vue';

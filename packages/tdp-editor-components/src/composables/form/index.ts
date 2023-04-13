@@ -1,7 +1,7 @@
 import { getCurrentInstance, onBeforeUnmount, computed } from 'vue';
-import formFactory from 'tdp-editor-common/factory/formFactory';
-import type { IFieldCallbackRule } from 'tdp-editor-types/interface/app/form';
-import type { ISetupBaseProps } from 'tdp-editor-types/interface/app/components';
+import formFactory from 'tdp-editor-common/src/factory/formFactory';
+import type { IFieldCallbackRule } from 'tdp-editor-types/src/interface/app/form';
+import type { ISetupBaseProps } from 'tdp-editor-types/src/interface/app/components';
 import useFormInject from './formInject';
 
 export { default as useFormInject } from './formInject';

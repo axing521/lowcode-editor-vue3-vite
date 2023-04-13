@@ -1,8 +1,9 @@
-packages/**/*.config.js
+/packages/**/*.config.js
 tsdist
-packages/**/*.less
-packages/**/*.svg
-packages/**/*.MD
-packages/**/*.jpg
-packages/**/*.png
-packages/*/node_modules/**/*
+/packages/**/*.less
+/packages/**/*.svg
+/packages/**/*.MD
+/packages/**/*.jpg
+/packages/**/*.png
+/packages/*/node_modules/**/*
+/packages/tdp-editor/src/pages/rightPanel/UXDesigner/*

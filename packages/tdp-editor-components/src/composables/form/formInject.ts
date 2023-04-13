@@ -1,5 +1,9 @@
 import { inject } from 'vue';
-import { formSubmited, getFdFormFields, getFdFormRef } from 'tdp-editor-types/constant/injectKeys';
+import {
+    formSubmited,
+    getFdFormFields,
+    getFdFormRef,
+} from 'tdp-editor-types/src/constant/injectKeys';
 export default function useFormInject() {
     // 获取当前form实例
     const getFdForm = inject(getFdFormRef, () => {

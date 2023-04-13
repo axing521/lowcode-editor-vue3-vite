@@ -2,7 +2,7 @@
     <a-input :placeholder="allProps.props.placeholder || 'input something'" />
 </template>
 <script lang="ts" setup>
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 export interface IProps {
     placeholder?: string;
 }

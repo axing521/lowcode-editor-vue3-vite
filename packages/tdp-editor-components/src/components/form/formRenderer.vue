@@ -21,16 +21,16 @@ export default defineComponent({
 import { provide, reactive, ref, getCurrentInstance, defineComponent } from 'vue';
 import { useBaseInject, useBaseLifecycle } from '../../composables/base';
 import { useFormInject } from '../../composables/form';
-import { getFdFormRef, getFdFormFields } from 'tdp-editor-types/constant/injectKeys';
-import { forms } from 'tdp-editor-common/service';
-import { funcFactory, propsFactory, utils } from 'tdp-editor-common';
-import { EnumComponentType } from 'tdp-editor-types/enum/components';
-import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
-import { EnumAppMode } from 'tdp-editor-types/enum';
+import { getFdFormRef, getFdFormFields } from 'tdp-editor-types/src/constant/injectKeys';
+import { forms } from 'tdp-editor-common/src/service';
+import { funcFactory, propsFactory, utils } from 'tdp-editor-common/src';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
+import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
 
-import type { IServiceResult } from 'tdp-editor-types/interface/request';
-import type { IFormField } from 'tdp-editor-types/interface/app/form';
-import type { IComponentState } from 'tdp-editor-types/interface/app/components';
+import type { IServiceResult } from 'tdp-editor-types/src/interface/request';
+import type { IFormField } from 'tdp-editor-types/src/interface/app/form';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 import type { IFormProps } from './interface';
 
 const allProps = defineProps<{

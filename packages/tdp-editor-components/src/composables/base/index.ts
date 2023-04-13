@@ -1,7 +1,7 @@
 import { computed, reactive } from 'vue';
-import type { ISetupBaseProps } from 'tdp-editor-types/interface/app/components';
-import { propsFactory } from 'tdp-editor-common';
-import { EnumAppMode } from 'tdp-editor-types/enum';
+import type { ISetupBaseProps } from 'tdp-editor-types/src/interface/app/components';
+import { propsFactory } from 'tdp-editor-common/src';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import useVars from './baseVars';
 import useBaseInject from './baseInject';
 

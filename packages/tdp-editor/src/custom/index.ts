@@ -1,6 +1,6 @@
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-// import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
-// import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+// import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+// import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import LycButton from './LycButton';
 import LycInput from './LycInput';
 

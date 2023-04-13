@@ -1,9 +1,9 @@
-import type { IAppVarConstructor, IAppVarJson } from 'tdp-editor-types/interface/app/vars';
+import type { IAppVarConstructor, IAppVarJson } from 'tdp-editor-types/src/interface/app/vars';
 import {
     EnumAppVarDataType,
     EnumAppVarScope,
     EnumAppVarType,
-} from 'tdp-editor-types/enum/app/vars';
+} from 'tdp-editor-types/src/enum/app/vars';
 import { $getUUID } from '../utils';
 
 const NumberRegx = /^[+-]?\d*[.]?\d*$/gi;

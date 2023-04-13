@@ -103,12 +103,12 @@
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
 import type { PropType } from 'vue';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor';
 
-import { useAppStore } from 'tdp-editor-common/stores/appStore';
-import { useVarControler } from 'tdp-editor-common/controller';
+import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { useVarControler } from 'tdp-editor-common/src/controller';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
 // 设置提示信息

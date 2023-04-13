@@ -1,9 +1,9 @@
 import { defineComponent } from 'vue';
 import type { PropType, VNode } from 'vue';
 import { Photoshop } from 'vue-color';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import type { EnumCssProerty } from 'tdp-editor-types/enum/designer';
-import { cssFactory } from 'tdp-editor-common';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import type { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
+import { cssFactory } from 'tdp-editor-common/src';
 
 export default defineComponent({
     name: 'css-color-selector',

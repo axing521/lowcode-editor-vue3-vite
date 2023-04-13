@@ -3,13 +3,13 @@ import type { PropType } from 'vue';
 import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor';
 import './index.less';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import { EnumCssProerty } from 'tdp-editor-types/enum/designer';
-import { cssFactory } from 'tdp-editor-common';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
+import { cssFactory } from 'tdp-editor-common/src';
 import CssBoxDesigner from '../cssBoxDesigner.vue';
 import CssWidthSelector from '../../../../selectors/cssSelectors/widthSelector';
 import CssColorSelector from '../../../../selectors/cssSelectors/colorSelector';
-import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
+import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
 

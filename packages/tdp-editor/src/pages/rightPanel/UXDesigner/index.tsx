@@ -1,14 +1,14 @@
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
 import type { PropType } from 'vue';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import './index.less';
 
 import { DeleteOutlined } from '@ant-design/icons-vue';
-import { EnumEventName, EnumEventType } from 'tdp-editor-types/enum/components';
-import { eventFactory } from 'tdp-editor-common';
+import { EnumEventName, EnumEventType } from 'tdp-editor-types/src/enum/components';
+import { eventFactory } from 'tdp-editor-common/src';
 import pm from '../paramsModal.vue';
-import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
+import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 
 type TEventList = {
     key: EnumEventName,

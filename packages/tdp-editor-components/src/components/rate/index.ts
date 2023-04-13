@@ -1,17 +1,17 @@
 import { defineAsyncComponent } from 'vue';
-import { EnumSelectorName } from 'tdp-editor-types/enum/designer';
-import type { ISelectorSliderOptions } from 'tdp-editor-types/interface/designer/selector';
+import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import type { ISelectorSliderOptions } from 'tdp-editor-types/src/interface/designer/selector';
 import {
     EnumComponentGroup,
     EnumComponentType,
     EnumEventName,
     EnumEventType,
     EnumPropsValueType,
-} from 'tdp-editor-types/enum/components';
+} from 'tdp-editor-types/src/enum/components';
 import type {
     IDesignerComponent,
     registerComponentFunc,
-} from 'tdp-editor-types/interface/designer';
+} from 'tdp-editor-types/src/interface/designer';
 import type { IRateProps } from './interface';
 export default defineAsyncComponent(() => import('./rateRenderer.vue'));
 

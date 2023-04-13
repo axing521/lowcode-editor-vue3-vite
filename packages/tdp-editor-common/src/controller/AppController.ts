@@ -1,9 +1,9 @@
 import { toRaw } from 'vue';
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
-import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/enum';
-import type { IAppStore } from 'tdp-editor-types/interface/store';
-import type { IAppSaveStruct } from 'tdp-editor-types/interface/app';
+import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
+import type { IAppStore } from 'tdp-editor-types/src/interface/store';
+import type { IAppSaveStruct } from 'tdp-editor-types/src/interface/app';
 
 import { useAppStore } from '../stores/appStore';
 export default class AppController {

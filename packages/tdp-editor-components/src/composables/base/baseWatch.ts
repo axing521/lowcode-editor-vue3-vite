@@ -1,7 +1,7 @@
 import { watchEffect } from 'vue';
-import { EnumAppMode } from 'tdp-editor-types/enum';
-import type { ISetupBaseProps } from 'tdp-editor-types/interface/app/components';
-import { utils } from 'tdp-editor-common';
+import { EnumAppMode } from 'tdp-editor-types/src/enum';
+import type { ISetupBaseProps } from 'tdp-editor-types/src/interface/app/components';
+import { utils } from 'tdp-editor-common/src';
 import useInject from './baseInject';
 
 export default function useBaseWatch(props: ISetupBaseProps) {

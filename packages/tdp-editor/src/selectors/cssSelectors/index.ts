@@ -1,5 +1,5 @@
-import { EnumCssProerty } from 'tdp-editor-types/enum/designer';
-import type { TCssSelector } from 'tdp-editor-types/interface/designer/selector';
+import { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
+import type { TCssSelector } from 'tdp-editor-types/src/interface/designer/selector';
 // 遍历所有组件信息
 const allSelectors = import.meta.globEager('./*Selector.(tsx|vue)');
 const cssSelectors: TCssSelector[] = [];

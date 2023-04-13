@@ -1,10 +1,10 @@
 import { defineAsyncComponent } from 'vue';
-import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
-import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/enum/designer';
+import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/src/enum/components';
+import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type {
     IDesignerComponent,
     registerComponentFunc,
-} from 'tdp-editor-types/interface/designer';
+} from 'tdp-editor-types/src/interface/designer';
 import type { ILayoutProps } from './interface';
 export default defineAsyncComponent(() => import('./layoutRenderer.vue'));
 

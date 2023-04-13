@@ -3,14 +3,14 @@
  * 暴露createEditor方法提供给第三方调用
  */
 import { createApp } from 'vue';
-import type { TSelector } from 'tdp-editor-types/interface/designer/selector';
-import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
+import type { TSelector } from 'tdp-editor-types/src/interface/designer/selector';
+import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 import { initEditor } from './utils';
 import TdpEditorVue from '../pages/TdpEditor.vue';
 // 自定义组件样式
 import 'tdp-editor-components/src/styles/index.less';
-import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
+import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 
 interface ICreateEditorOptions {
     container: string | Element;

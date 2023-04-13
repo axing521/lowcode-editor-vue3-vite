@@ -1,5 +1,5 @@
-import type { EnumApiType } from 'tdp-editor-types/enum/components';
-import type { IComponentState, IComponentApi } from 'tdp-editor-types/interface/app/components';
+import type { EnumApiType } from 'tdp-editor-types/src/enum/components';
+import type { IComponentState, IComponentApi } from 'tdp-editor-types/src/interface/app/components';
 
 const ApiFactory = {
     // 根据apiName获取api对象
