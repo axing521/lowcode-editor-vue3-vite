@@ -9,6 +9,7 @@ import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
 import { useAppStore } from 'tdp-editor-common/stores/appStore';
 import { utils } from 'tdp-editor-common';
+import { newComponentJson } from '../../utils';
 
 const delayError = utils.$getDelayFunction((message: string) => {
     $message.warn(message);
@@ -77,31 +78,7 @@ export default defineComponent({
         },
         // 向设计面板拖入组件时，生成新的id
         dragCloneData(originData: IDesignerComponent) {
-            const newId = utils.$getUUID(originData.type);
-            // eslint-disable-next-line
-            const { eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
-            const newComponent = {
-                ...newProps,
-                key: newId,
-                name: newId,
-                list: [],
-            };
-            // 如果添加的组件是form组件，追加formInfo属性
-            if (originData.group === EnumComponentGroup.form) {
-                newComponent.formInfo = {
-                    formFieldName: newId,
-                    rules: [],
-                };
-            }
-            // 设置默认属性
-            if (getDefaultProps && typeof getDefaultProps === 'function') {
-                newComponent.props = getDefaultProps();
-            }
-            // 设置默认样式
-            if (getDefaultCss && typeof getDefaultCss === 'function') {
-                newComponent.css = getDefaultCss();
-            }
-            return newComponent;
+            return newComponentJson(originData);
         },
         // 双击向选中组件中添加组件
         doubleClickComponent(originData: IDesignerComponent) {

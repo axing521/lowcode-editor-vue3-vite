@@ -24,9 +24,9 @@
     "core-js": "^3.8.3",
     "dayjs": "^1.10.7",
     "pinia": "^2.0.14",
+    "tdp-editor-common": "workspace:^0.1.0",
     "tdp-editor-components": "workspace:*",
     "tdp-editor-types": "workspace:*",
-    "tdp-editor-common": "workspace:*",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },

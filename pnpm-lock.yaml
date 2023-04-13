@@ -46,7 +46,7 @@ importers:
       dayjs: ^1.10.7
       pinia: ^2.0.14
       rollup-plugin-visualizer: ^5.8.3
-      tdp-editor-common: workspace:*
+      tdp-editor-common: workspace:^0.1.0
       tdp-editor-components: workspace:*
       tdp-editor-types: workspace:*
       vite: ^4.2.1
@@ -94,7 +94,7 @@ importers:
       pinia: ^2.0.14
       rollup-plugin-visualizer: ^5.8.3
       tdp-app-runtime: workspace:*
-      tdp-editor-common: workspace:*
+      tdp-editor-common: workspace:^0.1.0
       tdp-editor-components: workspace:*
       tdp-editor-types: workspace:*
       vite: ^4.2.1
