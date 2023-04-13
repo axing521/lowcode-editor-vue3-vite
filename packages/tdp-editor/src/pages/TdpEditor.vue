@@ -7,6 +7,10 @@
     >
         <div class="tdp-editor-toolbar">
             <div class="toolbar-left">
+                <AddVarModal
+                    v-model:visible="addVarModalVisible"
+                    :scope="addVarScope"
+                ></AddVarModal>
                 <ExportOutlined title="导出" @click="exportJson" />
                 <a-upload
                     name="file"
@@ -18,6 +22,22 @@
                     <ImportOutlined title="导入" />
                 </a-upload>
                 <SaveOutlined title="保存" />
+                <a-button
+                    type="primary"
+                    @click="
+                        addVarScope = EnumAppVarScope.Global;
+                        addVarModalVisible = true;
+                    "
+                    >添加全局变量</a-button
+                >&nbsp;
+                <a-button
+                    type="primary"
+                    @click="
+                        addVarScope = EnumAppVarScope.Page;
+                        addVarModalVisible = true;
+                    "
+                    >添加页面变量</a-button
+                >
             </div>
             <div class="toolbar-right">
                 <a-button type="primary" @click="pagePreview">
@@ -160,11 +180,12 @@ import {
 } from 'tdp-editor-common/src/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
+import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/vars';
 
 import DesignerLeft from './leftPanel';
 import DesignerRight from './rightPanel';
 import DesignerMain from './mainPanel';
-import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/vars';
+import AddVarModal from '../components/AddVar.vue';
 
 (window as any).MonacoEnvironment = {
     getWorker(_: any, label: any) {
@@ -272,4 +293,7 @@ const setRefs = (key: string, value: ComponentPublicInstance) => {
 provide('selectComponent', selectComponent);
 provide('unselectComponent', unselectComponent);
 provide('setRefs', setRefs);
+
+const addVarModalVisible = ref(false);
+const addVarScope = ref(EnumAppVarScope.Global);
 </script>

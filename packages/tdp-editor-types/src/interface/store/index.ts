@@ -18,8 +18,8 @@ export interface IAppStore {
     leftSide?: IDesignerComponent;
     rightSide?: IDesignerComponent;
     footer?: IDesignerComponent;
-    globalVars: Record<string, any>; // { 变量名：变量值 }
-    pageVars: Record<string, Record<string, any>>; // { 页面名: { 变量名：变量值 } }
+    globalVars: Record<string, any>; // 全局变量集合 { 变量名：变量数据 }
+    currentPageVars: Record<string, any>; // 当前页面的变量集合 { 变量名：变量数据 }
 }
 
 export interface IEditorStore {

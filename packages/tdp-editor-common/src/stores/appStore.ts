@@ -10,8 +10,8 @@ export const useAppStore = defineStore('appStore', {
             pages: [],
             pageForms: new Map(),
             activePage: undefined,
-            globalVars: {},
-            pageVars: {},
+            globalVars: {}, // 运行时的全局变量，存放的是运行时的值
+            currentPageVars: {}, // 运行时的当前页面变量，存放的是运行时的值
         };
     },
     actions: {

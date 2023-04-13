@@ -24,6 +24,7 @@ import {
     Popover,
     Rate,
     Row,
+    Radio,
     Select,
     Switch,
     Slider,
@@ -57,6 +58,7 @@ export default function useAntdV(app: App) {
     app.use(Popover);
     app.use(Rate);
     app.use(Row);
+    app.use(Radio);
     app.use(Select);
     app.use(Switch);
     app.use(Slider);

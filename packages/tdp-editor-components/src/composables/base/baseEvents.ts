@@ -1,10 +1,6 @@
 import { computed, getCurrentInstance } from 'vue';
 import type { EnumEventName } from 'tdp-editor-types/src/enum/components';
-import type {
-    ISetupBaseProps,
-    TEventFunc,
-    TEventsMapRaw,
-} from 'tdp-editor-types/src/interface/app/components';
+import type { ISetupBaseProps, TEventsMapRaw } from 'tdp-editor-types/src/interface/app/components';
 import { eventFactory } from 'tdp-editor-common/src';
 import { useVarControler } from 'tdp-editor-common/src/controller';
 import useBaseInject from './baseInject';

@@ -7,7 +7,7 @@ import { useAppStore } from '../stores/appStore';
 
 // 创建两个map，存放变量实例
 const GlobalVarMap: Map<string, AppVar> = new Map();
-const PageVarMap: Map<string, Record<string, AppVar>> = new Map();
+const currentPageVarMap: Map<string, AppVar> = new Map();
 
 export default class AppVarController {
     private readonly $app: App;
@@ -64,28 +64,17 @@ export default class AppVarController {
             // 添加页面变量
             const activePageId = varInstance.pageKey || appStore.activePage?.key;
             if (activePageId) {
-                const page = appStore.pageVars[activePageId];
+                const pageVars = appStore.currentPageVars;
                 // 如果变量已经存在，则不能添加
-                if (page && page[varInstance.name]) {
+                if (pageVars[varInstance.name]) {
                     console.error(`${varInstance.name}变量已存在，不能重复添加`);
                     addResult.msg = '变量已存在，不能重复添加';
                     return addResult;
                 }
-                // 如果之前没有任何页面变量
-                if (!page) {
-                    PageVarMap.set(activePageId, {
-                        [varInstance.name]: varInstance,
-                    });
-                    appStore.pageVars[activePageId] = {
-                        [varInstance.name]: varInstance.getCloneInitData(),
-                    };
-                }
-                // 如果有页面变量大对象，但是没有当前要添加的变量
+                // 添加变量
                 else {
-                    PageVarMap.get(activePageId)![varInstance.name] = varInstance;
-
-                    appStore.pageVars[activePageId][varInstance.name] =
-                        varInstance.getCloneInitData();
+                    currentPageVarMap.set(varInstance.name, varInstance);
+                    appStore.currentPageVars[varInstance.name] = varInstance.getCloneInitData();
                 }
                 addResult.success = true;
             }
@@ -102,12 +91,8 @@ export default class AppVarController {
         _var = appStore.globalVars[name];
         if (_var) return _var;
         // 再查找页面变量
-        for (const pagekey in appStore.pageVars) {
-            const vars = appStore.pageVars[pagekey];
-            if (vars[name]) {
-                return vars[name];
-            }
-        }
+        _var = appStore.currentPageVars[name];
+        if (_var) return _var;
         return undefined;
     }
 
@@ -118,23 +103,14 @@ export default class AppVarController {
         _var = GlobalVarMap.get(name);
         if (_var) return _var;
         // 再查找页面变量
-        try {
-            PageVarMap.forEach(pageVars => {
-                if (pageVars[name]) {
-                    _var = pageVars[name];
-                    throw new Error('找到了var实例');
-                }
-            });
-        } catch {
-            /* empty */
-        }
+        _var = currentPageVarMap.get(name);
+        if (_var) return _var;
         return _var;
     }
 
     // 获取当前页面下所有的页面变量
     getCurrentPageVars(): Record<string, any> | undefined {
-        const appStore = useAppStore();
-        return appStore.pageVars && appStore.pageVars[appStore.activePage?.key || ''];
+        return useAppStore().currentPageVars;
     }
 
     getGlobalVars(): Record<string, any> {
@@ -164,23 +140,13 @@ export default class AppVarController {
         if (varInstance instanceof AppVar) {
             // 判断是 全局变量 还是 页面变量
             if (varInstance.scope === EnumAppVarScope.Global) {
-                const _var = appStore.globalVars[varInstance.name];
-                if (_var) {
-                    delete appStore.globalVars[varInstance.name];
-                    GlobalVarMap.delete(varInstance.name);
-                }
+                if (!GlobalVarMap.has(varInstance.key)) return;
+                delete appStore.globalVars[varInstance.name];
+                GlobalVarMap.delete(varInstance.name);
             } else if (varInstance.scope === EnumAppVarScope.Page) {
-                const pageMap = PageVarMap.get(varInstance.pageKey);
-                if (!pageMap) return;
-                delete appStore.pageVars[varInstance.pageKey][varInstance.name];
-                delete pageMap[varInstance.name];
-                // 如果删除页面变量后，该页面下没有变量了，则删除页面对象
-                if (!Object.keys(appStore.pageVars[varInstance.pageKey]).length) {
-                    delete appStore.pageVars[varInstance.pageKey];
-                }
-                if (!Object.keys(pageMap).length) {
-                    PageVarMap.delete(varInstance.pageKey);
-                }
+                if (!currentPageVarMap.has(varInstance.key)) return;
+                delete appStore.currentPageVars[varInstance.name];
+                currentPageVarMap.delete(varInstance.key);
             }
         } else {
             result.success = false;
