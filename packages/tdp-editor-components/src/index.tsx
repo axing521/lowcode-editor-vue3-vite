@@ -11,5 +11,5 @@ export { default as Layout } from './components/layout';
 export { default as Rate } from './components/rate';
 // export { default as Row } from './components/row';
 // export { default as Select } from './components/select';
-export { default as Page } from './page.vue';
+export { default as Page } from './components/page';
 export { default as FdComponent } from './component';

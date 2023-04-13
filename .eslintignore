@@ -5,3 +5,4 @@ packages/**/*.svg
 packages/**/*.MD
 packages/**/*.jpg
 packages/**/*.png
+packages/*/node_modules/**/*

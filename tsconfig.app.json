@@ -2,13 +2,14 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": [
     "packages/*/src/@types/*.ts",
-    "packages/*/src/**/*",
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.tsx",
     "packages/*/src/**/*.vue",
     "packages/tdp-editor-types/**/*.ts",
     "packages/tdp-editor-common/**/*.ts",
     "packages/*/package.json"
   ],
-  "exclude": ["packages/*/src/**/__tests__/*"],
+  "exclude": ["packages/*/src/**/__tests__/*", "packages/*/node_modules/**"],
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",

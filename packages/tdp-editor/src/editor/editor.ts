@@ -6,7 +6,6 @@ import { createApp } from 'vue';
 import type { TSelector } from 'tdp-editor-types/interface/designer/selector';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 
-import packageJson from '../../package.json';
 import { initEditor } from './utils';
 import TdpEditorVue from '../pages/TdpEditor.vue';
 // 自定义组件样式
@@ -16,8 +15,6 @@ import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 interface ICreateEditorOptions {
     container: string | Element;
 }
-
-console.info('tdp editor version: ' + packageJson.version);
 
 export const createEditor = (options: ICreateEditorOptions) => {
     const app = createApp(TdpEditorVue);

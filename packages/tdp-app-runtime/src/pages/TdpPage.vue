@@ -14,7 +14,7 @@
 import { onMounted, computed, watch } from 'vue';
 // import { useRouter } from 'vue-router';
 import { EnumAppMode } from 'tdp-editor-types/enum';
-import RuntimePage from 'tdp-editor-components/src/page.vue';
+import RuntimePage from 'tdp-editor-components/src/components/page';
 import { useAppControler } from 'tdp-editor-common/controller';
 const props = defineProps<{
     pageId?: string;

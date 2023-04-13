@@ -1,7 +1,10 @@
 import type { App } from 'vue';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-// 遍历所有组件信息
-const components = import.meta.globEager('../components/*/index.(ts|tsx)');
+import { EnumComponentType } from 'tdp-editor-types/enum/components';
+// 遍历所有组件信息 , '!../components/page/**'
+const components = import.meta.glob(['../components/*/index.(ts|tsx)'], {
+    eager: true,
+});
 /**
  * 自动注册组件
  * @returns 返回组件列表
@@ -21,10 +24,14 @@ const register = (app: App): IDesignerComponent[] => {
                 registers = [$register];
             }
             registers.forEach((c: any) => {
-                app.component(c.type, isMultiple ? componentFile[c.type] : componentFile.default);
-                if (c.showInList !== false) {
-                    componentList.push(c);
+                // page不注册全局组件
+                if (c.type !== EnumComponentType.page) {
+                    app.component(
+                        c.type,
+                        isMultiple ? componentFile[c.type] : componentFile.default
+                    );
                 }
+                componentList.push(c);
             });
         }
     });

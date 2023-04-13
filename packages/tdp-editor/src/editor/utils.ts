@@ -1,5 +1,6 @@
 import type { App } from 'vue';
 import { createPinia } from 'pinia';
+import packageJson from '../../package.json';
 import createRouter from '../routers/router';
 import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../plugins';
@@ -9,7 +10,14 @@ import SelectorManager from '../selectors/SelectorManager';
 import propSelectors from '../selectors/propSelectors';
 import { createController } from 'tdp-editor-common/controller';
 import { EnumAppMode } from 'tdp-editor-types/enum';
+import { $log } from 'tdp-editor-common/utils';
+
 export const initEditor = (app: App) => {
+    $log(
+        '%c %s',
+        'background-color: red; color: white',
+        'tdp-editor version: ' + packageJson.version
+    );
     const pinia = createPinia();
     // 注册插件
     usePlugin(app);

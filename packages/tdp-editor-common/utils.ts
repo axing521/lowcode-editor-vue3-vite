@@ -1,3 +1,5 @@
+import { EnumAppEnv } from 'tdp-editor-types/enum';
+
 /* eslint-disable prettier/prettier */
 export const $getUUID = (prefix?: string): string => {
     let result = $randomWord(false, 16);
@@ -6,11 +8,11 @@ export const $getUUID = (prefix?: string): string => {
     }
     return result;
 };
-const __env = function() {return 'dev'}();
-export const $log = __env === 'production' ? () => {} : console.log;
-export const $warn = __env === 'production' ? () => {} : console.warn;
-export const $info = __env === 'production' ? () => {} : console.info;
-export const $error = __env === 'production' ? () => {} : console.error;
+
+const APP_ENV = import.meta.env.VITE_APP_ENV;
+export const $log = APP_ENV === EnumAppEnv.production ? () => {} : console.log;
+export const $warn = APP_ENV === EnumAppEnv.production ? () => {} : console.warn;
+export const $error = APP_ENV === EnumAppEnv.production ? () => {} : console.error;
 
 /**
  * 生成随机字符串

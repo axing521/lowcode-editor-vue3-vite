@@ -19,12 +19,17 @@ import createRouter from '../routers/runtime.router';
 import App from './TdpApp.vue';
 import { createController } from 'tdp-editor-common/controller';
 import { EnumAppMode } from 'tdp-editor-types/enum';
+import { $log } from 'tdp-editor-common/utils';
 
 interface ICreateRuntimeOptions {
     container: string | Element;
 }
 
-console.info('tdp app runtime version: ' + packageJson.version);
+$log(
+    '%c %s',
+    'background-color: blue; color: white',
+    'tdp app runtime version: ' + packageJson.version
+);
 
 export const createRuntime = (options: ICreateRuntimeOptions) => {
     const app = createApp(App);

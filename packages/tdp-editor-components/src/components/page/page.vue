@@ -5,7 +5,7 @@
 </template>
 
 <style lang="less">
-@import url('./styles/var/index.less');
+@import url('../../styles/var/index.less');
 
 @prefixName: ~'@{prefix-className}';
 .@{prefixName}-renderer {

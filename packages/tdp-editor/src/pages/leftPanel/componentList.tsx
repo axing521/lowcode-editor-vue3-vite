@@ -9,7 +9,7 @@ import { EnumComponentGroup } from 'tdp-editor-types/enum/components';
 import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
 import { useAppStore } from 'tdp-editor-common/stores/appStore';
 import { utils } from 'tdp-editor-common';
-import { newComponentJson } from '../../utils';
+import { newComponentJson } from 'tdp-editor-common/stores/editorStore';
 
 const delayError = utils.$getDelayFunction((message: string) => {
     $message.warn(message);
@@ -31,17 +31,19 @@ export default defineComponent({
         ...mapState(useAppStore, ['activePage']),
         componentGroup() {
             const group = [] as componentMenu[];
-            this.componentList.forEach(c => {
-                const groupItem = group.find(g => g.name === (c.listGroup || 'normal'));
-                if (groupItem) {
-                    groupItem.components.push(c);
-                } else {
-                    group.push({
-                        name: c.listGroup || 'normal',
-                        components: [c],
-                    });
-                }
-            });
+            this.componentList
+                .filter(c => c.showInList !== false)
+                .forEach(c => {
+                    const groupItem = group.find(g => g.name === (c.listGroup || 'normal'));
+                    if (groupItem) {
+                        groupItem.components.push(c);
+                    } else {
+                        group.push({
+                            name: c.listGroup || 'normal',
+                            components: [c],
+                        });
+                    }
+                });
             return group;
         },
     },

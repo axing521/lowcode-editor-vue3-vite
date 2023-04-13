@@ -5,7 +5,7 @@ import './index.less';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/enum/components';
 import { EnumAppMode } from 'tdp-editor-types/enum';
 import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
-import PageView from 'tdp-editor-components/src/page.vue';
+import PageView from 'tdp-editor-components/src/components/page';
 import { utils } from 'tdp-editor-common';
 import { useEditorStore } from 'tdp-editor-common/stores/editorStore';
 import { useAppStore } from 'tdp-editor-common/stores/appStore';

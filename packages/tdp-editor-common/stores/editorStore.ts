@@ -11,6 +11,7 @@ import type { IDesignerComponent } from 'tdp-editor-types/interface/designer';
 import { utils } from '../';
 import { apps, forms } from '../service';
 import { EnumServiceResultStatus } from 'tdp-editor-types/enum/request';
+import { $log } from '../utils';
 // import { useAppStore } from './appStore';
 
 export const useEditorStore = defineStore('editorStore', {
@@ -114,49 +115,44 @@ export const useEditorStore = defineStore('editorStore', {
     },
 });
 
+export const newComponentJson = (originData: IDesignerComponent): IDesignerComponent => {
+    const newId = utils.$getUUID(originData.type);
+    // eslint-disable-next-line
+            const { eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
+    const newComponent = {
+        ...newProps,
+        key: newId,
+        name: newId,
+        list: [],
+    };
+    // 如果添加的组件是form组件，追加formInfo属性
+    if (originData.group === EnumComponentGroup.form) {
+        newComponent.formInfo = {
+            formFieldName: newId,
+            rules: [],
+        };
+    }
+    // 设置默认属性
+    if (getDefaultProps && typeof getDefaultProps === 'function') {
+        newComponent.props = getDefaultProps();
+    }
+    // 设置默认样式
+    if (getDefaultCss && typeof getDefaultCss === 'function') {
+        newComponent.css = getDefaultCss();
+    }
+    return newComponent;
+};
+
 // 生成一个默认的page配置
 const getDefaultPageModule = (
     pages: IPageStore[],
     componentList: IDesignerComponent[]
 ): IPageStore => {
-    const newPage: IPageStore = {
-        key: utils.$getUUID(EnumComponentType.page),
-        code: '',
-        label: '表单' + (pages.length + 1),
-        icons: 'flex',
-        type: EnumComponentType.page,
-        group: EnumComponentGroup.page,
+    $log('%c %s', 'color:red', 'editor componentList', componentList);
+    const _newPage = newComponentJson(componentList.find(c => c.type === EnumComponentType.page)!);
+    const newPage = Object.assign(_newPage, {
         selected: false,
         submitState: 'unsaved',
-        list: [],
-    };
-    // const formState = state.componentList.find(c => c.type === EnumComponentType.form);
-    // if (formState) {
-    //     const formKey = utils.$getUUID(EnumComponentType.form);
-    //     const newForm: IDesignerComponent = {
-    //         key: formKey,
-    //         code: '',
-    //         label: formState.label,
-    //         icon: formState.icon,
-    //         group: formState.group,
-    //         type: formState.type,
-    //         list: [],
-    //     };
-    //     newPage.list!.push(newForm);
-    // }
-    const layoutState = componentList.find(c => c.type === EnumComponentType.layout);
-    if (layoutState) {
-        const Key = utils.$getUUID(EnumComponentType.layout);
-        const newForm: IDesignerComponent = {
-            key: Key,
-            code: '',
-            label: layoutState.label,
-            icons: layoutState.icons,
-            group: layoutState.group,
-            type: layoutState.type,
-            list: [],
-        };
-        newPage.list!.push(newForm);
-    }
-    return newPage;
+    });
+    return newPage as IPageStore;
 };
