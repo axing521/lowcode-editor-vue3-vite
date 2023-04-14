@@ -82,6 +82,13 @@ export type TEventsMapRaw = Record<
 // 将TEventsMapRaw处理后的事件对象，可直接绑定到组件v-on属性上
 export type TEventsMap = Record<EnumEventName, ($event: any) => void>;
 
-export type TEventFunc = ($event: any, $info: Record<string, any>) => void;
+// 组件事件函数第一个参数
+export type TEventFuncParam1 = {
+    $g: Record<string, any>; // 全局变量
+    $p?: Record<string, any>; // 当前页面变量
+    comp: ComponentPublicInstance | null; // 触发当前事件的组件实例
+    e?: any; // 原始事件对象
+    data?: Record<string, any>; // 扩展属性
+};
 
-export type IComponentEventFunction = ($event: Event, component: ComponentPublicInstance) => void;
+export type TEventFunc = ($event: TEventFuncParam1) => void;

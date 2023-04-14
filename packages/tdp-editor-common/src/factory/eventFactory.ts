@@ -1,4 +1,4 @@
-import type { ComponentInternalInstance, ComponentPublicInstance } from 'vue';
+import type { ComponentInternalInstance } from 'vue';
 import type {
     IComponentState,
     IComponentEvent,
@@ -39,7 +39,6 @@ const EventFactory = {
         eventsMapRaw: TEventsMapRaw;
         $g: Record<string, any>;
         $p?: Record<string, any>;
-        comps?: Map<string, ComponentPublicInstance>;
         instance: ComponentInternalInstance | null;
         $event?: any;
         extendParams?: Record<string, any>;
@@ -49,20 +48,16 @@ const EventFactory = {
         const instance = params.instance && params.instance.proxy;
         // 没找到事件直接退出
         if (!events) return;
-        // 封装额外参数对象
-        const $info = Object.assign(
-            {},
-            {
-                comps: params.comps || new Map(),
+
+        // 循环执行每个处理函数
+        events.forEach(event => {
+            event.func.call(instance, {
                 comp: instance,
                 $g: params.$g,
                 $p: params.$p,
-            },
-            params.extendParams
-        );
-        // 循环执行每个处理函数
-        events.forEach(event => {
-            event.func.call(instance, params.$event, $info);
+                e: params.$event,
+                data: params.extendParams,
+            });
         });
     },
     /**
@@ -74,7 +69,6 @@ const EventFactory = {
         eventsMapRaw: TEventsMapRaw;
         $g: Record<string, any>;
         $p?: Record<string, any>;
-        comps?: Map<string, ComponentPublicInstance>;
         instance: ComponentInternalInstance | null;
         extendParams?: Record<string, any>;
     }) {
@@ -91,19 +85,15 @@ const EventFactory = {
             // 获取事件对应的具体信息(是一个数组)
             const eventInfo = params.eventsMapRaw[eventName as EnumEventName];
             // 封装额外参数对象
-            const $info = Object.assign(
-                {},
-                {
-                    comps: params.comps || new Map(),
-                    comp: instance,
-                    $g: params.$g,
-                    $p: params.$p,
-                },
-                eventParmas
-            );
             _eventsMap[eventName as EnumEventName] = function ($event: any) {
                 eventInfo.forEach(e => {
-                    e.func.call(instance, $event, $info);
+                    e.func.call(instance, {
+                        comp: instance,
+                        $g: params.$g,
+                        $p: params.$p,
+                        e: $event,
+                        data: eventParmas,
+                    });
                 });
             };
         });
