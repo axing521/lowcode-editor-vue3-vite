@@ -3,6 +3,7 @@
   "version": "3.2.38",
   "packageManager": "pnpm@7.1.0",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "app": "pnpm -F tdp-app-runtime",
     "editor": "pnpm -F tdp-editor",
@@ -10,7 +11,8 @@
     "common": "pnpm -F tdp-editor-common",
     "types": "pnpm -F tdp-editor-types",
     "type-check": "vue-tsc --noEmit -p ./tsconfig.vitest.json --composite false",
-    "lint": "eslint \"packages/*/src/**\" --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path ./.eslintignore"
+    "lint": "eslint \"packages/*/src/**\" --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path ./.eslintignore",
+    "lintStaged": "lint-staged"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
