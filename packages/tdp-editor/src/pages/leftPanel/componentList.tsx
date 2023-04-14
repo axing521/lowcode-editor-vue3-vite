@@ -85,7 +85,7 @@ export default defineComponent({
         // 双击向选中组件中添加组件
         doubleClickComponent(originData: IDesignerComponent) {
             const parent = this.selectedComponent ? this.selectedComponent : this.activePage;
-            const newComponent = this.dragCloneData(originData);
+            const newComponent = newComponentJson(originData);
             useEditorStore().doubleAddComponent({
                 parent: parent as any,
                 component: newComponent,

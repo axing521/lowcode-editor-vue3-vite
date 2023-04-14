@@ -12,6 +12,7 @@ import { utils } from '..';
 import { apps, forms } from '../service';
 import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
 import { $log } from '../utils';
+import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 // import { useAppStore } from './appStore';
 
 export const useEditorStore = defineStore('editorStore', {
@@ -46,7 +47,7 @@ export const useEditorStore = defineStore('editorStore', {
             }
         },
         // 双击添加组件
-        doubleAddComponent(payload: { parent: IDesignerComponent; component: IDesignerComponent }) {
+        doubleAddComponent<C extends IDesignerComponent>(payload: { parent: C; component: C }) {
             if (payload.parent && payload.component) {
                 // 父组件是页面，并且要添加的组件是容器组件时，才可以正常添加
                 if (
@@ -115,10 +116,10 @@ export const useEditorStore = defineStore('editorStore', {
     },
 });
 
-export const newComponentJson = (originData: IDesignerComponent): IDesignerComponent => {
+export const newComponentJson = (originData: IDesignerComponent): IComponentState => {
     const newId = utils.$getUUID(originData.type);
     // eslint-disable-next-line
-            const { eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
+    const { icons, order, showInList, listGroup, sfc, eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
     const newComponent = {
         ...newProps,
         key: newId,
