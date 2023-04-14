@@ -1,0 +1,3 @@
+{
+    "./packages/*/**.{vue,js,jsx,cjs,mjs,ts,tsx}": "pnpm lint --"
+}
