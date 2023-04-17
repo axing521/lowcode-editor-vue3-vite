@@ -36,7 +36,7 @@ import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import { cssFactory } from 'tdp-editor-common/src';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
-import { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
+import type { TCssStyleName } from 'tdp-editor-types/src/interface/app/components';
 
 export default defineComponent({
     name: 'css-box-designer',
@@ -49,26 +49,26 @@ export default defineComponent({
     data() {
         return {
             marginValue: [
-                EnumCssProerty.marginTop,
-                EnumCssProerty.marginRight,
-                EnumCssProerty.marginBottom,
-                EnumCssProerty.marginLeft,
-            ],
+                'marginTop',
+                'marginRight',
+                'marginBottom',
+                'marginLeft',
+            ] as TCssStyleName[],
             paddingValue: [
-                EnumCssProerty.paddingTop,
-                EnumCssProerty.paddingRight,
-                EnumCssProerty.paddingBottom,
-                EnumCssProerty.paddingLeft,
-            ],
+                'paddingTop',
+                'paddingRight',
+                'paddingBottom',
+                'paddingLeft',
+            ] as TCssStyleName[],
         };
     },
     methods: {
-        getValue(key: EnumCssProerty) {
+        getValue(key: TCssStyleName) {
             let value = cssFactory.getCssValue(this.element!, key) || '';
-            value = value.replace('px', '');
+            value = (value as string).replace('px', '');
             return value || 'auto';
         },
-        setValue(key: EnumCssProerty, $event: Event) {
+        setValue(key: TCssStyleName, $event: Event) {
             // @ts-ignore
             const value = $event.target?.value;
             const _value = isNaN(Number(value)) ? value : value + 'px';

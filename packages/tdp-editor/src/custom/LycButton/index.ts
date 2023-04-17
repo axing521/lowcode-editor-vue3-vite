@@ -1,10 +1,9 @@
 import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
-import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 import LycButton from './LycButton.vue';
 export const componentConfig: IDesignerComponent = {
-    code: '',
     group: EnumComponentGroup.custom,
     sfc: LycButton,
     key: '',
@@ -12,7 +11,7 @@ export const componentConfig: IDesignerComponent = {
     type: 'LycButton',
     listGroup: 'high',
     propsConfigs: [{ key: 'text', label: '文本', selector: EnumSelectorName.input }],
-    cssConfigs: [EnumCssProerty.position, EnumCssProerty.display],
+    cssConfigs: ['position', 'display'],
 };
 
 export default {

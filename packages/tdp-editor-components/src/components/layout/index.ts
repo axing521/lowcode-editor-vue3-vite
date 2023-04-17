@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from 'vue';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/src/enum/components';
-import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type {
     IDesignerComponent,
     registerComponentFunc,
@@ -19,7 +19,7 @@ export const register: registerComponentFunc = function () {
         listGroup: 'normal',
         showInList: false,
         propsConfigs: [{ key: 'showShadow', label: '显示阴影', selector: EnumSelectorName.switch }],
-        cssConfigs: [EnumCssProerty.position, EnumCssProerty.width, EnumCssProerty.height],
+        cssConfigs: ['position', 'width', 'height'],
     };
     return layout;
 };

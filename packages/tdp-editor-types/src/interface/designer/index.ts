@@ -1,17 +1,17 @@
 import type { VNode } from 'vue';
-import type { IComponentProps, IComponentState } from '../app/components';
-import type { EnumCssProerty, EnumSelectorName } from '../../enum/designer';
+import type { IComponentProps, IComponentState, TCssStyleName } from '../app/components';
+import type { EnumSelectorName } from '../../enum/designer';
 import type { EnumEventName, EnumEventType, EnumPropsValueType } from '../../enum/components';
 
 // 设计模式下组件的属性
-export interface IDesignerComponent<P = any, C = Record<string, string>>
+export interface IDesignerComponent<P = any, C = Partial<CSSStyleDeclaration>>
     extends IComponentState<P, C> {
     sfc?: any;
     order?: number;
     icons?: string;
     listGroup?: 'normal' | 'business' | 'high';
     propsConfigs?: IPropsConfig<P>[];
-    cssConfigs?: EnumCssProerty[];
+    cssConfigs?: TCssStyleName[];
     eventConfigs?: TEventConfig[];
     showInList?: boolean;
     getDefaultProps?: () => IComponentProps<P>;

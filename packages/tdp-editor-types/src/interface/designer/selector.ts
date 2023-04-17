@@ -1,6 +1,7 @@
 import type { DefineComponent, Component } from 'vue';
 import type { IDesignerComponent, IPropsConfig } from '.';
-import type { EnumCssProerty, EnumSelectorName } from '../../enum/designer';
+import type { EnumSelectorName } from '../../enum/designer';
+import type { TCssStyleName } from '../app/components';
 
 // Selector对象定义
 export type TSelector = {
@@ -9,7 +10,7 @@ export type TSelector = {
     type?: 'tsx' | 'vue';
 };
 // css Selector对象定义
-export type TCssSelector = { name: EnumCssProerty | string; render: DefineComponent };
+export type TCssSelector = { name: TCssStyleName | string; render: DefineComponent };
 // 选择器渲染方法定义
 export type TSelectorRender<P = unknown, O extends ISelectorBaseOptions = ISelectorBaseOptions> = (
     element: IDesignerComponent,

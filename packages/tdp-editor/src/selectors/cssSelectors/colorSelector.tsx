@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import type { PropType, VNode } from 'vue';
 import { Photoshop } from 'vue-color';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
-import type { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
+import type { TCssStyleName } from 'tdp-editor-types/src/interface/app/components';
 import { cssFactory } from 'tdp-editor-common/src';
 
 export default defineComponent({
@@ -14,7 +14,7 @@ export default defineComponent({
         },
         propertyName: {
             required: true,
-            type: String as PropType<EnumCssProerty>,
+            type: String as PropType<TCssStyleName>,
         },
     },
     data() {

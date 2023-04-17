@@ -4,7 +4,6 @@ import { mapState } from 'pinia';
 import * as monaco from 'monaco-editor';
 import './index.less';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
-import { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
 import { cssFactory } from 'tdp-editor-common/src';
 import CssBoxDesigner from '../cssBoxDesigner.vue';
 import CssWidthSelector from '../../../../selectors/cssSelectors/widthSelector';
@@ -43,15 +42,12 @@ export default defineComponent({
                     document.getElementById('fd_css_designer_monaco')!,
                     {
                         language: 'css',
-                        value:
-                            cssFactory.getCssValue(this.element!, EnumCssProerty.styleText) || '',
+                        value: cssFactory.getCssValue(this.element!, 'styleText') || '',
                         minimap: { enabled: true },
                     }
                 );
             } else {
-                monacoEditor.setValue(
-                    cssFactory.getCssValue(this.element!, EnumCssProerty.styleText) || ''
-                );
+                monacoEditor.setValue(cssFactory.getCssValue(this.element!, 'styleText') || '');
             }
         },
         openMonaco() {
@@ -67,7 +63,7 @@ export default defineComponent({
             this.showMonaco = false;
             if (monacoEditor) {
                 const styleText = monacoEditor.getValue();
-                cssFactory.setCssValue(this.element!, EnumCssProerty.styleText, styleText);
+                cssFactory.setCssValue(this.element!, 'styleText', styleText);
             }
         },
         renderCssList() {
@@ -76,22 +72,15 @@ export default defineComponent({
             const comp = componentList.find(c => c.type === this.element!.type);
             if (this.element && comp && comp.cssConfigs) {
                 return comp.cssConfigs.map(c => {
-                    if (c === EnumCssProerty.position) {
+                    if (c === 'position') {
                         return (
                             <div class="item">
                                 <div class="label">定位</div>
                                 <div class="value">
                                     <a-select
-                                        value={cssFactory.getCssValue(
-                                            this.element!,
-                                            EnumCssProerty.position
-                                        )}
+                                        value={cssFactory.getCssValue(this.element!, 'position')}
                                         onChange={(value: string) =>
-                                            cssFactory.setCssValue(
-                                                this.element!,
-                                                EnumCssProerty.position,
-                                                value
-                                            )
+                                            cssFactory.setCssValue(this.element!, 'position', value)
                                         }
                                     >
                                         <a-select-option value="">请选择</a-select-option>
@@ -102,20 +91,17 @@ export default defineComponent({
                                 </div>
                             </div>
                         );
-                    } else if (c === EnumCssProerty.textAlign) {
+                    } else if (c === 'textAlign') {
                         return (
                             <div class="item">
                                 <div class="label">内容对齐</div>
                                 <div class="value">
                                     <a-select
-                                        value={cssFactory.getCssValue(
-                                            this.element!,
-                                            EnumCssProerty.textAlign
-                                        )}
+                                        value={cssFactory.getCssValue(this.element!, 'textAlign')}
                                         onChange={(value: string) =>
                                             cssFactory.setCssValue(
                                                 this.element!,
-                                                EnumCssProerty.textAlign,
+                                                'textAlign',
                                                 value
                                             )
                                         }
@@ -128,22 +114,15 @@ export default defineComponent({
                                 </div>
                             </div>
                         );
-                    } else if (c === EnumCssProerty.display) {
+                    } else if (c === 'display') {
                         return (
                             <div class="item">
                                 <div class="label">显示类型</div>
                                 <div class="value">
                                     <a-select
-                                        value={cssFactory.getCssValue(
-                                            this.element!,
-                                            EnumCssProerty.display
-                                        )}
+                                        value={cssFactory.getCssValue(this.element!, 'display')}
                                         onChange={(value: string) =>
-                                            cssFactory.setCssValue(
-                                                this.element!,
-                                                EnumCssProerty.display,
-                                                value
-                                            )
+                                            cssFactory.setCssValue(this.element!, 'display', value)
                                         }
                                     >
                                         <a-select-option value="">请选择</a-select-option>
@@ -157,38 +136,38 @@ export default defineComponent({
                                 </div>
                             </div>
                         );
-                    } else if (c === EnumCssProerty.width) {
+                    } else if (c === 'width') {
                         return (
                             <div class="item">
                                 <div class="label">宽度</div>
                                 <div class="value">
                                     <css-width-selector
                                         element={this.element}
-                                        propertyName={EnumCssProerty.width}
+                                        propertyName="width"
                                     />
                                 </div>
                             </div>
                         );
-                    } else if (c === EnumCssProerty.height) {
+                    } else if (c === 'height') {
                         return (
                             <div class="item">
                                 <div class="label">高度</div>
                                 <div class="value">
                                     <css-width-selector
                                         element={this.element}
-                                        propertyName={EnumCssProerty.height}
+                                        propertyName="height"
                                     />
                                 </div>
                             </div>
                         );
-                    } else if (c === EnumCssProerty.backgroundColor) {
+                    } else if (c === 'backgroundColor') {
                         return (
                             <div class="item">
                                 <div class="label">背景色</div>
                                 <div class="value">
                                     <css-color-selector
                                         element={this.element}
-                                        propertyName={EnumCssProerty.backgroundColor}
+                                        propertyName="backgroundColor"
                                     />
                                 </div>
                             </div>

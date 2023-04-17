@@ -6,7 +6,7 @@ import {
     EnumEventType,
     EnumPropsValueType,
 } from 'tdp-editor-types/src/enum/components';
-import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type {
     IDesignerComponent,
     registerComponentFunc,
@@ -33,7 +33,7 @@ export const register: registerComponentFunc = function () {
                 },
             };
         },
-        cssConfigs: [EnumCssProerty.width],
+        cssConfigs: ['width'],
         propsConfigs: [
             {
                 key: 'title',

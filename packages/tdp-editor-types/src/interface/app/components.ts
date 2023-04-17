@@ -38,6 +38,7 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
     css: C;
     events: Record<string, any>;
 }
+export type TCssStyleName = keyof CSSStyleDeclaration;
 export interface IComponentState<P = any, C = Partial<CSSStyleDeclaration>> {
     key: string;
     label: string /* 页面显示名称 */;

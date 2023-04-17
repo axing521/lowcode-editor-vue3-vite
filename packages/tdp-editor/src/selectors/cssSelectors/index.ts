@@ -1,18 +1,16 @@
-import { EnumCssProerty } from 'tdp-editor-types/src/enum/designer';
 import type { TCssSelector } from 'tdp-editor-types/src/interface/designer/selector';
 // 遍历所有组件信息
-const allSelectors = import.meta.globEager('./*Selector.(tsx|vue)');
+const allSelectors = import.meta.glob('./*Selector.(tsx|vue)', { eager: true });
 const cssSelectors: TCssSelector[] = [];
 
-// 自动加载propSelector
+// 自动加载cssSelector
 for (const key in allSelectors) {
     const module = allSelectors[key] as unknown as any;
     if (!module.default) continue;
     const _vue = module.default;
-    const selectorName = module.name as EnumCssProerty;
+    const selectorName = module.name as string;
     const selectorRender = _vue;
-    const keys = Object.values(EnumCssProerty);
-    if (selectorName && keys.includes(selectorName) && selectorRender) {
+    if (selectorName && selectorName.includes('Selector') && selectorRender) {
         cssSelectors.push({
             name: selectorName,
             render: selectorRender,

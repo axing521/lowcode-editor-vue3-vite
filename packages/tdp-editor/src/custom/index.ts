@@ -1,5 +1,5 @@
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
-// import { EnumCssProerty, EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+// import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 // import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import LycButton from './LycButton';
 import LycInput from './LycInput';
@@ -18,7 +18,7 @@ export const customList: IDesignerComponent[] = [
     //         { key: 'options', label: '静态数据', selector: EnumSelectorName.arrayData },
     //         { key: 'allowClear', label: '支持清空', selector: EnumSelectorName.switch },
     //     ],
-    //     cssConfigs: [EnumCssProerty.width],
+    //     cssConfigs: ['width'],
     // },
     // // 添加divider
     // {
@@ -40,7 +40,7 @@ export const customList: IDesignerComponent[] = [
     //             ],
     //         },
     //     ],
-    //     cssConfigs: [EnumCssProerty.width, EnumCssProerty.height, EnumCssProerty.backgroundColor],
+    //     cssConfigs: ['width', 'height', 'backgroundColor'],
     // },
     // 添加自定义组件LycButton
     LycButton.componentConfig,
