@@ -20,10 +20,9 @@ export default defineAsyncComponent(() => {
 export const register: registerComponentFunc = function () {
     const page: IDesignerComponent<IPageProps> = {
         key: '',
-        code: '',
         label: '页面',
         icons: 'manage_page',
-        group: EnumComponentGroup.form,
+        group: EnumComponentGroup.page,
         type: EnumComponentType.page,
         showInList: false,
         getDefaultProps: () => {

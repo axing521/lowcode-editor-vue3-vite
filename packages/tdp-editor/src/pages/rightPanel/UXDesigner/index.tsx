@@ -9,6 +9,7 @@ import { EnumEventName, EnumEventType } from 'tdp-editor-types/src/enum/componen
 import { eventFactory } from 'tdp-editor-common/src';
 import pm from '../paramsModal.vue';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
+import { utils } from 'tdp-editor-common/src';
 
 type TEventList = {
     key: EnumEventName,
@@ -31,7 +32,7 @@ export default defineComponent({
     data() {
         return {
             showPm: false,
-            eventIndex: 0,
+            eventId: '',
         };
     },
     computed: {
@@ -66,6 +67,7 @@ export default defineComponent({
         addEvent() {
             if (!this.eventList.length) return false;
             eventFactory.pushEvent(this.element!, {
+                eventId: this.element?.type + '_' + utils.$randomWord(false, 10),
                 eventName: this.eventList[0].key,
                 eventType: EnumEventType.script,
                 funcName: '',
@@ -75,8 +77,8 @@ export default defineComponent({
         deleteEvent(index: number) {
             eventFactory.removeEvent(this.element!, index);
         },
-        showParamsModal(index: number) {
-            this.eventIndex = index;
+        showParamsModal(eventId: string) {
+            this.eventId = eventId;
             this.showPm = true;
         },
         onParamCheck(paramInfo: any) {
@@ -85,7 +87,7 @@ export default defineComponent({
                     alert('事件只能绑定方法，请重新选择!');
                     return;
                 }
-                this.element!.events[this.eventIndex].funcName = paramInfo.name;
+                this.element!.events.find(c => c.eventId === this.eventId)!.funcName = paramInfo.name;
                 this.showPm = false;
             }
         },
@@ -105,7 +107,7 @@ export default defineComponent({
                             </div>
                             <div class="value">
                                 {!event.funcName ? (
-                                    <a-button onClick={() => this.showParamsModal(index)}>
+                                    <a-button onClick={() => this.showParamsModal(event.eventId)}>
                                         选择方法
                                     </a-button>
                                 ) : (
@@ -132,8 +134,7 @@ export default defineComponent({
                 <pm
                     v-model:visible={this.showPm}
                     element={this.element}
-                    eventIndex={this.eventIndex}
-                    forceRender={true}
+                    eventId={this.eventId}
                     onParamCheck={(info: any) => this.onParamCheck(info)}
                 />
             </div>

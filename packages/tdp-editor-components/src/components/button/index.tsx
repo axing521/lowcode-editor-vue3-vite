@@ -22,7 +22,6 @@ export default defineAsyncComponent(() => {
 export const register: registerComponentFunc = function () {
     const button: IDesignerComponent<IButtonProps> = {
         key: '',
-        code: '',
         label: '按钮',
         icons: 'button',
         group: EnumComponentGroup.form,

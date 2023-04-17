@@ -52,6 +52,8 @@ export enum EnumEventName {
 
 export enum EnumEventType {
     script = 'script',
+    pageFunction = 'pf',
+    appFunction = 'af',
 }
 
 export enum EnumPropsValueType {

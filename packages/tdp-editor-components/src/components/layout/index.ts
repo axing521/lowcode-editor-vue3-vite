@@ -11,7 +11,6 @@ export default defineAsyncComponent(() => import('./layoutRenderer.vue'));
 export const register: registerComponentFunc = function () {
     const layout: IDesignerComponent<ILayoutProps> = {
         key: '',
-        code: '',
         label: '卡片',
         icons: 'Cards',
         group: EnumComponentGroup.layout,

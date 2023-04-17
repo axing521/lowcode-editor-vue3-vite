@@ -18,7 +18,6 @@ export default defineAsyncComponent(() => import('./rateRenderer.vue'));
 export const register: registerComponentFunc = function () {
     const rate: IDesignerComponent<IRateProps> = {
         key: '',
-        code: '',
         label: '评分',
         icons: 'Ratings',
         group: EnumComponentGroup.form,

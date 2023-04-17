@@ -48,7 +48,12 @@
                 </ul>
             </div>
             <div class="p-value">
-                <div id="fd_designer_paramsmodal_monaco"></div>
+                <monaco-editor
+                    ref="monacoRef"
+                    :value="monacoValue"
+                    language="javascript"
+                    style="height: 96%"
+                ></monaco-editor>
                 <div id="fd_designer_paramsmodal_monaco_action">
                     <a-button type="link" @click="setParam">选择</a-button>
                     <a-button type="primary" @click="saveParamValue">保存</a-button>
@@ -101,66 +106,14 @@
 }
 </style>
 <script lang="ts">
-import { defineComponent, nextTick } from 'vue';
+import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import { mapState } from 'pinia';
-import * as monaco from 'monaco-editor';
 
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useVarControler } from 'tdp-editor-common/src/controller';
-
-let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
-
-monaco.languages.registerCompletionItemProvider('javascript', {
-    provideCompletionItems(model, position) {
-        const varController = useVarControler();
-        const lineContent = model.getLineContent(position.lineNumber);
-        const range = {
-            startLineNumber: position.lineNumber,
-            endLineNumber: position.lineNumber,
-            startColumn: 1,
-            endColumn: 2,
-        };
-        const suggestions: monaco.languages.CompletionItem[] = [];
-        if (lineContent.lastIndexOf('$info.$g.') === lineContent.length - 9) {
-            const globalVars = varController.getGlobalVars();
-            for (const varKey in globalVars) {
-                if (Object.prototype.hasOwnProperty.call(globalVars, varKey)) {
-                    suggestions.push({
-                        label: varKey,
-                        range,
-                        kind: monaco.languages.CompletionItemKind['Property'],
-                        insertText: varKey,
-                    });
-                }
-            }
-        } else if (lineContent.lastIndexOf('$info.$p.') === lineContent.length - 8) {
-            const pageVars = varController.getCurrentPageVars();
-            for (const varKey in pageVars) {
-                if (Object.prototype.hasOwnProperty.call(pageVars, varKey)) {
-                    suggestions.push({
-                        label: varKey,
-                        range,
-                        kind: monaco.languages.CompletionItemKind['Property'],
-                        insertText: varKey,
-                    });
-                }
-            }
-        }
-        return {
-            suggestions: [
-                {
-                    label: 'test',
-                    kind: monaco.languages.CompletionItemKind['Property'],
-                    insertText: 'test',
-                    range,
-                },
-            ],
-        };
-    },
-    triggerCharacters: ['.', ' '],
-});
+import MonacoEditor from '../../components/MonacoEditor.vue';
 enum EnumParamType {
     params = 'params',
     function = 'function',
@@ -176,10 +129,13 @@ export default defineComponent({
             required: true,
             type: Boolean,
         },
-        eventIndex: {
+        eventId: {
             required: true,
-            type: Number,
+            type: String,
         },
+    },
+    components: {
+        MonacoEditor,
     },
     computed: {
         ...mapState(useAppStore, {
@@ -216,57 +172,34 @@ export default defineComponent({
             return paramInfo;
         },
     },
-    beforeUnmount() {
-        if (monacoEditor) {
-            monacoEditor.dispose();
-        }
-    },
     data() {
         return {
             // 标识用户选中的是 [变量] 还是 [方法]
             checkedType: EnumParamType.params,
             // 标识用户选中的 变量 或者 方法 名
             checkedParamName: '',
+            monacoValue: '',
         };
     },
     methods: {
-        initMonaco() {
-            if (!monacoEditor) {
-                monacoEditor = monaco.editor.create(
-                    document.getElementById('fd_designer_paramsmodal_monaco')!,
-                    {
-                        language: 'javascript',
-                        theme: 'vs',
-                        value: '',
-                        minimap: { enabled: true },
-                    }
-                );
-            }
-        },
         checkType(type: EnumParamType) {
             this.checkedType = type;
         },
         checkParam(name: string) {
             this.checkedParamName = name;
-            if (!monacoEditor) return;
             if (this.checkedType === 'params') {
                 const param = this.paramsList.find(p => p.name === name);
-                monacoEditor.setValue(param!.value);
+                this.monacoValue = param!.value;
             } else if (this.checkedType === 'function') {
                 const param = this.functionsList.find(f => f.name === name);
-                monacoEditor.setValue(param!.value);
+                this.monacoValue = param!.value;
             }
         },
         saveParamValue() {
-            if (
-                monacoEditor &&
-                this.element &&
-                this.element.events &&
-                this.element.events[this.eventIndex]
-            ) {
-                const value = monacoEditor.getValue();
-                const eventInfo = this.element.events[this.eventIndex];
-                eventInfo.funcStr = value;
+            const $monacoRef: any = this.$refs['monacoRef'];
+            if (this.element && this.element.events && $monacoRef) {
+                const eventInfo = this.element.events.find(c => c.eventId === this.eventId);
+                if (eventInfo) eventInfo.funcStr = $monacoRef.getValue();
             }
         },
         setParam() {
@@ -280,18 +213,11 @@ export default defineComponent({
         },
     },
     watch: {
-        visible(val: boolean, oldVal: boolean) {
-            if (val === true && val !== oldVal) {
-                nextTick(() => {
-                    this.initMonaco();
-                });
-            }
-        },
-        eventIndex(val: number, oldVal: number) {
-            if (this.element && val > -1 && val !== oldVal) {
-                if (monacoEditor && this.element.events && this.element.events[this.eventIndex]) {
-                    const eventInfo = this.element.events[this.eventIndex];
-                    monacoEditor.setValue(eventInfo.funcStr);
+        eventId(val: string, oldVal: string) {
+            if (this.element && val && val !== oldVal && this.element.events) {
+                const event = this.element.events.find(c => c.eventId === val);
+                if (event) {
+                    this.monacoValue = event.funcStr || '';
                 }
             }
         },

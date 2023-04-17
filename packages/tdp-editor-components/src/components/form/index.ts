@@ -12,7 +12,6 @@ export default defineAsyncComponent(() => import('./formRenderer.vue'));
 export const register: registerComponentFunc = function () {
     const form: IDesignerComponent<IFormProps> = {
         key: '',
-        code: '',
         label: '表单',
         icons: 'form',
         group: EnumComponentGroup.layout,

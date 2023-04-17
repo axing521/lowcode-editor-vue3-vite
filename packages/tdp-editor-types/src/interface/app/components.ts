@@ -38,10 +38,10 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
     css: C;
     events: Record<string, any>;
 }
-export interface IComponentState<P = any, C = Record<string, string | undefined>> {
+export interface IComponentState<P = any, C = Partial<CSSStyleDeclaration>> {
     key: string;
     label: string /* 页面显示名称 */;
-    code: string /* 别名，一般用于用户给组件定义，方便调用 */;
+    name?: string /* 别名，一般用于用户给组件定义，方便调用 */;
     type: EnumComponentType | string;
     group: EnumComponentGroup;
     list?: IComponentState[];
@@ -63,10 +63,11 @@ export interface IComponentApi {
 
 // 组件的事件描述对象
 export interface IComponentEvent {
+    eventId: string;
     eventName: EnumEventName;
     eventType: EnumEventType;
-    funcName: string;
-    funcStr: string;
+    funcName?: string;
+    funcStr?: string;
 }
 
 // 将IComponentEvent处理后的事件对象
