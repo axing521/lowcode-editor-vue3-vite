@@ -32,14 +32,14 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
                 _eventsMap[eventInfo.eventName].push({
                     func: eventFunc,
                     eventType: eventInfo.eventType,
-                    funcName: eventInfo.funcName,
+                    funcName: eventInfo.funcName || '',
                 });
             } else {
                 _eventsMap[eventInfo.eventName] = [
                     {
                         func: eventFunc,
                         eventType: eventInfo.eventType,
-                        funcName: eventInfo.funcName,
+                        funcName: eventInfo.funcName || '',
                     },
                 ];
             }

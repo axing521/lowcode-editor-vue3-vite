@@ -6,4 +6,3 @@ tsdist
 /packages/**/*.jpg
 /packages/**/*.png
 /packages/*/node_modules/**/*
-/packages/tdp-editor/src/pages/rightPanel/UXDesigner/*
