@@ -1,7 +1,7 @@
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type { TSelector } from 'tdp-editor-types/src/interface/designer/selector';
 // 遍历所有组件信息
-const allSelectors = import.meta.globEager('./*Selector.(tsx|vue)');
+const allSelectors = import.meta.glob('./*Selector.(tsx|vue)', { eager: true });
 const propSelectors: TSelector[] = [];
 
 // 自动加载propSelector

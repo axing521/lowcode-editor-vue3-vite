@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="label">{{ _props.prop.label }}</div>
+    <div class="value">
         <a-input prefix="{{" suffix="}}" v-model:value="bindData"></a-input>
     </div>
 </template>

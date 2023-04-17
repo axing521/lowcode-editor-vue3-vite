@@ -49,31 +49,28 @@
                             :data-props="prop.key"
                             :key="prop.key"
                         >
-                            <div class="label">{{ prop.label }}</div>
-                            <div class="value">
-                                <template v-if="typeof prop.selector === 'string'">
-                                    <component
-                                        :is="prop.selector"
-                                        :state="element"
-                                        :prop="prop"
-                                    ></component>
-                                </template>
-                                <template
-                                    v-else-if="
-                                        typeof prop.selector === 'object' && 'name' in prop.selector
-                                    "
-                                >
-                                    <component
-                                        :is="prop.selector.name"
-                                        :state="element"
-                                        :prop="prop"
-                                        :options="prop.selector.options"
-                                    ></component>
-                                </template>
-                                <template v-else>
-                                    <div></div>
-                                </template>
-                            </div>
+                            <template v-if="typeof prop.selector === 'string'">
+                                <component
+                                    :is="prop.selector"
+                                    :state="element"
+                                    :prop="prop"
+                                ></component>
+                            </template>
+                            <template
+                                v-else-if="
+                                    typeof prop.selector === 'object' && 'name' in prop.selector
+                                "
+                            >
+                                <component
+                                    :is="prop.selector.name"
+                                    :state="element"
+                                    :prop="prop"
+                                    :options="prop.selector.options"
+                                ></component>
+                            </template>
+                            <template v-else>
+                                <div></div>
+                            </template>
                         </div>
                     </template>
                 </div>

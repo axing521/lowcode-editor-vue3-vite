@@ -1,5 +1,8 @@
 <template>
-    <a-input v-model:value="inputValue"></a-input>
+    <div class="label">{{ _props.prop.label }}</div>
+    <div class="value">
+        <a-input v-model:value="inputValue"></a-input>
+    </div>
 </template>
 <script lang="ts">
 import { defineComponent, computed } from 'vue';

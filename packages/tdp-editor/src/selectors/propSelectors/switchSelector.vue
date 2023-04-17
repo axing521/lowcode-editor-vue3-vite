@@ -1,5 +1,8 @@
 <template>
-    <a-switch v-model:checked="switchValue" />
+    <div class="label">{{ _props.prop.label }}</div>
+    <div class="value">
+        <a-switch v-model:checked="switchValue" />
+    </div>
 </template>
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
