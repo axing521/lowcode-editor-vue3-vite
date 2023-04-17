@@ -12,7 +12,7 @@
     "types": "pnpm -F tdp-editor-types",
     "type-check": "vue-tsc --noEmit -p ./tsconfig.vitest.json --composite false",
     "lint": "eslint \"packages/*/src/**\" --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx --fix --ignore-path ./.eslintignore",
-    "lintStaged": "lint-staged"
+    "lint:staged": "lint-staged"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

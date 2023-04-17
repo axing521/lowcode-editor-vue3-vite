@@ -19,7 +19,6 @@ export default defineConfig({
         include: [
             `${prefix}/language/json/json.worker`,
             `${prefix}/language/css/css.worker`,
-            // `${prefix}/language/html/html.worker`,
             `${prefix}/language/typescript/ts.worker`,
             `${prefix}/editor/editor.worker`,
         ],
@@ -31,7 +30,7 @@ export default defineConfig({
                 index: path.resolve(__dirname, 'index.html'),
             },
             output: {
-                chunkFileNames: 'js/[name].[hash].js',
+                chunkFileNames: 'chunk/[name].[hash].js',
                 entryFileNames: 'js/[name].[hash].js',
                 assetFileNames: 'assets/[name].[hash].[ext]',
                 manualChunks(id) {
@@ -39,6 +38,8 @@ export default defineConfig({
                         return 'antdv';
                     } else if (id.includes('monaco')) {
                         return 'monaco';
+                    } else if (id.includes('editor-components')) {
+                        return 'components';
                     } else if (id.includes('node_modules')) {
                         return 'vendor';
                     }

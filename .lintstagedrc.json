@@ -1,3 +1,3 @@
 {
-    "packages/*/src/**/*.{vue,js,jsx,cjs,mjs,ts,tsx}": "pnpm lint --max-warnings 0"
+    "packages/*/src/**/*.{vue,js,jsx,cjs,mjs,ts,tsx}": "pnpm lint --cache --max-warnings 0"
 }
