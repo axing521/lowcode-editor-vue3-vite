@@ -7,3 +7,8 @@ export enum EnumSelectorName {
     bindData = 'bindDataSelector',
     bindFunction = 'bindFunction',
 }
+
+export enum EnumCssSelectorName {
+    size = 'sizeSelector',
+    color = 'colorSelector',
+}

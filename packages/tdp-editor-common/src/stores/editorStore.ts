@@ -127,7 +127,7 @@ export const newComponentJson = (originData: IDesignerComponent): IComponentStat
         list: [],
     };
     // 如果添加的组件是form组件，追加formInfo属性
-    if (originData.group === EnumComponentGroup.form) {
+    if (originData.isFormer) {
         newComponent.formInfo = {
             formFieldName: newId,
             rules: [],

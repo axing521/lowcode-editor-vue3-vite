@@ -75,7 +75,7 @@
                     </template>
                 </div>
             </a-collapse-panel>
-            <a-collapse-panel key="form" header="表单" v-if="!isPage">
+            <a-collapse-panel key="form" header="表单" v-if="showFormDesigner">
                 <DesignerFormPanel :element="element" />
             </a-collapse-panel>
             <a-collapse-panel key="css" header="外观">
@@ -99,7 +99,11 @@ import { useEditorControler } from 'tdp-editor-common/src/controller';
 import DesignerCssPanel from './cssDesigner';
 import DesignerFormPanel from './formDesigner';
 import DataSourcePanel from './DataSourcePanel.vue';
-import { EnumComponentType, EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
+import {
+    EnumComponentGroup,
+    EnumComponentType,
+    EnumPropsValueType,
+} from 'tdp-editor-types/src/enum/components';
 import { DownOutlined, CopyOutlined, DeleteFilled, UndoOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({
@@ -132,6 +136,13 @@ export default defineComponent({
         }),
         isPage(): boolean {
             return Boolean(this.element && this.element.type === EnumComponentType.page);
+        },
+        showFormDesigner(): boolean {
+            return Boolean(
+                this.element &&
+                    this.element.group === EnumComponentGroup.form &&
+                    this.element.isFormer
+            );
         },
         // 组件ID
         componentId(): string {

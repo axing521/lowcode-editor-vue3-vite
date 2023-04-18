@@ -26,7 +26,6 @@ export const register: registerComponentFunc = function () {
         icons: 'button',
         group: EnumComponentGroup.form,
         type: EnumComponentType.button,
-        isFormer: true,
         order: 302,
         cssConfigs: ['width', 'display'],
         getDefaultProps: () => {
@@ -95,20 +94,6 @@ export const register: registerComponentFunc = function () {
                             { key: 'button', label: '普通按钮' },
                         ],
                     } as ISelectorSelectOptions,
-                },
-            },
-            {
-                key: 'shape',
-                label: 'shape',
-                selector: (state, propsFactory) => {
-                    return (
-                        <a-input
-                            value={propsFactory.getPropsValue(state, 'shape')}
-                            onChange={(e: any) => {
-                                propsFactory.setPropsValue(state, 'shape', e.target.value);
-                            }}
-                        ></a-input>
-                    );
                 },
             },
         ],
