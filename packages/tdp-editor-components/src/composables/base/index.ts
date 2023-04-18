@@ -23,7 +23,7 @@ function useBaseIndex(props: ISetupBaseProps) {
                 padding: 'auto',
             },
             ...props.state.css,
-        };
+        } as unknown as Record<string, string>;
     });
 
     // 处理后的组件属性，返回一个reactive对象，用于动态改变组件内部属性
