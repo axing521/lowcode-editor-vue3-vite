@@ -1,31 +1,7 @@
-import { watchEffect } from 'vue';
-import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import type { ISetupBaseProps } from 'tdp-editor-types/src/interface/app/components';
-import { utils } from 'tdp-editor-common/src';
-import useInject from './baseInject';
+
+import { $log } from 'tdp-editor-common/src/utils';
 
 export default function useBaseWatch(props: ISetupBaseProps) {
-    const { getAppMode } = useInject();
-    if (getAppMode() === EnumAppMode.design) {
-        /*
-        watch(
-            reactive(props.state),
-            newState => {
-                // 监听styleText，用户自定义样式字段
-                if (newState.styleText) {
-                    utils.$createDynamicStyle(props.state.key, newState.styleText);
-                }
-            }
-            // reactive 默认开启immediate
-            // {
-            //     immediate: true,
-            // }
-        );
-        */
-        watchEffect(() => {
-            if (props.state.styleText) {
-                utils.$createDynamicStyle(props.state.key, props.state.styleText);
-            }
-        });
-    }
+    $log('useBaseWatch >>>>>>>>>>>>', props);
 }

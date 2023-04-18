@@ -3,10 +3,7 @@ import { cssFactory } from '..';
 
 const CssFactory = {
     // 获取css值
-    getCssValue(state: IComponentState, propertyName: TCssStyleName | 'styleText') {
-        if (state && propertyName === 'styleText') {
-            return state.styleText as string;
-        }
+    getCssValue(state: IComponentState, propertyName: TCssStyleName) {
         if (state && state.css) {
             if (state.css[propertyName as TCssStyleName]) {
                 return state.css[propertyName as TCssStyleName] as string;
@@ -19,29 +16,25 @@ const CssFactory = {
     // 设置css属性
     setCssValue(
         state: IComponentState,
-        propertyName: TCssStyleName | 'styleText',
+        propertyName: TCssStyleName,
         value: string | undefined
     ): void {
         if (state && propertyName) {
-            if (propertyName === 'styleText') {
-                state['styleText'] = value;
+            if (state.css) {
+                state.css[propertyName as any] = value;
             } else {
-                if (state.css) {
-                    state.css[propertyName as any] = value;
-                } else {
-                    state.css = { [propertyName]: value };
-                }
+                state.css = { [propertyName]: value };
             }
         }
     },
 };
 
-export const getCss = (state: IComponentState, propertyName: TCssStyleName | 'styleText') => {
+export const getCss = (state: IComponentState, propertyName: TCssStyleName) => {
     return cssFactory.getCssValue(state, propertyName) as string;
 };
 export const setCss = (
     state: IComponentState,
-    propertyName: TCssStyleName | 'styleText',
+    propertyName: TCssStyleName,
     value: string | undefined
 ) => {
     cssFactory.setCssValue(state, propertyName, value);

@@ -39,7 +39,7 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
     events: Record<string, any>;
 }
 export type TCssStyleName = keyof CSSStyleDeclaration;
-export interface IComponentState<P = any, C = Partial<CSSStyleDeclaration>> {
+export interface IComponentState<P = any, C = any> {
     key: string;
     label: string /* 页面显示名称 */;
     name?: string /* 别名，一般用于用户给组件定义，方便调用 */;
@@ -51,7 +51,7 @@ export interface IComponentState<P = any, C = Partial<CSSStyleDeclaration>> {
     formInfo?: IFormInfo;
     isFormer?: boolean; // 是否属于form组件
     css?: C;
-    styleText?: string;
+    styles?: string; // 自定义样式, 存放在page 的state中
     events?: IComponentEvent[];
 }
 

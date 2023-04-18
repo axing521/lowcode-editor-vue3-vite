@@ -15,39 +15,46 @@
                 :state="props.element"
                 :cssStyleName="item.key"
             ></component>
-            <div class="item">
+            <div class="item" v-show="isPage">
                 <div class="label">css代码</div>
                 <div class="value">
-                    <a-button @lick="showMonaco = true">编辑</a-button>
+                    <a-button @click="showMonaco = true">编辑</a-button>
                 </div>
             </div>
         </div>
         <div id="fd_css_monaco_box" :style="{ display: showMonaco ? 'block' : 'none' }">
             <div class="box-buttons">
                 <a-button type="link" @click="showMonaco = false"> 关闭 </a-button>
-                <a-button type="primary" @click="saveStyleText"> 确定 </a-button>
+                <a-button type="primary" @click="savePageStyles"> 确定 </a-button>
             </div>
-            <div id="fd_css_designer_monaco"></div>
+            <monaco-editor
+                style="height: 300px"
+                v-if="showMonaco"
+                ref="monacoRef"
+                language="css"
+                :value="pageStyles"
+            ></monaco-editor>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
 import { defineComponent, ref, computed } from 'vue';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
-import { cssFactory } from 'tdp-editor-common/src';
-import { cssSelectorMap } from '../../../../selectors/cssSelectors';
+import { cssSelectorMap } from '../../../selectors/cssSelectors';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
+import MonacoEditor from '../../../components/MonacoEditor.vue';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 const props = defineProps<{
     element?: IDesignerComponent;
 }>();
 const monacoRef = ref<any>(null);
 const showMonaco = ref(false);
-const saveStyleText = () => {
+const savePageStyles = () => {
     showMonaco.value = false;
     if (props.element && monacoRef.value) {
         const styleText = monacoRef.value.getValue();
-        cssFactory.setCssValue(props.element, 'styleText', styleText);
+        props.element!.styles = styleText;
     }
 };
 const cssList = computed(() => {
@@ -70,6 +77,18 @@ const cssList = computed(() => {
         return [];
     }
 });
+// 页面样式
+const pageStyles = computed(() => {
+    if (props.element && props.element.styles) {
+        return props.element.styles;
+    } else {
+        return '';
+    }
+});
+// 当前选中元素是否是页面
+const isPage = computed(() => {
+    return Boolean(props.element && props.element.type === EnumComponentType.page);
+});
 </script>
 <script lang="ts">
 export default defineComponent({
@@ -81,11 +100,11 @@ export default defineComponent({
     position: relative;
     #fd_css_monaco_box {
         position: fixed;
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
-        background-color: #fff;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        background-color: bisque;
         display: none;
         z-index: 1000;
         .box-buttons {
@@ -99,11 +118,13 @@ export default defineComponent({
                 float: right;
             }
         }
-        #fd_css_designer_monaco {
+        .monaco-editor {
             width: 100%;
             height: 100%;
             padding: 40px 10px;
             text-align: left;
+            margin-top: 50px;
+            background-color: #fff;
         }
     }
 }

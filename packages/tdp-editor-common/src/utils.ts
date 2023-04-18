@@ -111,7 +111,7 @@ export const $getDelayFunction = (fn: Function, delay: number): Function => {
 // 动态插入style标签样式
 export const $createDynamicStyle = (
     key: string,
-    styleText: string
+    styles: string
 ) => {
     const head = document.getElementsByTagName('head')[0];
     if (!head) return false;
@@ -124,7 +124,7 @@ export const $createDynamicStyle = (
         style.setAttribute('id', styleKey);
         head.appendChild(style);
     }
-    style.innerHTML = styleText;
+    style.innerHTML = styles;
 };
 
 export const $createDynamicClass = (

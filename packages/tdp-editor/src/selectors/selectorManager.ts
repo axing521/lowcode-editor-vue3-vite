@@ -4,7 +4,7 @@ import type { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type { TSelector, TCssSelector } from 'tdp-editor-types/src/interface/designer/selector';
 
 type TSelectorMapKey = EnumSelectorName | string;
-type TCssSelectorMapKey = keyof CSSStyleDeclaration | 'styleText';
+type TCssSelectorMapKey = keyof CSSStyleDeclaration;
 
 /**
  * 选择器管理

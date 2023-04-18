@@ -14,8 +14,10 @@
 </style>
 
 <script lang="ts" setup>
-import { reactive, provide } from 'vue';
+import { reactive, provide, watchEffect } from 'vue';
 import type { PropType, ComponentPublicInstance } from 'vue';
+import moment from 'moment';
+
 import type {
     IComponentCommonProps,
     IComponentState,
@@ -29,7 +31,7 @@ import {
     getComponentsMap,
 } from 'tdp-editor-types/src/constant/injectKeys';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
-import moment from 'moment';
+import { utils } from 'tdp-editor-common/src';
 
 const props = defineProps({
     json: {
@@ -42,6 +44,13 @@ const props = defineProps({
         default: () => EnumAppMode.runtime,
     },
 });
+if (props.appMode === EnumAppMode.design && props.json.type === EnumComponentType.page) {
+    watchEffect(() => {
+        if (props.json.styles) {
+            utils.$createDynamicStyle(props.json.key, props.json.styles);
+        }
+    });
+}
 // 当前页面所有组件的实例集合
 const componentsMap = reactive<Map<string, ComponentPublicInstance<IComponentCommonProps>>>(
     new Map()
