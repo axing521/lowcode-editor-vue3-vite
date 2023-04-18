@@ -3,7 +3,7 @@
 ### propSelector [属性选择器]
 
 #### 1. 创建枚举值
-tdp-editor-types/src/enum/designer 下的 EnumSelectorName枚举添加一个新值，以 "Selector" 结尾
+<font color="blue">tdp-editor-types/src/enum/designer</font> 下的 <font color="green">EnumSelectorName</font> 枚举添加一个新值，以 "Selector" 结尾
 #### 2. 在当前目录下创建一个与枚举值相同的vue组件
 #### 3. vue组件的name以EnumSelectorName枚举值命名
 #### 4. 开发selector组件的逻辑
@@ -15,7 +15,7 @@ options: 为传入给selector的选项，每个选择器有不同的选项
 label: 属性设计面板中对应的属性名
 ```
 例如sliderSelector，选项中有max值和min值
-// propSelectors/sliderSelector.vue
+ -> sliderSelector.vue
 const _props = defineProps<{
     state: IDesignerComponent;
     prop: IPropsConfig;

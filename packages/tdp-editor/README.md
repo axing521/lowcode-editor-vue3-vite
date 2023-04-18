@@ -1,49 +1,17 @@
-# tdp-editor
-
-包含[designer]（设计）端 和 [view]（用户端）部分端
-
-项目总体访问地址为：xxx.com/tdp-editor
-
-###[designer端] => xxx.com/tdp-editor/designer
-```
-管理页面
-xxx.com/tdp-editor/designer
-设计页面
-xxx.com/tdp-editor/designer/designer
-```
-
-###[view端] => xxx.com/tdp-editor/view
-```
-提交某个form表单
-xxx.com/tdp-editor/view/submit/sad33-44fsdf
-查看某个form表单
-xxx.com/tdp-editor/view/form/sad33-44fsdf
-```
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Run your unit tests
-```
-yarn test:unit
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## tdp-editor 低代码平台编辑器
+### 目录介绍
+tdp-editor
+    
+    --src
+      |--assets     - 所有资源文件
+      |--components - 复用逻辑
+      |--editor     - 编辑器入口配置
+      |--pages      - 编辑器页面
+         |--leftPanel  - 编辑器左侧面板 (左侧导航)
+         |--mainPanel  - 编辑器中心区域 (拖拽区域)
+         |--rightPanel  - 编辑器右侧面板（包含各种组件配置）
+      |--plugins    - 依赖的插件
+      |--routers    - 路由配置
+      |--selectors  - 所有选择器
+         |--cssSelectors  - 样式选择器
+         |--propSelectors - 属性选择器
