@@ -1,7 +1,7 @@
 ## 如何开发组件
 
 ### 1. 添加组件类型枚举
-在 tdp-editor-types/src/enum/components 目录中的 EnumComponentType 枚举下，添加新组件的枚举值
+在 <font color=blue>tdp-editor-types/src/enum/components</font> 目录中的 <font color=green>EnumComponentType</font> 枚举下，添加新组件的枚举值
 
 ### 2. 在当前目录下创建以组件命名的文件夹
 
@@ -40,10 +40,10 @@ const { getAppMode } = useBaseInject();
 $log(getAppMode()) // 打印 当前的运行状态;
 ```
 
-### 4.3 组件用禁止的行为
+### 4.3 <font color=red>组件用禁止的行为
 
 1. 禁止在组件中直接操作Pinia中的数据 -- 应使用controller中封装的方法和属性
-   
+</font>   
 
 ### 5. 在组件文件夹下创建index.tsx，将组件的vue文件、组件的配置项等export出去
 
