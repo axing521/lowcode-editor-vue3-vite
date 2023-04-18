@@ -8,6 +8,7 @@ import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
 import SelectorManager from '../selectors/SelectorManager';
 import propSelectors from '../selectors/propSelectors';
+import { cssSelectors } from '../selectors/cssSelectors';
 import { createController } from 'tdp-editor-common/src/controller';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import { $log } from 'tdp-editor-common/src/utils';
@@ -36,7 +37,7 @@ export const initEditor = (app: App) => {
         list: componentList,
     });
     // 注册selector
-    const selectorManager = new SelectorManager(app, propSelectors);
+    const selectorManager = new SelectorManager(app, propSelectors, cssSelectors);
     app.config.globalProperties.$selectorManager = selectorManager;
 
     return {

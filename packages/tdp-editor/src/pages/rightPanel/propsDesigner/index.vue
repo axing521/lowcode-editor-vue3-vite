@@ -96,7 +96,7 @@ import { mapState } from 'pinia';
 import { message } from 'ant-design-vue';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useEditorControler } from 'tdp-editor-common/src/controller';
-import DesignerCssPanel from './cssDesigner';
+import DesignerCssPanel from './cssDesigner/index.vue';
 import DesignerFormPanel from './formDesigner';
 import DataSourcePanel from './DataSourcePanel.vue';
 import {

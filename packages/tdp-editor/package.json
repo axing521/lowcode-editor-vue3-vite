@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
+    "@ckpack/vue-color": "^1.4.1",
     "ant-design-vue": "^3.2.0",
     "classnames": "^2.3.1",
     "copy-to-clipboard": "^3.3.1",
@@ -38,7 +39,6 @@
     "tdp-editor-components": "workspace:*",
     "tdp-editor-types": "workspace:*",
     "vue": "^3.2.37",
-    "vue-color": "^2.8.1",
     "vue-router": "^4.0.16",
     "vuedraggable": "^4.1.0"
   },

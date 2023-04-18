@@ -1,5 +1,5 @@
 <template>
-    <div class="css-box-designer">
+    <div class="css-box-selector">
         <div class="outer">
             <span>Margin</span>
             <div>
@@ -34,14 +34,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import { cssFactory } from 'tdp-editor-common/src';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import type { TCssStyleName } from 'tdp-editor-types/src/interface/app/components';
+import { getCss, setCss } from 'tdp-editor-common/src/factory/cssFactory';
 
 export default defineComponent({
-    name: 'css-box-designer',
+    name: 'css-box-selector',
     props: {
-        element: {
+        state: {
             type: Object as PropType<IDesignerComponent>,
             required: false,
         },
@@ -64,7 +64,7 @@ export default defineComponent({
     },
     methods: {
         getValue(key: TCssStyleName) {
-            let value = cssFactory.getCssValue(this.element!, key) || '';
+            let value = getCss(this.state!, key) || '';
             value = (value as string).replace('px', '');
             return value || 'auto';
         },
@@ -72,14 +72,14 @@ export default defineComponent({
             // @ts-ignore
             const value = $event.target?.value;
             const _value = isNaN(Number(value)) ? value : value + 'px';
-            cssFactory.setCssValue(this.element!, key, _value);
+            setCss(this.state!, key, _value);
         },
     },
 });
 </script>
 
 <style lang="less" scoped>
-.css-box-designer {
+.css-box-selector {
     width: 252px;
     color: #7a94b5;
     font-size: 10px;
@@ -90,7 +90,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         position: relative;
-        background: url('../../../assets/image_magin.svg');
+        background: url('../../assets/image_magin.svg');
         background-size: 100% 100%;
         background-repeat: no-repeat;
         span {
@@ -145,7 +145,7 @@ export default defineComponent({
             align-items: center;
             justify-content: center;
             position: relative;
-            background-image: url('../../../assets/image_padding.svg');
+            background-image: url('../../assets/image_padding.svg');
             background-size: 100% 100%;
             background-repeat: no-repeat;
         }

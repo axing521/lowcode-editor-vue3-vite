@@ -1,4 +1,5 @@
 import type { IComponentState, TCssStyleName } from 'tdp-editor-types/src/interface/app/components';
+import { cssFactory } from '..';
 
 const CssFactory = {
     // 获取css值
@@ -33,6 +34,17 @@ const CssFactory = {
             }
         }
     },
+};
+
+export const getCss = (state: IComponentState, propertyName: TCssStyleName | 'styleText') => {
+    return cssFactory.getCssValue(state, propertyName) as string;
+};
+export const setCss = (
+    state: IComponentState,
+    propertyName: TCssStyleName | 'styleText',
+    value: string | undefined
+) => {
+    cssFactory.setCssValue(state, propertyName, value);
 };
 
 export default CssFactory;

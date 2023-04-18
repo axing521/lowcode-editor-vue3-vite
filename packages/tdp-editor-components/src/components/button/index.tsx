@@ -27,7 +27,15 @@ export const register: registerComponentFunc = function () {
         group: EnumComponentGroup.form,
         type: EnumComponentType.button,
         order: 302,
-        cssConfigs: ['width', 'display'],
+        cssConfigs: [
+            'width',
+            'display',
+            'position',
+            'textAlign',
+            'height',
+            'color',
+            'backgroundColor',
+        ],
         getDefaultProps: () => {
             return {
                 text: {

@@ -1,49 +1,77 @@
 <template>
-    <div class="css-color-selector">
-        <a-popover placement="left" trigger="click">
-            <template #content>
-                <div style="width: 200; height: 200">
-                    <Photoshop v-model="computed_cssValue" @cancel="computed_cssValue = ''" />
-                </div>
-            </template>
-            <a-button
-                class="button-show"
-                :style="{ backgroundColor: computed_cssValue, width: '80%' }"
-            >
-                &nbsp;
-            </a-button>
-        </a-popover>
+    <div class="item">
+        <div class="label">{{ props.label }}</div>
+        <div class="value">
+            <div class="css-color-selector">
+                <a-popover placement="left" v-model:visible="showPS" trigger="click">
+                    <template #content>
+                        <div style="width: 200; height: 200">
+                            <Photoshop
+                                v-model="computed_color"
+                                acceptLabel="确定"
+                                cancelLabel="取消"
+                                @ok="ok"
+                                @cancel="cancel"
+                            />
+                        </div>
+                    </template>
+                    <div
+                        @click="showPS = !showPS"
+                        class="button-show"
+                        :style="{ backgroundColor: computed_color, width: '80%' }"
+                    >
+                        &nbsp;
+                    </div>
+                </a-popover>
+            </div>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import { Photoshop } from 'vue-color';
+import { Photoshop } from '@ckpack/vue-color';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import type { TCssStyleName } from 'tdp-editor-types/src/interface/app/components';
-import { cssFactory } from 'tdp-editor-common/src';
+import { getCss, setCss } from 'tdp-editor-common/src/factory/cssFactory';
 
 const props = defineProps<{
-    element?: IDesignerComponent;
-    propertyName: TCssStyleName;
+    state?: IDesignerComponent;
+    cssStyleName: TCssStyleName;
+    label: string;
 }>();
-const cssValue = ref('');
-const computed_cssValue = computed({
-    get(): string {
-        const value = cssFactory.getCssValue(props.element!, props.propertyName);
-        return value || '';
+const showPS = ref(false);
+const color = ref('');
+const computed_color = computed({
+    get() {
+        return getCss(props.state!, props.cssStyleName) || '#ffffff';
     },
-    set(value: any): void {
-        cssValue.value = value.hex;
-        if (cssValue.value) {
-            cssFactory.setCssValue(props.element!, props.propertyName, cssValue.value);
-        } else {
-            cssFactory.setCssValue(props.element!, props.propertyName, undefined);
-        }
+    set(value: any) {
+        color.value = value.hex;
     },
 });
+const ok = () => {
+    showPS.value = false;
+    if (props.state) {
+        setCss(props.state, props.cssStyleName, color.value);
+    }
+};
+const cancel = () => {
+    color.value = '';
+    showPS.value = false;
+};
 </script>
 <script lang="ts">
 export default defineComponent({
     name: 'css-color-selector',
 });
 </script>
+<style lang="less">
+.css-color-selector {
+    .button-show {
+        width: 100% !important;
+        height: 10px;
+        border: 1px solid #7a94b5;
+        cursor: pointer;
+    }
+}
+</style>

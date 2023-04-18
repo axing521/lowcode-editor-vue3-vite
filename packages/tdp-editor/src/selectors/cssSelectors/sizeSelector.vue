@@ -1,22 +1,32 @@
 <template>
-    <a-input-group compact>
-        <a-input v-model:value="computed_cssValue" style="width: 100px"></a-input>
-        <a-select :value="valueUnit" @change="valueUnitChange" style="width: 70px">
-            <a-select-option v-for="item in valueTypeList" :key="item.key" :value="item.key">
-                {{ item.label }}
-            </a-select-option>
-        </a-select>
-    </a-input-group>
+    <div class="item">
+        <div class="label">{{ props.label }}</div>
+        <div class="value">
+            <a-input-group compact>
+                <a-input v-model:value="computed_cssValue" style="width: 147px"></a-input>
+                <a-select :value="valueUnit" @change="valueUnitChange" style="width: 70px">
+                    <a-select-option
+                        v-for="item in valueTypeList"
+                        :key="item.key"
+                        :value="item.key"
+                    >
+                        {{ item.label }}
+                    </a-select-option>
+                </a-select>
+            </a-input-group>
+        </div>
+    </div>
 </template>
 <script setup lang="ts">
 import { defineComponent, ref, reactive, watch, computed } from 'vue';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import type { TCssStyleName } from 'tdp-editor-types/src/interface/app/components';
-import { cssFactory } from 'tdp-editor-common/src';
+import { getCss, setCss } from 'tdp-editor-common/src/factory/cssFactory';
 
 const props = defineProps<{
-    element?: IDesignerComponent;
-    propertyName: TCssStyleName;
+    state?: IDesignerComponent;
+    cssStyleName: TCssStyleName;
+    label: string;
 }>();
 const cssValue = ref('');
 const valueUnit = ref('px');
@@ -28,7 +38,7 @@ const valueTypeList = reactive([
 ]);
 const computed_cssValue = computed({
     get(): string {
-        const value = cssFactory.getCssValue(props.element!, props.propertyName);
+        const value = getCss(props.state!, props.cssStyleName);
         if (value) {
             return value.replace(valueUnit.value, '');
         } else {
@@ -38,9 +48,9 @@ const computed_cssValue = computed({
     set(value: string): void {
         cssValue.value = value;
         if (value) {
-            cssFactory.setCssValue(props.element!, props.propertyName, value + valueUnit.value);
+            setCss(props.state!, props.cssStyleName, value + valueUnit.value);
         } else {
-            cssFactory.setCssValue(props.element!, props.propertyName, undefined);
+            setCss(props.state!, props.cssStyleName, undefined);
         }
     },
 });
@@ -52,12 +62,12 @@ const valueUnitChange = (type: string) => {
 };
 
 watch(
-    () => props.element,
+    () => props.state,
     (newElement, oldElement) => {
         if (newElement && newElement !== oldElement) {
             const css = newElement.css;
-            if (css && css[props.propertyName]) {
-                const __value = css[props.propertyName] as string;
+            if (css && css[props.cssStyleName]) {
+                const __value = css[props.cssStyleName] as string;
                 if (__value.indexOf('px') > -1) {
                     valueUnit.value = 'px';
                 } else if (__value.indexOf('%') > -1) {
