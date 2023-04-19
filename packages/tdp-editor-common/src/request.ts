@@ -1,16 +1,12 @@
 import axios from 'axios';
 import type {
-    IFetchAsyncResult,
+    IAxiosAsyncResult,
     IFetchOptions,
-    IServerResponse,
-    IServiceResult,
+    IFetchAsyncResult,
 } from 'tdp-editor-types/src/interface/request';
 
-import {
-    EnumContentTypeValue,
-    EnumRequestHeadersKey,
-    EnumServiceResultStatus,
-} from 'tdp-editor-types/src/enum/request';
+import { EnumContentTypeValue, EnumRequestHeadersKey } from 'tdp-editor-types/src/enum/request';
+import { $warn } from './utils';
 
 /**
  * fetch请求，并处理返回数据
@@ -18,26 +14,23 @@ import {
  * @returns 返回处理过的结构数据
  */
 export const $fetch = async <DATA = any>(options: IFetchOptions) => {
-    const result: IServiceResult<DATA> = {
-        status: EnumServiceResultStatus.failed,
+    const result: IFetchAsyncResult<DATA> = {
+        code: 500,
         data: {} as DATA,
-        message: '',
+        success: false,
+        timestamp: 0,
     };
     const response = await _fetch<DATA>(options);
-    $handleResponse(response, {
-        success: body => {
-            result.status = EnumServiceResultStatus.success;
-            result.data = body.data;
-        },
-        fail: (code, msg) => {
-            result.status = EnumServiceResultStatus.failed;
-            result.message = msg;
-            result.code = code;
-        },
-        error: () => {
-            result.status = EnumServiceResultStatus.error;
-        },
-    });
+    if (response.success) {
+        result.success = true;
+        result.code = response.httpStatus;
+        result.data = response.body.data;
+        result.timestamp = response.body.timestamp;
+    } else {
+        // @ts-ignore
+        result.code = response.httpStatus;
+        result.timestamp = Date.now();
+    }
     return result;
 };
 
@@ -47,38 +40,48 @@ export const $fetch = async <DATA = any>(options: IFetchOptions) => {
  * @returns 返回接口返回的原始数据
  */
 export const _fetch = async <DATA = any>(options: IFetchOptions) => {
-    const result: IFetchAsyncResult<DATA> = {
+    const result: IAxiosAsyncResult<DATA> = {
         success: false,
         httpStatus: 500,
-        message: '',
-        body: { code: '500', data: {} as DATA, message: '', timestamp: 0, success: false },
+        body: { code: '500', data: {} as DATA, timestamp: 0, success: false },
         headers: undefined,
         error: undefined,
     };
-    let response;
-    try {
-        const headers = $getBaseHeaders(options.headers);
-        // formData的请求数据处理
-        if (options.postType === 'form-data') {
-            headers[EnumRequestHeadersKey.contentType] = EnumContentTypeValue.formData;
-            options.transformRequest = [
-                data => {
-                    return $parseUrlParmas(data);
-                },
-            ];
-        } else if (options.postType === 'json') {
-            headers[EnumRequestHeadersKey.contentType] = EnumContentTypeValue.json;
-        }
-        options.headers = headers;
-        response = await axios(options);
-        result.httpStatus = response.status;
-        result.body = response.data;
-        result.success = response.status === 200;
-    } catch (e) {
-        result.success = false;
-        result.httpStatus = (response && response.status) || 500;
+    const headers = $getBaseHeaders(options.headers);
+    // formData的请求数据处理
+    if (options.postType === 'form-data') {
+        headers[EnumRequestHeadersKey.contentType] = EnumContentTypeValue.formData;
+        options.transformRequest = [
+            data => {
+                return $parseUrlParmas(data);
+            },
+        ];
+    } else if (options.postType === 'json') {
+        headers[EnumRequestHeadersKey.contentType] = EnumContentTypeValue.json;
     }
-    return result;
+    options.headers = headers;
+    return await axios(options)
+        .then(res => {
+            result.success = true;
+            result.httpStatus = res.status;
+            result.body = {
+                code: res.status,
+                data: res.data,
+                success: true,
+                timestamp: Date.now(),
+            };
+            result.headers = res.headers;
+            return result;
+        })
+        .catch(error => {
+            const errorLog = '接口：[  ' + options.url + '  ]报错了：';
+            $warn('%c %s', 'color: red', errorLog, error);
+            result.success = false;
+            result.httpStatus = (error.response && error.response.status) || 500;
+            result.headers = error.response && error.response.headers;
+            result.error = error;
+            return result;
+        });
 };
 
 /**
@@ -107,27 +110,6 @@ export const $parseUrlParmas = (urlParams: any) => {
     return result;
 };
 
-export const $handleResponse = <T = any>(
-    response: IFetchAsyncResult<T>,
-    callback: {
-        success: (body: IServerResponse<T>) => void;
-        fail?: (code: string | number, msg: string) => void;
-        error?: (e: any) => void;
-    }
-) => {
-    const body = response.body || ({} as IServerResponse<T>);
-    if (body.success) {
-        callback.success(body);
-    } else if (response.success && body && !body.success) {
-        callback.fail && callback.fail(body.code, body.message || body.message || '');
-    } else {
-        if (callback.error) {
-            callback.error(response.error);
-        } else {
-            callback.fail && callback.fail(body.code, body.message || body.message || '');
-        }
-    }
-};
 export const $getBaseHeaders = (headers = {}) => {
     const more: any = {
         tenantId: '25',

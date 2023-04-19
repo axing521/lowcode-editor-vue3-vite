@@ -4,7 +4,6 @@ import { message } from 'ant-design-vue/es';
 
 import './index.less';
 import { EnumApiType } from 'tdp-editor-types/src/enum/components';
-import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
 import type { EnumHttpMethod } from 'tdp-editor-types/src/enum';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import type { IComponentApi } from 'tdp-editor-types/src/interface/app/components';
@@ -84,7 +83,7 @@ export default defineComponent({
                     method: this.selectedApi.method as any,
                     url: `${apiDomain.domain}${this.selectedApi.path}`,
                 });
-                if (res.status === EnumServiceResultStatus.success) {
+                if (res.success) {
                     this.previewData.data = res.data.rows || [];
                     this.previewData.columns = (res.data.columns || []).map(c => {
                         return {
@@ -101,7 +100,7 @@ export default defineComponent({
         },
         async getApiDetail(id: number) {
             const res = await apis.apiService.getApiDetail(id);
-            if (res.status === EnumServiceResultStatus.success) {
+            if (res.success) {
                 this.selectedApi = res.data;
                 this.dataPreview();
             } else {
@@ -111,7 +110,7 @@ export default defineComponent({
         async getApiList() {
             this.apiLoading = true;
             const res = await apis.apiService.getApiList();
-            if (res.status === EnumServiceResultStatus.success) {
+            if (res.success) {
                 this.apiLoading = false;
                 this.apiList = res.data.rows || [];
             }

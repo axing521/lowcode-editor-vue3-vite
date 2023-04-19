@@ -1,19 +1,18 @@
 import type { AxiosRequestConfig } from 'axios';
 import type { EnumServiceResultStatus } from '../../enum/request';
 //接口返回的原始数据结构
-export interface IServerResponse<DATA> {
+export interface IFetchAsyncResult<DATA> {
     code: string | number;
     data: DATA;
-    message: string;
+    message?: string;
     timestamp: number;
     success: boolean;
 }
-export interface IFetchAsyncResult<DATA = any> extends IBaseAsyncResult<IServerResponse<DATA>> {}
+export interface IAxiosAsyncResult<DATA = any> extends IBaseAsyncResult<IFetchAsyncResult<DATA>> {}
 // 请求返回结果结构体
 export interface IBaseAsyncResult<BODY = any> {
     success: boolean;
     httpStatus: number /*http状态码*/;
-    message: string;
     body: BODY;
     headers: any;
     error?: Error & { response: any };
@@ -26,7 +25,8 @@ export interface IFetchOptions extends AxiosRequestConfig {
 // service的返回结构
 export interface IServiceResult<DATA = any> {
     status: EnumServiceResultStatus;
-    message: string;
-    data: DATA;
-    code?: number | string;
+    message: string; // 错误信息
+    data: DATA; // 处理后的数据
+    code?: number | string; // http状态码
+    timestamp?: number;
 }

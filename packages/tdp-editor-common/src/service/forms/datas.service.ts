@@ -21,7 +21,13 @@ const service = {
             url: `${apiDomain.formService}/api/v1.0/form-content`,
             data: data,
         });
-        return res;
+        return {
+            status: res.success ? EnumServiceResultStatus.success : EnumServiceResultStatus.error,
+            data: res.data.data,
+            message: res.data.message,
+            timestamp: res.timestamp,
+            code: res.code,
+        };
     },
     // 修改表单数据
     updateFormData: async (data: IFormDataUpdate): Promise<IServiceResult> => {
@@ -30,7 +36,13 @@ const service = {
             url: `${apiDomain.formService}/api/v1.0/form-content`,
             data: data,
         });
-        return res;
+        return {
+            status: res.success ? EnumServiceResultStatus.success : EnumServiceResultStatus.error,
+            data: res.data.data,
+            message: res.data.message,
+            timestamp: res.timestamp,
+            code: res.code,
+        };
     },
     // 查询表单数据
     queryFormData: async (query: IFormDataQuery) => {
@@ -49,7 +61,7 @@ const service = {
             )}`,
             // data: query,
         });
-        if (res.status === EnumServiceResultStatus.success) {
+        if (res.success) {
             result.status = EnumServiceResultStatus.success;
             result.data.rows = res.data.formContentList.map((c: any) => {
                 return {
@@ -67,7 +79,13 @@ const service = {
             method: 'DELETE',
             url: `${apiDomain.formService}/api/v1.0/form-contents/${formContentId}`,
         });
-        return res;
+        return {
+            status: res.success ? EnumServiceResultStatus.success : EnumServiceResultStatus.error,
+            data: res.data.data,
+            message: res.data.message,
+            timestamp: res.timestamp,
+            code: res.code,
+        };
     },
 };
 
