@@ -14,7 +14,6 @@
 import { defineComponent, computed } from 'vue';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import { useAppControler } from 'tdp-editor-common/src/controller';
-import { $log } from 'tdp-editor-common/src/utils';
 
 const props = defineProps<{
     state?: IDesignerComponent;
@@ -35,7 +34,6 @@ const classNameList = computed(() => {
     if (!activePage || !activePage.styles) return [];
     const regex = /\.([\w-]+)/g;
     const matches = activePage.styles.match(regex);
-    $log(' classNameList match', matches);
     if (matches && matches.length) {
         const filterSet = new Set<string>();
         matches.forEach(c => {

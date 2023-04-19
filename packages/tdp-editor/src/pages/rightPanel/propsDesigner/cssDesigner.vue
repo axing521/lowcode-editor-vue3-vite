@@ -2,6 +2,13 @@
     <div class="designer-css-panel">
         <div class="section">
             <css-box-selector :state="props.element" />
+            <div class="item" v-show="isPage">
+                <div class="label">css代码</div>
+                <div class="value">
+                    <a-button @click="openMonacoBox">编辑</a-button>
+                </div>
+            </div>
+            <css-class-selector :state="props.element"></css-class-selector>
             <component
                 v-for="item in cssList"
                 :key="item.key"
@@ -10,13 +17,6 @@
                 :state="props.element"
                 :cssStyleName="item.key"
             ></component>
-            <div class="item" v-show="isPage">
-                <div class="label">css代码</div>
-                <div class="value">
-                    <a-button @click="openMonacoBox">编辑</a-button>
-                </div>
-            </div>
-            <css-class-selector :state="props.element"></css-class-selector>
         </div>
         <div id="fd_css_monaco_box" v-show="showMonacoBox">
             <div class="box-buttons">
