@@ -10,8 +10,11 @@ export const $getUUID = (prefix?: string): string => {
 };
 
 const APP_ENV = import.meta.env.VITE_APP_ENV;
+// eslint-disable-next-line no-console
 export const $log = APP_ENV === EnumAppEnv.production ? () => {} : console.log;
+// eslint-disable-next-line no-console
 export const $warn = APP_ENV === EnumAppEnv.production ? () => {} : console.warn;
+// eslint-disable-next-line no-console
 export const $error = APP_ENV === EnumAppEnv.production ? () => {} : console.error;
 
 /**

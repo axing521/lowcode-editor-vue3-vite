@@ -10,7 +10,7 @@ module.exports = {
         '@vue/eslint-config-prettier',
     ],
     rules: {
-        // 'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-console': 'error',
         // 'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         indent: ['error', 4],
         '@typescript-eslint/ban-ts-comment': ['off'],

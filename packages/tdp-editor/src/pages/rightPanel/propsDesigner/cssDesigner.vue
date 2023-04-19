@@ -1,11 +1,8 @@
 <template>
     <div class="designer-css-panel">
         <div class="section">
-            <div class="item">
-                <div class="label">边距</div>
-                <div class="value">
-                    <css-box-selector :element="props.element" />
-                </div>
+            <div class="item box-selector">
+                <css-box-selector :state="props.element" />
             </div>
             <component
                 v-for="item in cssList"

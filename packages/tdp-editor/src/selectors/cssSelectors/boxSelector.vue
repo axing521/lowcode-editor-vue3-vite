@@ -80,7 +80,8 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .css-box-selector {
-    width: 252px;
+    width: 276px;
+    margin: 0 auto;
     color: #7a94b5;
     font-size: 10px;
     .outer {
@@ -139,8 +140,8 @@ export default defineComponent({
             transform: translateY(-50%);
         }
         .inner {
-            width: 59%;
-            height: 54%;
+            width: 58%;
+            height: 56%;
             display: flex;
             align-items: center;
             justify-content: center;
