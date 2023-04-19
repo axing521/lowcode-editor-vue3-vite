@@ -14,7 +14,7 @@
 </style>
 
 <script lang="ts" setup>
-import { reactive, provide, watchEffect } from 'vue';
+import { provide, watchEffect } from 'vue';
 import type { PropType, ComponentPublicInstance } from 'vue';
 import moment from 'moment';
 
@@ -50,9 +50,7 @@ watchEffect(() => {
     }
 });
 // 当前页面所有组件的实例集合
-const componentsMap = reactive<Map<string, ComponentPublicInstance<IComponentCommonProps>>>(
-    new Map()
-);
+const componentsMap = new Map<string, ComponentPublicInstance<IComponentCommonProps>>();
 
 provide(getAppMode, () => {
     return props.appMode;
