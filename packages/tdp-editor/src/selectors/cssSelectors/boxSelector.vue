@@ -1,28 +1,30 @@
 <template>
-    <div class="css-box-selector">
-        <div class="outer">
-            <span>Margin</span>
-            <div>
-                <div v-for="(margin, index) in marginValue" :key="index">
-                    <div class="slot-area" :class="'slot-' + index">
-                        <input
-                            class="margin-padding-input"
-                            :value="getValue(margin)"
-                            @change="setValue(margin, $event)"
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="inner">
-                <span>Padding</span>
+    <div class="item">
+        <div class="css-box-selector">
+            <div class="outer">
+                <span>Margin</span>
                 <div>
-                    <div v-for="(padding, index) in paddingValue" :key="index">
+                    <div v-for="(margin, index) in marginValue" :key="index">
                         <div class="slot-area" :class="'slot-' + index">
                             <input
                                 class="margin-padding-input"
-                                :value="getValue(padding)"
-                                @change="setValue(padding, $event)"
+                                :value="getValue(margin)"
+                                @change="setValue(margin, $event)"
                             />
+                        </div>
+                    </div>
+                </div>
+                <div class="inner">
+                    <span>Padding</span>
+                    <div>
+                        <div v-for="(padding, index) in paddingValue" :key="index">
+                            <div class="slot-area" :class="'slot-' + index">
+                                <input
+                                    class="margin-padding-input"
+                                    :value="getValue(padding)"
+                                    @change="setValue(padding, $event)"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -52,6 +52,7 @@ export interface IComponentState<P = any, C = any> {
     isFormer?: boolean; // 是否属于form组件
     css?: C;
     styles?: string; // 自定义样式, 存放在page 的state中
+    classNames?: string[]; // 组件的自定义样式名
     events?: IComponentEvent[];
 }
 

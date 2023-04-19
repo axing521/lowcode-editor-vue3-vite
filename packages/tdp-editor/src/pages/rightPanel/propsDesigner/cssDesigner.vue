@@ -1,9 +1,7 @@
 <template>
     <div class="designer-css-panel">
         <div class="section">
-            <div class="item box-selector">
-                <css-box-selector :state="props.element" />
-            </div>
+            <css-box-selector :state="props.element" />
             <component
                 v-for="item in cssList"
                 :key="item.key"
@@ -18,6 +16,7 @@
                     <a-button @click="showMonaco = true">编辑</a-button>
                 </div>
             </div>
+            <css-class-selector :state="props.element"></css-class-selector>
         </div>
         <div id="fd_css_monaco_box" :style="{ display: showMonaco ? 'block' : 'none' }">
             <div class="box-buttons">

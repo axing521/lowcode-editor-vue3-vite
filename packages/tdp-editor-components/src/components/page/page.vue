@@ -44,13 +44,11 @@ const props = defineProps({
         default: () => EnumAppMode.runtime,
     },
 });
-if (props.appMode === EnumAppMode.design && props.json.type === EnumComponentType.page) {
-    watchEffect(() => {
-        if (props.json.styles) {
-            utils.$createDynamicStyle(props.json.key, props.json.styles);
-        }
-    });
-}
+watchEffect(() => {
+    if (props.json.styles) {
+        utils.$createDynamicStyle(props.json.key, props.json.styles);
+    }
+});
 // 当前页面所有组件的实例集合
 const componentsMap = reactive<Map<string, ComponentPublicInstance<IComponentCommonProps>>>(
     new Map()
