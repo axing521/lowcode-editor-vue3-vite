@@ -23,13 +23,6 @@
                 <a-button type="link" @click="closeMonacoBox"> 关闭 </a-button>
                 <a-button type="primary" @click="savePageStyles"> 确定 </a-button>
             </div>
-            <monaco-editor
-                style="height: 300px"
-                v-if="showMonaco"
-                ref="monacoRef"
-                language="css"
-                :value="pageStyles"
-            ></monaco-editor>
         </div>
     </div>
 </template>
@@ -39,7 +32,6 @@ import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import { cssSelectorMap } from '../../../selectors/cssSelectors';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
-import MonacoEditor from '../../../components/MonacoEditor.vue';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 const props = defineProps<{
@@ -76,18 +68,7 @@ const cssList = computed(() => {
         return [];
     }
 });
-// 页面样式
-const pageStyles = computed(() => {
-    if (
-        props.element &&
-        props.element.type === EnumComponentType.page &&
-        (props.element as IPageState).styles
-    ) {
-        return (props.element as IPageState).styles || '';
-    } else {
-        return '';
-    }
-});
+
 // 当前选中元素是否是页面
 const isPage = computed(() => {
     return Boolean(props.element && props.element.type === EnumComponentType.page);
