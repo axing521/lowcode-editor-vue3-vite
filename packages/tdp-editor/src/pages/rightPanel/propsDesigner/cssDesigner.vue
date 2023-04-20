@@ -2,12 +2,6 @@
     <div class="designer-css-panel">
         <div class="section">
             <css-box-selector :state="props.element" />
-            <div class="item" v-show="isPage">
-                <div class="label">css代码</div>
-                <div class="value">
-                    <a-button @click="openMonacoBox">编辑</a-button>
-                </div>
-            </div>
             <css-class-selector :state="props.element"></css-class-selector>
             <component
                 v-for="item in cssList"
@@ -27,7 +21,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { defineComponent, ref, computed, nextTick } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import { cssSelectorMap } from '../../../selectors/cssSelectors';
@@ -69,20 +63,9 @@ const cssList = computed(() => {
     }
 });
 
-// 当前选中元素是否是页面
-const isPage = computed(() => {
-    return Boolean(props.element && props.element.type === EnumComponentType.page);
-});
-
 const closeMonacoBox = () => {
     showMonacoBox.value = false;
     showMonaco.value = false;
-};
-const openMonacoBox = () => {
-    showMonacoBox.value = true;
-    nextTick(() => {
-        showMonaco.value = true;
-    });
 };
 </script>
 <script lang="ts">
