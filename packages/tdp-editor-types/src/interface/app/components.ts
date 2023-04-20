@@ -51,7 +51,6 @@ export interface IComponentState<P = any, C = any> {
     formInfo?: IFormInfo;
     isFormer?: boolean; // 是否属于form组件
     css?: C;
-    styles?: string; // 自定义样式, 存放在page 的state中
     classNames?: string[]; // 组件的自定义样式名
     events?: IComponentEvent[];
 }
@@ -95,3 +94,15 @@ export type TEventFuncParam1 = {
 };
 
 export type TEventFunc = ($event: TEventFuncParam1) => void;
+
+// 页面的state，因为页面状态可能提供外部开发者，所以放到interface项目中
+export interface IPageState extends IComponentState<IPageProps> {
+    type: EnumComponentType.page;
+    styles?: string; // 自定义样式, 存放在page 的state中
+    functions?: string; // 自定义函数, 存放在page 的state中
+    vars?: string; // 页面变量
+}
+
+export interface IPageProps {
+    title?: string;
+}

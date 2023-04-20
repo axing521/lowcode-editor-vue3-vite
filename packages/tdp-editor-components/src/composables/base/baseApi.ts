@@ -1,4 +1,4 @@
-import type { IServiceResult } from 'tdp-editor-types/src/interface/request';
+import type { IFetchAsyncResult } from 'tdp-editor-types/src/interface/request';
 import type { EnumApiType } from 'tdp-editor-types/src/enum/components';
 import { apiFactory, request } from 'tdp-editor-common/src';
 import { apiDomain } from 'tdp-editor-common/src/service';
@@ -9,8 +9,8 @@ export default function useBaseApi(props: ISetupBaseProps) {
     async function triggerApi(params: {
         name?: string;
         apiType?: EnumApiType;
-    }): Promise<IServiceResult | null> {
-        let res: IServiceResult | null = null;
+    }): Promise<IFetchAsyncResult<any> | null> {
+        let res: IFetchAsyncResult<any> | null = null;
         if (params.name) {
             const api = apiFactory.getApiValueByName(props.state, params.name);
             if (api) {

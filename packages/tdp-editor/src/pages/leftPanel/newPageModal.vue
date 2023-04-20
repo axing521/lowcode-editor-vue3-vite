@@ -172,7 +172,7 @@ const clickOk = () => {
         editorController.addPage({
             page: {
                 label: pageName.value,
-                code: pageCode.value,
+                name: pageCode.value,
             } as IPageStore,
         });
         $emit('update:visible', false);

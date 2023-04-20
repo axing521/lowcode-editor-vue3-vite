@@ -35,6 +35,7 @@
 </template>
 <script lang="ts" setup>
 import { defineComponent, ref, computed, nextTick } from 'vue';
+import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import { cssSelectorMap } from '../../../selectors/cssSelectors';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
@@ -50,9 +51,9 @@ const showMonaco = ref(false);
 const savePageStyles = () => {
     showMonacoBox.value = false;
     showMonaco.value = false;
-    if (props.element && monacoRef.value) {
+    if (props.element && props.element.type === EnumComponentType.page && monacoRef.value) {
         const styleText = monacoRef.value.getValue();
-        props.element!.styles = styleText;
+        (props.element as IPageState).styles = styleText;
     }
 };
 const cssList = computed(() => {
@@ -77,8 +78,12 @@ const cssList = computed(() => {
 });
 // 页面样式
 const pageStyles = computed(() => {
-    if (props.element && props.element.styles) {
-        return props.element.styles;
+    if (
+        props.element &&
+        props.element.type === EnumComponentType.page &&
+        (props.element as IPageState).styles
+    ) {
+        return (props.element as IPageState).styles || '';
     } else {
         return '';
     }

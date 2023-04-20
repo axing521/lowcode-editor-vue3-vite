@@ -184,7 +184,7 @@ import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/v
 
 import DesignerLeft from './leftPanel';
 import DesignerRight from './rightPanel';
-import DesignerMain from './mainPanel';
+import DesignerMain from './mainPanel/MainPanelDesigner.vue';
 import AddVarModal from '../components/AddVar.vue';
 
 (window as any).MonacoEnvironment = {

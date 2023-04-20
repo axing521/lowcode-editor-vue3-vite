@@ -168,7 +168,6 @@ export default class EditorController {
             const rowKey = utils.$getUUID(EnumComponentType.row);
             const newRow: IDesignerComponent = {
                 key: rowKey,
-                code: '',
                 label: rowState.label,
                 icons: rowState.icons,
                 group: rowState.group,

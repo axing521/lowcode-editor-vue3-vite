@@ -10,7 +10,6 @@ import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer
 
 import { utils } from '..';
 import { apps, forms } from '../service';
-import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
 import { $log } from '../utils';
 import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 // import { useAppStore } from './appStore';
@@ -98,11 +97,7 @@ export const useEditorStore = defineStore('editorStore', {
                     this.saveForm({ form: payload.form }),
                 ])
                     .then(resAll => {
-                        if (
-                            resAll.length === 2 &&
-                            resAll[0].status === EnumServiceResultStatus.success &&
-                            resAll[1].status === EnumServiceResultStatus.success
-                        ) {
+                        if (resAll.length === 2 && resAll[0].success && resAll[1].success) {
                             ok('');
                         } else {
                             fail('save fail');

@@ -1,9 +1,10 @@
 import type { EnumAppMode } from '../../enum';
+import type { IPageState } from '../app/components';
 import type { IDesignerComponent } from '../designer';
 import type { IPageForm } from '../designer/pageForm';
 
 // page Module对象定义
-export interface IPageStore extends IDesignerComponent {
+export interface IPageStore extends IPageState {
     submitState: 'unsaved' | 'saved' | 'submited';
     selected?: boolean;
 }

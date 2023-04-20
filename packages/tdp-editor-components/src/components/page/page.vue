@@ -15,13 +15,15 @@
 
 <script lang="ts" setup>
 import { provide, watchEffect } from 'vue';
-import type { PropType, ComponentPublicInstance } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 import moment from 'moment';
 
 import type {
     IComponentCommonProps,
-    IComponentState,
+    IPageState,
 } from 'tdp-editor-types/src/interface/app/components';
+import type { EnumAppMode } from 'tdp-editor-types/src/enum';
+
 import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import {
     addComponent,
@@ -30,22 +32,14 @@ import {
     getComponentByKey,
     getComponentsMap,
 } from 'tdp-editor-types/src/constant/injectKeys';
-import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import { utils } from 'tdp-editor-common/src';
 
-const props = defineProps({
-    json: {
-        required: true,
-        type: Object as PropType<IComponentState>,
-    },
-    appMode: {
-        required: true,
-        type: String as PropType<EnumAppMode>,
-        default: () => EnumAppMode.runtime,
-    },
-});
+const props = defineProps<{
+    json?: IPageState;
+    appMode: EnumAppMode;
+}>();
 watchEffect(() => {
-    if (props.json.styles) {
+    if (props.json && props.json.styles) {
         utils.$createDynamicStyle(props.json.key, props.json.styles);
     }
 });

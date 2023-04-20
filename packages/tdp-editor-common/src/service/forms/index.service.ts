@@ -5,7 +5,6 @@ import type {
     IFormAdd,
     IFormUpdate,
 } from 'tdp-editor-types/src/interface/service/form';
-import { EnumServiceResultStatus } from 'tdp-editor-types/src/enum/request';
 
 type addFormResult = {
     formId: string;
@@ -18,7 +17,7 @@ const service = {
             url: `${API_Domain.formService}/api/v1.0/forms/${formId}`,
         });
         // 做一些错误处理
-        if (res.status !== EnumServiceResultStatus.success) {
+        if (res.success) {
             res.data = {} as IFormDetail;
         }
         return res;
