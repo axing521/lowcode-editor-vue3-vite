@@ -20,6 +20,7 @@ export const useEditorStore = defineStore('editorStore', {
             selectedComponent: undefined,
             componentList: [],
             dragComponent: undefined, // 正在拖动的组件
+            pageEditMode: 'content',
         };
     },
     actions: {

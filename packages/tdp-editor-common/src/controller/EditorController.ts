@@ -6,7 +6,7 @@ import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IAppSaveStruct } from 'tdp-editor-types/src/interface/app';
-import type { IPageStore } from 'tdp-editor-types/src/interface/store';
+import type { IPageStore, TPageEditMode } from 'tdp-editor-types/src/interface/store';
 
 import { toRaw } from 'vue';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
@@ -25,10 +25,18 @@ export default class EditorController {
         this.$app = app;
         this.$pinia = pinia;
     }
+    /**
+     * 添加自定义组件
+     * @param list 要添加的自定义组件列表
+     */
     addCustomerComponents(list: IDesignerComponent[]) {
         const $editorStore = useEditorStore(this.$pinia);
         $editorStore.addComponents({ list });
     }
+    /**
+     * 初始化组件列表
+     * @param list 组件列表
+     */
     initComponentList(list: IDesignerComponent[]) {
         const $editorStore = useEditorStore(this.$pinia);
         $editorStore.initComponentList({ list });
@@ -72,7 +80,7 @@ export default class EditorController {
         const newPage = editorStore.createNewEmptyPage(appStore.pages);
         newPage.selected = true;
         appStore.pages.push(newPage);
-        appStore.activePage = newPage;
+        appStore.setActivePage({ pageId: newPage.key });
     }
     /**
      * 获取预览地址
@@ -139,7 +147,7 @@ export default class EditorController {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = payload.pages;
         if (payload.pages.length) {
-            appStore.activePage = payload.pages[0];
+            appStore.setActivePage({ pageId: payload.pages[0].key });
         }
     }
     // 删除选中的组件
@@ -207,5 +215,24 @@ export default class EditorController {
         appStore.setActivePage({
             pageId: appStore.pages[appStore.pages.length - 1].key,
         });
+    }
+
+    /**
+     * 编辑器切换页面动作
+     * @param pageKey 要切换的页面key
+     */
+    setActivePage(pageKey: string) {
+        const appStore = useAppStore();
+        appStore.setActivePage({ pageId: pageKey });
+        this.setActivePageMode('content');
+    }
+
+    /**
+     * 设置当前页面的编辑模式
+     * @param mode 内容，css或者function
+     */
+    setActivePageMode(mode: TPageEditMode) {
+        const editorStore = useEditorStore();
+        editorStore.pageEditMode = mode;
     }
 }

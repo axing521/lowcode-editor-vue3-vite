@@ -22,12 +22,13 @@ export interface IAppStore {
     globalVars: Record<string, any>; // 全局变量集合 { 变量名：变量数据 }
     currentPageVars: Record<string, any>; // 当前页面的变量集合 { 变量名：变量数据 }
 }
-
+export type TPageEditMode = 'content' | 'css' | 'function';
 export interface IEditorStore {
     // selectedPageComponentList: IDesignerComponent[]; // 当前页面所有组件列表
     selectedComponent?: IDesignerComponent; // 当前页面所选择的组件
     dragComponent?: IDesignerComponent;
     componentList: IDesignerComponent[]; // 所有组件列表，用于左侧拖动面板展示
+    pageEditMode: TPageEditMode;
 }
 
 export interface IMenusStore {

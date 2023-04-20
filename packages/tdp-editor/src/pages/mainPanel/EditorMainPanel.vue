@@ -10,14 +10,26 @@
                 <i class="iconfont del" @click="deleteComponent" />
             </div>
         </div>
-        <template v-if="selectedPage">
-            <div class="main-panel-container">
+        <div class="main-panel-container">
+            <template v-if="selectedPage && activePageMode === 'content'">
                 <page-content-designer
                     :selectedPage="selectedPage"
                     :appMode="appMode"
                 ></page-content-designer>
-            </div>
-        </template>
+            </template>
+            <template v-if="selectedPage && activePageMode === 'css'">
+                <page-css-designer
+                    :selectedPage="selectedPage"
+                    :appMode="appMode"
+                ></page-css-designer>
+            </template>
+            <template v-if="selectedPage && activePageMode === 'function'">
+                <page-function-designer
+                    :selectedPage="selectedPage"
+                    :appMode="appMode"
+                ></page-function-designer>
+            </template>
+        </div>
     </div>
 </template>
 <style lang="less">
@@ -26,6 +38,7 @@
     position: relative;
     height: 100%;
     flex: 1;
+    overflow-x: hidden;
     #designer-main-action-box {
         position: absolute;
         display: none;
@@ -57,9 +70,11 @@
         }
     }
     .main-panel-container {
-        min-height: 100%;
+        height: 100%;
         position: relative;
         padding: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
         .editor-designer-comp {
             position: relative;
             border: 1px dashed #c8c8c8;
@@ -96,6 +111,8 @@ import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useEditorControler } from 'tdp-editor-common/src/controller';
 import { $log } from 'tdp-editor-common/src/utils';
 import PageContentDesigner from './PageContentDesigner.vue';
+import PageCssDesigner from './PageCssDesigner.vue';
+import PageFunctionDesigner from './PageFunctionDesigner.vue';
 
 const appStore = useAppStore();
 const editorStore = useEditorStore();
@@ -105,6 +122,7 @@ const setIndexRefs = inject('setRefs', (key: string, comInstance: ComponentPubli
 const selectedComponent = computed(() => editorStore.selectedComponent);
 const appMode = computed(() => appStore.mode);
 const selectedPage = computed(() => appStore.activePage);
+const activePageMode = computed(() => editorStore.pageEditMode);
 // const dragContainerClassName = 'main-panel-container';
 // let dragComponent: IDesignerComponent | undefined = undefined;
 // 用户选中的组件

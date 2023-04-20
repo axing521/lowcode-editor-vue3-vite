@@ -1,6 +1,15 @@
 <template>
     <div id="tdp-monaco-editor"></div>
 </template>
+<style lang="less">
+#tdp-monaco-editor {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+</style>
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, watch } from 'vue';
 import * as monaco from 'monaco-editor';
@@ -68,6 +77,15 @@ watch(
             monacoEditor.setValue('');
         } else if (value !== oldValue && monacoEditor) {
             monacoEditor.setValue(value);
+        }
+    }
+);
+watch(
+    () => props.language,
+    (value, oldValue) => {
+        if (monacoEditor && value !== oldValue) {
+            monacoEditor.dispose();
+            initMonaco();
         }
     }
 );

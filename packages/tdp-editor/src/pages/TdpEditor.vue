@@ -53,8 +53,8 @@
             </div>
         </div>
         <div class="tdp-editor-main">
-            <DesignerLeft :class="{ 'tdp-editor-panel-left': true, hide: !showLeft }" />
-            <DesignerMain class="tdp-editor-panel-main" ref="designerMain" />
+            <editor-left-panel :class="{ 'tdp-editor-panel-left': true, hide: !showLeft }" />
+            <editor-main-panel class="tdp-editor-panel-main" ref="designerMain" />
             <DesignerRight
                 :class="{ 'tdp-editor-panel-right': true, hide: !showRight }"
                 ref="designerRight"
@@ -182,9 +182,9 @@ import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/vars';
 
-import DesignerLeft from './leftPanel';
+import EditorLeftPanel from './leftPanel/EditorLeftPanel.vue';
 import DesignerRight from './rightPanel';
-import DesignerMain from './mainPanel/MainPanelDesigner.vue';
+import EditorMainPanel from './mainPanel/EditorMainPanel.vue';
 import AddVarModal from '../components/AddVar.vue';
 
 (window as any).MonacoEnvironment = {
@@ -275,13 +275,13 @@ const pagePreview = () => {
 
 const selectComponent = (componentKey: string) => {
     const compElement = document.getElementById(componentKey);
-    const mainRef = thisRefs['designerMain'] as typeof DesignerMain;
+    const mainRef = thisRefs['designerMain'] as typeof EditorMainPanel;
     if (compElement && mainRef) {
         mainRef.handleClick({ target: compElement });
     }
 };
 const unselectComponent = () => {
-    const mainRef = thisRefs['designerMain'] as typeof DesignerMain;
+    const mainRef = thisRefs['designerMain'] as typeof EditorMainPanel;
     if (mainRef) {
         mainRef.unselect();
     }
