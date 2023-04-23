@@ -11,7 +11,7 @@
 @blueColor: #1890ff;
 </style>
 <script lang="ts" setup>
-import { onMounted, computed, watch } from 'vue';
+import { onMounted, computed, watch, toRaw } from 'vue';
 // import { useRouter } from 'vue-router';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import RuntimePage from 'tdp-editor-components/src/components/page';
@@ -40,7 +40,8 @@ watch(
 const appController = useAppControler();
 // 监听当前页面数据切换
 const pageJson = computed(() => {
-    return appController.getActivePage();
+    const activePage = appController.getActivePage();
+    return toRaw(activePage);
 });
 
 // setTimeout(() => {
