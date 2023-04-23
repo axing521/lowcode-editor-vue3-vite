@@ -173,7 +173,7 @@ const clickOk = () => {
             page: {
                 label: pageName.value,
                 code: pageCode.value,
-            } as IPageStore,
+            } as unknown as IPageStore,
         });
         $emit('update:visible', false);
         resetForm();
