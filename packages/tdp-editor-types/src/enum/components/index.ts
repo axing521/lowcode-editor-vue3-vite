@@ -24,6 +24,7 @@ export enum EnumComponentType {
     divider = 'FdDivider',
     select = 'FdSelect',
     demo1 = 'FdDemo1',
+    chatGPT = 'FdChatGPT',
 }
 
 export enum EnumComponentGroup {
