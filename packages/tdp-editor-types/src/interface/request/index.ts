@@ -2,6 +2,7 @@ import type { AxiosRequestConfig } from 'axios';
 import type { EnumServiceResultStatus } from '../../enum/request';
 //接口返回的原始数据结构
 export interface IFetchAsyncResult<DATA> {
+    status: EnumServiceResultStatus;
     code: string | number;
     data: DATA;
     message?: string;
