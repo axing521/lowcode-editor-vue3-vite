@@ -32,10 +32,9 @@ import {
     getComponentByKey,
     getComponentsMap,
 } from 'tdp-editor-types/src/constant/injectKeys';
-import { utils } from 'tdp-editor-common/src';
+import { usePageControler } from 'tdp-editor-common/src/controller';
 
-const pageFunctions = new Map<string, Function>();
-
+const pageController = usePageControler();
 const props = defineProps<{
     json?: IPageState;
     appMode: EnumAppMode;
@@ -43,14 +42,10 @@ const props = defineProps<{
 // 动态创建页面样式表和函数
 watchEffect(() => {
     if (props.json && props.json.styles) {
-        utils.$createDynamicStyle(props.json.key, props.json.styles);
+        pageController.initStyle(props.json.key, props.json.styles);
     }
     if (props.json && props.json.functions) {
-        const functions = utils.$createPageFunction(props.json.functions);
-        pageFunctions.clear();
-        functions.forEach(func => {
-            pageFunctions.set(func.name, func);
-        });
+        pageController.initFunctions(props.json.functions);
     }
 });
 // 当前页面所有组件的实例集合
