@@ -17,7 +17,7 @@
                             <span v-show="event.eventType === EnumEventType.pageFunction">
                                 -- {{ event.funcName }}
                             </span>
-                            <delete-outlined @click="deleteEvent(event.eventId)" />
+                            <delete-outlined @click="deleteEvent($event, event.eventId)" />
                         </li>
                     </ul>
                 </div>
@@ -145,7 +145,9 @@ const elementBindEvents = computed(() => {
     return eventGroup;
 });
 // 删除事件
-const deleteEvent = (eventId: string) => {
+const deleteEvent = ($event: any, eventId: string) => {
+    $event.preventDefault();
+    $event.stopPropagation();
     eventFactory.removeEventById(props.element!, eventId);
 };
 const addEvents = (_eventId: string) => {
