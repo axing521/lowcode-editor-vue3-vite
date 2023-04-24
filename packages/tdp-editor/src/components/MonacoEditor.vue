@@ -104,7 +104,7 @@ const initMonaco = () => {
             language: props.language,
             theme: 'vs',
             value: props.value || '',
-            minimap: { enabled: true },
+            minimap: { enabled: false },
         });
     }
 };

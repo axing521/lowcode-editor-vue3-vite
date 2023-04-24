@@ -105,7 +105,12 @@ export const register: registerComponentFunc = function () {
                 },
             },
         ],
-        eventConfigs: [{ eventName: EnumEventName.click, eventTypes: [EnumEventType.script] }],
+        eventConfigs: [
+            {
+                eventName: EnumEventName.click,
+                eventTypes: [EnumEventType.script, EnumEventType.pageFunction],
+            },
+        ],
     };
     return button;
 };

@@ -33,6 +33,12 @@ const EventFactory = {
             state.events.splice(index, 1);
         }
     },
+    removeEventById(state: IComponentState, eventId: string): void {
+        if (state && state.events && state.events.length) {
+            const eventIndex = state.events.findIndex(e => e.eventId === eventId);
+            if (eventIndex >= 0) state.events.splice(eventIndex, 1);
+        }
+    },
     // 触发某个事件的所有处理函数
     triggerEvent(params: {
         eventName: EnumEventName;

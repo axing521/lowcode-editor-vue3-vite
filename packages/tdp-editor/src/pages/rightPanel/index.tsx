@@ -3,7 +3,7 @@ import { mapState } from 'pinia';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import './index.less';
-import DesignerUXPanel from './UXDesigner/index.vue';
+import DesignerUXPanel from './UXDesigner/DesignerUxPanel.vue';
 import DesignerPropsPanel from './propsDesigner/index.vue';
 import DesignerDataPanel from './dataDesigner';
 

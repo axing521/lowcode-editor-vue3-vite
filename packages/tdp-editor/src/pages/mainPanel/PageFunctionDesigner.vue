@@ -30,6 +30,7 @@ import { computed, ref } from 'vue';
 import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import MonacoEditor from '../../components/MonacoEditor.vue';
 import { message } from 'ant-design-vue';
+import { usePageControler } from 'tdp-editor-common/src/controller';
 
 const props = defineProps<{
     selectedPage: IPageState;
@@ -48,6 +49,7 @@ const saveFunctions = () => {
         const newFunction = monacoRef.value.getValue();
         const page = props.selectedPage;
         page.functions = newFunction;
+        usePageControler().initFunctions(page.functions!);
         message.success('函数保存成功');
     }
 };
