@@ -4,12 +4,19 @@
             <h3>事件绑定</h3>
             <div class="item" v-for="group in elementBindEvents" :key="group.groupName">
                 <div class="event-group-name">
-                    {{ group.groupName }}
+                    {{ group.groupLabel }}
                 </div>
                 <div class="event-info">
                     <ul>
-                        <li v-for="event in group.events" :key="event.eventId">
-                            {{ event.eventType }}
+                        <li
+                            v-for="event in group.events"
+                            :key="event.eventId"
+                            @click="editEvents(event)"
+                        >
+                            {{ EventTypeMap[event.eventType] }}
+                            <span v-show="event.eventType === EnumEventType.pageFunction">
+                                -- {{ event.funcName }}
+                            </span>
                             <delete-outlined @click="deleteEvent(event.eventId)" />
                         </li>
                     </ul>
@@ -19,7 +26,7 @@
         <a-button
             type="primary"
             class="btn-add-event"
-            @click="showEventsModal"
+            @click="addEvents"
             :disabled="!eventList.length"
         >
             添加
@@ -27,8 +34,8 @@
         <add-event-modal
             v-model:visible="showPm"
             :element="props.element"
-            :eventId="eventId"
             :eventList="eventList"
+            :event="checkedEvent"
         />
     </div>
 </template>
@@ -39,19 +46,30 @@
         margin-top: 10px;
     }
     .section.ux > .item {
-        > .label {
-            width: 120px;
-            .ant-select {
-                width: 90%;
+        display: block;
+        padding: 10px;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+        margin: 2px;
+        .event-group-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .event-info {
+            ul {
+                margin: 0;
+                padding: 0;
+                li {
+                    list-style: none;
+                    cursor: pointer;
+                }
             }
         }
-        .value {
-            .anticon {
-                margin-left: 10px;
-                cursor: pointer;
-                &:hover {
-                    color: red;
-                }
+        .anticon {
+            margin-left: 10px;
+            cursor: pointer;
+            &:hover {
+                color: red;
             }
         }
     }
@@ -63,11 +81,11 @@ import type { IComponentEvent } from 'tdp-editor-types/src/interface/app/compone
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 import { DeleteOutlined } from '@ant-design/icons-vue';
-import type { EnumEventType, EnumEventName } from 'tdp-editor-types/src/enum/components';
+import { EnumEventType, type EnumEventName } from 'tdp-editor-types/src/enum/components';
 import { eventFactory } from 'tdp-editor-common/src';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import AddEventModal from './AddEventModal.vue';
-import { EventNameMap } from 'tdp-editor-types/src/constant/component';
+import { EventNameMap, EventTypeMap } from 'tdp-editor-types/src/constant/component';
 
 type TEventList = {
     key: EnumEventName;
@@ -79,7 +97,7 @@ const props = defineProps<{
 }>();
 const editorStore = useEditorStore();
 const showPm = ref(false);
-const eventId = ref('');
+const checkedEvent = ref<IComponentEvent | null>(null);
 const componentList = editorStore.componentList;
 // 计算组件支持的事件
 const eventConfigs = computed(() => {
@@ -105,14 +123,22 @@ const eventList = computed(() => {
 });
 // 计算组件已绑定的事件
 const elementBindEvents = computed(() => {
-    const eventGroup = [] as { groupName: EnumEventName; events: IComponentEvent[] }[];
+    const eventGroup = [] as {
+        groupName: EnumEventName;
+        groupLabel: string;
+        events: IComponentEvent[];
+    }[];
     if (props.element && props.element.events) {
         props.element.events.forEach(e => {
             const group = eventGroup.find(c => c.groupName === e.eventName);
             if (group) {
                 group.events.push(e);
             } else {
-                eventGroup.push({ groupName: e.eventName, events: [e] });
+                eventGroup.push({
+                    groupName: e.eventName,
+                    groupLabel: EventNameMap[e.eventName],
+                    events: [e],
+                });
             }
         });
     }
@@ -122,9 +148,13 @@ const elementBindEvents = computed(() => {
 const deleteEvent = (eventId: string) => {
     eventFactory.removeEventById(props.element!, eventId);
 };
-const showEventsModal = (_eventId: string) => {
-    eventId.value = _eventId;
+const addEvents = (_eventId: string) => {
     showPm.value = true;
+    checkedEvent.value = null;
+};
+const editEvents = (event: IComponentEvent) => {
+    showPm.value = true;
+    checkedEvent.value = event;
 };
 </script>
 <script lang="ts">

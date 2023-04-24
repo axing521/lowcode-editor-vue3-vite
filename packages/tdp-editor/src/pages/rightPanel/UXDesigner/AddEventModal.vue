@@ -56,7 +56,7 @@
             >
                 <monaco-editor
                     ref="monacoRef"
-                    :value="monacoValue"
+                    :value="formState.eventFuncStr"
                     language="javascript"
                     style="height: 320px"
                 ></monaco-editor>
@@ -70,7 +70,7 @@
 </template>
 <style lang="less" scoped></style>
 <script lang="ts" setup>
-import { reactive, ref, computed, nextTick } from 'vue';
+import { shallowReactive, ref, computed, nextTick, watchEffect } from 'vue';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import type { IComponentEvent } from 'tdp-editor-types/src/interface/app/components';
 import { EnumEventType, type EnumEventName } from 'tdp-editor-types/src/enum/components';
@@ -88,7 +88,8 @@ type TEventList = {
 const props = defineProps<{
     element: IDesignerComponent;
     visible: boolean;
-    eventList: TEventList[];
+    eventList: TEventList[]; // 组件可绑定的事件配置
+    event?: IComponentEvent;
 }>();
 const emits = defineEmits<{
     (e: 'update:visible', visible: boolean): void;
@@ -97,14 +98,12 @@ const emits = defineEmits<{
 // 自定义脚本实例代码
 const funcStrDemo = 'function demo(events) { \n    console.log("this is a demo", events); \n} \n';
 // form表单数据
-const formState = reactive({
+const formState = shallowReactive({
     eventName: '' as EnumEventName,
     eventType: '' as EnumEventType,
     eventFuncStr: '',
     eventFuncName: '',
 });
-// 编辑器的值
-const monacoValue = ref('');
 // 编辑器实例
 const monacoRef = ref<any>(null);
 
@@ -117,15 +116,16 @@ const eventTypeList = computed(() => {
     }
     return result;
 });
-
 // 计算页面方法列表
 const pageFuncionList = computed(() => {
     const result: string[] = [];
-    const pageController = usePageControler();
-    const pageFunctionMap = pageController.getPageFunctionMap();
-    pageFunctionMap.forEach((value, key) => {
-        result.push(key);
-    });
+    if (props.visible) {
+        const pageController = usePageControler();
+        const pageFunctionMap = pageController.getPageFunctionMap();
+        pageFunctionMap.forEach((value, key) => {
+            result.push(key);
+        });
+    }
     return result;
 });
 
@@ -171,4 +171,20 @@ const eventTypeChange = (e?: EnumEventType) => {
         });
     }
 };
+
+watchEffect(() => {
+    // 修改事件
+    if (props.event) {
+        formState.eventName = props.event.eventName;
+        nextTick(() => {
+            if (!props.event) return;
+            formState.eventType = props.event.eventType;
+            if (formState.eventType === EnumEventType.script) {
+                formState.eventFuncStr = props.event.funcStr || '';
+            } else if (formState.eventType === EnumEventType.pageFunction) {
+                formState.eventFuncName = props.event.funcName || '';
+            }
+        });
+    }
+});
 </script>
