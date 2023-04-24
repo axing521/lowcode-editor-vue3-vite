@@ -2,7 +2,7 @@
     <div class="item">
         <div class="label">class类名</div>
         <div class="value">
-            <a-select v-model:value="computed_classNames" mode="multiple">
+            <a-select v-model:value="computed_classNames" mode="tags">
                 <a-select-option v-for="item in classNameList" :key="item" :value="item">
                     {{ item }}
                 </a-select-option>

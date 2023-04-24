@@ -97,7 +97,7 @@ const props = defineProps<{
 }>();
 const editorStore = useEditorStore();
 const showPm = ref(false);
-const checkedEvent = ref<IComponentEvent | null>(null);
+const checkedEvent = ref<IComponentEvent | undefined>(undefined);
 const componentList = editorStore.componentList;
 // 计算组件支持的事件
 const eventConfigs = computed(() => {
@@ -150,7 +150,7 @@ const deleteEvent = (eventId: string) => {
 };
 const addEvents = (_eventId: string) => {
     showPm.value = true;
-    checkedEvent.value = null;
+    checkedEvent.value = undefined;
 };
 const editEvents = (event: IComponentEvent) => {
     showPm.value = true;

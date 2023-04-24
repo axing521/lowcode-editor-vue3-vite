@@ -86,7 +86,7 @@ type TEventList = {
     types: EnumEventType[];
 };
 const props = defineProps<{
-    element: IDesignerComponent;
+    element?: IDesignerComponent;
     visible: boolean;
     eventList: TEventList[]; // 组件可绑定的事件配置
     event?: IComponentEvent;
