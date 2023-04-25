@@ -44,7 +44,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useVarControler } from 'tdp-editor-common/src/controller';
 
 interface IData {
@@ -53,6 +53,10 @@ interface IData {
 }
 const varController = useVarControler();
 const ArrayFuncs = Object.getOwnPropertyNames(Array.prototype);
+
+const props = defineProps<{
+    value?: string;
+}>();
 
 const emits = defineEmits<{
     (e: 'change', value: string): void;
@@ -165,6 +169,11 @@ const onFocus = () => {
         });
     });
 };
+watchEffect(() => {
+    if (props.value) {
+        inputBindValue.value = props.value;
+    }
+});
 </script>
 <style lang="less">
 .var-prop-wrapper {

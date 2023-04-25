@@ -64,6 +64,7 @@ export const register: registerComponentFunc = function () {
                 key: 'ghost',
                 label: '幽灵模式',
                 selector: EnumSelectorName.switch,
+                enableExpression: true,
             },
             {
                 key: 'abc',

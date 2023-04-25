@@ -1,5 +1,10 @@
 <template>
-    <prop-selector-wrapper :enable-expression="prop.enableExpression" :state="state" :prop="prop">
+    <prop-selector-wrapper
+        :enable-expression="prop.enableExpression"
+        :state="state"
+        :prop="prop"
+        :defualt-value-type="valueType"
+    >
         <!-- 属性名显示 -->
         <template #label>{{ prop.label }}</template>
         <!-- 属性选择器实现 -->
@@ -24,6 +29,8 @@ const _props = defineProps<{
     state: IDesignerComponent;
     prop: IPropsConfig;
 }>();
+
+const valueType = EnumPropsValueType.string;
 const inputValue = computed<string>({
     get() {
         const propValue = getPropValue(_props.state, _props.prop.key);
@@ -34,7 +41,7 @@ const inputValue = computed<string>({
         }
     },
     set(value) {
-        setPropValue(_props.state, _props.prop.key, value, EnumPropsValueType.string);
+        setPropValue(_props.state, _props.prop.key, value, valueType);
     },
 });
 </script>
