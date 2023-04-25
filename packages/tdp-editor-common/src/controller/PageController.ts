@@ -1,8 +1,7 @@
 import type { App, ComponentPublicInstance } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
-import { utils } from '..';
-
+import { $createPageFunction, $createDynamicStyle } from '../utils';
 export default class PageController {
     private readonly $app: App;
     private readonly $pinia: Pinia;
@@ -23,7 +22,7 @@ export default class PageController {
      * @param functionStr 用户定义的函数字符串
      */
     initFunctions(functionStr: string) {
-        const functions = utils.$createPageFunction(functionStr);
+        const functions = $createPageFunction(functionStr);
         this.pageFunctions.clear();
         functions.forEach(func => {
             this.pageFunctions.set(func.name, func);
@@ -36,7 +35,7 @@ export default class PageController {
      * @param styleStr 样式内容
      */
     initStyle(pageKey: string, styleStr: string) {
-        utils.$createDynamicStyle(pageKey, styleStr);
+        $createDynamicStyle(pageKey, styleStr);
     }
 
     /**

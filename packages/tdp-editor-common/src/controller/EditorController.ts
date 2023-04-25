@@ -15,7 +15,7 @@ import { useAppStore } from '../stores/appStore';
 import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 import { openDBAsync, setDataAsync, getDataAsync } from '../indexDBUtil';
 import { utils } from '../index';
-import { useVarControler } from './index';
+import { useVarControler, useAppControler } from './index';
 import { $warn } from '../utils';
 
 export default class EditorController {
@@ -66,10 +66,7 @@ export default class EditorController {
                 selected: false,
             } as IPageStore;
         });
-        appStore.activePage = appStore.pages.find(c => c.key === localData.defaultPageKey);
-        if (appStore.activePage) {
-            appStore.activePage.selected = true;
-        }
+        this.setActivePage(localData.defaultPageKey);
     }
     /**
      * 初始化一个空的editor的数据
@@ -80,7 +77,7 @@ export default class EditorController {
         const newPage = editorStore.createNewEmptyPage(appStore.pages);
         newPage.selected = true;
         appStore.pages.push(newPage);
-        appStore.setActivePage({ pageId: newPage.key });
+        this.setActivePage(newPage.key);
     }
     /**
      * 获取预览地址
@@ -147,7 +144,7 @@ export default class EditorController {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = payload.pages;
         if (payload.pages.length) {
-            appStore.setActivePage({ pageId: payload.pages[0].key });
+            this.setActivePage(payload.pages[0].key);
         }
     }
     // 删除选中的组件
@@ -212,9 +209,7 @@ export default class EditorController {
     importCsvDataAsync(payload: { pageName: string; pageCode: string; data: any }) {
         this.importCsvData(payload);
         const appStore = useAppStore(this.$pinia);
-        appStore.setActivePage({
-            pageId: appStore.pages[appStore.pages.length - 1].key,
-        });
+        this.setActivePage(appStore.pages[appStore.pages.length - 1].key);
     }
 
     /**
@@ -223,7 +218,9 @@ export default class EditorController {
      */
     setActivePage(pageKey: string) {
         const appStore = useAppStore(this.$pinia);
-        appStore.setActivePage({ pageId: pageKey });
+        const appController = useAppControler(this.$app);
+        const oldPageKey = appStore.activePage?.key || '';
+        appController.changePage(pageKey, oldPageKey);
         this.setActivePageMode('content');
     }
 

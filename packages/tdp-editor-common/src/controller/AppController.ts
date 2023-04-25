@@ -52,12 +52,13 @@ export default class AppController {
      */
     changePage(pageKey: string, oldPageKey: string) {
         const appStore = useAppStore(this.$pinia);
-        const activePage = appStore.getPageByKey(pageKey);
-        if (activePage) {
+        const targetPage = appStore.getPageByKey(pageKey);
+        if (targetPage) {
             const pageController = usePageControler();
-            pageController.initStyle(activePage.key, activePage.styles || '');
-            pageController.initFunctions(activePage.functions || '');
-            appStore.setActivePage({ pageId: activePage.key });
+            pageController.getComponentsMap().clear();
+            pageController.initStyle(targetPage.key, targetPage.styles || '');
+            pageController.initFunctions(targetPage.functions || '');
+            appStore.setActivePage({ pageId: targetPage.key });
         }
         if (oldPageKey) {
             $log('切换前的页面key：' + oldPageKey);

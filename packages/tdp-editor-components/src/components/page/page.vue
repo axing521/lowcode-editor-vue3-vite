@@ -14,7 +14,7 @@
 </style>
 
 <script lang="ts" setup>
-import { provide, watchEffect } from 'vue';
+import { provide } from 'vue';
 import moment from 'moment';
 import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { EnumAppMode } from 'tdp-editor-types/src/enum';
@@ -34,15 +34,6 @@ const props = defineProps<{
     json?: IPageState;
     appMode: EnumAppMode;
 }>();
-// 动态创建页面样式表和函数
-watchEffect(() => {
-    if (props.json && props.json.styles) {
-        pageController.initStyle(props.json.key, props.json.styles);
-    }
-    if (props.json && props.json.functions) {
-        pageController.initFunctions(props.json.functions);
-    }
-});
 
 provide(getAppMode, () => {
     return props.appMode;
