@@ -1,19 +1,21 @@
 <template>
-    <div class="label">{{ _props.prop.label }}</div>
-    <div class="value">
-        <a-row>
-            <a-col :span="12">
-                <a-slider v-model:value="sliderValue" :min="min" :max="max" />
-            </a-col>
-            <a-col :span="6">
-                <a-input-number
-                    v-model:value="sliderValue"
-                    :min="min"
-                    :max="max"
-                    style="marginleft: 5px"
-                />
-            </a-col>
-        </a-row>
+    <div class="item">
+        <div class="label">{{ prop.label }}</div>
+        <div class="value">
+            <a-row>
+                <a-col :span="12">
+                    <a-slider v-model:value="sliderValue" :min="min" :max="max" />
+                </a-col>
+                <a-col :span="6">
+                    <a-input-number
+                        v-model:value="sliderValue"
+                        :min="min"
+                        :max="max"
+                        style="marginleft: 5px"
+                    />
+                </a-col>
+            </a-row>
+        </div>
     </div>
 </template>
 <script lang="ts">

@@ -1,7 +1,9 @@
 <template>
-    <div class="label">{{ _props.prop.label }}</div>
-    <div class="value">
-        <a-switch v-model:checked="switchValue" />
+    <div class="item">
+        <div class="label">{{ prop.label }}</div>
+        <div class="value">
+            <a-switch v-model:checked="switchValue" />
+        </div>
     </div>
 </template>
 <script lang="ts">

@@ -1,7 +1,9 @@
 <template>
-    <div class="label">{{ _props.prop.label }}</div>
-    <div class="value">
-        <a-input prefix="{{" suffix="}}" v-model:value="bindData"></a-input>
+    <div class="item">
+        <div class="label">{{ prop.label }}</div>
+        <div class="value">
+            <a-input prefix="{{" suffix="}}" v-model:value="bindData"></a-input>
+        </div>
     </div>
 </template>
 <script lang="ts">

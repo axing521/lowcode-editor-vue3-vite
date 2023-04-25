@@ -1,6 +1,6 @@
 <template>
     <div class="item">
-        <div class="label">{{ props.label }}</div>
+        <div class="label">{{ label }}</div>
         <div class="value">
             <div class="css-color-selector">
                 <a-popover placement="left" v-model:visible="showPS" trigger="click">

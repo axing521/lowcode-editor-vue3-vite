@@ -1,15 +1,17 @@
 <template>
-    <div class="label">{{ _props.prop.label }}</div>
-    <div class="value">
-        <div class="selector-array-data">
-            <ul>
-                <li class="data-item" v-for="(d, index) in arrayData" :key="'i_' + index">
-                    <a-input v-model:value="d.key" placeholder="key"></a-input>
-                    <a-input v-model:value="d.label" placeholder="label"></a-input>
-                    <DeleteFilled @click="onDeleteItem(index)"></DeleteFilled>
-                </li>
-            </ul>
-            <a-button type="primary" @click="onAddItem"> 添加 </a-button>
+    <div class="item">
+        <div class="label">{{ prop.label }}</div>
+        <div class="value">
+            <div class="selector-array-data">
+                <ul>
+                    <li class="data-item" v-for="(d, index) in arrayData" :key="'i_' + index">
+                        <a-input v-model:value="d.key" placeholder="key"></a-input>
+                        <a-input v-model:value="d.label" placeholder="label"></a-input>
+                        <DeleteFilled @click="onDeleteItem(index)"></DeleteFilled>
+                    </li>
+                </ul>
+                <a-button type="primary" @click="onAddItem"> 添加 </a-button>
+            </div>
         </div>
     </div>
 </template>
