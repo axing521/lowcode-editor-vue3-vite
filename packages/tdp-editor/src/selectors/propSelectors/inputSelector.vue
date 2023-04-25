@@ -1,10 +1,10 @@
 <template>
-    <div class="item">
-        <div class="label">{{ prop.label }}</div>
-        <div class="value">
-            <a-input v-model:value="inputValue"></a-input>
-        </div>
-    </div>
+    <prop-selector-wrapper :enable-expression="prop.enableExpression" :state="state" :prop="prop">
+        <!-- 属性名显示 -->
+        <template #label>{{ prop.label }}</template>
+        <!-- 属性选择器实现 -->
+        <template #value><a-input v-model:value="inputValue"></a-input></template>
+    </prop-selector-wrapper>
 </template>
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
@@ -18,6 +18,8 @@ import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/src/inte
 import { getPropValue, setPropValue } from 'tdp-editor-common/src/factory/propsFactory';
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
+import PropSelectorWrapper from './PropSelectorWrapper.vue';
+
 const _props = defineProps<{
     state: IDesignerComponent;
     prop: IPropsConfig;

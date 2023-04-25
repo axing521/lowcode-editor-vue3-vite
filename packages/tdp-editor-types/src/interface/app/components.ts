@@ -29,6 +29,7 @@ export type IComponentProps<P> = {
     [key in keyof P]: {
         value: P[key];
         type: EnumPropsValueType;
+        bindValue?: string;
     };
 };
 export interface IComponentCommonProps<P = any, C = Record<string, string | undefined>> {

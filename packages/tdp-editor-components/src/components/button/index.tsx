@@ -52,6 +52,7 @@ export const register: registerComponentFunc = function () {
             {
                 key: 'text',
                 label: '按钮文本',
+                enableExpression: true,
                 selector: EnumSelectorName.input,
             },
             {

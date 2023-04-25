@@ -50,7 +50,8 @@
                                     :is="prop.selector"
                                     :state="element"
                                     :prop="prop"
-                                ></component>
+                                >
+                                </component>
                             </template>
                             <template
                                 v-else-if="
@@ -210,7 +211,7 @@ export default defineComponent({
         font-weight: 600;
     }
     .ant-collapse-content-box {
-        padding: 0;
+        padding: 0 !important;
     }
     .selector-array-data {
         ul,
