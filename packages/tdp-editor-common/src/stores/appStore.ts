@@ -33,7 +33,10 @@ export const useAppStore = defineStore('appStore', {
                 this.pageForms.set(payload.pageForm.key, payload.pageForm);
             }
         },
-        // 切换所选页面
+        /**
+         * 切换所选页面
+         * @param payload 参数
+         */
         setActivePage(payload: { pageId: string }) {
             this.pages.forEach(page => {
                 page.selected = page.key === payload.pageId;
@@ -41,6 +44,13 @@ export const useAppStore = defineStore('appStore', {
                     this.activePage = page;
                 }
             });
+        },
+        /**
+         * 根据页面key获取页面对象
+         * @param key 页面key
+         */
+        getPageByKey(key: string) {
+            return this.pages.find(c => c.key === key);
         },
     },
 });

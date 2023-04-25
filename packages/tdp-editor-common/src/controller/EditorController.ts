@@ -222,7 +222,7 @@ export default class EditorController {
      * @param pageKey 要切换的页面key
      */
     setActivePage(pageKey: string) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         appStore.setActivePage({ pageId: pageKey });
         this.setActivePageMode('content');
     }
@@ -232,7 +232,7 @@ export default class EditorController {
      * @param mode 内容，css或者function
      */
     setActivePageMode(mode: TPageEditMode) {
-        const editorStore = useEditorStore();
+        const editorStore = useEditorStore(this.$pinia);
         editorStore.pageEditMode = mode;
     }
 }

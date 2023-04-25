@@ -1,11 +1,18 @@
-import type { App } from 'vue';
+import type { App, ComponentPublicInstance } from 'vue';
 import type { Pinia } from 'pinia';
+import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
 import { utils } from '..';
 
 export default class PageController {
     private readonly $app: App;
     private readonly $pinia: Pinia;
+    // 当前页面所有函数集合
     private readonly pageFunctions = new Map<string, Function>();
+    // 当前页面所有组件的实例集合
+    private readonly componentsMap = new Map<
+        string,
+        ComponentPublicInstance<IComponentCommonProps>
+    >();
     constructor(app: App, pinia: Pinia) {
         this.$app = app;
         this.$pinia = pinia;
@@ -41,7 +48,45 @@ export default class PageController {
         return this.pageFunctions.get(funcName);
     }
 
+    /**
+     * 获取当前页面的函数Map集合
+     * @returns 返回map
+     */
     getPageFunctionMap() {
         return this.pageFunctions;
+    }
+
+    /**
+     * 向当前页面添加组件实例
+     * @param key 组件key
+     * @param componentInstance 组件实例
+     */
+    addComponent(key: string, componentInstance: ComponentPublicInstance) {
+        this.componentsMap.set(key, componentInstance as any);
+    }
+
+    /**
+     * 删除当前页面添加组件实例
+     * @param key 组件key
+     */
+    deleteComponent(key: string) {
+        this.componentsMap.delete(key);
+    }
+
+    /**
+     * 获取当前页面添加组件实例
+     * @param key 组件key
+     * @returns 返回组件实例
+     */
+    getComponentByKey(key: string) {
+        return this.componentsMap.get(key);
+    }
+
+    /**
+     * 获取实例集合map
+     * @returns 返回map
+     */
+    getComponentsMap() {
+        return this.componentsMap;
     }
 }

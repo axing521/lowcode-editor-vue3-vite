@@ -15,13 +15,8 @@
 
 <script lang="ts" setup>
 import { provide, watchEffect } from 'vue';
-import type { ComponentPublicInstance } from 'vue';
 import moment from 'moment';
-
-import type {
-    IComponentCommonProps,
-    IPageState,
-} from 'tdp-editor-types/src/interface/app/components';
+import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { EnumAppMode } from 'tdp-editor-types/src/enum';
 
 import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
@@ -48,28 +43,26 @@ watchEffect(() => {
         pageController.initFunctions(props.json.functions);
     }
 });
-// 当前页面所有组件的实例集合
-const componentsMap = new Map<string, ComponentPublicInstance<IComponentCommonProps>>();
 
 provide(getAppMode, () => {
     return props.appMode;
 });
 provide(addComponent, (key, componentInstance) => {
-    componentsMap.set(key, componentInstance as any);
+    pageController.addComponent(key, componentInstance);
 });
 provide(removeComponent, key => {
-    componentsMap.delete(key);
+    pageController.deleteComponent(key);
 });
 provide(getComponentByKey, key => {
-    return componentsMap.get(key);
+    return pageController.getComponentByKey(key);
 });
 provide(getComponentsMap, () => {
-    return componentsMap;
+    return pageController.getComponentsMap();
 });
 
 // 清空form组件的值
 const resetFormFields = () => {
-    componentsMap.forEach(component => {
+    pageController.getComponentsMap().forEach(component => {
         // 将form组件的value设置为空
         if (component.state && component.state.group === EnumComponentGroup.form) {
             component.props.value = null;
@@ -78,7 +71,7 @@ const resetFormFields = () => {
 };
 // 根据给定的defaultData默认值，初始化表单数据
 const initFormFields = (defaultData: Record<string, any>) => {
-    componentsMap.forEach(component => {
+    pageController.getComponentsMap().forEach(component => {
         // 将form组件的value设置为空
         if (component.state.group === EnumComponentGroup.form) {
             const value = defaultData[component.state.key || ''] || null;

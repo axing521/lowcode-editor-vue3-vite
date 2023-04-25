@@ -36,7 +36,6 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
     parentId: string;
     props: P;
     css: C;
-    events: Record<string, any>;
 }
 export type TCssStyleName = keyof CSSStyleDeclaration;
 export interface IComponentState<P = any, C = any> {

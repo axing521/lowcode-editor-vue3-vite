@@ -15,8 +15,8 @@ type TController = {
 const __createControllers = (app: App, pinia: Pinia) => {
     return {
         appController: new AppController(app, pinia),
-        appVarController: new AppVarController(app, pinia),
         editorController: new EditorController(app, pinia),
+        appVarController: new AppVarController(app, pinia),
         pageController: new PageController(app, pinia),
     };
 };
@@ -33,7 +33,7 @@ export const createController = (app: App, pinia: Pinia) => {
     app.config.globalProperties.$AppController = controllers.appController;
     app.config.globalProperties.$AppVarController = controllers.appVarController;
     app.config.globalProperties.$EditorController = controllers.editorController;
-    app.config.globalProperties.$PditorController = controllers.pageController;
+    app.config.globalProperties.$PageController = controllers.pageController;
     controllerMap.set(app, controllers);
     return controllers;
 };

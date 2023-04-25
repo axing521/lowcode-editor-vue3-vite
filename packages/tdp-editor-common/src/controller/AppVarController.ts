@@ -23,7 +23,7 @@ export default class AppVarController {
      * @param {} param0
      */
     addVar(varJson: IAppVarConstructor) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         const result = {
             success: false,
             msg: 'vars.newDialog.errorCreate',
@@ -45,7 +45,7 @@ export default class AppVarController {
      * @param {*} varInstance 被添加的变量对象
      */
     addVarInstance(varInstance: AppVar) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         const addResult = {
             success: false,
             msg: 'vars.newDialog.errorCreate',
@@ -88,7 +88,7 @@ export default class AppVarController {
     getVarByName(name: string) {
         let _var: any = undefined;
         // 先查找全局变量
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         _var = appStore.globalVars[name];
         if (_var) return _var;
         // 再查找页面变量
@@ -111,11 +111,11 @@ export default class AppVarController {
 
     // 获取当前页面下所有的页面变量
     getCurrentPageVars(): Record<string, any> | undefined {
-        return useAppStore().currentPageVars;
+        return useAppStore(this.$pinia).currentPageVars;
     }
 
     getGlobalVars(): Record<string, any> {
-        return useAppStore().globalVars;
+        return useAppStore(this.$pinia).globalVars;
     }
 
     /**
