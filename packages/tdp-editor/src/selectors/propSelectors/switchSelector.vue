@@ -5,6 +5,7 @@
         :prop="prop"
         :defualt-value-type="valueType"
     >
+        <template #label />
         <!-- 属性选择器实现 -->
         <template #value><a-switch v-model:checked="switchValue" /></template>
     </prop-selector-wrapper>
