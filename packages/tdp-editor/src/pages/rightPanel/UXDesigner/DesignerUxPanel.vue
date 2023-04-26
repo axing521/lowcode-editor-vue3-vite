@@ -151,12 +151,12 @@ const deleteEvent = ($event: any, eventId: string) => {
     eventFactory.removeEventById(props.element!, eventId);
 };
 const addEvents = (_eventId: string) => {
-    showPm.value = true;
     checkedEvent.value = undefined;
+    showPm.value = true;
 };
 const editEvents = (event: IComponentEvent) => {
-    showPm.value = true;
     checkedEvent.value = event;
+    showPm.value = true;
 };
 </script>
 <script lang="ts">

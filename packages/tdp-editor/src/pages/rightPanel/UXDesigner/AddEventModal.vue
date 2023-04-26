@@ -96,7 +96,8 @@ const emits = defineEmits<{
 }>();
 
 // 自定义脚本实例代码
-const funcStrDemo = 'function demo(events) { \n    console.log("this is a demo", events); \n} \n';
+const funcStrDemo =
+    'function demo() { \n    console.log("this is a demo", this); \n    const { $g, $p, $event } = this; \n    console.log($g, $p, $event); \n} \n';
 // form表单数据
 const formState = shallowReactive({
     eventName: '' as EnumEventName,
@@ -151,15 +152,12 @@ const clickCancel = () => {
     // resetFormState();
 };
 // 重置form表单数据
-// const resetFormState = () => {
-//     formState.eventName = '' as EnumEventName;
-//     formState.eventType = '' as EnumEventType;
-//     formState.eventFuncName = '';
-//     formState.eventFuncStr = '';
-//     if (monacoRef.value) {
-//         monacoRef.value.setValue(formState.eventFuncStr);
-//     }
-// };
+const resetFormState = () => {
+    formState.eventName = '' as EnumEventName;
+    formState.eventType = '' as EnumEventType;
+    formState.eventFuncName = '';
+    formState.eventFuncStr = funcStrDemo;
+};
 // 事件操作类型变化事件
 const eventTypeChange = (e?: EnumEventType) => {
     if (e === EnumEventType.script) {
@@ -185,6 +183,8 @@ watchEffect(() => {
                 formState.eventFuncName = props.event.funcName || '';
             }
         });
+    } else {
+        resetFormState();
     }
 });
 </script>

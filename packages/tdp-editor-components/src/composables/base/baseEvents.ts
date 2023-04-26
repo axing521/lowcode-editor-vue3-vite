@@ -27,8 +27,7 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
             if (eventInfo.eventType === EnumEventType.script && eventInfo.funcStr) {
                 if (eventInfo.funcStr.includes('function')) {
                     _func = new Function(
-                        '$event',
-                        `try{(${eventInfo.funcStr})($event)}catch(e){console.warn(e);}`
+                        `try{return (${eventInfo.funcStr}).call(this);}catch(e){console.warn(e);}`
                     );
                 } else _func = emptyFunc;
             }

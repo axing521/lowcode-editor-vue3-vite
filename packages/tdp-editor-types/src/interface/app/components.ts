@@ -85,8 +85,16 @@ export type TEventFuncParam1 = {
     e?: any; // 原始事件对象
     data?: Record<string, any>; // 扩展属性
 };
-
-export type TEventFunc = ($event: TEventFuncParam1) => void;
+type TEventFuncThis = {
+    $g: Record<string, any>;
+    $p?: Record<string, any>;
+    $event: {
+        e: any;
+        instance: ComponentPublicInstance | null;
+        data?: Record<string, any>;
+    };
+};
+export type TEventFunc = (this: TEventFuncThis, $event?: TEventFuncParam1) => void;
 
 // 页面的state，因为页面状态可能提供外部开发者，所以放到interface项目中
 export interface IPageState extends IComponentState<IPageProps> {
