@@ -148,18 +148,18 @@ const onFinishFailed = () => {};
 // 关闭弹窗
 const clickCancel = () => {
     emits('update:visible', false);
-    resetFormState();
+    // resetFormState();
 };
 // 重置form表单数据
-const resetFormState = () => {
-    formState.eventName = '' as EnumEventName;
-    formState.eventType = '' as EnumEventType;
-    formState.eventFuncName = '';
-    formState.eventFuncStr = '';
-    if (monacoRef.value) {
-        monacoRef.value.setValue(formState.eventFuncStr);
-    }
-};
+// const resetFormState = () => {
+//     formState.eventName = '' as EnumEventName;
+//     formState.eventType = '' as EnumEventType;
+//     formState.eventFuncName = '';
+//     formState.eventFuncStr = '';
+//     if (monacoRef.value) {
+//         monacoRef.value.setValue(formState.eventFuncStr);
+//     }
+// };
 // 事件操作类型变化事件
 const eventTypeChange = (e?: EnumEventType) => {
     if (e === EnumEventType.script) {
