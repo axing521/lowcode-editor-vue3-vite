@@ -52,6 +52,7 @@ export const register: registerComponentFunc = function () {
             {
                 key: 'text',
                 label: '按钮文本',
+                enableExpression: true,
                 selector: EnumSelectorName.input,
             },
             {
@@ -63,6 +64,7 @@ export const register: registerComponentFunc = function () {
                 key: 'ghost',
                 label: '幽灵模式',
                 selector: EnumSelectorName.switch,
+                enableExpression: true,
             },
             {
                 key: 'abc',
@@ -105,7 +107,12 @@ export const register: registerComponentFunc = function () {
                 },
             },
         ],
-        eventConfigs: [{ eventName: EnumEventName.click, eventTypes: [EnumEventType.script] }],
+        eventConfigs: [
+            {
+                eventName: EnumEventName.click,
+                eventTypes: [EnumEventType.script, EnumEventType.pageFunction],
+            },
+        ],
     };
     return button;
 };

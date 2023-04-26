@@ -4,7 +4,6 @@ import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer
 
 import LycInput from './LycInput.vue';
 export const componentConfig: IDesignerComponent = {
-    code: '',
     group: EnumComponentGroup.custom,
     sfc: LycInput,
     key: '',

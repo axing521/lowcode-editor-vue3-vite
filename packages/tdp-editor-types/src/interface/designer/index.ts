@@ -71,6 +71,7 @@ export type propsSelectorType<P> = EnumSelectorName | IPropsSelectorRender<P> | 
 export type IPropsConfig<P = any> = {
     key: keyof P;
     label: string;
+    enableExpression?: boolean;
     selector: propsSelectorType<P> | propsSelectorType<P>[];
 };
 

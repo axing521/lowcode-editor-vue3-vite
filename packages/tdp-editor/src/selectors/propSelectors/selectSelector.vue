@@ -1,11 +1,13 @@
 <template>
-    <div class="label">{{ _props.prop.label }}</div>
-    <div class="value">
-        <a-select v-model:value="selectData">
-            <a-select-option v-for="option in items" :key="option.key" :value="option.key">
-                {{ option.label }}
-            </a-select-option>
-        </a-select>
+    <div class="item">
+        <div class="label">{{ prop.label }}</div>
+        <div class="value">
+            <a-select v-model:value="selectData">
+                <a-select-option v-for="option in items" :key="option.key" :value="option.key">
+                    {{ option.label }}
+                </a-select-option>
+            </a-select>
+        </div>
     </div>
 </template>
 <script lang="ts">

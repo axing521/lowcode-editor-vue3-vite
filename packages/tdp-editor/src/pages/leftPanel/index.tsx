@@ -1,3 +1,6 @@
+/**
+ * 废弃，改用EditorLeftPanel.vue
+ */
 import type { VNode } from 'vue';
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
@@ -115,24 +118,37 @@ export default defineComponent({
                         >
                             {(this.pages as IPageStore[]).map(c => {
                                 return (
-                                    <li
-                                        class={classnames({
-                                            'li-page': true,
-                                            selected: c.selected,
-                                        })}
-                                        data-compType={c.type}
-                                        key={c.key}
-                                        onClick={() => this.selectPage(c.key)}
+                                    <a-popover
+                                        title="编辑页面"
+                                        v-slots={{
+                                            content: () => (
+                                                <div>
+                                                    <p>内容</p>
+                                                    <p>css</p>
+                                                    <p>function</p>
+                                                </div>
+                                            ),
+                                        }}
                                     >
-                                        {c.label}
-                                        <span class="page-action">
-                                            <edit-outlined />
-                                            <delete-outlined
-                                                type="delete"
-                                                onClick={(e: any) => this.deletePage(e, c.key)}
-                                            />
-                                        </span>
-                                    </li>
+                                        <li
+                                            class={classnames({
+                                                'li-page': true,
+                                                selected: c.selected,
+                                            })}
+                                            data-compType={c.type}
+                                            key={c.key}
+                                            onClick={() => this.selectPage(c.key)}
+                                        >
+                                            {c.label}
+                                            <span class="page-action">
+                                                <edit-outlined />
+                                                <delete-outlined
+                                                    type="delete"
+                                                    onClick={(e: any) => this.deletePage(e, c.key)}
+                                                />
+                                            </span>
+                                        </li>
+                                    </a-popover>
                                 );
                             })}
                         </ul>
@@ -183,8 +199,7 @@ export default defineComponent({
             useLeftMenuStore().setSelectMenu({ menu });
         },
         selectPage(pageId: string): void {
-            const appStore = useAppStore();
-            appStore.setActivePage({ pageId });
+            this.$EditorController.setActivePage(pageId);
         },
         addPage(): void {
             this.showAddPageShadow = true;

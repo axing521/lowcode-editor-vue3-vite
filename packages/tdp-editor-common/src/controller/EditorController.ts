@@ -6,7 +6,7 @@ import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IAppSaveStruct } from 'tdp-editor-types/src/interface/app';
-import type { IPageStore } from 'tdp-editor-types/src/interface/store';
+import type { IPageStore, TPageEditMode } from 'tdp-editor-types/src/interface/store';
 
 import { toRaw } from 'vue';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
@@ -15,7 +15,7 @@ import { useAppStore } from '../stores/appStore';
 import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 import { openDBAsync, setDataAsync, getDataAsync } from '../indexDBUtil';
 import { utils } from '../index';
-import { useVarControler } from './index';
+import { useVarControler, useAppControler } from './index';
 import { $warn } from '../utils';
 
 export default class EditorController {
@@ -25,10 +25,18 @@ export default class EditorController {
         this.$app = app;
         this.$pinia = pinia;
     }
+    /**
+     * 添加自定义组件
+     * @param list 要添加的自定义组件列表
+     */
     addCustomerComponents(list: IDesignerComponent[]) {
         const $editorStore = useEditorStore(this.$pinia);
         $editorStore.addComponents({ list });
     }
+    /**
+     * 初始化组件列表
+     * @param list 组件列表
+     */
     initComponentList(list: IDesignerComponent[]) {
         const $editorStore = useEditorStore(this.$pinia);
         $editorStore.initComponentList({ list });
@@ -58,10 +66,7 @@ export default class EditorController {
                 selected: false,
             } as IPageStore;
         });
-        appStore.activePage = appStore.pages.find(c => c.key === localData.defaultPageKey);
-        if (appStore.activePage) {
-            appStore.activePage.selected = true;
-        }
+        this.setActivePage(localData.defaultPageKey);
     }
     /**
      * 初始化一个空的editor的数据
@@ -72,7 +77,7 @@ export default class EditorController {
         const newPage = editorStore.createNewEmptyPage(appStore.pages);
         newPage.selected = true;
         appStore.pages.push(newPage);
-        appStore.activePage = newPage;
+        this.setActivePage(newPage.key);
     }
     /**
      * 获取预览地址
@@ -139,7 +144,7 @@ export default class EditorController {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = payload.pages;
         if (payload.pages.length) {
-            appStore.activePage = payload.pages[0];
+            this.setActivePage(payload.pages[0].key);
         }
     }
     // 删除选中的组件
@@ -168,7 +173,6 @@ export default class EditorController {
             const rowKey = utils.$getUUID(EnumComponentType.row);
             const newRow: IDesignerComponent = {
                 key: rowKey,
-                code: '',
                 label: rowState.label,
                 icons: rowState.icons,
                 group: rowState.group,
@@ -205,8 +209,27 @@ export default class EditorController {
     importCsvDataAsync(payload: { pageName: string; pageCode: string; data: any }) {
         this.importCsvData(payload);
         const appStore = useAppStore(this.$pinia);
-        appStore.setActivePage({
-            pageId: appStore.pages[appStore.pages.length - 1].key,
-        });
+        this.setActivePage(appStore.pages[appStore.pages.length - 1].key);
+    }
+
+    /**
+     * 编辑器切换页面动作
+     * @param pageKey 要切换的页面key
+     */
+    setActivePage(pageKey: string) {
+        const appStore = useAppStore(this.$pinia);
+        const appController = useAppControler(this.$app);
+        const oldPageKey = appStore.activePage?.key || '';
+        appController.changePage(pageKey, oldPageKey);
+        this.setActivePageMode('content');
+    }
+
+    /**
+     * 设置当前页面的编辑模式
+     * @param mode 内容，css或者function
+     */
+    setActivePageMode(mode: TPageEditMode) {
+        const editorStore = useEditorStore(this.$pinia);
+        editorStore.pageEditMode = mode;
     }
 }

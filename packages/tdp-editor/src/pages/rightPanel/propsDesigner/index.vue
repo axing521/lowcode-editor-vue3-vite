@@ -43,18 +43,15 @@
             <a-collapse-panel key="props" header="属性">
                 <div class="section section-panel">
                     <template v-if="element">
-                        <div
-                            class="item"
-                            v-for="prop in propsConfigs"
-                            :data-props="prop.key"
-                            :key="prop.key"
-                        >
+                        <template v-for="prop in propsConfigs" :key="prop.key">
                             <template v-if="typeof prop.selector === 'string'">
                                 <component
+                                    :data-prop-name="prop.key"
                                     :is="prop.selector"
                                     :state="element"
                                     :prop="prop"
-                                ></component>
+                                >
+                                </component>
                             </template>
                             <template
                                 v-else-if="
@@ -62,6 +59,7 @@
                                 "
                             >
                                 <component
+                                    :data-prop-name="prop.key"
                                     :is="prop.selector.name"
                                     :state="element"
                                     :prop="prop"
@@ -71,7 +69,7 @@
                             <template v-else>
                                 <div></div>
                             </template>
-                        </div>
+                        </template>
                     </template>
                 </div>
             </a-collapse-panel>
@@ -213,7 +211,7 @@ export default defineComponent({
         font-weight: 600;
     }
     .ant-collapse-content-box {
-        padding: 0;
+        padding: 0 !important;
     }
     .selector-array-data {
         ul,

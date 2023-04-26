@@ -14,7 +14,7 @@ function useFormIndex(props: ISetupBaseProps) {
     if (internalInstance && internalInstance.proxy) {
         $fields.push({
             key: props.state.key,
-            name: props.state.code,
+            name: props.state.name || '',
             type: props.state.type as any,
             state: props.state,
             instance: internalInstance.proxy,

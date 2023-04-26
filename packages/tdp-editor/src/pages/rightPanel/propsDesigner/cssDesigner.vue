@@ -2,12 +2,6 @@
     <div class="designer-css-panel">
         <div class="section">
             <css-box-selector :state="props.element" />
-            <div class="item" v-show="isPage">
-                <div class="label">css代码</div>
-                <div class="value">
-                    <a-button @click="openMonacoBox">编辑</a-button>
-                </div>
-            </div>
             <css-class-selector :state="props.element"></css-class-selector>
             <component
                 v-for="item in cssList"
@@ -23,22 +17,15 @@
                 <a-button type="link" @click="closeMonacoBox"> 关闭 </a-button>
                 <a-button type="primary" @click="savePageStyles"> 确定 </a-button>
             </div>
-            <monaco-editor
-                style="height: 300px"
-                v-if="showMonaco"
-                ref="monacoRef"
-                language="css"
-                :value="pageStyles"
-            ></monaco-editor>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
-import { defineComponent, ref, computed, nextTick } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
+import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import { cssSelectorMap } from '../../../selectors/cssSelectors';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
-import MonacoEditor from '../../../components/MonacoEditor.vue';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 const props = defineProps<{
@@ -50,9 +37,9 @@ const showMonaco = ref(false);
 const savePageStyles = () => {
     showMonacoBox.value = false;
     showMonaco.value = false;
-    if (props.element && monacoRef.value) {
+    if (props.element && props.element.type === EnumComponentType.page && monacoRef.value) {
         const styleText = monacoRef.value.getValue();
-        props.element!.styles = styleText;
+        (props.element as IPageState).styles = styleText;
     }
 };
 const cssList = computed(() => {
@@ -75,28 +62,10 @@ const cssList = computed(() => {
         return [];
     }
 });
-// 页面样式
-const pageStyles = computed(() => {
-    if (props.element && props.element.styles) {
-        return props.element.styles;
-    } else {
-        return '';
-    }
-});
-// 当前选中元素是否是页面
-const isPage = computed(() => {
-    return Boolean(props.element && props.element.type === EnumComponentType.page);
-});
 
 const closeMonacoBox = () => {
     showMonacoBox.value = false;
     showMonaco.value = false;
-};
-const openMonacoBox = () => {
-    showMonacoBox.value = true;
-    nextTick(() => {
-        showMonaco.value = true;
-    });
 };
 </script>
 <script lang="ts">

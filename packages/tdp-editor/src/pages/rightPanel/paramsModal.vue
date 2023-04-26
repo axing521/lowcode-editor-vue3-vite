@@ -32,20 +32,6 @@
                         <a-button type="link">添加变量</a-button>
                     </li>
                 </ul>
-                <ul v-else>
-                    <li
-                        v-for="item in functionsList"
-                        :key="item.name"
-                        @click="checkParam(item.name)"
-                    >
-                        <a-button :type="checkedParamName === item.name ? 'primary' : 'link'">
-                            {{ item.name }}
-                        </a-button>
-                    </li>
-                    <li>
-                        <a-button type="link">添加方法</a-button>
-                    </li>
-                </ul>
             </div>
             <div class="p-value">
                 <monaco-editor
@@ -153,16 +139,6 @@ export default defineComponent({
             }
             return result;
         },
-        functionsList(): any[] {
-            const result = [];
-            if (this.selectedPage) {
-                const methods = this.selectedPage.props?.pageMethods.value;
-                for (const key in methods) {
-                    result.push({ name: key, value: methods[key] });
-                }
-            }
-            return result;
-        },
     },
     emits: {
         ['update:visible'](visible: boolean): boolean {
@@ -190,10 +166,11 @@ export default defineComponent({
             if (this.checkedType === 'params') {
                 const param = this.paramsList.find(p => p.name === name);
                 this.monacoValue = param!.value;
-            } else if (this.checkedType === 'function') {
-                const param = this.functionsList.find(f => f.name === name);
-                this.monacoValue = param!.value;
             }
+            // else if (this.checkedType === 'function') {
+            //     const param = this.functionsList.find(f => f.name === name);
+            //     this.monacoValue = param!.value;
+            // }
         },
         saveParamValue() {
             const $monacoRef: any = this.$refs['monacoRef'];

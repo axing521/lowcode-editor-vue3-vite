@@ -3,18 +3,21 @@ import type { Pinia } from 'pinia';
 import AppController from './AppController';
 import AppVarController from './AppVarController';
 import EditorController from './EditorController';
+import PageController from './PageController';
 
 type TController = {
     appController: AppController;
     appVarController: AppVarController;
     editorController: EditorController;
+    pageController: PageController;
 };
 
 const __createControllers = (app: App, pinia: Pinia) => {
     return {
         appController: new AppController(app, pinia),
-        appVarController: new AppVarController(app, pinia),
         editorController: new EditorController(app, pinia),
+        appVarController: new AppVarController(app, pinia),
+        pageController: new PageController(app, pinia),
     };
 };
 let activeApp: App;
@@ -30,6 +33,7 @@ export const createController = (app: App, pinia: Pinia) => {
     app.config.globalProperties.$AppController = controllers.appController;
     app.config.globalProperties.$AppVarController = controllers.appVarController;
     app.config.globalProperties.$EditorController = controllers.editorController;
+    app.config.globalProperties.$PageController = controllers.pageController;
     controllerMap.set(app, controllers);
     return controllers;
 };
@@ -52,4 +56,9 @@ export const useVarControler = (app?: App) => {
 export const useEditorControler = (app?: App) => {
     if (app) activeApp = app;
     return controllerMap.get(activeApp)!.editorController;
+};
+
+export const usePageControler = (app?: App) => {
+    if (app) activeApp = app;
+    return controllerMap.get(activeApp)!.pageController;
 };

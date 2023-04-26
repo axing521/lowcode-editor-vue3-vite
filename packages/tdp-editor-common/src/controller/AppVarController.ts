@@ -4,7 +4,24 @@ import type { IAppVarConstructor } from 'tdp-editor-types/src/interface/app/vars
 import AppVar from './AppVar';
 import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
 import { useAppStore } from '../stores/appStore';
-import { $error, $log } from '../utils';
+import { $error, $log, $warn } from '../utils';
+
+type evalBindValueResult = {
+    success: boolean;
+    value: any;
+    errMsg: string;
+    err?: Error;
+};
+
+type evalBindValueParams = {
+    expression: string;
+    faildValue?: any;
+    globalVars?: Record<string, any>;
+    pageVars?: Record<string, any>;
+    loopItem?: any;
+    loopIndex?: number;
+    apiData?: any;
+};
 
 // 创建两个map，存放变量实例
 const GlobalVarMap: Map<string, AppVar> = new Map();
@@ -23,7 +40,7 @@ export default class AppVarController {
      * @param {} param0
      */
     addVar(varJson: IAppVarConstructor) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         const result = {
             success: false,
             msg: 'vars.newDialog.errorCreate',
@@ -45,7 +62,7 @@ export default class AppVarController {
      * @param {*} varInstance 被添加的变量对象
      */
     addVarInstance(varInstance: AppVar) {
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         const addResult = {
             success: false,
             msg: 'vars.newDialog.errorCreate',
@@ -88,7 +105,7 @@ export default class AppVarController {
     getVarByName(name: string) {
         let _var: any = undefined;
         // 先查找全局变量
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         _var = appStore.globalVars[name];
         if (_var) return _var;
         // 再查找页面变量
@@ -111,11 +128,11 @@ export default class AppVarController {
 
     // 获取当前页面下所有的页面变量
     getCurrentPageVars(): Record<string, any> | undefined {
-        return useAppStore().currentPageVars;
+        return useAppStore(this.$pinia).currentPageVars;
     }
 
     getGlobalVars(): Record<string, any> {
-        return useAppStore().globalVars;
+        return useAppStore(this.$pinia).globalVars;
     }
 
     /**
@@ -178,6 +195,44 @@ export default class AppVarController {
             result[key] = value.Serialize();
         });
         $log('%c %s', 'color: green', 'SerializeCurrentPageVars --------->', result);
+        return result;
+    }
+
+    /**
+     * 执行变量表达式，获得结果
+     * @param expression 表达式
+     * @param faildValue 表达式错误时返回的默认值，不传则返回 undefined
+     * @returns
+     */
+    evalVarValue(params: evalBindValueParams): evalBindValueResult {
+        let result: evalBindValueResult = {
+            success: false,
+            value: params.faildValue !== undefined ? params.faildValue : undefined,
+            errMsg: '',
+        };
+        if (!params.expression) return result;
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        const $g = params.globalVars || this.getGlobalVars();
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        const $p = params.pageVars || this.getCurrentPageVars();
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        const $item = params.loopItem || {};
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        const $index = params.loopIndex || 0;
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        const $api = params.apiData || [];
+        try {
+            result = {
+                success: true,
+                value: eval(`(${params.expression})`),
+                // value: evalFn($g, $p),
+                errMsg: '',
+            };
+        } catch (error: any) {
+            $warn(`{{ ${params.expression} }} 表达式有错误`, error);
+            result.errMsg = error.toString();
+            result.err = error;
+        }
         return result;
     }
 }

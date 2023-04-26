@@ -111,6 +111,21 @@ export const $getDelayFunction = (fn: Function, delay: number): Function => {
     };
 };
 
+export const $createPageFunction = (functionString: string) => {
+    // Split the string into individual function strings
+    const functionStrings = functionString.split(/\bfunction\b/).slice(1);
+
+    // Map each function string to a function object
+    const functions = functionStrings.map((str) => {
+    // Add the "function" keyword back to the string
+        str = "function" + str;
+        // Create the function object using the Function constructor
+        return new Function(`return ${str}`)();
+    });
+
+    return functions as Function[];
+};
+
 // 动态插入style标签样式
 export const $createDynamicStyle = (
     key: string,

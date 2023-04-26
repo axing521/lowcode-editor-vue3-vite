@@ -1,8 +1,8 @@
 import { computed, getCurrentInstance } from 'vue';
-import type { EnumEventName } from 'tdp-editor-types/src/enum/components';
+import { EnumEventType, type EnumEventName } from 'tdp-editor-types/src/enum/components';
 import type { ISetupBaseProps, TEventsMapRaw } from 'tdp-editor-types/src/interface/app/components';
 import { eventFactory } from 'tdp-editor-common/src';
-import { useVarControler } from 'tdp-editor-common/src/controller';
+import { useVarControler, usePageControler } from 'tdp-editor-common/src/controller';
 
 type TExtendParams = () => Record<string, any>;
 /**
@@ -17,31 +17,31 @@ export default function _useEvents(props: ISetupBaseProps, extendParams?: TExten
 
     // 处理funcStr的原始事件map对象
     const eventsMapRaw = computed(() => {
+        const pageController = usePageControler();
+        const emptyFunc: any = function () {};
         const _eventsMap: TEventsMapRaw = {} as TEventsMapRaw;
         if (props.state && !props.state.events) return _eventsMap;
         props.state.events!.forEach(eventInfo => {
-            let eventFunc: any = new Function();
-            if (eventInfo.funcStr && eventInfo.funcStr.startsWith('function')) {
-                eventFunc = new Function(
-                    '$event',
-                    `try{(${eventInfo.funcStr})($event)}catch(e){console.warn(e);}`
-                );
+            let _func = emptyFunc;
+            // 用户自定义脚本
+            if (eventInfo.eventType === EnumEventType.script && eventInfo.funcStr) {
+                if (eventInfo.funcStr.includes('function')) {
+                    _func = new Function(
+                        '$event',
+                        `try{(${eventInfo.funcStr})($event)}catch(e){console.warn(e);}`
+                    );
+                } else _func = emptyFunc;
+            }
+            // 选择的页面函数
+            else if (eventInfo.eventType === EnumEventType.pageFunction && eventInfo.funcName) {
+                _func = pageController.getFunctionByName(eventInfo.funcName);
             }
 
+            // 添加到事件原始map对象中
             if (_eventsMap[eventInfo.eventName]) {
-                _eventsMap[eventInfo.eventName].push({
-                    func: eventFunc,
-                    eventType: eventInfo.eventType,
-                    funcName: eventInfo.funcName || '',
-                });
+                _eventsMap[eventInfo.eventName].push(_func);
             } else {
-                _eventsMap[eventInfo.eventName] = [
-                    {
-                        func: eventFunc,
-                        eventType: eventInfo.eventType,
-                        funcName: eventInfo.funcName || '',
-                    },
-                ];
+                _eventsMap[eventInfo.eventName] = [_func];
             }
         });
         return _eventsMap;

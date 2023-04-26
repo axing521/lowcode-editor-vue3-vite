@@ -1,6 +1,6 @@
 <template>
     <div class="item">
-        <div class="label">{{ props.label }}</div>
+        <div class="label">{{ label }}</div>
         <div class="value">
             <a-input-group compact>
                 <a-input v-model:value="computed_cssValue" style="width: 147px"></a-input>

@@ -29,6 +29,7 @@ export type IComponentProps<P> = {
     [key in keyof P]: {
         value: P[key];
         type: EnumPropsValueType;
+        bindValue?: string;
     };
 };
 export interface IComponentCommonProps<P = any, C = Record<string, string | undefined>> {
@@ -36,7 +37,6 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
     parentId: string;
     props: P;
     css: C;
-    events: Record<string, any>;
 }
 export type TCssStyleName = keyof CSSStyleDeclaration;
 export interface IComponentState<P = any, C = any> {
@@ -51,7 +51,6 @@ export interface IComponentState<P = any, C = any> {
     formInfo?: IFormInfo;
     isFormer?: boolean; // 是否属于form组件
     css?: C;
-    styles?: string; // 自定义样式, 存放在page 的state中
     classNames?: string[]; // 组件的自定义样式名
     events?: IComponentEvent[];
 }
@@ -73,14 +72,7 @@ export interface IComponentEvent {
 }
 
 // 将IComponentEvent处理后的事件对象
-export type TEventsMapRaw = Record<
-    EnumEventName,
-    {
-        func: TEventFunc;
-        eventType: EnumEventType;
-        funcName: string;
-    }[]
->;
+export type TEventsMapRaw = Record<EnumEventName, TEventFunc[]>;
 
 // 将TEventsMapRaw处理后的事件对象，可直接绑定到组件v-on属性上
 export type TEventsMap = Record<EnumEventName, ($event: any) => void>;
@@ -95,3 +87,15 @@ export type TEventFuncParam1 = {
 };
 
 export type TEventFunc = ($event: TEventFuncParam1) => void;
+
+// 页面的state，因为页面状态可能提供外部开发者，所以放到interface项目中
+export interface IPageState extends IComponentState<IPageProps> {
+    type: EnumComponentType.page;
+    styles?: string; // 自定义样式, 存放在page 的state中
+    functions?: string; // 自定义函数, 存放在page 的state中
+    vars?: string; // 页面变量
+}
+
+export interface IPageProps {
+    title?: string;
+}

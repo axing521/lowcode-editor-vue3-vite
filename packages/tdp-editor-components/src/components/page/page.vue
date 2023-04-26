@@ -14,14 +14,11 @@
 </style>
 
 <script lang="ts" setup>
-import { reactive, provide, watchEffect } from 'vue';
-import type { PropType, ComponentPublicInstance } from 'vue';
+import { provide } from 'vue';
 import moment from 'moment';
+import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
+import type { EnumAppMode } from 'tdp-editor-types/src/enum';
 
-import type {
-    IComponentCommonProps,
-    IComponentState,
-} from 'tdp-editor-types/src/interface/app/components';
 import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import {
     addComponent,
@@ -30,49 +27,33 @@ import {
     getComponentByKey,
     getComponentsMap,
 } from 'tdp-editor-types/src/constant/injectKeys';
-import { EnumAppMode } from 'tdp-editor-types/src/enum';
-import { utils } from 'tdp-editor-common/src';
+import { usePageControler } from 'tdp-editor-common/src/controller';
 
-const props = defineProps({
-    json: {
-        required: true,
-        type: Object as PropType<IComponentState>,
-    },
-    appMode: {
-        required: true,
-        type: String as PropType<EnumAppMode>,
-        default: () => EnumAppMode.runtime,
-    },
-});
-watchEffect(() => {
-    if (props.json.styles) {
-        utils.$createDynamicStyle(props.json.key, props.json.styles);
-    }
-});
-// 当前页面所有组件的实例集合
-const componentsMap = reactive<Map<string, ComponentPublicInstance<IComponentCommonProps>>>(
-    new Map()
-);
+const pageController = usePageControler();
+const props = defineProps<{
+    json?: IPageState;
+    appMode: EnumAppMode;
+}>();
 
 provide(getAppMode, () => {
     return props.appMode;
 });
 provide(addComponent, (key, componentInstance) => {
-    componentsMap.set(key, componentInstance as any);
+    pageController.addComponent(key, componentInstance);
 });
 provide(removeComponent, key => {
-    componentsMap.delete(key);
+    pageController.deleteComponent(key);
 });
 provide(getComponentByKey, key => {
-    return componentsMap.get(key);
+    return pageController.getComponentByKey(key);
 });
 provide(getComponentsMap, () => {
-    return componentsMap;
+    return pageController.getComponentsMap();
 });
 
 // 清空form组件的值
 const resetFormFields = () => {
-    componentsMap.forEach(component => {
+    pageController.getComponentsMap().forEach(component => {
         // 将form组件的value设置为空
         if (component.state && component.state.group === EnumComponentGroup.form) {
             component.props.value = null;
@@ -81,7 +62,7 @@ const resetFormFields = () => {
 };
 // 根据给定的defaultData默认值，初始化表单数据
 const initFormFields = (defaultData: Record<string, any>) => {
-    componentsMap.forEach(component => {
+    pageController.getComponentsMap().forEach(component => {
         // 将form组件的value设置为空
         if (component.state.group === EnumComponentGroup.form) {
             const value = defaultData[component.state.key || ''] || null;

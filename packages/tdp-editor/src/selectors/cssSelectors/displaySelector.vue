@@ -1,6 +1,6 @@
 <template>
     <div class="item">
-        <div class="label">{{ props.label }}</div>
+        <div class="label">{{ label }}</div>
         <div class="value">
             <a-select v-model:value="computed_cssValue">
                 <a-select-option value="">请选择</a-select-option>

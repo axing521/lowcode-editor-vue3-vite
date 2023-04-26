@@ -1,7 +1,10 @@
 import { customRef, reactive } from 'vue';
 import type { Ref } from 'vue';
 import type { IPropsRenderFactory } from 'tdp-editor-types/src/interface/designer';
-import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
+import type {
+    IComponentProps,
+    IComponentState,
+} from 'tdp-editor-types/src/interface/app/components';
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import { EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
 
@@ -18,18 +21,26 @@ const PropsFactory: IPropsRenderFactory = {
     },
     setPropsValue: (state, propertyName, value, type = EnumPropsValueType.string) => {
         if (state && propertyName) {
-            if (state.props) {
-                state.props[propertyName] = {
-                    type,
-                    value: value as any,
-                };
-            } else {
+            // 如果原本没有props集合
+            if (!state.props) {
                 state.props = {
                     [propertyName]: {
                         type,
-                        value: value,
+                        value,
                     },
-                } as any;
+                } as unknown as IComponentProps<any>;
+            }
+            // 有props集合，但是没有当前属性
+            else if (!state.props[propertyName]) {
+                state.props[propertyName] = {
+                    value: value as any,
+                    type,
+                };
+            }
+            // 之前设置过当前属性
+            else if (state.props[propertyName]) {
+                state.props[propertyName].value = value as any;
+                state.props[propertyName].type = type;
             }
         }
     },
@@ -76,7 +87,7 @@ const PropsFactory: IPropsRenderFactory = {
             const prop = _props[key];
             // 处理绑定数据
             if (prop.type === EnumPropsValueType.expression) {
-                newProps[key] = getExpression(prop.value);
+                newProps[key] = getExpression(prop.bindValue);
             } else if (prop.type === EnumPropsValueType.function) {
                 newProps[key] = getFunction(prop.value as any);
             } else {
@@ -142,6 +153,76 @@ export function setPropValue<P, PK extends keyof P>(
     type = EnumPropsValueType.string
 ) {
     PropsFactory.setPropsValue(state, key, value, type);
+}
+
+// 设置属性的表达式
+export function setPropExpression<P, PK extends keyof P>(
+    state: IComponentState<P>,
+    propKey: PK,
+    expression: string
+) {
+    if (!state) return;
+    // 如果原本没有props集合
+    if (!state.props) {
+        state.props = {
+            [propKey]: {
+                type: EnumPropsValueType.expression,
+                bindValue: expression,
+                value: '',
+            },
+        } as unknown as IComponentProps<any>;
+    }
+    // 有props集合，但是没有当前属性
+    else if (!state.props[propKey]) {
+        state.props[propKey] = {
+            value: '' as any,
+            type: EnumPropsValueType.expression,
+            bindValue: expression,
+        };
+    }
+    // 之前设置过当前属性
+    else if (state.props[propKey]) {
+        state.props[propKey].bindValue = expression;
+        state.props[propKey].type = EnumPropsValueType.expression;
+    }
+}
+
+// 获取属性的表达式
+export function getPropExpression<P, PK extends keyof P>(state: IComponentState<P>, propKey: PK) {
+    if (state && state.props && state.props[propKey]) {
+        return state.props[propKey].bindValue || '';
+    }
+    return '';
+}
+
+// 更改属性值类型
+export function setPropValueType<P, PK extends keyof P>(
+    state: IComponentState<P>,
+    propKey: PK,
+    type: EnumPropsValueType
+) {
+    if (!state) return;
+    // 如果原本没有props集合
+    if (!state.props) {
+        state.props = {
+            [propKey]: {
+                type,
+                bindValue: undefined,
+            },
+        } as unknown as IComponentProps<any>;
+    }
+    // 有props集合，但是没有当前属性
+    else if (!state.props[propKey]) {
+        state.props[propKey] = {
+            value: undefined as any,
+            type,
+            bindValue: undefined,
+        };
+    }
+    // 之前设置过当前属性
+    else if (state.props[propKey]) {
+        state.props[propKey].type = type;
+    }
 }
 
 export default PropsFactory;

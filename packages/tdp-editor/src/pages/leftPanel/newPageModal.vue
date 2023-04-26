@@ -172,8 +172,8 @@ const clickOk = () => {
         editorController.addPage({
             page: {
                 label: pageName.value,
-                code: pageCode.value,
-            } as unknown as IPageStore,
+                name: pageCode.value,
+            } as IPageStore,
         });
         $emit('update:visible', false);
         resetForm();

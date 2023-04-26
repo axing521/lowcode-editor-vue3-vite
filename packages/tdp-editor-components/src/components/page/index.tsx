@@ -1,4 +1,9 @@
 import { defineAsyncComponent } from 'vue';
+import type {
+    IDesignerComponent,
+    registerComponentFunc,
+} from 'tdp-editor-types/src/interface/designer';
+import type { IPageProps } from 'tdp-editor-types/src/interface/app/components';
 import {
     EnumComponentGroup,
     EnumComponentType,
@@ -7,11 +12,6 @@ import {
     EnumPropsValueType,
 } from 'tdp-editor-types/src/enum/components';
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
-import type {
-    IDesignerComponent,
-    registerComponentFunc,
-} from 'tdp-editor-types/src/interface/designer';
-import type { IPageProps } from './interface';
 
 export default defineAsyncComponent(() => {
     return import('./page.vue');

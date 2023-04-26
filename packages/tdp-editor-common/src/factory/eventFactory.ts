@@ -33,6 +33,12 @@ const EventFactory = {
             state.events.splice(index, 1);
         }
     },
+    removeEventById(state: IComponentState, eventId: string): void {
+        if (state && state.events && state.events.length) {
+            const eventIndex = state.events.findIndex(e => e.eventId === eventId);
+            if (eventIndex >= 0) state.events.splice(eventIndex, 1);
+        }
+    },
     // 触发某个事件的所有处理函数
     triggerEvent(params: {
         eventName: EnumEventName;
@@ -44,14 +50,14 @@ const EventFactory = {
         extendParams?: Record<string, any>;
     }) {
         // 从原始事件对象中查找是否有对应的事件
-        const events = params.eventsMapRaw[params.eventName];
+        const funcs = params.eventsMapRaw[params.eventName];
         const instance = params.instance && params.instance.proxy;
         // 没找到事件直接退出
-        if (!events) return;
+        if (!funcs) return;
 
         // 循环执行每个处理函数
-        events.forEach(event => {
-            event.func.call(instance, {
+        funcs.forEach(func => {
+            func.call(instance, {
                 comp: instance,
                 $g: params.$g,
                 $p: params.$p,
@@ -83,11 +89,11 @@ const EventFactory = {
                     ? params.extendParams[eventName]
                     : undefined;
             // 获取事件对应的具体信息(是一个数组)
-            const eventInfo = params.eventsMapRaw[eventName as EnumEventName];
+            const funcs = params.eventsMapRaw[eventName as EnumEventName];
             // 封装额外参数对象
             _eventsMap[eventName as EnumEventName] = function ($event: any) {
-                eventInfo.forEach(e => {
-                    e.func.call(instance, {
+                funcs.forEach(func => {
+                    func.call(instance, {
                         comp: instance,
                         $g: params.$g,
                         $p: params.$p,
