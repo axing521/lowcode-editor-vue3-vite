@@ -6,7 +6,7 @@ import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../plugins';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import componentRegister from 'tdp-editor-components/src/utils/componentRegister';
-import SelectorManager from '../selectors/SelectorManager';
+import SelectorManager from '../selectors/selectorManager';
 import propSelectors from '../selectors/propSelectors';
 import { cssSelectors } from '../selectors/cssSelectors';
 import { createController } from 'tdp-editor-common/src/controller';

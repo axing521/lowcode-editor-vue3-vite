@@ -2,6 +2,7 @@ import type { App, ComponentPublicInstance } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
 import { $createPageFunction, $createDynamicStyle } from '../utils';
+
 export default class PageController {
     private readonly $app: App;
     private readonly $pinia: Pinia;

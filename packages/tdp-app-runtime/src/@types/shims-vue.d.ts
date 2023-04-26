@@ -11,6 +11,11 @@ interface Window {
     $fd: {
         funcFactory: any;
     };
+    $tdp: {
+        App: {};
+        Utils: {};
+    };
+    wm: WeakMap;
 }
 
 namespace NodeJS {
