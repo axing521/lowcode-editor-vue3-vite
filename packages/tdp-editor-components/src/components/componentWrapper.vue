@@ -25,7 +25,7 @@ const allProps = defineProps<{
 const { c_Props, c_Css, c_isDesignMode } = useBase(allProps);
 const classNames = computed(() => {
     const classNames = [];
-    if (c_isDesignMode) {
+    if (c_isDesignMode.value) {
         classNames.push('editor-designer-comp');
     }
     (allProps.state.classNames || []).forEach(name => {
