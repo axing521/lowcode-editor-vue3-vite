@@ -1,6 +1,7 @@
 <template>
     <div class="page-css-designer">
         <div class="action">
+            <span class="designer-title">页面样式</span>
             <a-button type="primary" @click="saveStyles">保存</a-button>
         </div>
         <div class="monaco">
@@ -18,7 +19,13 @@
     .action {
         height: 40px;
         line-height: 40px;
-        text-align: right;
+        text-align: center;
+        > button {
+            float: right;
+        }
+        .designer-title {
+            font-weight: 600;
+        }
     }
     .monaco {
         flex: 1;

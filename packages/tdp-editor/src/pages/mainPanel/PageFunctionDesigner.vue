@@ -1,6 +1,7 @@
 <template>
     <div class="page-function-designer">
         <div class="action">
+            <span class="designer-title">页面函数</span>
             <a-button type="primary" @click="saveFunctions">保存</a-button>
         </div>
         <div class="monaco">
@@ -18,7 +19,13 @@
     .action {
         height: 40px;
         line-height: 40px;
-        text-align: right;
+        text-align: center;
+        > button {
+            float: right;
+        }
+        .designer-title {
+            font-weight: 600;
+        }
     }
     .monaco {
         flex: 1;
