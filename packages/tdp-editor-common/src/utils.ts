@@ -1,3 +1,4 @@
+import { isReactive } from 'vue';
 import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 
 /* eslint-disable prettier/prettier */
@@ -125,6 +126,45 @@ export const $createPageFunction = (functionString: string) => {
 
     return functions as Function[];
 };
+
+type TPageScriptSet = {
+    vars: {varKey: string; varValue: any}[];
+    responsiveVars: {varKey: string; varValue: any}[];
+    functions: Function[];
+};
+
+/**
+ * 初始化页面脚本
+ * @param script 脚本字符串
+ * @returns 返回分解出的函数集合、响应式变量集合
+ */
+export const $iniPageScript = (script: string): TPageScriptSet => {
+    const result: TPageScriptSet = {
+        vars: [],
+        functions: [],
+        responsiveVars: [],
+    };
+    try {
+        const pageFunc = new Function(script);
+        const pageScript = pageFunc();
+        for (const key in pageScript) {
+            if (Object.prototype.hasOwnProperty.call(pageScript, key)) {
+                const element = pageScript[key];
+                if (typeof element === 'function') {
+                    result.functions.push(element);
+                } else if (isReactive(element)) {
+                    result.responsiveVars.push({
+                        varKey: key,
+                        varValue: element,
+                    });
+                }
+            }
+        }
+    } catch (e) {
+        $warn('$createPageFunction error:', e);
+    }
+    return result;
+}
 
 // 动态插入style标签样式
 export const $createDynamicStyle = (

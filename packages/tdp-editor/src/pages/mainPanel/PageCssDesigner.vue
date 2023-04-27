@@ -37,6 +37,7 @@ import { computed, ref } from 'vue';
 import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import MonacoEditor from '../../components/MonacoEditor.vue';
 import { message } from 'ant-design-vue';
+import { usePageControler } from 'tdp-editor-common/src/controller';
 
 const props = defineProps<{
     selectedPage: IPageState;
@@ -55,6 +56,7 @@ const saveStyles = () => {
         const newStyles = monacoRef.value.getValue();
         const page = props.selectedPage;
         page.styles = newStyles;
+        usePageControler().initScript(page.key, page.script!);
         message.success('样式保存成功');
     }
 };

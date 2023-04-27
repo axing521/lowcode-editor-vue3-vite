@@ -21,7 +21,6 @@ export interface IAppStore {
     footer?: IDesignerComponent;
     globalVars: Record<string, any>; // 全局变量集合 { 变量名：变量数据 }
     currentPageVars: Record<string, any>; // 当前页面的变量集合 { 变量名：变量数据 }
-    currentPageFuncs: Record<string, Function>;
 }
 export type TPageEditMode = 'content' | 'css' | 'function';
 export interface IEditorStore {

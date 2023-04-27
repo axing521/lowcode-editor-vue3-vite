@@ -100,7 +100,7 @@ export type TEventFunc = (this: TEventFuncThis, $event?: TEventFuncParam1) => vo
 export interface IPageState extends IComponentState<IPageProps> {
     type: EnumComponentType.page;
     styles?: string; // 自定义样式, 存放在page 的state中
-    functions?: string; // 自定义函数, 存放在page 的state中
+    script?: string; // 自定义脚本, 存放在page 的state中
     vars?: string; // 页面变量
 }
 

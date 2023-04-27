@@ -1,7 +1,13 @@
+/**
+ * 封装页面级别的交互逻辑
+ * 例如页面初始化、获取页面方法、向当前页面添加删除组件map关系等
+ */
 import type { App, ComponentPublicInstance } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
-import { $createPageFunction, $createDynamicStyle } from '../utils';
+import { $createPageFunction, $createDynamicStyle, $iniPageScript, $log } from '../utils';
+import { useVarControler } from './index';
+import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/vars';
 
 export default class PageController {
     private readonly $app: App;
@@ -28,6 +34,41 @@ export default class PageController {
         functions.forEach(func => {
             this.pageFunctions.set(func.name, func);
         });
+    }
+
+    /**
+     * 初始化脚本
+     * @param pageKey 页面key
+     * @param script 用户定义的脚本字符串
+     */
+    initScript(pageKey: string, script: string) {
+        const startTime = Date.now();
+        $log('初始化脚本开始', startTime);
+        const scriptSet = $iniPageScript(script);
+        this.pageFunctions.clear();
+        // 保存用户自定义函数
+        scriptSet.functions.forEach(func => {
+            this.pageFunctions.set(func.name, func);
+        });
+        // 保存用户自定义变量
+        const varController = useVarControler(this.$app);
+        scriptSet.responsiveVars.forEach(v => {
+            varController.addVar({
+                pageKey,
+                scope: EnumAppVarScope.Page,
+                type: EnumAppVarType.Normal,
+                name: v.varKey,
+                data: v.varValue,
+            });
+        });
+
+        const endTime = Date.now();
+        $log('初始化脚本结束', endTime);
+        $log(
+            `共用时 ${endTime - startTime} ms`,
+            this.pageFunctions,
+            varController.getCurrentPageVars()
+        );
     }
 
     /**

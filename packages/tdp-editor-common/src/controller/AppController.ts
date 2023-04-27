@@ -57,7 +57,7 @@ export default class AppController {
             const pageController = usePageControler();
             pageController.getComponentsMap().clear();
             pageController.initStyle(targetPage.key, targetPage.styles || '');
-            pageController.initFunctions(targetPage.functions || '');
+            pageController.initScript(targetPage.key, targetPage.script || '');
             appStore.setActivePage({ pageId: targetPage.key });
         }
         if (oldPageKey) {

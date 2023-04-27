@@ -12,8 +12,9 @@ interface Window {
         funcFactory: any;
     };
     $tdp: {
-        App: {};
-        Utils: {};
+        App: any;
+        Utils: any;
+        vue: any;
     };
     wm: WeakMap;
 }
