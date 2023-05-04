@@ -5,11 +5,9 @@
             <div class="flex-group">
                 <h3>尺寸设置</h3>
                 <div class="flex-box">
-                    <div class="box-label">快速设置</div>
-                    <div class="box-content">
-                        <a-button @click="quickSizeChange('flex')">自动</a-button>
-                        <a-button @click="quickSizeChange('fixed')">固定</a-button>
-                    </div>
+                    <a-button @click="quickSizeChange('default')">清空</a-button>
+                    <a-button @click="quickSizeChange('flex')">自动</a-button>
+                    <a-button @click="quickSizeChange('fixed')">固定</a-button>
                 </div>
                 <div class="flex-box">
                     <div class="box-label">伸展</div>
@@ -72,7 +70,7 @@ const quickSizeChange = (value: TQuickSize) => {
     } else if (value === 'flex') {
         setCss(props.state!, 'flexGrow', '1');
         setCss(props.state!, 'flexShrink', '1');
-        setCss(props.state!, 'flexBasis', 'auto');
+        setCss(props.state!, 'flexBasis', '0%');
     } else if (value === 'fixed') {
         setCss(props.state!, 'flexGrow', '0');
         setCss(props.state!, 'flexShrink', '0');

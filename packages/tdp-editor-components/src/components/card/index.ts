@@ -45,7 +45,7 @@ export const register: registerComponentFunc = function () {
                 selector: EnumSelectorName.switch,
             },
         ],
-        cssConfigs: ['display', 'flex', 'width'],
+        cssConfigs: ['display', 'flex', 'width', 'height'],
     };
     return card;
 };
