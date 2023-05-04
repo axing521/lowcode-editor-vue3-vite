@@ -167,10 +167,10 @@ export default class EditorController {
             ...editorStore.createNewEmptyPage(appStore.pages),
             ...{ label: payload.pageName, code: payload.pageCode },
         };
-        const rowState = editorStore.componentList.find(c => c.type === EnumComponentType.row);
+        const rowState = editorStore.componentList.find(c => c.type === EnumComponentType.form);
         if (rowState) {
             // 创建行
-            const rowKey = utils.$getUUID(EnumComponentType.row);
+            const rowKey = utils.$getUUID(EnumComponentType.form);
             const newRow: IDesignerComponent = {
                 key: rowKey,
                 label: rowState.label,

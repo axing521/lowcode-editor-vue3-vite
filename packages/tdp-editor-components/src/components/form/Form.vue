@@ -115,8 +115,5 @@ const submitForm = async () => {
             margin-right: 10px;
         }
     }
-    .fd-form-layout > .layout-drag {
-        min-height: 200px;
-    }
 }
 </style>

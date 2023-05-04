@@ -84,10 +84,7 @@ let dragComponent: IDesignerComponent | undefined = undefined;
 const dragAddHandler = () => {
     const targetComponent = props.state;
     if (targetComponent) {
-        const isLayoutType =
-            targetComponent.group === EnumComponentGroup.layout ||
-            targetComponent.type === EnumComponentType.row ||
-            targetComponent.type === EnumComponentType.col;
+        const isLayoutType = targetComponent.group === EnumComponentGroup.layout;
         if (isLayoutType) {
             // @ts-ignore
             dragAddComponent(dragComponent!, targetComponent!);

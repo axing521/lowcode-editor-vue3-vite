@@ -4,11 +4,6 @@ export enum EnumComponentType {
     layout = 'FdLayout',
     form = 'FdForm',
     card = 'FdCard',
-    row = 'FdRow',
-    col = 'FdCol',
-    layoutDesigner = 'FdLayoutDesigner',
-    label = 'FdLabel',
-    fieldItem = 'FdFielditem',
     button = 'FdButton',
     input = 'FdInput',
     textField = 'FdTextfield',
@@ -17,14 +12,12 @@ export enum EnumComponentType {
     float = 'FdFloat',
     switch = 'FdSwitch',
     sliders = 'FdSliders',
-    checkboxes = 'FdCheckboxes',
     radios = 'FdRadios',
     datePicker = 'FdDatePicker',
     textarea = 'FdTextarea',
     rate = 'FdRate',
     divider = 'FdDivider',
     select = 'FdSelect',
-    demo1 = 'FdDemo1',
 }
 
 export enum EnumComponentGroup {

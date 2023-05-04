@@ -69,9 +69,7 @@ export default defineComponent({
                 // 只有form group组件，并且不是form、col、row才显示form属性
                 const showFormInfoConfig =
                     this.element.group === EnumComponentGroup.form &&
-                    ![EnumComponentType.form, EnumComponentType.row, EnumComponentType.col].some(
-                        type => type === this.element?.type
-                    );
+                    ![EnumComponentType.form].some(type => type === this.element?.type);
                 if (showFormInfoConfig) {
                     return (
                         <div class="section section-form">

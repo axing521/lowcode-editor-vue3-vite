@@ -59,12 +59,7 @@ export const useEditorStore = defineStore('editorStore', {
                 // 不是页面时，需要父组件是容器组件才能添加
                 else if (
                     payload.parent.type !== EnumComponentType.page &&
-                    [
-                        EnumComponentType.layout,
-                        EnumComponentType.form,
-                        EnumComponentType.row,
-                        EnumComponentType.col,
-                    ].some(type => type === payload.parent.type)
+                    payload.parent.group === EnumComponentGroup.layout
                 ) {
                     payload.parent.list?.push(payload.component);
                     // state.selectedComponent = payload.component;

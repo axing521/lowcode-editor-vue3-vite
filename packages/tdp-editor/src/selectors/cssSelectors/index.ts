@@ -25,6 +25,7 @@ export const cssSelectorMap = {
     position: { selector: 'css-position-selector', label: '定位' },
     textAlign: { selector: 'css-align-selector', label: '文本对齐' },
     width: { selector: 'css-size-selector', label: '宽度' },
+    flex: { selector: 'css-flex-selector', label: '弹性布局' },
 } as Record<
     keyof CSSStyleDeclaration,
     {
