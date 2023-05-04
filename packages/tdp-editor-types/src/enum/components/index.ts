@@ -3,6 +3,7 @@ export enum EnumComponentType {
     renderer = 'FdRenderer',
     layout = 'FdLayout',
     form = 'FdForm',
+    card = 'FdCard',
     row = 'FdRow',
     col = 'FdCol',
     layoutDesigner = 'FdLayoutDesigner',

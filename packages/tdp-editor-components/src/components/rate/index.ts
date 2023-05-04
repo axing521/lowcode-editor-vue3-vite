@@ -13,7 +13,7 @@ import type {
     registerComponentFunc,
 } from 'tdp-editor-types/src/interface/designer';
 import type { IRateProps } from './interface';
-export default defineAsyncComponent(() => import('./rateRenderer.vue'));
+export default defineAsyncComponent(() => import('./Rate.vue'));
 
 export const register: registerComponentFunc = function () {
     const rate: IDesignerComponent<IRateProps> = {
