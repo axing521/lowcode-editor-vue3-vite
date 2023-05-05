@@ -58,6 +58,7 @@
             float: right;
             height: 100%;
             background-color: azure;
+            display: none;
             i.iconfont {
                 z-index: 100;
                 color: @primary-color;
