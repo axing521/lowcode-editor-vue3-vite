@@ -21,7 +21,8 @@ export default class AppController {
     initApp(appJson: IAppStore) {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = appJson.pages;
-        appStore.activePage = appJson.activePage || appJson.pages[0];
+        const activePage = appJson.activePage || appJson.pages[0];
+        this.changePage(activePage.key, '');
     }
     /**
      * 获取当前显示页面

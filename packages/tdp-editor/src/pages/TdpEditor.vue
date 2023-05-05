@@ -42,7 +42,7 @@
             <div class="toolbar-right">
                 <a-button type="primary" @click="pagePreview">
                     <i class="iconfont Preview" />
-                    预览
+                    运行
                 </a-button>
                 <a-switch
                     class="switch-designer"
