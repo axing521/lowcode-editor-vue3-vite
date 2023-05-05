@@ -24,7 +24,7 @@ const testData = {
                         icons: 'form',
                         group: '0',
                         type: 'FdForm',
-                        isFormer: true,
+                        isForm: true,
                         order: 200,
                         list: [
                             {
@@ -34,7 +34,7 @@ const testData = {
                                 icons: 'button',
                                 group: '2',
                                 type: 'FdButton',
-                                isFormer: true,
+                                isForm: true,
                                 order: 302,
                                 name: 'FdButton_lRfLNBMBn8hdRCDV',
                                 list: [],
@@ -54,7 +54,7 @@ const testData = {
                         icons: 'form',
                         group: '0',
                         type: 'FdForm',
-                        isFormer: true,
+                        isForm: true,
                         order: 200,
                         list: [
                             {
@@ -64,7 +64,7 @@ const testData = {
                                 icons: 'Ratings',
                                 group: '2',
                                 type: 'FdRate',
-                                isFormer: true,
+                                isForm: true,
                                 listGroup: 'business',
                                 order: 307,
                                 name: 'FdRate_YfXzVxXrmAwnBY4Y',
@@ -99,7 +99,7 @@ const testData = {
                     icons: 'form',
                     group: '0',
                     type: 'FdForm',
-                    isFormer: true,
+                    isForm: true,
                     order: 200,
                     list: [
                         {
@@ -109,7 +109,7 @@ const testData = {
                             icons: 'button',
                             group: '2',
                             type: 'FdButton',
-                            isFormer: true,
+                            isForm: true,
                             order: 302,
                             name: 'FdButton_lRfLNBMBn8hdRCDV',
                             list: [],
@@ -129,7 +129,7 @@ const testData = {
                     icons: 'form',
                     group: '0',
                     type: 'FdForm',
-                    isFormer: true,
+                    isForm: true,
                     order: 200,
                     list: [
                         {
@@ -139,7 +139,7 @@ const testData = {
                             icons: 'Ratings',
                             group: '2',
                             type: 'FdRate',
-                            isFormer: true,
+                            isForm: true,
                             listGroup: 'business',
                             order: 307,
                             name: 'FdRate_YfXzVxXrmAwnBY4Y',

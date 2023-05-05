@@ -16,7 +16,6 @@ export const register: registerComponentFunc = function () {
         icons: 'form',
         group: EnumComponentGroup.layout,
         type: EnumComponentType.form,
-        isFormer: true,
         order: 200,
         list: [],
         propsConfigs: [

@@ -139,7 +139,7 @@ export default defineComponent({
             return Boolean(
                 this.element &&
                     this.element.group === EnumComponentGroup.form &&
-                    this.element.isFormer
+                    this.element.isForm
             );
         },
         // 组件ID

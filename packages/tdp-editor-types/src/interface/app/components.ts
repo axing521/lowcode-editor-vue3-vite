@@ -49,7 +49,7 @@ export interface IComponentState<P = any, C = any> {
     apis?: IComponentApi[];
     props?: IComponentProps<P>;
     formInfo?: IFormInfo;
-    isFormer?: boolean; // 是否属于form组件
+    isForm?: boolean; // 是否属于form组件
     css?: C;
     classNames?: string[]; // 组件的自定义样式名
     events?: IComponentEvent[];

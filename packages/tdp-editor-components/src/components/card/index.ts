@@ -17,7 +17,6 @@ export const register: registerComponentFunc = function () {
         icons: 'Cards',
         group: EnumComponentGroup.layout,
         type: EnumComponentType.card,
-        isFormer: true,
         order: 200,
         list: [],
         propsConfigs: [

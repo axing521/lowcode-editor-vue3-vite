@@ -107,6 +107,7 @@ export const useEditorStore = defineStore('editorStore', {
     },
 });
 
+// 创建一个新的空组件
 export const newComponentJson = (originData: IDesignerComponent): IComponentState => {
     const newId = utils.$getUUID(originData.type);
     // eslint-disable-next-line
@@ -115,10 +116,13 @@ export const newComponentJson = (originData: IDesignerComponent): IComponentStat
         ...newProps,
         key: newId,
         name: newId,
-        list: [],
     };
+    // 容器组件，添加list
+    if (originData.group === EnumComponentGroup.layout) {
+        newComponent.list = [];
+    }
     // 如果添加的组件是form组件，追加formInfo属性
-    if (originData.isFormer) {
+    if (originData.isForm) {
         newComponent.formInfo = {
             formFieldName: newId,
             rules: [],

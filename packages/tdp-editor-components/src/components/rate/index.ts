@@ -22,7 +22,7 @@ export const register: registerComponentFunc = function () {
         icons: 'Ratings',
         group: EnumComponentGroup.form,
         type: EnumComponentType.rate,
-        isFormer: true,
+        isForm: true,
         listGroup: 'business',
         order: 307,
         getDefaultProps: () => {
