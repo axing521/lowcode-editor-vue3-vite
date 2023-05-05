@@ -68,11 +68,16 @@ export default defineComponent({
         getValue(key: TCssStyleName) {
             let value = getCss(this.state!, key) || '';
             value = (value as string).replace('px', '');
-            return value || 'auto';
+            return value;
         },
         setValue(key: TCssStyleName, $event: Event) {
             // @ts-ignore
             const value = $event.target?.value;
+            const css = this.state?.css;
+            if (value === '' && css) {
+                delete css[key];
+                return;
+            }
             const _value = isNaN(Number(value)) ? value : value + 'px';
             setCss(this.state!, key, _value);
         },
@@ -106,7 +111,7 @@ export default defineComponent({
             position: absolute;
             display: flex;
             .margin-padding-input {
-                border: 0px solid #dce2e9;
+                border: 1px solid #dce2e9;
                 border-radius: 2px;
                 background-color: #fafafa;
                 outline: none;
