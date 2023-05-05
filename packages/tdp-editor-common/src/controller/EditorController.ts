@@ -102,6 +102,15 @@ export default class EditorController {
         };
         await setDataAsync(db, data).catch(e => $warn(e));
     }
+    /**
+     * 根据组件类型获取组件配置信息
+     * @param type 组件类型
+     * @returns 返回组件的配置信息
+     */
+    getComponentConfigByType(type: EnumComponentType | string) {
+        const editorStore = useEditorStore(this.$pinia);
+        return editorStore.componentList.find(c => c.type === type);
+    }
     getSaveData(): IAppSaveStruct {
         const appStore = useAppStore(this.$pinia);
         const varController = useVarControler(this.$app);

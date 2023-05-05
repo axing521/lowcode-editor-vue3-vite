@@ -41,7 +41,7 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
 export type TCssStyleName = keyof CSSStyleDeclaration;
 export interface IComponentState<P = any, C = any> {
     key: string;
-    label: string /* 页面显示名称 */;
+    label?: string /* 页面显示名称 */;
     name?: string /* 别名，一般用于用户给组件定义，方便调用 */;
     type: EnumComponentType | string;
     group: EnumComponentGroup;

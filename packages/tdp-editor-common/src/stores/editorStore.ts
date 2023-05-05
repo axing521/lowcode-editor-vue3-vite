@@ -110,7 +110,7 @@ export const useEditorStore = defineStore('editorStore', {
 export const newComponentJson = (originData: IDesignerComponent): IComponentState => {
     const newId = utils.$getUUID(originData.type);
     // eslint-disable-next-line
-    const { icons, order, showInList, listGroup, sfc, eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
+    const { icons, label, order, showInList, listGroup, sfc, eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
     const newComponent = {
         ...newProps,
         key: newId,

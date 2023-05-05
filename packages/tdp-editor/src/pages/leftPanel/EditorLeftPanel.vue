@@ -70,11 +70,11 @@
                         @select="onTreeSelect"
                         :treeData="__treeData"
                     >
-                        <template #title="{ label }">
-                            <span :title="label">{{ label }}</span>
+                        <template #title="{ type }">
+                            <span>{{ getTreeLabel(type) }}</span>
                         </template>
-                        <template #icon="{ icon }">
-                            <i :class="`iconfont ${icon || ''}`"></i>
+                        <template #icon="{ type }">
+                            <i :class="`iconfont ${getTreeIcon(type)}`"></i>
                         </template>
                     </a-tree>
                 </ul>
@@ -214,7 +214,7 @@
                 text-align: left;
             }
             .iconfont {
-                font-size: 14px;
+                font-size: 22px;
             }
             .ant-tree-title {
                 height: 24px;
@@ -243,6 +243,7 @@ import DesignerComponentList from './componentList';
 import './index.less';
 import NewPageModal from './newPageModal.vue';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
+import type { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 const showAddPageShadow = ref(false);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -260,6 +261,20 @@ const __treeData = computed(() => {
         return [];
     }
 });
+
+// 获取组件的icon信息
+const getTreeIcon = (type: EnumComponentType) => {
+    const componentConfig = useEditorControler().getComponentConfigByType(type);
+    if (componentConfig) return componentConfig.icons;
+    return '';
+};
+
+// 获取组件的label信息
+const getTreeLabel = (type: EnumComponentType) => {
+    const componentConfig = useEditorControler().getComponentConfigByType(type);
+    if (componentConfig) return componentConfig.label;
+    return '';
+};
 
 // 显示隐藏大纲
 const showTreeStruct = () => {
