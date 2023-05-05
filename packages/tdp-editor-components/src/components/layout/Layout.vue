@@ -1,6 +1,6 @@
 <template>
     <template v-if="c_isDesignMode">
-        <!--设计时渲染拖拽组件-->
+        <!-- 设计时渲染拖拽组件 -->
         <Draggable
             class="fd-layout layout-drag"
             :class="{
@@ -23,7 +23,7 @@
         </Draggable>
     </template>
     <template v-else>
-        <!--运行时渲染实际组件-->
+        <!-- 运行时渲染实际组件 -->
         <ComponentWrapper
             v-for="child in props.state.list"
             :key="child.key + '_wrapper'"

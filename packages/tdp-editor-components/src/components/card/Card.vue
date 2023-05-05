@@ -53,18 +53,11 @@ const flexCardClass = computed(() => {
     text-align: left;
     &.card-flex {
         display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
         > .@{prefixName}-card {
             flex: 1;
-        }
-        /* 处理编辑时flex样式保持统一 */
-        &.editor-designer-comp {
-            > .layout-drag {
-                display: flex;
-                padding: 10px;
-                > .@{prefixName}-card {
-                    flex: 1;
-                }
-            }
         }
     }
     &.card-flex-row {
@@ -75,18 +68,29 @@ const flexCardClass = computed(() => {
         > .@{prefixName}-card {
             width: 100%;
         }
-        /* 处理编辑时flex样式保持统一 */
-        &.editor-designer-comp {
-            > .layout-drag {
-                flex-direction: column;
-                > .@{prefixName}-card {
-                    width: 100%;
-                }
-            }
-        }
     }
     &.card-flex-nowrap {
         flex-wrap: nowrap;
+    }
+}
+/* 处理编辑时flex样式保持统一 */
+.@{prefixName}-card.card-flex.editor-designer-comp {
+    > .layout-drag {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        > .@{prefixName}-card {
+            flex: 1;
+        }
+    }
+}
+.@{prefixName}-card.card-flex.card-flex-column.editor-designer-comp {
+    > .layout-drag {
+        flex-direction: column;
+        > .@{prefixName}-card {
+            width: 100%;
+        }
     }
 }
 </style>
