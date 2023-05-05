@@ -3,12 +3,13 @@
         <div class="label">{{ label }}</div>
         <div class="value">
             <div class="flex-group">
-                <h3>尺寸设置</h3>
+                <h3>快捷设置</h3>
                 <div class="flex-box">
                     <a-button @click="quickSizeChange('default')">清空</a-button>
                     <a-button @click="quickSizeChange('flex')">自动</a-button>
                     <a-button @click="quickSizeChange('fixed')">固定</a-button>
                 </div>
+                <h3>手动设置</h3>
                 <div class="flex-box">
                     <div class="box-label">伸展</div>
                     <div class="box-content">
