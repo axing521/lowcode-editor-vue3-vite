@@ -54,8 +54,8 @@ const flexCardClass = computed(() => {
     &.card-flex {
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
-        align-items: flex-start;
+        justify-content: space-evenly;
+        align-items: center;
         > .@{prefixName}-card {
             flex: 1;
         }
@@ -78,8 +78,8 @@ const flexCardClass = computed(() => {
     > .layout-drag {
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
-        align-items: flex-start;
+        justify-content: space-evenly;
+        align-items: center;
         > .@{prefixName}-card {
             flex: 1;
         }
