@@ -56,7 +56,7 @@ const saveStyles = () => {
         const newStyles = monacoRef.value.getValue();
         const page = props.selectedPage;
         page.styles = newStyles;
-        usePageControler().initScript(page.key, page.script!);
+        usePageControler().initStyle(page.key, page.styles!);
         message.success('样式保存成功');
     }
 };
