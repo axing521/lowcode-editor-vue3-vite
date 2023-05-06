@@ -1,4 +1,4 @@
-import { isReactive } from 'vue';
+import { isReactive, isRef } from 'vue';
 import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 
 /* eslint-disable prettier/prettier */
@@ -152,7 +152,7 @@ export const $iniPageScript = (script: string): TPageScriptSet => {
                 const element = pageScript[key];
                 if (typeof element === 'function') {
                     result.functions.push(element);
-                } else if (isReactive(element)) {
+                } else if (isReactive(element) || isRef(element)) {
                     result.responsiveVars.push({
                         varKey: key,
                         varValue: element,

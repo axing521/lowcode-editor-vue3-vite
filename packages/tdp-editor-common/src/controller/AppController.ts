@@ -4,7 +4,7 @@ import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
 import type { IAppStore } from 'tdp-editor-types/src/interface/store';
 
 import { useAppStore } from '../stores/appStore';
-import { usePageControler, useVarControler } from './index';
+import { usePageControler } from './index';
 import { $log } from '../utils';
 
 export default class AppController {
@@ -56,8 +56,6 @@ export default class AppController {
         const targetPage = appStore.getPageByKey(pageKey);
         if (targetPage) {
             const pageController = usePageControler(this.$app);
-            const varController = useVarControler(this.$app);
-            varController.clearCurrentPageVar();
             pageController.clearComponentMap();
             pageController.initStyle(pageKey, targetPage.styles || '');
             pageController.initScript(pageKey, targetPage.script || '');

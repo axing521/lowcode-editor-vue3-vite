@@ -7,7 +7,7 @@ import type { Pinia } from 'pinia';
 import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
 import { $createPageFunction, $createDynamicStyle, $iniPageScript, $log } from '../utils';
 import { useVarControler } from './index';
-import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/vars';
+import { useAppStore } from '../stores/appStore';
 
 export default class PageController {
     private readonly $app: App;
@@ -45,21 +45,20 @@ export default class PageController {
         const startTime = Date.now();
         $log('初始化脚本开始', startTime);
         const scriptSet = $iniPageScript(script);
+        const appStore = useAppStore(this.$pinia);
+        const varController = useVarControler(this.$app);
+
+        // 清理之前的页面函数
         this.pageFunctions.clear();
+        // 清理之前的页面变量
+        varController.clearCurrentPageVar();
         // 保存用户自定义函数
         scriptSet.functions.forEach(func => {
             this.pageFunctions.set(func.name, func);
         });
         // 保存用户自定义变量
-        const varController = useVarControler(this.$app);
         scriptSet.responsiveVars.forEach(v => {
-            varController.addVar({
-                pageKey,
-                scope: EnumAppVarScope.Page,
-                type: EnumAppVarType.Normal,
-                name: v.varKey,
-                data: v.varValue,
-            });
+            appStore.currentPageVars[v.varKey] = v.varValue;
         });
 
         const endTime = Date.now();
