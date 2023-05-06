@@ -1,3 +1,4 @@
+import { isReactive } from 'vue';
 import type { IAppVarConstructor, IAppVarJson } from 'tdp-editor-types/src/interface/app/vars';
 import {
     EnumAppVarDataType,
@@ -128,7 +129,9 @@ export default class AppVar {
     // }
 
     getCloneInitData() {
-        if (typeof this.#_initData === 'object' || Array.isArray(this.#_initData)) {
+        if (isReactive(this.#_initData)) {
+            return this.#_initData;
+        } else if (typeof this.#_initData === 'object' || Array.isArray(this.#_initData)) {
             return JSON.parse(JSON.stringify(this.#_initData));
         } else {
             return this.#_initData;
@@ -136,7 +139,9 @@ export default class AppVar {
     }
 
     setInitData(data: unknown) {
-        if (typeof data === 'object' || Array.isArray(data)) {
+        if (isReactive(data)) {
+            this.#_initData = data;
+        } else if (typeof data === 'object' || Array.isArray(data)) {
             this.#_initData = JSON.parse(JSON.stringify(data));
         } else {
             this.#_initData = data;
