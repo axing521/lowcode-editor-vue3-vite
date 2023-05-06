@@ -116,7 +116,11 @@ export const newComponentJson = (originData: IDesignerComponent): IComponentStat
         ...newProps,
         key: newId,
         name: newId,
-    };
+    } as IComponentState;
+    if (originData.type === EnumComponentType.page) {
+        newComponent.label = '页面';
+        newComponent.list = [];
+    }
     // 容器组件，添加list
     if (originData.group === EnumComponentGroup.layout) {
         newComponent.list = [];

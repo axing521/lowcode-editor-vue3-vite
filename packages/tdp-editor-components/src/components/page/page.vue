@@ -1,5 +1,5 @@
 <template>
-    <div v-if="json" class="template-page" :id="json.key" :style="json.css" data-app>
+    <div v-if="json" class="fd-page" :id="json.key" :style="json.css" data-app>
         <fd-layout :state="json"></fd-layout>
     </div>
 </template>
@@ -8,7 +8,7 @@
 @import url('../../styles/var/index.less');
 
 @prefixName: ~'@{prefix-className}';
-.@{prefixName}-renderer {
+.@{prefixName}-page {
     position: relative;
 }
 </style>

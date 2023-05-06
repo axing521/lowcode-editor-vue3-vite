@@ -1,6 +1,5 @@
 export enum EnumComponentType {
-    page = 'PageRenderer',
-    renderer = 'FdRenderer',
+    page = 'FdPage',
     layout = 'FdLayout',
     form = 'FdForm',
     card = 'FdCard',
