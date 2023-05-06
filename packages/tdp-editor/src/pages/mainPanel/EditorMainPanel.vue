@@ -45,7 +45,7 @@
         z-index: 1;
         transition: all 0.3s;
         width: 30px;
-        height: 26px;
+        height: 20px;
         overflow: hidden;
         .action-title {
             float: left;
@@ -58,8 +58,8 @@
             float: right;
             height: 100%;
             background-color: azure;
-            display: none;
             i.iconfont {
+                font-size: 14px;
                 z-index: 100;
                 color: @primary-color;
                 float: right;
