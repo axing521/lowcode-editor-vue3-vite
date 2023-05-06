@@ -1,7 +1,6 @@
 import type { App } from 'vue';
 import { createPinia } from 'pinia';
 import packageJson from '../../package.json';
-import createRouter from '../routers/router';
 import registerDirectives from 'tdp-editor-components/src/directives';
 import usePlugin from '../plugins';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
@@ -23,7 +22,6 @@ export const initEditor = (app: App) => {
     // 注册指令
     registerDirectives(app);
     app.use(pinia);
-    app.use(createRouter());
     const editorStore = useEditorStore();
     // 注册controller
     const controllers = createController(app, pinia);
