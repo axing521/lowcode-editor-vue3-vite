@@ -1,6 +1,6 @@
 <template>
     <div class="fd-card" :class="flexCardClass" :id="state.key" :style="css">
-        <fd-layout :state="state" :parentId="state.key"></fd-layout>
+        <fd-layout :state="state" :designerClass="flexCardClass"></fd-layout>
     </div>
 </template>
 <script lang="ts">
@@ -51,6 +51,9 @@ const flexCardClass = computed(() => {
 .@{prefixName}-card {
     position: relative;
     text-align: left;
+}
+.@{prefixName}-card,
+.@{prefixName}-card > .layout-drag {
     &.card-flex {
         display: flex;
         flex-direction: row;
@@ -71,32 +74,6 @@ const flexCardClass = computed(() => {
         }
     }
     &.card-flex-wrap {
-        flex-wrap: wrap;
-    }
-}
-/* 处理编辑时flex样式保持统一 */
-.@{prefixName}-card.card-flex.editor-designer-comp {
-    > .layout-drag {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-evenly;
-        align-items: center;
-        > .@{prefixName}-card {
-            flex: 1;
-        }
-    }
-}
-.@{prefixName}-card.card-flex.card-flex-column.editor-designer-comp {
-    > .layout-drag {
-        flex-direction: column;
-        > .@{prefixName}-card {
-            width: 100%;
-        }
-    }
-}
-.@{prefixName}-card.card-flex.card-flex-wrap.editor-designer-comp {
-    > .layout-drag {
         flex-wrap: wrap;
     }
 }

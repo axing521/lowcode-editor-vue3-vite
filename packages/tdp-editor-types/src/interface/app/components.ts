@@ -13,7 +13,7 @@ import type { IFormInfo } from './form';
 // setup中公共部分props的定义
 export interface ISetupBaseProps {
     state: IComponentState;
-    parentId: string;
+    parentId?: string;
 }
 
 /* form组件基础属性定义 */

@@ -3,9 +3,7 @@
         <!-- 设计时渲染拖拽组件 -->
         <Draggable
             class="fd-layout layout-drag"
-            :class="{
-                'fd-page-layout': props.state.type === EnumComponentType.page,
-            }"
+            :class="c_designerClass"
             :data-drag-id="props.state.key"
             :data-drag-type="props.state.type"
             :itemKey="getDragableItemKey"
@@ -40,7 +38,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { inject, defineComponent } from 'vue';
+import { inject, defineComponent, computed } from 'vue';
 import { useBase } from '../../composables/base';
 import Draggable from 'vuedraggable';
 
@@ -53,7 +51,7 @@ import ComponentWrapper from '../componentWrapper.vue';
 
 const props = defineProps<{
     state: IComponentState;
-    parentId: string;
+    designerClass?: string[]; // 处理设计时需要添加一些class保持和预览效果一致
 }>();
 
 const { c_isDesignMode } = useBase(props);
@@ -61,25 +59,21 @@ const dragAddComponent = inject(
     'dragAddComponent',
     (component: IDesignerComponent, parent: IDesignerComponent) => {}
 );
-// const layoutType = EnumComponentType.layout;
+
 let dragComponent: IDesignerComponent | undefined = undefined;
 
-// const _isPage = computed(() => {
-//     return props.state.type === EnumComponentType.page;
-// });
-// const _Css = computed(() => {
-//     const combieCss: any = {};
-//     // 显示阴影
-//     if (c_Props.value.showShadow === true) {
-//         combieCss.boxShadow = '0 0 10px 0 #888888';
-//         combieCss.margin = '10px';
-//     }
-//     return {
-//         ...{},
-//         ...props.state.css,
-//         ...combieCss,
-//     };
-// });
+const c_designerClass = computed(() => {
+    const result: string[] = [];
+    if (props.state.type === EnumComponentType.page) {
+        result.push('fd-page-layout');
+    }
+    if (props.designerClass) {
+        props.designerClass.forEach(c => {
+            result.push(c);
+        });
+    }
+    return result;
+});
 
 const dragAddHandler = () => {
     const targetComponent = props.state;
