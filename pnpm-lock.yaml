@@ -142,11 +142,13 @@ importers:
       pinia: ^2.0.14
       tdp-editor-types: workspace:*
       vue: ^3.2.37
+      vue-router: ^4.0.16
     dependencies:
       axios: registry.npmmirror.com/axios/0.24.0
       pinia: registry.npmmirror.com/pinia/2.0.23_vue@3.2.41
       tdp-editor-types: link:../tdp-editor-types
       vue: registry.npmmirror.com/vue/3.2.41
+      vue-router: registry.npmmirror.com/vue-router/4.1.6_vue@3.2.41
 
   packages/tdp-editor-components:
     specifiers:

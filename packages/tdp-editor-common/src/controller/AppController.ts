@@ -1,4 +1,5 @@
 import type { App } from 'vue';
+import type { Router } from 'vue-router';
 import type { Pinia } from 'pinia';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
 import type { IAppStore } from 'tdp-editor-types/src/interface/store';
@@ -63,6 +64,12 @@ export default class AppController {
         }
         if (oldPageKey) {
             $log('切换前的页面key：' + oldPageKey);
+        }
+    }
+    // 路由到某个页面
+    routerPage(params: { router: Router; pageKey?: string; pageName?: string }) {
+        if (params.pageKey) {
+            params.router.push(params.pageKey);
         }
     }
     /**
