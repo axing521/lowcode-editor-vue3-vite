@@ -7,5 +7,5 @@ export default function usePlugin(app: App) {
     useAntdV(app);
     // useVxeTable(app);
     useClipboard(app);
-    useTDP();
+    useTDP(app);
 }

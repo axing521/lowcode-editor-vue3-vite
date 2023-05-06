@@ -20,8 +20,6 @@ export const initEditor = (app: App) => {
         'tdp-editor version: ' + packageJson.version
     );
     const pinia = createPinia();
-    // 注册插件
-    usePlugin(app);
     // 注册指令
     registerDirectives(app);
     app.use(pinia);
@@ -30,6 +28,8 @@ export const initEditor = (app: App) => {
     // 注册controller
     const controllers = createController(app, pinia);
     controllers.appController.setMode(EnumAppMode.design);
+    // 注册插件
+    usePlugin(app);
     // 注册默认组件
     const componentList = componentRegister(app);
     app.config.globalProperties.$default_componentList = componentList;
