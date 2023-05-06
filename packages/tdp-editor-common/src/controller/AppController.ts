@@ -4,7 +4,7 @@ import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
 import type { IAppStore } from 'tdp-editor-types/src/interface/store';
 
 import { useAppStore } from '../stores/appStore';
-import { usePageControler } from './index';
+import { usePageControler, useVarControler } from './index';
 import { $log } from '../utils';
 
 export default class AppController {
@@ -55,11 +55,13 @@ export default class AppController {
         const appStore = useAppStore(this.$pinia);
         const targetPage = appStore.getPageByKey(pageKey);
         if (targetPage) {
-            const pageController = usePageControler();
-            pageController.getComponentsMap().clear();
-            pageController.initStyle(targetPage.key, targetPage.styles || '');
-            pageController.initScript(targetPage.key, targetPage.script || '');
-            appStore.setActivePage({ pageId: targetPage.key });
+            const pageController = usePageControler(this.$app);
+            const varController = useVarControler(this.$app);
+            varController.clearCurrentPageVar();
+            pageController.clearComponentMap();
+            pageController.initStyle(pageKey, targetPage.styles || '');
+            pageController.initScript(pageKey, targetPage.script || '');
+            appStore.setActivePage({ pageId: pageKey });
         }
         if (oldPageKey) {
             $log('切换前的页面key：' + oldPageKey);

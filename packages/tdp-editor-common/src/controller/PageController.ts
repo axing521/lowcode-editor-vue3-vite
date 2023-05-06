@@ -124,10 +124,10 @@ export default class PageController {
     }
 
     /**
-     * 获取实例集合map
+     * 清空实例集合map
      * @returns 返回map
      */
-    getComponentsMap() {
-        return this.componentsMap;
+    clearComponentMap() {
+        return this.componentsMap.clear();
     }
 }
