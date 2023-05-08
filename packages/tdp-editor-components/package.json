@@ -19,8 +19,11 @@
     "dist"
   ],
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "axios": "^0.24.0",
     "classnames": "^2.3.1",
     "moment": "^2.29.1",
+    "openai": "^3.2.1",
     "tdp-editor-common": "workspace:^0.1.0",
     "tdp-editor-types": "workspace:*",
     "vue": "^3.2.37",

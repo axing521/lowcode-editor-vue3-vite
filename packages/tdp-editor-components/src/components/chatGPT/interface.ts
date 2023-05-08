@@ -7,9 +7,16 @@ export interface IChatGPTState extends IComponentState<IChatGPTProps> {
 export interface IChatGPTProps {
     apiKey?: string;
     proxy?: string;
-    gptModel?: string;
+    gptModel?: 'gpt-4' | 'gpt-4-0314' | 'gpt-3.5-turbo' | 'gpt-3.5-turbo-0301' | '';
     theme?: boolean; //true: dark, false: light
     enableContext?: boolean; //true: enable, false: disable
+}
+
+export interface IAllProps {
+    state: IComponentState<IChatGPTProps>;
+    parentId: string;
+    props: IChatGPTProps;
+    css: Record<string, any>;
 }
 
 /* 

@@ -6,43 +6,54 @@ import { defineAsyncComponent } from 'vue';
 import type { IChatGPTProps } from './interface';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import type { ISelectorSelectOptions } from '@/tdp-editor-types/src/interface/designer/selector';
 
 export default defineAsyncComponent(() => import('./chatGPTRenderer.vue'));
 
 export const register: registerComponentFunc = function () {
     const chatGPT: IDesignerComponent<IChatGPTProps> = {
         key: '',
-        label: '表单',
-        icons: 'chatGPT', //这一块是做什么，从哪儿拿这个icon
-        group: EnumComponentGroup.layout, //这一块是做什么
+        label: 'chatGPT',
+        icons: 'button',
+        group: EnumComponentGroup.base,
         type: EnumComponentType.chatGPT,
-        isFormer: true, //?
         order: 200,
         list: [],
         propsConfigs: [
             {
                 key: 'apiKey',
-                label: 'openAI-API-Key',
-                selector: EnumSelectorName.bindData,
+                label: 'APIKey',
+                selector: EnumSelectorName.input,
             },
             {
                 key: 'proxy',
-                label: '可以访问openAI的代理地址',
-                selector: EnumSelectorName.bindData,
+                label: '代理地址',
+                selector: EnumSelectorName.input,
             },
             {
                 key: 'gptModel',
-                label: '选择GPT模型',
-                selector: EnumSelectorName.select,
+                label: 'GPT模型',
+                selector: {
+                    name: EnumSelectorName.select,
+                    options: {
+                        items: [
+                            { key: '', label: '默认' },
+                            { key: 'gpt-3.5-turbo', label: 'gpt-3.5-turbo' },
+                            { key: 'gpt-3.5-turbo-0301', label: 'gpt-3.5-turbo-0301' },
+                            { key: 'gpt-4-0314', label: 'gpt-4-0314' },
+                            { key: 'gpt-4', label: 'gpt-4' },
+                        ],
+                    } as ISelectorSelectOptions,
+                },
             },
             {
                 key: 'theme',
-                label: '设置颜色主题',
+                label: '颜色主题',
                 selector: EnumSelectorName.switch,
             },
             {
                 key: 'enableContext',
-                label: '开启上下文功能',
+                label: '开启上下文',
                 selector: EnumSelectorName.switch,
             },
         ],
