@@ -23,12 +23,12 @@ export const register: registerComponentFunc = function () {
             {
                 key: 'apiKey',
                 label: 'APIKey',
-                selector: EnumSelectorName.input,
+                selector: EnumSelectorName.pwd,
             },
             {
                 key: 'proxy',
                 label: '代理地址',
-                selector: EnumSelectorName.input,
+                selector: EnumSelectorName.pwd,
             },
             {
                 key: 'gptModel',
