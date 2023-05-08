@@ -5,8 +5,8 @@
         :prop="prop"
         :defualt-value-type="valueType"
     >
-        <!-- 属性名显示 -->
-        <template #label>{{ prop.label }}</template>
+        <!-- 属性名显示 ，如果不写这个template那么lable将不显示 -->
+        <template #label />
         <!-- 属性选择器实现 -->
         <template #value><a-input v-model:value="inputValue"></a-input></template>
     </prop-selector-wrapper>

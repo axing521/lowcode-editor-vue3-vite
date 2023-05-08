@@ -42,7 +42,7 @@
             <div class="toolbar-right">
                 <a-button type="primary" @click="pagePreview">
                     <i class="iconfont Preview" />
-                    预览
+                    运行
                 </a-button>
                 <a-switch
                     class="switch-designer"
@@ -173,14 +173,10 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
-import {
-    useAppControler,
-    useEditorControler,
-    useVarControler,
-} from 'tdp-editor-common/src/controller';
+import { useAppControler, useEditorControler } from 'tdp-editor-common/src/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
-import { EnumAppVarScope, EnumAppVarType } from 'tdp-editor-types/src/enum/app/vars';
+import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
 
 import EditorLeftPanel from './leftPanel/EditorLeftPanel.vue';
 import DesignerRight from './rightPanel';
@@ -212,19 +208,6 @@ const thisRefs = {} as any;
 onMounted(async () => {
     // editorStore.initDesignerPage();
     await editorController.initEditorAsync();
-    const varController = useVarControler();
-    varController.addVar({
-        type: EnumAppVarType.Normal,
-        data: { itcode: 'liuyc14' },
-        name: 'app',
-        scope: EnumAppVarScope.Global,
-    });
-    varController.addVar({
-        type: EnumAppVarType.Normal,
-        data: { text: '变量中的text' },
-        name: 'button',
-        scope: EnumAppVarScope.Page,
-    });
 });
 
 // 编辑器的所有页面

@@ -1,7 +1,14 @@
+/**
+ * 封装页面级别的交互逻辑
+ * 例如页面初始化、获取页面方法、向当前页面添加删除组件map关系等
+ */
 import type { App, ComponentPublicInstance } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
-import { $createPageFunction, $createDynamicStyle } from '../utils';
+import { $createPageFunction, $createDynamicStyle, $iniPageScript, $log } from '../utils';
+import { useVarControler } from './index';
+import { useAppStore } from '../stores/appStore';
+
 export default class PageController {
     private readonly $app: App;
     private readonly $pinia: Pinia;
@@ -27,6 +34,40 @@ export default class PageController {
         functions.forEach(func => {
             this.pageFunctions.set(func.name, func);
         });
+    }
+
+    /**
+     * 初始化脚本
+     * @param pageKey 页面key
+     * @param script 用户定义的脚本字符串
+     */
+    initScript(pageKey: string, script: string) {
+        const startTime = Date.now();
+        $log('初始化脚本开始', startTime);
+        const scriptSet = $iniPageScript(script);
+        const appStore = useAppStore(this.$pinia);
+        const varController = useVarControler(this.$app);
+
+        // 清理之前的页面函数
+        this.pageFunctions.clear();
+        // 清理之前的页面变量
+        varController.clearCurrentPageVar();
+        // 保存用户自定义函数
+        scriptSet.functions.forEach(func => {
+            this.pageFunctions.set(func.name, func);
+        });
+        // 保存用户自定义变量
+        scriptSet.responsiveVars.forEach(v => {
+            appStore.currentPageVars[v.varKey] = v.varValue;
+        });
+
+        const endTime = Date.now();
+        $log('初始化脚本结束', endTime);
+        $log(
+            `共用时 ${endTime - startTime} ms`,
+            this.pageFunctions,
+            varController.getCurrentPageVars()
+        );
     }
 
     /**
@@ -82,10 +123,10 @@ export default class PageController {
     }
 
     /**
-     * 获取实例集合map
+     * 清空实例集合map
      * @returns 返回map
      */
-    getComponentsMap() {
-        return this.componentsMap;
+    clearComponentMap() {
+        return this.componentsMap.clear();
     }
 }

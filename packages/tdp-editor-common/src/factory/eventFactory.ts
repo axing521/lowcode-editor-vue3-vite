@@ -57,12 +57,14 @@ const EventFactory = {
 
         // 循环执行每个处理函数
         funcs.forEach(func => {
-            func.call(instance, {
-                comp: instance,
+            func.call({
                 $g: params.$g,
                 $p: params.$p,
-                e: params.$event,
-                data: params.extendParams,
+                $event: {
+                    e: params.$event,
+                    instance,
+                    data: params.extendParams,
+                },
             });
         });
     },
@@ -93,12 +95,14 @@ const EventFactory = {
             // 封装额外参数对象
             _eventsMap[eventName as EnumEventName] = function ($event: any) {
                 funcs.forEach(func => {
-                    func.call(instance, {
-                        comp: instance,
+                    func.call({
                         $g: params.$g,
                         $p: params.$p,
-                        e: $event,
-                        data: eventParmas,
+                        $event: {
+                            e: $event,
+                            instance,
+                            data: eventParmas,
+                        },
                     });
                 });
             };

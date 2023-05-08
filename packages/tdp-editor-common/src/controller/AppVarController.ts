@@ -37,9 +37,11 @@ export default class AppVarController {
 
     /**
      * 添加变量，传入变量的具体信息
-     * @param {} param0
+     * @param varJson 变量信息
+     * @param cover 是否覆盖已有变量
+     * @returns 返回创建变量结果
      */
-    addVar(varJson: IAppVarConstructor) {
+    addVar(varJson: IAppVarConstructor, cover = false) {
         const appStore = useAppStore(this.$pinia);
         const result = {
             success: false,
@@ -50,7 +52,7 @@ export default class AppVarController {
             varJson.pageKey = appStore.activePage?.key || '';
         }
         const varInstance = new AppVar(varJson);
-        const addResult = this.addVarInstance(varInstance);
+        const addResult = this.addVarInstance(varInstance, cover);
         result.success = addResult.success;
         result.msg = addResult.msg;
         result.instance = varInstance;
@@ -60,8 +62,9 @@ export default class AppVarController {
     /**
      * 添加变量
      * @param {*} varInstance 被添加的变量对象
+     * @param { boolean } cover 是否覆盖已有变量
      */
-    addVarInstance(varInstance: AppVar) {
+    addVarInstance(varInstance: AppVar, cover = false) {
         const appStore = useAppStore(this.$pinia);
         const addResult = {
             success: false,
@@ -69,7 +72,7 @@ export default class AppVarController {
         };
         // 添加全局变量
         if (varInstance.scope === EnumAppVarScope.Global) {
-            if (!appStore.globalVars[varInstance.name]) {
+            if (!appStore.globalVars[varInstance.name] || cover) {
                 appStore.globalVars[varInstance.name] = varInstance.getCloneInitData();
                 GlobalVarMap.set(varInstance.name, varInstance);
                 addResult.success = true;
@@ -84,7 +87,7 @@ export default class AppVarController {
             if (activePageId) {
                 const pageVars = appStore.currentPageVars;
                 // 如果变量已经存在，则不能添加
-                if (pageVars[varInstance.name]) {
+                if (pageVars[varInstance.name] && !cover) {
                     $error(`${varInstance.name}变量已存在，不能重复添加`);
                     addResult.msg = '变量已存在，不能重复添加';
                     return addResult;
@@ -153,7 +156,7 @@ export default class AppVarController {
             success: false,
             msg: '',
         };
-        const appStore = useAppStore();
+        const appStore = useAppStore(this.$pinia);
         // 非空校验
         if (varInstance instanceof AppVar) {
             // 判断是 全局变量 还是 页面变量
@@ -172,6 +175,17 @@ export default class AppVarController {
         }
         result.success = true;
         return result;
+    }
+
+    /**
+     * 清空当前页面变量
+     */
+    clearCurrentPageVar() {
+        const appStore = useAppStore(this.$pinia);
+        currentPageVarMap.clear();
+        for (const key in appStore.currentPageVars) {
+            delete appStore.currentPageVars[key];
+        }
     }
 
     /**

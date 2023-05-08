@@ -59,12 +59,7 @@ export const useEditorStore = defineStore('editorStore', {
                 // 不是页面时，需要父组件是容器组件才能添加
                 else if (
                     payload.parent.type !== EnumComponentType.page &&
-                    [
-                        EnumComponentType.layout,
-                        EnumComponentType.form,
-                        EnumComponentType.row,
-                        EnumComponentType.col,
-                    ].some(type => type === payload.parent.type)
+                    payload.parent.group === EnumComponentGroup.layout
                 ) {
                     payload.parent.list?.push(payload.component);
                     // state.selectedComponent = payload.component;
@@ -112,18 +107,26 @@ export const useEditorStore = defineStore('editorStore', {
     },
 });
 
+// 创建一个新的空组件
 export const newComponentJson = (originData: IDesignerComponent): IComponentState => {
     const newId = utils.$getUUID(originData.type);
     // eslint-disable-next-line
-    const { icons, order, showInList, listGroup, sfc, eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
+    const { icons, label, order, showInList, listGroup, sfc, eventConfigs, propsConfigs, cssConfigs, getDefaultCss, getDefaultProps, ...newProps } = originData;
     const newComponent = {
         ...newProps,
         key: newId,
         name: newId,
-        list: [],
-    };
+    } as IComponentState;
+    if (originData.type === EnumComponentType.page) {
+        newComponent.label = '页面';
+        newComponent.list = [];
+    }
+    // 容器组件，添加list
+    if (originData.group === EnumComponentGroup.layout) {
+        newComponent.list = [];
+    }
     // 如果添加的组件是form组件，追加formInfo属性
-    if (originData.isFormer) {
+    if (originData.isForm) {
         newComponent.formInfo = {
             formFieldName: newId,
             rules: [],

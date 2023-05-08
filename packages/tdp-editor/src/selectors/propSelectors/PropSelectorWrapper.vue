@@ -1,11 +1,13 @@
 <template>
     <div class="item">
         <!-- 属性名称显示 -->
-        <div class="label">
-            <slot name="label">
-                {{ prop.label }}
-            </slot>
-        </div>
+        <template v-if="$slots.label">
+            <div class="label">
+                <slot name="label">
+                    {{ prop.label }}
+                </slot>
+            </div>
+        </template>
         <!-- 普通选择器 -->
         <template v-if="$slots.value">
             <div class="value">

@@ -9,7 +9,7 @@
         :style="css"
         @submit.prevent="submitForm"
     >
-        <fd-layout :state="allProps.state" parentId=""></fd-layout>
+        <fd-layout :state="allProps.state"></fd-layout>
     </form>
 </template>
 <script lang="ts">
@@ -114,9 +114,6 @@ const submitForm = async () => {
         button {
             margin-right: 10px;
         }
-    }
-    .fd-form-layout > .layout-drag {
-        min-height: 200px;
     }
 }
 </style>

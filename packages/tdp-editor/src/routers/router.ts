@@ -5,7 +5,7 @@ import TdpPreview from '../pages/TdpPreview.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
-        name: 'index',
+        name: 'editor',
         path: '/',
         meta: {
             className: 'tdp-editor-index',

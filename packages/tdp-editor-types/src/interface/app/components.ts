@@ -13,7 +13,7 @@ import type { IFormInfo } from './form';
 // setup中公共部分props的定义
 export interface ISetupBaseProps {
     state: IComponentState;
-    parentId: string;
+    parentId?: string;
 }
 
 /* form组件基础属性定义 */
@@ -41,7 +41,7 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
 export type TCssStyleName = keyof CSSStyleDeclaration;
 export interface IComponentState<P = any, C = any> {
     key: string;
-    label: string /* 页面显示名称 */;
+    label?: string /* 页面显示名称 */;
     name?: string /* 别名，一般用于用户给组件定义，方便调用 */;
     type: EnumComponentType | string;
     group: EnumComponentGroup;
@@ -49,7 +49,7 @@ export interface IComponentState<P = any, C = any> {
     apis?: IComponentApi[];
     props?: IComponentProps<P>;
     formInfo?: IFormInfo;
-    isFormer?: boolean; // 是否属于form组件
+    isForm?: boolean; // 是否属于form组件
     css?: C;
     classNames?: string[]; // 组件的自定义样式名
     events?: IComponentEvent[];
@@ -85,14 +85,22 @@ export type TEventFuncParam1 = {
     e?: any; // 原始事件对象
     data?: Record<string, any>; // 扩展属性
 };
-
-export type TEventFunc = ($event: TEventFuncParam1) => void;
+type TEventFuncThis = {
+    $g: Record<string, any>;
+    $p?: Record<string, any>;
+    $event: {
+        e: any;
+        instance: ComponentPublicInstance | null;
+        data?: Record<string, any>;
+    };
+};
+export type TEventFunc = (this: TEventFuncThis, $event?: TEventFuncParam1) => void;
 
 // 页面的state，因为页面状态可能提供外部开发者，所以放到interface项目中
 export interface IPageState extends IComponentState<IPageProps> {
     type: EnumComponentType.page;
     styles?: string; // 自定义样式, 存放在page 的state中
-    functions?: string; // 自定义函数, 存放在page 的state中
+    script?: string; // 自定义脚本, 存放在page 的state中
     vars?: string; // 页面变量
 }
 

@@ -36,12 +36,11 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
     const pinia = createPinia();
     // 注册指令
     registerDirectives(app);
-    // 注册插件
-    usePlugin(app);
     // 注册pinia
     app.use(pinia);
     // 注册router
-    app.use(createRouter());
+    const router = createRouter();
+    app.use(router);
 
     // 注册默认组件
     const componentList = componentRegister(app);
@@ -49,6 +48,8 @@ export const createRuntime = (options: ICreateRuntimeOptions) => {
     // 注册controller
     const controllers = createController(app, pinia);
     controllers.appController.setMode(EnumAppMode.runtime);
+    // 注册插件
+    usePlugin(app, router);
     // 渲染应用
     app.mount(options.container);
     return {

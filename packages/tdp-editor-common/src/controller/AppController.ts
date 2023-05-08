@@ -1,4 +1,5 @@
 import type { App } from 'vue';
+import type { Router } from 'vue-router';
 import type { Pinia } from 'pinia';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
 import type { IAppStore } from 'tdp-editor-types/src/interface/store';
@@ -21,7 +22,8 @@ export default class AppController {
     initApp(appJson: IAppStore) {
         const appStore = useAppStore(this.$pinia);
         appStore.pages = appJson.pages;
-        appStore.activePage = appJson.activePage || appJson.pages[0];
+        const activePage = appJson.activePage || appJson.pages[0];
+        this.changePage(activePage.key, '');
     }
     /**
      * 获取当前显示页面
@@ -54,14 +56,20 @@ export default class AppController {
         const appStore = useAppStore(this.$pinia);
         const targetPage = appStore.getPageByKey(pageKey);
         if (targetPage) {
-            const pageController = usePageControler();
-            pageController.getComponentsMap().clear();
-            pageController.initStyle(targetPage.key, targetPage.styles || '');
-            pageController.initFunctions(targetPage.functions || '');
-            appStore.setActivePage({ pageId: targetPage.key });
+            const pageController = usePageControler(this.$app);
+            pageController.clearComponentMap();
+            pageController.initStyle(pageKey, targetPage.styles || '');
+            pageController.initScript(pageKey, targetPage.script || '');
+            appStore.setActivePage({ pageId: pageKey });
         }
         if (oldPageKey) {
             $log('切换前的页面key：' + oldPageKey);
+        }
+    }
+    // 路由到某个页面
+    routerPage(params: { router: Router; pageKey?: string; pageName?: string }) {
+        if (params.pageKey) {
+            params.router.push(params.pageKey);
         }
     }
     /**

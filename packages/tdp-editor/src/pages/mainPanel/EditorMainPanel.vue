@@ -5,7 +5,7 @@
             :class="{ preview: appMode !== EnumAppMode.design }"
             id="designer-main-action-box"
         >
-            <div class="action-title">{{ selectedComponent && selectedComponent.label }}</div>
+            <div class="action-title">{{ selectedComponentLabel }}</div>
             <div class="action-bars">
                 <i class="iconfont del" @click="deleteComponent" />
             </div>
@@ -45,7 +45,7 @@
         z-index: 1;
         transition: all 0.3s;
         width: 30px;
-        height: 26px;
+        height: 20px;
         overflow: hidden;
         .action-title {
             float: left;
@@ -59,6 +59,7 @@
             height: 100%;
             background-color: azure;
             i.iconfont {
+                font-size: 14px;
                 z-index: 100;
                 color: @primary-color;
                 float: right;
@@ -119,7 +120,13 @@ const editorStore = useEditorStore();
 const setIndexRefs = inject('setRefs', (key: string, comInstance: ComponentPublicInstance) =>
     $log('setRefs', key, comInstance)
 );
-const selectedComponent = computed(() => editorStore.selectedComponent);
+const selectedComponentLabel = computed(() => {
+    if (editorStore.selectedComponent) {
+        return useEditorControler().getComponentConfigByType(editorStore.selectedComponent.type)
+            ?.label;
+    }
+    return '';
+});
 const appMode = computed(() => appStore.mode);
 const selectedPage = computed(() => appStore.activePage);
 const activePageMode = computed(() => editorStore.pageEditMode);

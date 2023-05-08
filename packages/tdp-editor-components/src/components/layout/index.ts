@@ -1,4 +1,3 @@
-import { defineAsyncComponent } from 'vue';
 import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type {
@@ -6,12 +5,14 @@ import type {
     registerComponentFunc,
 } from 'tdp-editor-types/src/interface/designer';
 import type { ILayoutProps } from './interface';
-export default defineAsyncComponent(() => import('./layoutRenderer.vue'));
+import Layout from './Layout.vue';
+
+export default Layout;
 
 export const register: registerComponentFunc = function () {
     const layout: IDesignerComponent<ILayoutProps> = {
         key: '',
-        label: '卡片',
+        label: '布局容器',
         icons: 'Cards',
         group: EnumComponentGroup.layout,
         type: EnumComponentType.layout,

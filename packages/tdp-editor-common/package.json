@@ -12,7 +12,8 @@
     "axios": "^0.24.0",
     "pinia": "^2.0.14",
     "tdp-editor-types": "workspace:*",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-router": "^4.0.16"
   },
   "devDependencies": {
   }

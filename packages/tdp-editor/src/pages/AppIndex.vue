@@ -10,11 +10,10 @@
 }
 </style>
 <script lang="ts" setup>
-import { $log } from 'tdp-editor-common/src/utils';
 import { onMounted } from 'vue';
+import { $log } from 'tdp-editor-common/src/utils';
 
 onMounted(() => {
-    $log('tdp-editor-index onMounted');
-    // 这个地方可以执行用户的应用初始化方法
+    $log('路由到editor首页，初始化后进入editor');
 });
 </script>

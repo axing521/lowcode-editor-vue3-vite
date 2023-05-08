@@ -16,7 +16,7 @@ import type { IButtonProps } from './interface';
 import type { ISelectorSelectOptions } from 'tdp-editor-types/src/interface/designer/selector';
 
 export default defineAsyncComponent(() => {
-    return import('./buttonRenderer.vue');
+    return import('./Button.vue');
 });
 
 export const register: registerComponentFunc = function () {

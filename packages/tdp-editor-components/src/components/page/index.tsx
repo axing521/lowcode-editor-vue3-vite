@@ -1,4 +1,3 @@
-import { defineAsyncComponent } from 'vue';
 import type {
     IDesignerComponent,
     registerComponentFunc,
@@ -12,10 +11,9 @@ import {
     EnumPropsValueType,
 } from 'tdp-editor-types/src/enum/components';
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
+import Page from './page.vue';
 
-export default defineAsyncComponent(() => {
-    return import('./page.vue');
-});
+export default Page;
 
 export const register: registerComponentFunc = function () {
     const page: IDesignerComponent<IPageProps> = {

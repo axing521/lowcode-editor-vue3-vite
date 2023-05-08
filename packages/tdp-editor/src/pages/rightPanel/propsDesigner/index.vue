@@ -139,7 +139,7 @@ export default defineComponent({
             return Boolean(
                 this.element &&
                     this.element.group === EnumComponentGroup.form &&
-                    this.element.isFormer
+                    this.element.isForm
             );
         },
         // 组件ID
@@ -149,7 +149,10 @@ export default defineComponent({
         // 组件类型
         componentType(): string {
             if (this.element) {
-                return `${this.element.type}(${this.element.label})`;
+                const componentConfig = this.$EditorController.getComponentConfigByType(
+                    this.element.type
+                );
+                return `${this.element.type}(${componentConfig?.label})`;
             } else return '';
         },
         // 当前组件的所有属性

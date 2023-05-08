@@ -18,10 +18,6 @@ function useBaseIndex(props: ISetupBaseProps) {
     // 处理后的css
     const c_Css = computed<Record<string, string>>(() => {
         return {
-            ...{
-                margin: 'auto',
-                padding: 'auto',
-            },
             ...props.state.css,
         } as unknown as Record<string, string>;
     });
