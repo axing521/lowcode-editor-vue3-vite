@@ -57,7 +57,6 @@ export default class AppController {
         const targetPage = appStore.getPageByKey(pageKey);
         if (targetPage) {
             const pageController = usePageControler(this.$app);
-            pageController.clearComponentMap();
             pageController.initStyle(pageKey, targetPage.styles || '');
             pageController.initScript(pageKey, targetPage.script || '');
             appStore.setActivePage({ pageId: pageKey });
