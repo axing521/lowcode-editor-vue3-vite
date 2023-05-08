@@ -15,13 +15,19 @@ export default class PageController {
     // 当前页面所有函数集合
     private readonly pageFunctions = new Map<string, Function>();
     // 当前页面所有组件的实例集合
-    private readonly componentsMap = new Map<
-        string,
+    private readonly componentsMap = new WeakMap<
+        HTMLElement,
         ComponentPublicInstance<IComponentCommonProps>
     >();
+    // 测试组件是否释放
+    private readonly testMap = new WeakMap<ComponentPublicInstance, HTMLElement | string>();
     constructor(app: App, pinia: Pinia) {
         this.$app = app;
         this.$pinia = pinia;
+        document.addEventListener('dblclick', () => {
+            $log('testMap', this.testMap);
+            $log('componentsMap', this.componentsMap);
+        });
     }
 
     /**
@@ -102,7 +108,13 @@ export default class PageController {
      * @param componentInstance 组件实例
      */
     addComponent(key: string, componentInstance: ComponentPublicInstance) {
-        this.componentsMap.set(key, componentInstance as any);
+        const el = document.getElementById(key);
+        if (el) {
+            this.componentsMap.set(el, componentInstance as any);
+            this.testMap.set(componentInstance, el);
+        } else {
+            this.testMap.set(componentInstance, key);
+        }
     }
 
     /**
@@ -110,7 +122,10 @@ export default class PageController {
      * @param key 组件key
      */
     deleteComponent(key: string) {
-        this.componentsMap.delete(key);
+        const el = document.getElementById(key);
+        if (el) {
+            this.componentsMap.delete(el);
+        }
     }
 
     /**
@@ -119,14 +134,10 @@ export default class PageController {
      * @returns 返回组件实例
      */
     getComponentByKey(key: string) {
-        return this.componentsMap.get(key);
-    }
-
-    /**
-     * 清空实例集合map
-     * @returns 返回map
-     */
-    clearComponentMap() {
-        return this.componentsMap.clear();
+        const el = document.getElementById(key);
+        if (el) {
+            return this.componentsMap.get(el);
+        }
+        return undefined;
     }
 }
