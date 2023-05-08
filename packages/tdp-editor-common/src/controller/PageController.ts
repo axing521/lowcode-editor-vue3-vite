@@ -20,7 +20,7 @@ export default class PageController {
         ComponentPublicInstance<IComponentCommonProps>
     >();
     // 测试组件是否释放
-    private readonly testMap = new WeakMap<ComponentPublicInstance, HTMLElement>();
+    private readonly testMap = new WeakMap<ComponentPublicInstance, HTMLElement | string>();
     constructor(app: App, pinia: Pinia) {
         this.$app = app;
         this.$pinia = pinia;
@@ -112,6 +112,8 @@ export default class PageController {
         if (el) {
             this.componentsMap.set(el, componentInstance as any);
             this.testMap.set(componentInstance, el);
+        } else {
+            this.testMap.set(componentInstance, key);
         }
     }
 
