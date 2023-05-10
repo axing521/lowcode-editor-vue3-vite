@@ -6,6 +6,7 @@ export enum EnumSelectorName {
     arrayData = 'arrayDataSelector',
     bindData = 'bindDataSelector',
     bindFunction = 'bindFunction',
+    pwd = 'pwdSelector',
 }
 
 export enum EnumCssSelectorName {

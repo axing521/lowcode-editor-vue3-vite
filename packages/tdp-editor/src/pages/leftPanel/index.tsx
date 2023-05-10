@@ -64,8 +64,8 @@ export default defineComponent({
     methods: {
         renderMenus(): VNode[] {
             const MENUS = this.menus;
-            const menu_pageList = MENUS[0]; // 表单列表菜单项
-            const pageListChildren = menu_pageList.list || []; // 表单列表菜单的所有子菜单
+            const menu_pageList = MENUS[0]; // 表单列表页面项
+            const pageListChildren = menu_pageList.list || []; // 表单列表页面项的所有子菜单
             const firstMenu = (
                 <div class="first-menu">
                     <ul>

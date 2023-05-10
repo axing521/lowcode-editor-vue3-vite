@@ -4,6 +4,6 @@
   "compilerOptions": {
     "composite": true,
     "lib": ["DOM"],
-    "types": ["node"]
+    "types": ["node"],
   }
 }
