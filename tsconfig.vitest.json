@@ -5,6 +5,5 @@
     "composite": true,
     "lib": ["DOM"],
     "types": ["node"],
-    "ignoreDeprecations": "5.0"
   }
 }

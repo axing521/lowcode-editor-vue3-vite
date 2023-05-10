@@ -8,7 +8,7 @@ import { EnumComponentGroup, EnumComponentType } from 'tdp-editor-types/src/enum
 import { EnumSelectorName } from 'tdp-editor-types/src/enum/designer';
 import type { ISelectorSelectOptions } from '@/tdp-editor-types/src/interface/designer/selector';
 
-export default defineAsyncComponent(() => import('./chatGPTRenderer.vue'));
+export default defineAsyncComponent(() => import('./ChatGPT.vue'));
 
 export const register: registerComponentFunc = function () {
     const chatGPT: IDesignerComponent<IChatGPTProps> = {
