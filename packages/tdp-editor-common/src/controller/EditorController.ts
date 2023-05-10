@@ -17,6 +17,7 @@ import { openDBAsync, setDataAsync, getDataAsync } from '../indexDBUtil';
 import { utils } from '../index';
 import { useVarControler, useAppControler } from './index';
 import { $warn } from '../utils';
+import { useContentStore } from '../stores/contentStore';
 
 export default class EditorController {
     private readonly $app: App;
@@ -58,8 +59,8 @@ export default class EditorController {
      * 使用本地数据初始化editor数据
      */
     initEditorByLocalData(localData: IAppSaveStruct) {
-        const appStore = useAppStore(this.$pinia);
-        appStore.pages = localData.pages.map(p => {
+        const contentStore = useContentStore(this.$pinia);
+        contentStore.pages = localData.pages.map(p => {
             return {
                 ...p,
                 submitState: 'saved',
@@ -72,11 +73,11 @@ export default class EditorController {
      * 初始化一个空的editor的数据
      */
     initEditorByEmpty() {
-        const appStore = useAppStore(this.$pinia);
         const editorStore = useEditorStore(this.$pinia);
-        const newPage = editorStore.createNewEmptyPage(appStore.pages);
+        const contentStore = useContentStore(this.$pinia);
+        const newPage = editorStore.createNewEmptyPage(contentStore.pages);
         newPage.selected = true;
-        appStore.pages.push(newPage);
+        contentStore.pages.push(newPage);
         this.setActivePage(newPage.key);
     }
     /**
@@ -113,45 +114,47 @@ export default class EditorController {
     }
     getSaveData(): IAppSaveStruct {
         const appStore = useAppStore(this.$pinia);
+        const contentStore = useContentStore(this.$pinia);
         const varController = useVarControler(this.$app);
         return {
             defaultPageKey: appStore.activePage?.key || '',
-            pages: toRaw(appStore.pages),
+            pages: toRaw(contentStore.pages),
             globarVars: varController.SerializeGlobalVars(),
         };
     }
     // 导入配置文件
     importConfig(payload: { pages: IPageStore[] }) {
         const appStore = useAppStore(this.$pinia);
-        appStore.pages = payload.pages;
-        if (appStore.pages && appStore.pages.length) {
-            appStore.activePage = appStore.pages[0];
+        const contentStore = useContentStore(this.$pinia);
+        contentStore.pages = payload.pages;
+        if (contentStore.pages && contentStore.pages.length) {
+            appStore.setActivePage({ pageId: contentStore.pages[0].key });
         }
     }
     // 添加页面
     addPage(payload?: { page?: IPageStore }) {
-        const appStore = useAppStore(this.$pinia);
         const editorStore = useEditorStore(this.$pinia);
+        const contentStore = useContentStore(this.$pinia);
         if (payload && payload.page) {
-            const newPage = editorStore.createNewEmptyPage(appStore.pages);
+            const newPage = editorStore.createNewEmptyPage(contentStore.pages);
             const _page = { ...newPage, ...payload.page };
-            appStore.pages.push(_page);
+            contentStore.pages.push(_page);
         } else {
-            const newPage = editorStore.createNewEmptyPage(appStore.pages);
-            appStore.pages.push(newPage);
+            const newPage = editorStore.createNewEmptyPage(contentStore.pages);
+            contentStore.pages.push(newPage);
         }
     }
     // 删除页面
     deletePage(payload: { pageKey: string }) {
-        const appStore = useAppStore(this.$pinia);
-        const index = appStore.pages.findIndex(p => p.key === payload.pageKey);
+        const contentStore = useContentStore(this.$pinia);
+        const index = contentStore.pages.findIndex(p => p.key === payload.pageKey);
         if (index > -1) {
-            appStore.pages.splice(index, 1);
+            contentStore.pages.splice(index, 1);
         }
     }
     initAppPages(payload: { pages: IPageStore[] }) {
-        const appStore = useAppStore(this.$pinia);
-        appStore.pages = payload.pages;
+        const contentStore = useContentStore(this.$pinia);
+        contentStore.pages = payload.pages;
         if (payload.pages.length) {
             this.setActivePage(payload.pages[0].key);
         }
@@ -170,10 +173,10 @@ export default class EditorController {
     }
     // 导入csv文件的组件
     importCsvData(payload: { pageName: string; pageCode: string; data: any }) {
-        const appStore = useAppStore(this.$pinia);
+        const contentStore = useContentStore(this.$pinia);
         const editorStore = useEditorStore(this.$pinia);
         const newPage = {
-            ...editorStore.createNewEmptyPage(appStore.pages),
+            ...editorStore.createNewEmptyPage(contentStore.pages),
             ...{ label: payload.pageName, code: payload.pageCode },
         };
         const rowState = editorStore.componentList.find(c => c.type === EnumComponentType.form);
@@ -208,7 +211,7 @@ export default class EditorController {
             }
             if (newPage.list && newPage.list.length) {
                 newPage.list[0].list!.push(newRow);
-                appStore.pages.push(newPage);
+                contentStore.pages.push(newPage);
                 return newPage.key;
             }
         }
@@ -217,8 +220,8 @@ export default class EditorController {
     // 导入csv文件数据
     importCsvDataAsync(payload: { pageName: string; pageCode: string; data: any }) {
         this.importCsvData(payload);
-        const appStore = useAppStore(this.$pinia);
-        this.setActivePage(appStore.pages[appStore.pages.length - 1].key);
+        const contentStore = useContentStore(this.$pinia);
+        this.setActivePage(contentStore.pages[contentStore.pages.length - 1].key);
     }
 
     /**

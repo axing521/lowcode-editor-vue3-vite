@@ -19,6 +19,7 @@ import { useEditorControler } from 'tdp-editor-common/src/controller';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
 import DesignerComponentList from './componentList';
 import './index.less';
 import NewPageModal from './newPageModal.vue';
@@ -45,8 +46,10 @@ export default defineComponent({
             selectedMenu: 'selectedMenu',
         }),
         ...mapState(useAppStore, {
-            pages: 'pages',
             selectedPage: 'activePage',
+        }),
+        ...mapState(useContentStore, {
+            pages: 'pages',
         }),
         __treeData(): any[] {
             if (this.selectedPage) {

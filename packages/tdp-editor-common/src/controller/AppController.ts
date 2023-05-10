@@ -2,11 +2,11 @@ import type { App } from 'vue';
 import type { Router } from 'vue-router';
 import type { Pinia } from 'pinia';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
-import type { IAppStore } from 'tdp-editor-types/src/interface/store';
 
 import { useAppStore } from '../stores/appStore';
 import { usePageControler } from './index';
 import { $log } from '../utils';
+import { useContentStore } from '../stores/contentStore';
 
 export default class AppController {
     private readonly $app: App;
@@ -19,10 +19,10 @@ export default class AppController {
      * 初始化应用
      * @param appJson appJson
      */
-    initApp(appJson: IAppStore) {
-        const appStore = useAppStore(this.$pinia);
-        appStore.pages = appJson.pages;
-        const activePage = appJson.activePage || appJson.pages[0];
+    initApp(appJson: any) {
+        const contentStore = useContentStore(this.$pinia);
+        contentStore.pages = appJson.pages;
+        const activePage = appJson.activePage || contentStore.pages[0];
         this.changePage(activePage.key, '');
     }
     /**
@@ -31,11 +31,12 @@ export default class AppController {
      */
     getActivePage() {
         const appStore = useAppStore(this.$pinia);
+        const contentStore = useContentStore(this.$pinia);
         const activePage = appStore.activePage;
         if (activePage) {
             return activePage;
-        } else if (appStore.pages.length) {
-            appStore.activePage = appStore.pages[0];
+        } else if (contentStore.pages.length) {
+            appStore.setActivePage({ pageId: contentStore.pages[0].key });
             return appStore.activePage;
         } else {
             return undefined;
@@ -54,7 +55,8 @@ export default class AppController {
      */
     changePage(pageKey: string, oldPageKey: string) {
         const appStore = useAppStore(this.$pinia);
-        const targetPage = appStore.getPageByKey(pageKey);
+        const contentStore = useContentStore(this.$pinia);
+        const targetPage = contentStore.getPageByKey(pageKey);
         if (targetPage) {
             const pageController = usePageControler(this.$app);
             pageController.initStyle(pageKey, targetPage.styles || '');

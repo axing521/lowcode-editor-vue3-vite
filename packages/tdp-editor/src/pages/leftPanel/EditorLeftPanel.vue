@@ -239,6 +239,7 @@ import {
 import { useEditorControler } from 'tdp-editor-common/src/controller';
 import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
 import DesignerComponentList from './componentList';
 import './index.less';
 import NewPageModal from './newPageModal.vue';
@@ -251,7 +252,7 @@ const selectComponent = inject('selectComponent', (_key: string) => {});
 const menus = computed(() => useLeftMenuStore().menus);
 const menu_pageList = computed(() => menus.value[0]);
 const pageListChildren = computed(() => menu_pageList.value.list || []);
-const pages = computed(() => useAppStore().pages);
+const pages = computed(() => useContentStore().pages);
 const selectedPage = computed(() => useAppStore().activePage);
 const pageEditMode = computed(() => useEditorStore().pageEditMode);
 const __treeData = computed(() => {

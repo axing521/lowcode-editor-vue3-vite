@@ -173,6 +173,7 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
 import { useAppControler, useEditorControler } from 'tdp-editor-common/src/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
@@ -201,6 +202,7 @@ import AddVarModal from '../components/AddVar.vue';
 const appController = useAppControler();
 const editorController = useEditorControler();
 const appStore = useAppStore();
+const contentStore = useContentStore();
 const showRight = ref(true); // 是否显示右侧面板
 const showLeft = ref(true); // 是否显示左侧面板
 const thisRefs = {} as any;
@@ -211,7 +213,7 @@ onMounted(async () => {
 });
 
 // 编辑器的所有页面
-const pages = appStore.pages;
+const pages = contentStore.pages;
 // 编辑器模式，预览 | 设计 | 浏览
 const editorMode = appStore.mode;
 
