@@ -4,7 +4,8 @@
 import type { VNode } from 'vue';
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
-import type { IMenusStore, IPageStore } from 'tdp-editor-types/src/interface/store';
+import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
+import type { IMenusStore } from 'tdp-editor-types/src/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import {
     OrderedListOutlined,
@@ -119,7 +120,7 @@ export default defineComponent({
                                 display: MENUS[0].list![0].selected === true ? 'block' : 'none',
                             }}
                         >
-                            {(this.pages as IPageStore[]).map(c => {
+                            {(this.pages as IPageState[]).map(c => {
                                 return (
                                     <a-popover
                                         title="编辑页面"
@@ -136,7 +137,7 @@ export default defineComponent({
                                         <li
                                             class={classnames({
                                                 'li-page': true,
-                                                selected: c.selected,
+                                                selected: this.selectedPage?.key,
                                             })}
                                             data-compType={c.type}
                                             key={c.key}

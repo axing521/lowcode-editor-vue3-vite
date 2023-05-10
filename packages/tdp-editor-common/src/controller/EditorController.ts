@@ -6,7 +6,8 @@ import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IAppSaveStruct } from 'tdp-editor-types/src/interface/app';
-import type { IPageStore, TPageEditMode } from 'tdp-editor-types/src/interface/store';
+import type { TPageEditMode } from 'tdp-editor-types/src/interface/store';
+import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 
 import { toRaw } from 'vue';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
@@ -63,9 +64,7 @@ export default class EditorController {
         contentStore.pages = localData.pages.map(p => {
             return {
                 ...p,
-                submitState: 'saved',
-                selected: false,
-            } as IPageStore;
+            } as IPageState;
         });
         this.setActivePage(localData.defaultPageKey);
     }
@@ -73,12 +72,9 @@ export default class EditorController {
      * 初始化一个空的editor的数据
      */
     initEditorByEmpty() {
-        const editorStore = useEditorStore(this.$pinia);
         const contentStore = useContentStore(this.$pinia);
-        const newPage = editorStore.createNewEmptyPage(contentStore.pages);
-        newPage.selected = true;
-        contentStore.pages.push(newPage);
-        this.setActivePage(newPage.key);
+        this.addPage();
+        this.setActivePage(contentStore.pages[0].key);
     }
     /**
      * 获取预览地址
@@ -123,7 +119,7 @@ export default class EditorController {
         };
     }
     // 导入配置文件
-    importConfig(payload: { pages: IPageStore[] }) {
+    importConfig(payload: { pages: IPageState[] }) {
         const appStore = useAppStore(this.$pinia);
         const contentStore = useContentStore(this.$pinia);
         contentStore.pages = payload.pages;
@@ -132,27 +128,35 @@ export default class EditorController {
         }
     }
     // 添加页面
-    addPage(payload?: { page?: IPageStore }) {
+    addPage(payload?: { page?: IPageState }) {
         const editorStore = useEditorStore(this.$pinia);
         const contentStore = useContentStore(this.$pinia);
         if (payload && payload.page) {
             const newPage = editorStore.createNewEmptyPage(contentStore.pages);
             const _page = { ...newPage, ...payload.page };
             contentStore.pages.push(_page);
+            editorStore.pageStatus[newPage.key] = {
+                submitState: 'unsaved',
+            };
         } else {
             const newPage = editorStore.createNewEmptyPage(contentStore.pages);
             contentStore.pages.push(newPage);
+            editorStore.pageStatus[newPage.key] = {
+                submitState: 'unsaved',
+            };
         }
     }
     // 删除页面
     deletePage(payload: { pageKey: string }) {
+        const editorStore = useEditorStore(this.$pinia);
         const contentStore = useContentStore(this.$pinia);
         const index = contentStore.pages.findIndex(p => p.key === payload.pageKey);
         if (index > -1) {
             contentStore.pages.splice(index, 1);
+            delete editorStore.pageStatus[payload.pageKey];
         }
     }
-    initAppPages(payload: { pages: IPageStore[] }) {
+    initAppPages(payload: { pages: IPageState[] }) {
         const contentStore = useContentStore(this.$pinia);
         contentStore.pages = payload.pages;
         if (payload.pages.length) {
@@ -231,7 +235,9 @@ export default class EditorController {
     setActivePage(pageKey: string) {
         const appStore = useAppStore(this.$pinia);
         const appController = useAppControler(this.$app);
+        const editorController = useEditorStore(this.$pinia);
         const oldPageKey = appStore.activePage?.key || '';
+        editorController.setSelectedComponent({ component: undefined });
         appController.changePage(pageKey, oldPageKey);
         this.setActivePageMode('content');
     }

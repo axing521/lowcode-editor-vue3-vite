@@ -44,7 +44,7 @@
                         :key="c.key"
                         :class="{
                             'li-page': true,
-                            selected: c.selected,
+                            selected: c.key === selectedPage?.key,
                         }"
                         :data-compType="c.type"
                         @click="selectPage(c.key)"
@@ -241,7 +241,6 @@ import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
 import DesignerComponentList from './componentList';
-import './index.less';
 import NewPageModal from './newPageModal.vue';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import type { EnumComponentType } from 'tdp-editor-types/src/enum/components';

@@ -41,7 +41,6 @@ export const useAppStore = defineStore('appStore', {
         setActivePage(payload: { pageId: string }) {
             const contentStore = useContentStore();
             contentStore.pages.forEach(page => {
-                page.selected = page.key === payload.pageId;
                 if (page.key === payload.pageId) {
                     this.activePage = page;
                 }

@@ -5,13 +5,13 @@
 import { defineStore } from 'pinia';
 import { EnumComponentType, EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 
-import type { IPageStore, IEditorStore } from 'tdp-editor-types/src/interface/store';
+import type { IEditorStore } from 'tdp-editor-types/src/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 import { utils } from '..';
 import { apps, forms } from '../service';
 import { $log } from '../utils';
-import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
+import type { IComponentState, IPageState } from 'tdp-editor-types/src/interface/app/components';
 // import { useAppStore } from './appStore';
 
 export const useEditorStore = defineStore('editorStore', {
@@ -21,6 +21,11 @@ export const useEditorStore = defineStore('editorStore', {
             componentList: [],
             dragComponent: undefined, // 正在拖动的组件
             pageEditMode: 'content',
+            pageStatus: {},
+            headerStatus: {},
+            footerStatus: {},
+            leftStatus: {},
+            rightStatus: {},
         };
     },
     actions: {
@@ -37,7 +42,7 @@ export const useEditorStore = defineStore('editorStore', {
             });
         },
         // 在editor中创建一个空的页面
-        createNewEmptyPage(pages: IPageStore[]) {
+        createNewEmptyPage(pages: IPageState[]) {
             return getDefaultPageModule(pages, this.componentList);
         },
         // 设计面板拖入组件
@@ -145,14 +150,11 @@ export const newComponentJson = (originData: IDesignerComponent): IComponentStat
 
 // 生成一个默认的page配置
 const getDefaultPageModule = (
-    pages: IPageStore[],
+    pages: IPageState[],
     componentList: IDesignerComponent[]
-): IPageStore => {
+): IPageState => {
     $log('%c %s', 'color:red', 'editor componentList', componentList);
     const _newPage = newComponentJson(componentList.find(c => c.type === EnumComponentType.page)!);
-    const newPage = Object.assign(_newPage, {
-        selected: false,
-        submitState: 'unsaved',
-    });
-    return newPage as IPageStore;
+    const newPage = Object.assign({}, _newPage);
+    return newPage as IPageState;
 };
