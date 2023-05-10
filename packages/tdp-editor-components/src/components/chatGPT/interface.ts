@@ -11,3 +11,9 @@ export interface IChatGPTProps {
     theme?: boolean; //true: dark, false: light
     enableContext?: boolean; //true: enable, false: disable
 }
+
+export interface UserConfigState {
+    apiKey?: string;
+    proxy?: string;
+    gptModel: 'gpt-4' | 'gpt-4-0314' | 'gpt-3.5-turbo' | 'gpt-3.5-turbo-0301' | '';
+}

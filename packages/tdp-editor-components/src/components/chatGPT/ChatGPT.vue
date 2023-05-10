@@ -5,9 +5,9 @@ export default defineComponent({
 </script>
 <script setup lang="ts">
 import { EnumComponentType, EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
-import { ref, defineComponent, computed } from 'vue';
+import { ref, defineComponent, computed, reactive } from 'vue';
 import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
-import type { IChatGPTProps } from './interface';
+import type { IChatGPTProps, UserConfigState } from './interface';
 import { useBaseLifecycle } from '../../composables/base';
 import { Configuration, OpenAIApi, type ChatCompletionRequestMessage } from 'openai';
 import { $fetch } from 'tdp-editor-common/src/request';
@@ -28,9 +28,24 @@ const questionInput = ref('');
 const qaList = ref<string[]>([]);
 const myProgress = ref<HTMLElement | null>(null);
 const myGPT = ref<HTMLElement | null>(null);
-const enableClearColor = ref({ color: '#262626' });
-const enableSpin = ref(false);
 const isShow = ref(false);
+const userVisible = ref(false);
+const isSpin = ref('');
+const userConfigState = reactive<UserConfigState>({
+    apiKey: '',
+    proxy: '',
+    gptModel: 'gpt-3.5-turbo',
+});
+const gptModels = [
+    { label: 'gpt-4', value: 'gpt-4' },
+    { label: 'gpt-4-0314', value: 'gpt-4-0314' },
+    { label: 'gpt-3.5-turbo', value: 'gpt-3.5-turbo' },
+    { label: 'gpt-3.5-turbo-0301', value: 'gpt-3.5-turbo-0301' },
+];
+const userConfigLayout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 18 },
+};
 
 // 配置chat网络请求request
 let conservation: ChatCompletionRequestMessage[] = []; // 保存对话上下文
@@ -76,17 +91,24 @@ const toggleTheme = () => {
 };
 
 const clearHTML = () => {
-    enableSpin.value = true;
+    isSpin.value = 'spin';
     qaList.value = [];
     conservation = [];
     setTimeout(() => {
-        enableSpin.value = false;
-        enableClearColor.value.color = '#262626';
+        isSpin.value = '';
     }, 1000);
 };
 
-// 设置用户配置（包括APIKey，Proxy，Model），待完成
-const setUserConfig = () => {};
+const setUserConfig = () => {
+    userVisible.value = true;
+};
+
+const hanleOk = () => {
+    setPropValue(allProps.state, 'apiKey', userConfigState.apiKey, EnumPropsValueType.string);
+    setPropValue(allProps.state, 'proxy', userConfigState.proxy, EnumPropsValueType.string);
+    setPropValue(allProps.state, 'gptModel', userConfigState.gptModel, EnumPropsValueType.string);
+    userVisible.value = false;
+};
 
 async function chat(APIKey: string, userQuery: string, model = 'gpt-3.5-turbo') {
     if (allProps.props.enableContext) {
@@ -227,6 +249,7 @@ async function onQuery() {
                 <a-button shape="circle" style="margin-right: 4px" @click="clearHTML">
                     <svg
                         t="1683615526200"
+                        :class="isSpin"
                         class="icon svg-1"
                         viewBox="0 0 1024 1024"
                         version="1.1"
@@ -287,6 +310,34 @@ async function onQuery() {
             </div>
         </div>
 
+        <!-- 新增模态框：设置用户配置 -->
+        <a-modal
+            :visible="userVisible"
+            title="用户配置"
+            @ok="hanleOk"
+            @cancel="userVisible = false"
+        >
+            <a-form :model="userConfigState" v-bind="userConfigLayout">
+                <a-form-item label="APIKey" name="apiKey">
+                    <a-input
+                        v-model:value="userConfigState.apiKey"
+                        type="password"
+                        autocomplete="off"
+                    />
+                </a-form-item>
+                <a-form-item label="Proxy" name="proxy">
+                    <a-input
+                        v-model:value="userConfigState.proxy"
+                        type="password"
+                        autocomplete="off"
+                    />
+                </a-form-item>
+                <a-form-item label="GPT模型" name="gptModel">
+                    <a-select v-model:value="userConfigState.gptModel" :options="gptModels" />
+                </a-form-item>
+            </a-form>
+        </a-modal>
+
         <ul class="flex-1 overflow-y-auto" id="qa-list">
             <li v-for="(item, index) in qaList" :key="index">
                 <div class="QA">
@@ -337,7 +388,7 @@ async function onQuery() {
                 <svg
                     t="1683626800025"
                     style="width: 20px; height: 20px"
-                    class="load"
+                    class="spin"
                     viewBox="0 0 1024 1024"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -405,7 +456,8 @@ async function onQuery() {
         transform: rotate(360deg);
     }
 }
-.load {
+
+.spin {
     animation: loading 1s linear infinite;
 }
 
