@@ -61,11 +61,7 @@ export default class EditorController {
      */
     initEditorByLocalData(localData: IAppSaveStruct) {
         const contentStore = useContentStore(this.$pinia);
-        contentStore.pages = localData.pages.map(p => {
-            return {
-                ...p,
-            } as IPageState;
-        });
+        contentStore.pages = localData.pages as IPageState[];
         this.setActivePage(localData.defaultPageKey);
     }
     /**
