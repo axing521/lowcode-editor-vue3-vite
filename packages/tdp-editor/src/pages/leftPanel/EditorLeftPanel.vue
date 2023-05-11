@@ -44,7 +44,7 @@
                         :key="c.key"
                         :class="{
                             'li-page': true,
-                            selected: c.selected,
+                            selected: c.key === selectedPage?.key,
                         }"
                         :data-compType="c.type"
                         @click="selectPage(c.key)"
@@ -239,8 +239,8 @@ import {
 import { useEditorControler } from 'tdp-editor-common/src/controller';
 import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
 import DesignerComponentList from './componentList';
-import './index.less';
 import NewPageModal from './newPageModal.vue';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import type { EnumComponentType } from 'tdp-editor-types/src/enum/components';
@@ -251,7 +251,7 @@ const selectComponent = inject('selectComponent', (_key: string) => {});
 const menus = computed(() => useLeftMenuStore().menus);
 const menu_pageList = computed(() => menus.value[0]);
 const pageListChildren = computed(() => menu_pageList.value.list || []);
-const pages = computed(() => useAppStore().pages);
+const pages = computed(() => useContentStore().pages);
 const selectedPage = computed(() => useAppStore().activePage);
 const pageEditMode = computed(() => useEditorStore().pageEditMode);
 const __treeData = computed(() => {

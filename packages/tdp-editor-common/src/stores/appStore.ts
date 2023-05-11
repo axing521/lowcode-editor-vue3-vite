@@ -1,55 +1,50 @@
 import { defineStore } from 'pinia';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import type { IAppStore } from 'tdp-editor-types/src/interface/store';
-import type { IPageForm } from 'tdp-editor-types/src/interface/designer/pageForm';
+import { useContentStore } from './contentStore';
 
 export const useAppStore = defineStore('appStore', {
     state(): IAppStore {
         return {
             mode: EnumAppMode.design,
-            pages: [],
-            pageForms: new Map(),
             activePage: undefined,
             globalVars: {}, // 运行时的全局变量，存放的是运行时的值
             currentPageVars: {}, // 运行时的当前页面变量，存放的是运行时的值
+            layout: {
+                header: {
+                    show: false,
+                    key: '',
+                },
+                footer: {
+                    show: false,
+                    key: '',
+                },
+                left: {
+                    show: false,
+                    key: '',
+                },
+                right: {
+                    show: false,
+                    key: '',
+                },
+            },
         };
     },
     actions: {
         setMode(mode: EnumAppMode) {
             this.mode = mode;
         },
-        // 根据formKey获取form实例
-        pageForm(key: string) {
-            return this.pageForms.get(key);
-        },
-        // 给pageForm赋值
-        setPageForm(payload: { pageForm: IPageForm }) {
-            if (this.pageForms.has(payload.pageForm.key)) {
-                const oldPageForm = this.pageForms.get(payload.pageForm.key)!;
-                oldPageForm.column = payload.pageForm.column;
-                oldPageForm.formId = payload.pageForm.formId;
-            } else {
-                this.pageForms.set(payload.pageForm.key, payload.pageForm);
-            }
-        },
         /**
          * 切换所选页面
          * @param payload 参数
          */
         setActivePage(payload: { pageId: string }) {
-            this.pages.forEach(page => {
-                page.selected = page.key === payload.pageId;
+            const contentStore = useContentStore();
+            contentStore.pages.forEach(page => {
                 if (page.key === payload.pageId) {
                     this.activePage = page;
                 }
             });
-        },
-        /**
-         * 根据页面key获取页面对象
-         * @param key 页面key
-         */
-        getPageByKey(key: string) {
-            return this.pages.find(c => c.key === key);
         },
     },
 });

@@ -4,7 +4,8 @@
 import type { VNode } from 'vue';
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
-import type { IMenusStore, IPageStore } from 'tdp-editor-types/src/interface/store';
+import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
+import type { IMenusStore } from 'tdp-editor-types/src/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 import {
     OrderedListOutlined,
@@ -19,6 +20,7 @@ import { useEditorControler } from 'tdp-editor-common/src/controller';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
+import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
 import DesignerComponentList from './componentList';
 import './index.less';
 import NewPageModal from './newPageModal.vue';
@@ -45,8 +47,10 @@ export default defineComponent({
             selectedMenu: 'selectedMenu',
         }),
         ...mapState(useAppStore, {
-            pages: 'pages',
             selectedPage: 'activePage',
+        }),
+        ...mapState(useContentStore, {
+            pages: 'pages',
         }),
         __treeData(): any[] {
             if (this.selectedPage) {
@@ -116,7 +120,7 @@ export default defineComponent({
                                 display: MENUS[0].list![0].selected === true ? 'block' : 'none',
                             }}
                         >
-                            {(this.pages as IPageStore[]).map(c => {
+                            {(this.pages as IPageState[]).map(c => {
                                 return (
                                     <a-popover
                                         title="编辑页面"
@@ -133,7 +137,7 @@ export default defineComponent({
                                         <li
                                             class={classnames({
                                                 'li-page': true,
-                                                selected: c.selected,
+                                                selected: this.selectedPage?.key,
                                             })}
                                             data-compType={c.type}
                                             key={c.key}

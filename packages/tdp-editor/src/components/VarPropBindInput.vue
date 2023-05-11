@@ -29,7 +29,6 @@
             defaultActiveFirstOption
             @blur="onACBlur"
             @search="onSearch"
-            @select="onSelect"
         >
             <a-textarea
                 ref="ac-textarea"
@@ -132,17 +131,12 @@ const onSearch = (searchText: string) => {
     });
 };
 /**
- * autoComplete组件选中变量时，触发change事件
- * @param value 变量path
- */
-const onSelect = (value: string) => {
-    emits('change', value);
-};
-/**
  * 按下回车时，触发change事件
  */
 const onPressEnter = () => {
-    emits('change', inputBindValue.value);
+    setTimeout(() => {
+        emits('change', inputBindValue.value);
+    }, 300);
 };
 /**
  * 失去交点时，触发change事件

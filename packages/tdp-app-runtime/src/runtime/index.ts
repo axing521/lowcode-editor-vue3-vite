@@ -14,8 +14,6 @@ const testData = {
                 icons: 'flex',
                 type: 'PageRenderer',
                 group: '-1',
-                selected: true,
-                submitState: 'unsaved',
                 list: [
                     {
                         key: 'FdForm_adNCEwuCQvmeXGHa',
@@ -89,8 +87,6 @@ const testData = {
             icons: 'flex',
             type: 'PageRenderer',
             group: '-1',
-            selected: true,
-            submitState: 'unsaved',
             list: [
                 {
                     key: 'FdForm_adNCEwuCQvmeXGHa',
