@@ -3,7 +3,6 @@
   "include": ["packages/*/vite.config.*", "packages/*/vitest.config.*", "packages/*/cypress.config.*", "packages/tdp-editor/vite.config.web.ts", "packages/tdp-editor/vite.config.lib.ts"],
   "compilerOptions": {
     "composite": true,
-    "types": ["node"],
-    "ignoreDeprecations": "5.0"
+    "types": ["node"]
   }
 }
