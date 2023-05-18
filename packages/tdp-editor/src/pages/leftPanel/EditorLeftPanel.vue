@@ -34,7 +34,8 @@
                         <ClusterOutlined
                             :class="{ selected: pageListChildren[1].selected }"
                             @click="showTreeStruct"
-                        ></ClusterOutlined>
+                        >
+                        </ClusterOutlined>
                     </div>
                 </h3>
                 <!-- 页面列表 -->
@@ -52,7 +53,7 @@
                         {{ c.label }}
                         <span class="page-action">
                             <edit-outlined />
-                            <delete-outlined type="delete" @click="deletePage($event, c.key)" />
+                            <delete-outlined @click="deletePage($event, c.key)" />
                         </span>
                     </li>
                 </ul>
@@ -87,6 +88,7 @@
 </template>
 <style lang="less">
 @import url('../../styles/var/index.less');
+
 .editor-left-panel {
     width: 320px;
     height: 100%;
@@ -99,9 +101,11 @@
     border-right: 1px solid @frame-border-color;
     overflow: hidden;
     transition: all 0.3s;
+
     &.hide {
         width: 0;
     }
+
     ul {
         list-style: none;
         padding: 0;
@@ -113,6 +117,7 @@
         width: 44px;
         height: 100%;
         border-right: 1px solid @frame-border-color;
+
         li {
             width: 44px;
             height: 44px;
@@ -121,23 +126,28 @@
             text-align: center;
             cursor: pointer;
             color: @primary-color;
+
             i.iconfont {
                 font-size: 18px;
             }
         }
+
         li.selected {
             background-color: @primary-color !important;
             color: #fff !important;
         }
+
         li:hover {
             background-color: rgba(38, 132, 252, 0.1);
             color: @primary-color;
         }
     }
+
     .second-menu {
         flex: 1;
         height: 100%;
         overflow-y: auto;
+
         h3 {
             height: 44px;
             line-height: 44px;
@@ -149,9 +159,11 @@
             border-bottom: 1px solid #aaa;
             position: relative;
         }
+
         .ant-collapse-content-box {
             padding: 10px;
         }
+
         li.li-page {
             height: 40px;
             line-height: 40px;
@@ -159,6 +171,7 @@
             text-align: left;
             padding-left: 20px;
         }
+
         div.pages {
             .pages-action {
                 position: absolute;
@@ -168,54 +181,66 @@
                 right: 0;
                 text-align: right;
                 padding-right: 10px;
+
                 .anticon {
                     cursor: pointer;
                     font-size: 18px;
                     color: @primary-color;
                     margin-left: 5px;
                     color: #aaa;
+
                     &.selected {
                         color: @primary-color;
                     }
                 }
             }
+
             li.li-page {
                 .page-action {
                     float: right;
                     margin-right: 10px;
                     cursor: pointer;
+
                     .anticon {
                         margin-left: 4px;
                         color: #000;
+
                         &:hover {
                             color: @primary-color;
                         }
                     }
                 }
+
                 .anticon-exclamation {
                     margin-left: 6px;
                     color: red;
                 }
+
                 .anticon-check {
                     margin-left: 6px;
                     color: #49cc90;
                 }
             }
+
             li.selected {
                 background-color: #e8e8e8;
                 border-left: 3px solid @primary-color;
                 color: @primary-color;
             }
         }
+
         ul.tree-component {
             text-align: left;
+
             .ant-tree,
             .ant-tree-child-tree {
                 text-align: left;
             }
+
             .iconfont {
                 font-size: 22px;
             }
+
             .ant-tree-title {
                 height: 24px;
                 line-height: 24px;
