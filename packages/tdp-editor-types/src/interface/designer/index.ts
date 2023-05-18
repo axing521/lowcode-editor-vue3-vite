@@ -7,6 +7,7 @@ import type { EnumEventName, EnumEventType, EnumPropsValueType } from '../../enu
 export interface IDesignerComponent<P = any, C = Partial<CSSStyleDeclaration>>
     extends IComponentState<P, C> {
     sfc?: any;
+    label?: string /* 页面显示名称 */;
     order?: number;
     icons?: string;
     listGroup?: 'normal' | 'business' | 'high';

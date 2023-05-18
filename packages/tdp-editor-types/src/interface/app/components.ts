@@ -41,7 +41,6 @@ export interface IComponentCommonProps<P = any, C = Record<string, string | unde
 export type TCssStyleName = keyof CSSStyleDeclaration;
 export interface IComponentState<P = any, C = any> {
     key: string;
-    label?: string /* 页面显示名称 */;
     name?: string /* 别名，一般用于用户给组件定义，方便调用 */;
     type: EnumComponentType | string;
     group: EnumComponentGroup;
@@ -99,9 +98,11 @@ export type TEventFunc = (this: TEventFuncThis, $event?: TEventFuncParam1) => vo
 // 页面的state，因为页面状态可能提供外部开发者，所以放到interface项目中
 export interface IPageState extends IComponentState<IPageProps> {
     type: EnumComponentType.page;
+    label?: string /* 页面显示名称 */;
     styles?: string; // 自定义样式, 存放在page 的state中
     script?: string; // 自定义脚本, 存放在page 的state中
     vars?: string; // 页面变量
+    datasource?: string;
 }
 
 export interface IPageProps {
