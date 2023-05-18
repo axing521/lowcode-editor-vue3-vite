@@ -17,51 +17,62 @@ import { useVarControler } from 'tdp-editor-common/src/controller';
 
 let monacoEditor: monaco.editor.IStandaloneCodeEditor | undefined = undefined;
 
+monaco.languages.typescript.javascriptDefaults.addExtraLib(`
+    interface ITDP {
+        App: {
+            changePage(pageKey: string): void;
+        };
+        Utils: any;
+        vue: {
+            ref: Function;
+            reactive: Function;
+            computed: Function;
+            watch: Function;
+            watchEffect: Function;
+        };
+    };
+    declare var $tdp: ITDP;
+`);
+
 monaco.languages.registerCompletionItemProvider('javascript', {
     provideCompletionItems(model, position) {
         const varController = useVarControler();
         const lineContent = model.getLineContent(position.lineNumber);
+        const word = model.getWordUntilPosition(position);
         const range = {
             startLineNumber: position.lineNumber,
             endLineNumber: position.lineNumber,
-            startColumn: 1,
-            endColumn: 2,
+            startColumn: word.startColumn,
+            endColumn: word.endColumn,
         };
         const suggestions: monaco.languages.CompletionItem[] = [];
-        if (lineContent.lastIndexOf('$info.$g.') === lineContent.length - 9) {
+        if (lineContent.match(/\$g\.$/)) {
             const globalVars = varController.getGlobalVars();
             for (const varKey in globalVars) {
                 if (Object.prototype.hasOwnProperty.call(globalVars, varKey)) {
                     suggestions.push({
                         label: varKey,
                         range,
-                        kind: monaco.languages.CompletionItemKind['Property'],
+                        kind: monaco.languages.CompletionItemKind.Field,
                         insertText: varKey,
                     });
                 }
             }
-        } else if (lineContent.lastIndexOf('$info.$p.') === lineContent.length - 8) {
+        } else if (lineContent.match(/\$p\.$/)) {
             const pageVars = varController.getCurrentPageVars();
             for (const varKey in pageVars) {
                 if (Object.prototype.hasOwnProperty.call(pageVars, varKey)) {
                     suggestions.push({
                         label: varKey,
                         range,
-                        kind: monaco.languages.CompletionItemKind['Property'],
+                        kind: monaco.languages.CompletionItemKind.Field,
                         insertText: varKey,
                     });
                 }
             }
         }
         return {
-            suggestions: [
-                {
-                    label: 'test',
-                    kind: monaco.languages.CompletionItemKind['Property'],
-                    insertText: 'test',
-                    range,
-                },
-            ],
+            suggestions: suggestions,
         };
     },
     triggerCharacters: ['.', ' '],
@@ -105,6 +116,8 @@ const initMonaco = () => {
             theme: 'vs',
             value: props.value || '',
             minimap: { enabled: false },
+            automaticLayout: true,
+            fontSize: 15,
         });
     }
 };

@@ -12,9 +12,17 @@ interface Window {
         funcFactory: any;
     };
     $tdp: {
-        App: any;
+        App: {
+            changePage(pageKey: string): void;
+        };
         Utils: any;
-        vue: any;
+        vue: {
+            ref: Function;
+            reactive: Function;
+            computed: Function;
+            watch: Function;
+            watchEffect: Function;
+        };
     };
     wm: WeakMap;
 }
