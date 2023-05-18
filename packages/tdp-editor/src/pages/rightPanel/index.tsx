@@ -4,14 +4,14 @@ import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import './index.less';
 import DesignerUXPanel from './UXDesigner/DesignerUxPanel.vue';
+import DatasourcePanel from './UXDesigner/DatasourcePanel.vue';
 import DesignerPropsPanel from './propsDesigner/index.vue';
-import DesignerDataPanel from './dataDesigner';
 
 export default defineComponent({
     name: 'editor-right-panel',
     components: {
         DesignerPropsPanel,
-        DesignerDataPanel,
+        DatasourcePanel,
         DesignerUXPanel,
     },
     computed: {
@@ -33,8 +33,7 @@ export default defineComponent({
                 <a-tab-pane key="ux" tab="高级">
                     {/*// @ts-ignore */}
                     <DesignerUXPanel element={selectedComponent} />
-                    {/*// @ts-ignore */}
-                    <DesignerDataPanel element={selectedComponent} />
+                    <datasource-panel element={selectedComponent} />
                 </a-tab-pane>
             </a-tabs>
         );

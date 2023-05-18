@@ -1,14 +1,25 @@
-export interface IDataSource {
+import type { EnumComponentType } from '../../enum/components';
+
+export interface IDataSource<I = any> {
     key: string;
     name: string;
     enable: boolean; // 是否启用
     des?: string;
-    detail: IDataSourceDetail;
+    sourceType: TSourceType; // 数据源类型
+    input: IDataSourceInput<I>;
+    output: IDataSourceOutput;
 }
 
-export interface IDataSourceDetail {
+export type TSourceType = 'url' | 'apiRepo' | 'dataModeler' | 'dataFlow';
+export interface IDataSourceInputUrl {
     url: string;
     method: string;
     queryString?: string;
     payload?: any;
+}
+export interface IDataSourceInput<T> {
+    config: T;
+}
+export interface IDataSourceOutput {
+    compType: EnumComponentType[];
 }
