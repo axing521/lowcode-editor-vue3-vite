@@ -17,5 +17,4 @@ export interface IAppVarJson {
     scope: EnumAppVarScope;
     initData: IAppVarValue;
     pageKey?: string;
-    apiBasic?: any;
 }

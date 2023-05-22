@@ -54,7 +54,8 @@ const onCreate = () => {
         name: formData.name,
         scope: formData.scope,
         type: formData.type,
-        data: '',
+        initData: '',
+        key: '',
     });
     if (result.success) {
         formData.name = '';

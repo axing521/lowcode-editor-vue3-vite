@@ -6,7 +6,6 @@ import type { App, ComponentPublicInstance } from 'vue';
 import type { Pinia } from 'pinia';
 import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
 import { $createPageFunction, $createDynamicStyle, $iniPageScript, $log } from '../utils';
-import { useVarControler } from './index';
 import { useAppStore } from '../stores/appStore';
 
 export default class PageController {
@@ -52,12 +51,9 @@ export default class PageController {
         $log('初始化脚本开始', startTime);
         const scriptSet = $iniPageScript(script);
         const appStore = useAppStore(this.$pinia);
-        const varController = useVarControler(this.$app);
 
         // 清理之前的页面函数
         this.pageFunctions.clear();
-        // 清理之前的页面变量
-        varController.clearCurrentPageVar();
         // 保存用户自定义函数
         scriptSet.functions.forEach(func => {
             this.pageFunctions.set(func.name, func);
@@ -69,11 +65,7 @@ export default class PageController {
 
         const endTime = Date.now();
         $log('初始化脚本结束', endTime);
-        $log(
-            `共用时 ${endTime - startTime} ms`,
-            this.pageFunctions,
-            varController.getCurrentPageVars()
-        );
+        $log(`共用时 ${endTime - startTime} ms`, this.pageFunctions);
     }
 
     /**

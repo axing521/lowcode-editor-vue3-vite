@@ -4,7 +4,7 @@ import type { Pinia } from 'pinia';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
 
 import { useAppStore } from '../stores/appStore';
-import { usePageControler } from './index';
+import { usePageControler, useVarControler } from './index';
 import { $log } from '../utils';
 import { useContentStore } from '../stores/contentStore';
 
@@ -59,8 +59,15 @@ export default class AppController {
         const targetPage = contentStore.getPageByKey(pageKey);
         if (targetPage) {
             const pageController = usePageControler(this.$app);
+            const varController = useVarControler(this.$app);
+
+            // 重置当前页面变量
+            varController.resetTargetPageVars(pageKey);
+            // 初始化目标页样式
             pageController.initStyle(pageKey, targetPage.styles || '');
+            // 初始化目标页脚本
             pageController.initScript(pageKey, targetPage.script || '');
+            // 切换到目标页
             appStore.setActivePage({ pageId: pageKey });
         }
         if (oldPageKey) {

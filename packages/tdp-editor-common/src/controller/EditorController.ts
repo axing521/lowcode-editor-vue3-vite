@@ -111,7 +111,7 @@ export default class EditorController {
         return {
             defaultPageKey: appStore.activePage?.key || '',
             pages: toRaw(contentStore.pages),
-            globarVars: varController.SerializeGlobalVars(),
+            globalVars: varController.SerializeGlobalVars(),
         };
     }
     // 导入配置文件

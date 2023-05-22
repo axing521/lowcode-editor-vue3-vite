@@ -5,6 +5,7 @@ export interface IDataSource<I = any> {
     name: string;
     scope: TDatasourceScope;
     enable: boolean; // 是否启用
+    pageKey?: string;
     desc?: string;
     sourceType: TSourceType; // 数据源类型
     input: IDataSourceInput<I>;

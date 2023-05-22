@@ -1,10 +1,9 @@
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
-import type { IAppVarConstructor } from 'tdp-editor-types/src/interface/app/vars';
-import AppVar from './AppVar';
+import type { IAppVarJson } from 'tdp-editor-types/src/interface/app/vars';
 import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
 import { useAppStore } from '../stores/appStore';
-import { $error, $log, $warn } from '../utils';
+import { $error, $getUUID, $log, $warn } from '../utils';
 
 type evalBindValueResult = {
     success: boolean;
@@ -24,8 +23,16 @@ type evalBindValueParams = {
 };
 
 // 创建两个map，存放变量实例
-const GlobalVarMap: Map<string, AppVar> = new Map();
-const currentPageVarMap: Map<string, AppVar> = new Map();
+const globalVarMap: Map<string, IAppVarJson> = new Map();
+const currentPageVarMap: Map<string, IAppVarJson> = new Map();
+
+const allPageVars: IAppVarJson[] = [];
+
+document.addEventListener('dblclick', function () {
+    $log(111, globalVarMap);
+    $log(222, currentPageVarMap);
+    $log(333, allPageVars);
+});
 
 export default class AppVarController {
     private readonly $app: App;
@@ -35,28 +42,37 @@ export default class AppVarController {
         this.$pinia = pinia;
     }
 
+    initVars(globalVars: IAppVarJson[], pageVars: IAppVarJson[]) {
+        globalVarMap.clear();
+        currentPageVarMap.clear();
+        globalVars.forEach(c => {
+            this.addVar(c, true);
+        });
+        pageVars.forEach(c => {
+            allPageVars.push(c);
+        });
+    }
+
     /**
-     * 添加变量，传入变量的具体信息
-     * @param varJson 变量信息
-     * @param cover 是否覆盖已有变量
-     * @returns 返回创建变量结果
+     * 重置指定页面的页面变量
+     * @param pageKey
      */
-    addVar(varJson: IAppVarConstructor, cover = false) {
+    resetTargetPageVars(pageKey: string) {
+        const pageVars = allPageVars.filter(c => c.pageKey === pageKey);
+        this.resetCurrentPageVars(pageVars);
+    }
+
+    /**
+     * 重置当前页面变量
+     * @param pageVars 要重置的变量集合
+     */
+    resetCurrentPageVars(pageVars: IAppVarJson[]) {
+        this.clearCurrentPageVar();
         const appStore = useAppStore(this.$pinia);
-        const result = {
-            success: false,
-            msg: 'vars.newDialog.errorCreate',
-            instance: null as AppVar | null,
-        };
-        if (!varJson.pageKey && varJson.scope === EnumAppVarScope.Page) {
-            varJson.pageKey = appStore.activePage?.key || '';
-        }
-        const varInstance = new AppVar(varJson);
-        const addResult = this.addVarInstance(varInstance, cover);
-        result.success = addResult.success;
-        result.msg = addResult.msg;
-        result.instance = varInstance;
-        return result;
+        pageVars.forEach(c => {
+            currentPageVarMap.set(c.name, c);
+            appStore.currentPageVars[c.name] = this.getCloneInitData(c.initData);
+        });
     }
 
     /**
@@ -64,44 +80,60 @@ export default class AppVarController {
      * @param {*} varInstance 被添加的变量对象
      * @param { boolean } cover 是否覆盖已有变量
      */
-    addVarInstance(varInstance: AppVar, cover = false) {
+    addVar(varJson: IAppVarJson, cover = false) {
         const appStore = useAppStore(this.$pinia);
         const addResult = {
             success: false,
             msg: 'vars.newDialog.errorCreate',
         };
+        if (!varJson.key) {
+            varJson.key = $getUUID(varJson.scope, 13);
+        }
         // 添加全局变量
-        if (varInstance.scope === EnumAppVarScope.Global) {
-            if (!appStore.globalVars[varInstance.name] || cover) {
-                appStore.globalVars[varInstance.name] = varInstance.getCloneInitData();
-                GlobalVarMap.set(varInstance.name, varInstance);
+        if (varJson.scope === EnumAppVarScope.Global) {
+            if (!appStore.globalVars[varJson.name] || cover) {
+                appStore.globalVars[varJson.name] = this.getCloneInitData(varJson.initData);
+                globalVarMap.set(varJson.name, varJson);
                 addResult.success = true;
             } else {
-                $error(`${varInstance.name}变量已存在，不能重复添加`);
+                $error(`${varJson.name}变量已存在，不能重复添加`);
                 addResult.msg = '变量已存在，不能重复添加';
                 return addResult;
             }
-        } else if (varInstance.scope === EnumAppVarScope.Page) {
+        } else if (varJson.scope === EnumAppVarScope.Page) {
+            if (!varJson.pageKey) {
+                varJson.pageKey = appStore.activePage?.key || '';
+            }
             // 添加页面变量
-            const activePageId = varInstance.pageKey || appStore.activePage?.key;
-            if (activePageId) {
+            if (appStore.activePage?.key === varJson.pageKey) {
                 const pageVars = appStore.currentPageVars;
                 // 如果变量已经存在，则不能添加
-                if (pageVars[varInstance.name] && !cover) {
-                    $error(`${varInstance.name}变量已存在，不能重复添加`);
+                if (pageVars[varJson.name] && !cover) {
+                    $error(`${varJson.name}变量已存在，不能重复添加`);
                     addResult.msg = '变量已存在，不能重复添加';
                     return addResult;
                 }
                 // 添加变量
                 else {
-                    currentPageVarMap.set(varInstance.name, varInstance);
-                    appStore.currentPageVars[varInstance.name] = varInstance.getCloneInitData();
+                    allPageVars.push(varJson);
+                    currentPageVarMap.set(varJson.name, varJson);
+                    appStore.currentPageVars[varJson.name] = this.getCloneInitData(
+                        varJson.initData
+                    );
                 }
                 addResult.success = true;
             }
         }
         addResult.success = true;
         return addResult;
+    }
+
+    getCloneInitData(initData: any) {
+        if (typeof initData === 'object' || Array.isArray(initData)) {
+            return JSON.parse(JSON.stringify(initData));
+        } else {
+            return initData;
+        }
     }
 
     // 根据name查找变量
@@ -119,9 +151,9 @@ export default class AppVarController {
 
     // 根据name查找变量实例
     getVarInstanceByName(name: string) {
-        let _var: AppVar | undefined = undefined;
+        let _var: IAppVarJson | undefined = undefined;
         // 先查找全局变量
-        _var = GlobalVarMap.get(name);
+        _var = globalVarMap.get(name);
         if (_var) return _var;
         // 再查找页面变量
         _var = currentPageVarMap.get(name);
@@ -151,19 +183,19 @@ export default class AppVarController {
      * 根据变量实例删除某个变量
      * @param varInstance 变量实例
      */
-    removeVarByInstance(varInstance: AppVar | undefined | null) {
+    removeVarByInstance(varInstance: IAppVarJson | undefined | null) {
         const result = {
             success: false,
             msg: '',
         };
         const appStore = useAppStore(this.$pinia);
         // 非空校验
-        if (varInstance instanceof AppVar) {
+        if (varInstance && varInstance.key) {
             // 判断是 全局变量 还是 页面变量
             if (varInstance.scope === EnumAppVarScope.Global) {
-                if (!GlobalVarMap.has(varInstance.key)) return;
+                if (!globalVarMap.has(varInstance.key)) return;
                 delete appStore.globalVars[varInstance.name];
-                GlobalVarMap.delete(varInstance.name);
+                globalVarMap.delete(varInstance.name);
             } else if (varInstance.scope === EnumAppVarScope.Page) {
                 if (!currentPageVarMap.has(varInstance.key)) return;
                 delete appStore.currentPageVars[varInstance.name];
@@ -192,9 +224,9 @@ export default class AppVarController {
      * 返回序列化后的全局变量集合
      */
     SerializeGlobalVars() {
-        const result: Record<string, any> = {};
-        GlobalVarMap.forEach((value, key) => {
-            result[key] = value.Serialize();
+        const result: IAppVarJson[] = [];
+        globalVarMap.forEach(value => {
+            result.push(value);
         });
         $log('%c %s', 'color: green', 'SerializeGlobalVars --------->', result);
         return result;
@@ -204,9 +236,9 @@ export default class AppVarController {
      * 返回序列化后的当前页面变量集合
      */
     SerializeCurrentPageVars() {
-        const result: Record<string, any> = {};
-        currentPageVarMap.forEach((value, key) => {
-            result[key] = value.Serialize();
+        const result: IAppVarJson[] = [];
+        currentPageVarMap.forEach(value => {
+            result.push(value);
         });
         $log('%c %s', 'color: green', 'SerializeCurrentPageVars --------->', result);
         return result;

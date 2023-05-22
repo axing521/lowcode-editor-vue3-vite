@@ -18,6 +18,8 @@ export interface IAppStore {
     footer?: IDesignerComponent;
     globalVars: Record<string, any>; // 全局变量集合 { 变量名：变量数据 }
     currentPageVars: Record<string, any>; // 当前页面的变量集合 { 变量名：变量数据 }
+    globalDS: Record<string, any>;
+    currentPageDS: Record<string, any>;
     layout: {
         header: TLayoutItem;
         footer: TLayoutItem;

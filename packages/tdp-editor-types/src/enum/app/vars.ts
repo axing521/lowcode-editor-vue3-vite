@@ -6,7 +6,7 @@ export enum EnumAppVarType {
 
 // 变量作用域
 export enum EnumAppVarScope {
-    Global = 'global',
+    Global = 'app',
     Page = 'page',
 }
 
