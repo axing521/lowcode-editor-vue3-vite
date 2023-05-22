@@ -235,13 +235,8 @@ export default class AppVarController {
     /**
      * 返回序列化后的当前页面变量集合
      */
-    SerializeCurrentPageVars() {
-        const result: IAppVarJson[] = [];
-        currentPageVarMap.forEach(value => {
-            result.push(value);
-        });
-        $log('%c %s', 'color: green', 'SerializeCurrentPageVars --------->', result);
-        return result;
+    SerializeAllPageVars() {
+        return allPageVars;
     }
 
     /**
