@@ -1,5 +1,8 @@
 <template>
     <div class="datasource-list-box">
+        <div>
+            <a-button type="primary" @click="onAddBtnClick">添加</a-button>
+        </div>
         <ul class="ds-list">
             <li v-for="item in dsList" :key="item.key">
                 <div class="info">
@@ -11,9 +14,30 @@
                 </div>
             </li>
         </ul>
+        <a-modal
+            v-model:visible="showAddModal"
+            :footer="null"
+            wrapClassName="add-ds-modal"
+            :width="1200"
+        >
+            <div class="add-modal-body">
+                <AddDatasource
+                    @create="onDatasourceCreate"
+                    @cancel="onDatasourceCancel"
+                ></AddDatasource>
+            </div>
+        </a-modal>
     </div>
 </template>
-<style lang="less" scoped>
+<style lang="less">
+.add-ds-modal {
+    .ant-modal-body {
+        width: 1200px;
+        height: 700px;
+        overflow: auto;
+    }
+}
+
 .datasource-list-box {
     position: relative;
     ul.ds-list {
@@ -23,7 +47,7 @@
         flex-flow: row wrap;
         justify-content: flex-start;
         align-items: baseline;
-        li {
+        > li {
             display: block;
             width: 260px;
             height: 150px;
@@ -31,7 +55,7 @@
             background-color: #fff;
             border: 1px solid #aaa;
             border-radius: 5px;
-            margin: 10px;
+            padding: 10px;
             .info {
                 height: 150px - 32px;
                 overflow: hidden;
@@ -47,29 +71,36 @@
 }
 </style>
 <script setup lang="ts">
-import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import type { IDataSource } from 'tdp-editor-types/src/interface/app/datasource';
-import { reactive } from 'vue';
+import AddDatasource from './AddDatasource.vue';
+import { reactive, ref } from 'vue';
 
 const emits = defineEmits<{
     (e: 'check', datasource: IDataSource): void;
 }>();
+
+const showAddModal = ref(false);
+
 const dsList = reactive<IDataSource[]>([]);
-dsList.push({
-    key: 'a1',
-    name: '用户列表',
-    sourceType: 'url',
-    enable: true,
-    input: {
-        config: {},
-    },
-    output: {
-        compType: [EnumComponentType.button],
-    },
-});
 
 // 选择按钮单击事件
 const onCheckBtnClick = (datasource: IDataSource) => {
     emits('check', datasource);
+};
+
+// 添加按钮单击事件
+const onAddBtnClick = () => {
+    showAddModal.value = true;
+};
+
+// 数据源创建事件
+const onDatasourceCreate = (datasource: IDataSource) => {
+    dsList.push(datasource);
+    showAddModal.value = false;
+};
+
+// 数据源取消创建事件
+const onDatasourceCancel = () => {
+    showAddModal.value = false;
 };
 </script>

@@ -2,8 +2,8 @@ import { isReactive, isRef } from 'vue';
 import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 
 /* eslint-disable prettier/prettier */
-export const $getUUID = (prefix?: string): string => {
-    let result = $randomWord(false, 16);
+export const $getUUID = (prefix?: string, length = 16): string => {
+    let result = $randomWord(false, length);
     if (prefix) {
         result = `${prefix}_${result}`;
     }
