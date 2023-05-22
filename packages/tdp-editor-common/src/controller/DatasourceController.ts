@@ -3,11 +3,12 @@ import type { Pinia } from 'pinia';
 import type { IDataSource } from 'tdp-editor-types/src/interface/app/datasource';
 
 import { useAppStore } from '../stores/appStore';
-import { $error, $log } from '../utils';
+import { $error } from '../utils';
 
 // 创建两个map，存放数据源配置
-const GlobalDSMap: Map<string, IDataSource> = new Map();
-const currentPageDSMap: Map<string, IDataSource> = new Map();
+const globalDS: IDataSource[] = [];
+const currentPageDS: IDataSource[] = [];
+const allPageDS: IDataSource[] = [];
 
 export default class DatasourceController {
     private readonly $app: App;
@@ -34,8 +35,8 @@ export default class DatasourceController {
         }
         // 添加全局变量
         if (dsJson.scope === 'app') {
-            if (!GlobalDSMap.get(dsJson.key) || cover) {
-                GlobalDSMap.set(dsJson.name, dsJson);
+            if (!globalDS.some(c => c.key === dsJson.key) || cover) {
+                globalDS.push(dsJson);
                 result.success = true;
             } else {
                 $error(`数据源： ${dsJson.name} 已存在，不能重复添加`);
@@ -47,14 +48,14 @@ export default class DatasourceController {
             const activePageId = dsJson.pageKey || appStore.activePage?.key;
             if (activePageId) {
                 // 如果变量已经存在，则不能添加
-                if (currentPageDSMap.has(dsJson.key) && !cover) {
+                if (currentPageDS.some(c => c.key === dsJson.key) && !cover) {
                     $error(`数据源： ${dsJson.name} 已存在，不能重复添加`);
                     result.msg = '数据源已存在，不能重复添加';
                     return result;
                 }
                 // 添加变量
                 else {
-                    currentPageDSMap.set(dsJson.key, dsJson);
+                    currentPageDS.push(dsJson);
                     appStore.currentPageDS[dsJson.key] = {};
                 }
                 result.success = true;
@@ -95,9 +96,9 @@ export default class DatasourceController {
     /**
      * 清空当前页面变量
      */
-    clearCurrentPageVar() {
+    clearCurrentPageDS() {
         const appStore = useAppStore(this.$pinia);
-        currentPageDSMap.clear();
+        currentPageDS.splice(0, currentPageDS.length);
         for (const key in appStore.currentPageDS) {
             delete appStore.currentPageDS[key];
         }
@@ -106,24 +107,14 @@ export default class DatasourceController {
     /**
      * 返回序列化后的全局变量集合
      */
-    SerializeGlobalVars() {
-        const result: Record<string, any> = {};
-        GlobalDSMap.forEach((value, key) => {
-            result[key] = JSON.stringify(value);
-        });
-        $log('%c %s', 'color: green', 'SerializeGlobalVars --------->', result);
-        return result;
+    SerializeGlobalDS() {
+        return globalDS;
     }
 
     /**
      * 返回序列化后的当前页面变量集合
      */
-    SerializeCurrentPageVars() {
-        const result: Record<string, any> = {};
-        currentPageDSMap.forEach((value, key) => {
-            result[key] = JSON.stringify(value);
-        });
-        $log('%c %s', 'color: green', 'SerializeCurrentPageVars --------->', result);
-        return result;
+    SerializeAllPageDS() {
+        return allPageDS;
     }
 }
