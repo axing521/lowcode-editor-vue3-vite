@@ -16,7 +16,7 @@ import { useAppStore } from '../stores/appStore';
 import { EnumAppEnv } from 'tdp-editor-types/src/enum';
 import { openDBAsync, setDataAsync, getDataAsync } from '../indexDBUtil';
 import { utils } from '../index';
-import { useVarControler, useAppControler } from './index';
+import { useVarControler, useAppControler, useDatasourceControler } from './index';
 import { $warn } from '../utils';
 import { useContentStore } from '../stores/contentStore';
 
@@ -61,7 +61,11 @@ export default class EditorController {
      */
     initEditorByLocalData(localData: IAppSaveStruct) {
         const contentStore = useContentStore(this.$pinia);
+        const varController = useVarControler(this.$app);
+        const dsController = useDatasourceControler(this.$app);
         contentStore.pages = localData.pages as IPageState[];
+        varController.initVars(localData.globalVars || [], localData.pageVars || []);
+        dsController.initDS(localData.globalDS || [], localData.pageDS || []);
         this.setActivePage(localData.defaultPageKey);
     }
     /**
@@ -108,11 +112,14 @@ export default class EditorController {
         const appStore = useAppStore(this.$pinia);
         const contentStore = useContentStore(this.$pinia);
         const varController = useVarControler(this.$app);
+        const dsController = useDatasourceControler(this.$app);
         return {
             defaultPageKey: appStore.activePage?.key || '',
             pages: toRaw(contentStore.pages),
             globalVars: varController.SerializeGlobalVars(),
             pageVars: varController.SerializeAllPageVars(),
+            globalDS: dsController.SerializeGlobalDS(),
+            pageDS: dsController.SerializeAllPageDS(),
         };
     }
     // 导入配置文件

@@ -4,12 +4,14 @@ import AppController from './AppController';
 import AppVarController from './AppVarController';
 import EditorController from './EditorController';
 import PageController from './PageController';
+import DatasourceController from './DatasourceController';
 
 type TController = {
     appController: AppController;
     appVarController: AppVarController;
     editorController: EditorController;
     pageController: PageController;
+    datasourceController: DatasourceController;
 };
 
 const __createControllers = (app: App, pinia: Pinia) => {
@@ -18,6 +20,7 @@ const __createControllers = (app: App, pinia: Pinia) => {
         editorController: new EditorController(app, pinia),
         appVarController: new AppVarController(app, pinia),
         pageController: new PageController(app, pinia),
+        datasourceController: new DatasourceController(app, pinia),
     };
 };
 let activeApp: App;
@@ -34,6 +37,7 @@ export const createController = (app: App, pinia: Pinia) => {
     app.config.globalProperties.$AppVarController = controllers.appVarController;
     app.config.globalProperties.$EditorController = controllers.editorController;
     app.config.globalProperties.$PageController = controllers.pageController;
+    app.config.globalProperties.$DatasourceController = controllers.datasourceController;
     controllerMap.set(app, controllers);
     return controllers;
 };
@@ -61,4 +65,9 @@ export const useEditorControler = (app?: App) => {
 export const usePageControler = (app?: App) => {
     if (app) activeApp = app;
     return controllerMap.get(activeApp)!.pageController;
+};
+
+export const useDatasourceControler = (app?: App) => {
+    if (app) activeApp = app;
+    return controllerMap.get(activeApp)!.datasourceController;
 };

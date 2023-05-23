@@ -71,17 +71,21 @@
 }
 </style>
 <script setup lang="ts">
-import type { IDataSource } from 'tdp-editor-types/src/interface/app/datasource';
-import AddDatasource from './AddDatasource.vue';
 import { reactive, ref } from 'vue';
+import type { IDataSource } from 'tdp-editor-types/src/interface/app/datasource';
+import { useDatasourceControler } from 'tdp-editor-common/src/controller';
+import AddDatasource from './AddDatasource.vue';
+import { $log } from 'tdp-editor-common/src/utils';
 
 const emits = defineEmits<{
     (e: 'check', datasource: IDataSource): void;
 }>();
-
+const dsController = useDatasourceControler();
 const showAddModal = ref(false);
 
-const dsList = reactive<IDataSource[]>([]);
+const dsList = reactive<IDataSource[]>(
+    dsController.getGlobalDSLIst().concat(dsController.getCurrentPageDSList())
+);
 
 // 选择按钮单击事件
 const onCheckBtnClick = (datasource: IDataSource) => {
@@ -95,6 +99,8 @@ const onAddBtnClick = () => {
 
 // 数据源创建事件
 const onDatasourceCreate = (datasource: IDataSource) => {
+    $log('datasource', datasource);
+    dsController.add(datasource);
     dsList.push(datasource);
     showAddModal.value = false;
 };

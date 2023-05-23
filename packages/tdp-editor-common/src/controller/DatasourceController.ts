@@ -3,12 +3,18 @@ import type { Pinia } from 'pinia';
 import type { IDataSource } from 'tdp-editor-types/src/interface/app/datasource';
 
 import { useAppStore } from '../stores/appStore';
-import { $error } from '../utils';
+import { $error, $log } from '../utils';
 
 // 创建两个map，存放数据源配置
 const globalDS: IDataSource[] = [];
 const currentPageDS: IDataSource[] = [];
 const allPageDS: IDataSource[] = [];
+
+document.addEventListener('dblclick', function () {
+    $log(111, globalDS);
+    $log(222, currentPageDS);
+    $log(333, allPageDS);
+});
 
 export default class DatasourceController {
     private readonly $app: App;
@@ -16,6 +22,40 @@ export default class DatasourceController {
     constructor(app: App, pinia: Pinia) {
         this.$app = app;
         this.$pinia = pinia;
+    }
+
+    initDS(_globalDS: IDataSource[], _pageDS: IDataSource[]) {
+        globalDS.splice(0, globalDS.length);
+        currentPageDS.splice(0, currentPageDS.length);
+        allPageDS.splice(0, allPageDS.length);
+        _globalDS.forEach(c => {
+            this.add(c, true);
+        });
+        _pageDS.forEach(c => {
+            allPageDS.push(c);
+        });
+    }
+
+    /**
+     * 重置指定页面的页面变量
+     * @param pageKey
+     */
+    resetTargetPageDS(pageKey: string) {
+        const pageVars = allPageDS.filter(c => c.pageKey === pageKey);
+        this.resetCurrentPageDS(pageVars);
+    }
+
+    /**
+     * 重置当前页面变量
+     * @param pageDS 要重置的变量集合
+     */
+    resetCurrentPageDS(pageDS: IDataSource[]) {
+        this.clearCurrentPageDS();
+        const appStore = useAppStore(this.$pinia);
+        pageDS.forEach(c => {
+            currentPageDS.push(c);
+            appStore.currentPageDS[c.key] = this.getDatasourceDefaultValue(c);
+        });
     }
 
     /**
@@ -45,8 +85,7 @@ export default class DatasourceController {
             }
         } else if (dsJson.scope === 'page') {
             // 添加页面变量
-            const activePageId = dsJson.pageKey || appStore.activePage?.key;
-            if (activePageId) {
+            if (dsJson.pageKey === appStore.activePage?.key) {
                 // 如果变量已经存在，则不能添加
                 if (currentPageDS.some(c => c.key === dsJson.key) && !cover) {
                     $error(`数据源： ${dsJson.name} 已存在，不能重复添加`);
@@ -56,10 +95,21 @@ export default class DatasourceController {
                 // 添加变量
                 else {
                     currentPageDS.push(dsJson);
-                    appStore.currentPageDS[dsJson.key] = {};
+                    allPageDS.push(dsJson);
+                    appStore.currentPageDS[dsJson.key] = this.getDatasourceDefaultValue(dsJson);
                 }
                 result.success = true;
             }
+        }
+        return result;
+    }
+
+    getDatasourceDefaultValue(datasource: IDataSource) {
+        const result: any = {};
+        if (datasource.output.fieldMapping && datasource.output.fieldMapping.length) {
+            datasource.output.fieldMapping.forEach(field => {
+                result[field.dsField] = '';
+            });
         }
         return result;
     }
@@ -71,6 +121,15 @@ export default class DatasourceController {
 
     getGlobalDS(): Record<string, any> {
         return useAppStore(this.$pinia).globalDS;
+    }
+
+    // 获取当前页面下所有的页面数据源
+    getCurrentPageDSList(): IDataSource[] {
+        return currentPageDS;
+    }
+
+    getGlobalDSLIst(): IDataSource[] {
+        return globalDS;
     }
 
     /**

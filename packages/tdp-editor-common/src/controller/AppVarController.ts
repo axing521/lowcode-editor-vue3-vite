@@ -28,11 +28,11 @@ const currentPageVarMap: Map<string, IAppVarJson> = new Map();
 
 const allPageVars: IAppVarJson[] = [];
 
-document.addEventListener('dblclick', function () {
-    $log(111, globalVarMap);
-    $log(222, currentPageVarMap);
-    $log(333, allPageVars);
-});
+// document.addEventListener('dblclick', function () {
+//     $log(111, globalVarMap);
+//     $log(222, currentPageVarMap);
+//     $log(333, allPageVars);
+// });
 
 export default class AppVarController {
     private readonly $app: App;

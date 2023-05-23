@@ -22,7 +22,11 @@ export interface IDataSourceInputUrl {
 export interface IDataSourceInput<T> {
     config: T;
 }
+type TFieldMappingItem = {
+    dsField: string;
+    resField: string;
+};
 export interface IDataSourceOutput {
     compType: EnumComponentType | 'basic';
-    fieldMapping: Record<string, string>;
+    fieldMapping: TFieldMappingItem[];
 }

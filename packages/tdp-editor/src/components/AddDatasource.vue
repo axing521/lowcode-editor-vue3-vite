@@ -59,7 +59,7 @@
                         <h3>原始字段</h3>
                         <ul>
                             <li v-for="(item, index) in fieldMapping" :key="index + 'key'">
-                                <a-input v-model:value="item.resourceField"></a-input>
+                                <a-input v-model:value="item.resField"></a-input>
                             </li>
                         </ul>
                     </div>
@@ -168,15 +168,15 @@ const urlDatasourceInput = reactive<IDataSourceInputUrl>({
 });
 const datasourceOutput = shallowReactive<IDataSourceOutput>({
     compType: 'basic',
-    fieldMapping: {},
+    fieldMapping: [],
 });
-const fieldMapping = reactive<{ dsField: string; resourceField: string }[]>([]);
+const fieldMapping = reactive<{ dsField: string; resField: string }[]>([]);
 
 // 添加字段按钮单击事件
 const onAddFieldMappingClick = () => {
     fieldMapping.push({
         dsField: 'newFiled' + Date.now(),
-        resourceField: 'response',
+        resField: 'res',
     });
 };
 // 添加字段按钮单击事件
@@ -186,9 +186,7 @@ const onRemoveFieldMappingClick = (index: number) => {
 
 // 点击创建事件
 const onSubmit = () => {
-    fieldMapping.forEach(c => {
-        datasourceOutput.fieldMapping[c.dsField] = c.resourceField;
-    });
+    datasourceOutput.fieldMapping = toRaw(fieldMapping);
     const dataSource: IDataSource = {
         key: $getUUID('ds', 10),
         enable: formState.enable,
