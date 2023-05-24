@@ -13,15 +13,10 @@ import { defineComponent, computed } from 'vue';
 import { useBaseLifecycle } from '../../composables/base';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
-import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
+import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
 import type { ICardProps } from './interface';
 
-const allProps = defineProps<{
-    state: IComponentState<ICardProps>;
-    parentId: string;
-    props: ICardProps;
-    css: Record<string, any>;
-}>();
+const allProps = defineProps<ICompBaseProps<ICardProps>>();
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 const flexCardClass = computed(() => {

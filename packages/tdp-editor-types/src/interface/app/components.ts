@@ -16,6 +16,13 @@ export interface ISetupBaseProps {
     parentId?: string;
 }
 
+export interface ICompBaseProps<P = any> {
+    state: IComponentState<P>;
+    parentId?: string;
+    props: P;
+    css: Record<string, any>;
+}
+
 /* form组件基础属性定义 */
 export interface IBaseFormItemProps {
     label: string;

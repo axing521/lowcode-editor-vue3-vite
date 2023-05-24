@@ -11,18 +11,13 @@
 </template>
 <script lang="ts" setup>
 import { defineComponent } from 'vue';
-import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
+import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
 import type { IButtonProps } from './interface';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { useBaseEvents, useBaseLifecycle } from '../../composables/base';
 
 // 接收prop
-const allProps = defineProps<{
-    state: IComponentState<IButtonProps>;
-    parentId: string;
-    props: IButtonProps;
-    css: Record<string, any>;
-}>();
+const allProps = defineProps<ICompBaseProps<IButtonProps>>();
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 // 获取事件对象
