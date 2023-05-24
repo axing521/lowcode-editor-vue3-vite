@@ -24,7 +24,7 @@
     "openai": "^3.2.1",
     "tdp-editor-common": "workspace:^0.1.0",
     "tdp-editor-types": "workspace:*",
-    "vue": "^3.2.37",
+    "vue": "^3.3.4",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
