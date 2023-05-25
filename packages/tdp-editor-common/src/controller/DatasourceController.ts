@@ -1,9 +1,19 @@
 import type { App } from 'vue';
 import type { Pinia } from 'pinia';
-import type { IDataSource } from 'tdp-editor-types/src/interface/app/datasource';
+import type {
+    IDataSource,
+    IDataSourceInputUrl,
+} from 'tdp-editor-types/src/interface/app/datasource';
+import type { IFetchAsyncResult } from 'tdp-editor-types/src/interface/request';
 
 import { useAppStore } from '../stores/appStore';
-import { $error, $log } from '../utils';
+import { $error, $log, $warn } from '../utils';
+import { $fetch } from '../request';
+
+type TTriggerDatasourceResult = {
+    success: boolean;
+    data: any;
+};
 
 // 创建两个map，存放数据源配置
 const globalDS: IDataSource[] = [];
@@ -15,6 +25,16 @@ document.addEventListener('dblclick', function () {
     $log(222, currentPageDS);
     $log(333, allPageDS);
 });
+
+const getResFieldValue = (response: IFetchAsyncResult<any>, expression: string) => {
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const res = response;
+        return eval(expression);
+    } catch {
+        return undefined;
+    }
+};
 
 export default class DatasourceController {
     private readonly $app: App;
@@ -54,8 +74,61 @@ export default class DatasourceController {
         const appStore = useAppStore(this.$pinia);
         pageDS.forEach(c => {
             currentPageDS.push(c);
-            appStore.currentPageDS[c.key] = this.getDatasourceDefaultValue(c);
+            this.triggerDatasource(c).then(res => {
+                if (res.success) {
+                    appStore.currentPageDS[c.key] = res.data;
+                } else {
+                    appStore.currentPageDS[c.key] = this.getDatasourceDefaultValue(c);
+                }
+            });
         });
+    }
+
+    /**
+     * 触发数据源
+     * @param datasource 数据源对象
+     */
+    async triggerDatasource(datasource: IDataSource) {
+        if (datasource.sourceType === 'url') {
+            return await this.triggerUrlDatasource(datasource);
+        }
+        return {
+            success: false,
+            data: null,
+        } as TTriggerDatasourceResult;
+    }
+
+    /**
+     * 触发url类型的数据源
+     * @param datasource 数据源对象
+     */
+    async triggerUrlDatasource(datasource: IDataSource<IDataSourceInputUrl>) {
+        const result: TTriggerDatasourceResult = {
+            success: false,
+            data: null,
+        };
+        const inputConfig = datasource.input.config;
+        const res = await $fetch({
+            url: inputConfig.url,
+            method: inputConfig.method,
+            data:
+                Array.isArray(inputConfig.payload) &&
+                inputConfig.payload.map(c => ({
+                    [c.field]: c.value,
+                })),
+        });
+
+        if (res.success) {
+            result.success = true;
+            result.data = {};
+            datasource.output.fieldMapping.forEach(field => {
+                result.data[field.dsField] = getResFieldValue(res.data, field.resField);
+            });
+            $log(`${datasource.name} -> ${inputConfig.url} 请求成功`, res, result);
+        } else {
+            $warn('url datasource发送请求失败', res.error);
+        }
+        return result;
     }
 
     /**

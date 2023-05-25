@@ -4,6 +4,7 @@ import type { EnumServiceResultStatus } from '../../enum/request';
 export interface IFetchAsyncResult<DATA> {
     code: string | number;
     data: DATA;
+    error?: Error;
     message?: string;
     timestamp: number;
     success: boolean;

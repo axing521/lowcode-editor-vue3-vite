@@ -16,8 +16,12 @@ export type TSourceType = 'url' | 'apiRepo' | 'dataModeler' | 'dataFlow';
 export interface IDataSourceInputUrl {
     url: string;
     method: 'post' | 'get' | 'delete' | 'put';
-    queryString?: Record<string, string>;
-    payload?: Record<string, any>;
+    queryString?: { key: string; value: string }[];
+    payload?: {
+        field: string;
+        type: 'string' | 'number' | 'file';
+        value: string;
+    }[];
 }
 export interface IDataSourceInput<T> {
     config: T;

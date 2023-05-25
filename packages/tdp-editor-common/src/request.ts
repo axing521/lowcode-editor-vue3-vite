@@ -30,6 +30,7 @@ export const $fetch = async <DATA = any>(options: IFetchOptions) => {
         // @ts-ignore
         result.code = response.httpStatus;
         result.timestamp = Date.now();
+        result.error = response.error;
     }
     return result;
 };

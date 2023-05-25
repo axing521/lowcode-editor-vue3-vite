@@ -163,8 +163,8 @@ const formState = reactive({
 const urlDatasourceInput = reactive<IDataSourceInputUrl>({
     url: '',
     method: 'get',
-    payload: {},
-    queryString: {},
+    payload: [],
+    queryString: [],
 });
 const datasourceOutput = shallowReactive<IDataSourceOutput>({
     compType: 'basic',
