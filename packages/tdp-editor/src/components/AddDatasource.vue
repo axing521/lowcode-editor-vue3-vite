@@ -4,9 +4,9 @@
             <a-input v-model:value="formState.name" />
         </a-form-item>
         <a-form-item label="作用域">
-            <a-radio-group v-model:value="formState.scope">
-                <a-radio value="app">应用级</a-radio>
+            <a-radio-group v-model:value="formState.scope" :disabled="action !== 'add'">
                 <a-radio value="page">页面级</a-radio>
+                <a-radio value="app">应用级</a-radio>
             </a-radio-group>
         </a-form-item>
         <a-form-item label="类型">
@@ -84,7 +84,9 @@
             </div>
         </div>
         <div style="text-align: center">
-            <a-button type="primary" @click="onSubmit">创建</a-button>
+            <a-button type="primary" @click="onSubmit">
+                {{ action === 'add' ? '创建' : '确定' }}
+            </a-button>
             <a-button style="margin-left: 10px" @click="onCancel">取消</a-button>
         </div>
     </a-form>
@@ -144,7 +146,12 @@ import type {
     IDataSourceOutput,
     IDataSource,
 } from 'tdp-editor-types/src/interface/app/datasource';
-import { reactive, toRaw, shallowReactive } from 'vue';
+import { reactive, toRaw, shallowReactive, watch, onBeforeUnmount, ref } from 'vue';
+
+const props = defineProps<{
+    action: 'add' | 'edit' | 'view';
+    editData?: IDataSource;
+}>();
 
 const emits = defineEmits<{
     (e: 'create', datasource: IDataSource): void;
@@ -156,7 +163,6 @@ const formState = reactive({
     scope: 'page' as TDatasourceScope,
     enable: true,
     sourceType: 'url' as TSourceType,
-    resource: '',
     desc: '',
 });
 
@@ -170,25 +176,42 @@ const datasourceOutput = shallowReactive<IDataSourceOutput>({
     compType: 'basic',
     fieldMapping: [],
 });
-const fieldMapping = reactive<{ dsField: string; resField: string }[]>([]);
+const fieldMapping = ref<{ dsField: string; resField: string }[]>([]);
+
+const resetForm = () => {
+    formState.name = '';
+    formState.desc = '';
+    formState.scope = 'page';
+    formState.enable = true;
+    formState.sourceType = 'url';
+
+    urlDatasourceInput.url = '';
+    urlDatasourceInput.method = 'get';
+    urlDatasourceInput.payload = undefined;
+    urlDatasourceInput.queryString = undefined;
+
+    datasourceOutput.compType = 'basic';
+    datasourceOutput.fieldMapping = [];
+    fieldMapping.value = [];
+};
 
 // 添加字段按钮单击事件
 const onAddFieldMappingClick = () => {
-    fieldMapping.push({
+    fieldMapping.value.push({
         dsField: 'newFiled' + Date.now(),
         resField: 'res',
     });
 };
 // 添加字段按钮单击事件
 const onRemoveFieldMappingClick = (index: number) => {
-    fieldMapping.splice(index, 1);
+    fieldMapping.value.splice(index, 1);
 };
 
 // 点击创建事件
 const onSubmit = () => {
-    datasourceOutput.fieldMapping = toRaw(fieldMapping);
+    datasourceOutput.fieldMapping = toRaw(fieldMapping.value);
     const dataSource: IDataSource = {
-        key: $getUUID('ds', 10),
+        key: props.action === 'add' ? $getUUID('ds', 10) : props.editData?.key || '',
         enable: formState.enable,
         name: formState.name,
         scope: formState.scope,
@@ -199,6 +222,9 @@ const onSubmit = () => {
         },
         output: toRaw(datasourceOutput),
     };
+    if (props.action === 'edit' && dataSource.scope === 'page' && props.editData) {
+        dataSource.pageKey = props.editData.pageKey;
+    }
     emits('create', dataSource);
 };
 
@@ -206,4 +232,35 @@ const onSubmit = () => {
 const onCancel = () => {
     emits('cancel');
 };
+
+const watch_editData_stop = watch(
+    () => props.editData,
+    (ds, oldDS) => {
+        if (!ds) {
+            resetForm();
+        } else if (ds && (!oldDS || ds.key !== oldDS.key)) {
+            formState.name = ds.name;
+            formState.desc = ds.desc || '';
+            formState.enable = ds.enable;
+            formState.sourceType = ds.sourceType;
+            if (ds.sourceType === 'url') {
+                const config: IDataSourceInputUrl = ds.input.config;
+                urlDatasourceInput.url = config.url;
+                urlDatasourceInput.method = config.method;
+                urlDatasourceInput.payload = config.payload;
+                urlDatasourceInput.queryString = config.queryString;
+            }
+            datasourceOutput.compType = ds.output.compType;
+            datasourceOutput.fieldMapping = ds.output.fieldMapping;
+            fieldMapping.value = ds.output.fieldMapping;
+        }
+    },
+    {
+        immediate: true,
+    }
+);
+onBeforeUnmount(() => {
+    // 清除watch
+    watch_editData_stop();
+});
 </script>
