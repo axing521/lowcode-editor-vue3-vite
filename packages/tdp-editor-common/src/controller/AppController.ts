@@ -2,6 +2,7 @@ import type { App } from 'vue';
 import type { Router } from 'vue-router';
 import type { Pinia } from 'pinia';
 import type { EnumAppEnv, EnumAppMode } from 'tdp-editor-types/src/enum';
+import type { IAppSaveStruct } from 'tdp-editor-types/src/interface/app';
 
 import { useAppStore } from '../stores/appStore';
 import { usePageControler, useVarControler, useDatasourceControler } from './index';
@@ -19,11 +20,14 @@ export default class AppController {
      * 初始化应用
      * @param appJson appJson
      */
-    initApp(appJson: any) {
+    initApp(appJson: IAppSaveStruct) {
         const contentStore = useContentStore(this.$pinia);
+        const varController = useVarControler(this.$app);
+        const dsController = useDatasourceControler(this.$app);
         contentStore.pages = appJson.pages;
-        const activePage = appJson.activePage || contentStore.pages[0];
-        this.changePage(activePage.key, '');
+        varController.initVars(appJson.globalVars || [], appJson.pageVars || []);
+        dsController.initDS(appJson.datasourceList || []);
+        this.changePage(appJson.defaultPageKey, '');
     }
     /**
      * 获取当前显示页面

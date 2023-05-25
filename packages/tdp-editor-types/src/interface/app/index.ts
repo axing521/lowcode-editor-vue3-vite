@@ -1,4 +1,4 @@
-import type { IComponentState } from './components';
+import type { IComponentState, IPageState } from './components';
 import type { IDataSource } from './datasource';
 import type { IAppVarJson } from './vars';
 
@@ -10,7 +10,7 @@ type TLayoutItem = {
 // 应用保存时的数据结构
 export interface IAppSaveStruct {
     defaultPageKey: string;
-    pages: IComponentState[];
+    pages: IPageState[];
     layout?: {
         headers: TLayoutItem[];
         footers: TLayoutItem[];
