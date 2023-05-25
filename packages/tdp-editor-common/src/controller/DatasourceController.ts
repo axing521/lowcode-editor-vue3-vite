@@ -87,6 +87,22 @@ export default class DatasourceController {
 
     /**
      * 触发数据源
+     * @param datasourceKey 数据源对象Key
+     */
+    async triggerDatasourceByKey(datasourceKey: string) {
+        const ds = this.getDSByKey(datasourceKey);
+        if (ds.item) {
+            return await this.triggerDatasource(ds.item);
+        } else {
+            return {
+                success: false,
+                data: null,
+            } as TTriggerDatasourceResult;
+        }
+    }
+
+    /**
+     * 触发数据源
      * @param datasource 数据源对象
      */
     async triggerDatasource(datasource: IDataSource) {

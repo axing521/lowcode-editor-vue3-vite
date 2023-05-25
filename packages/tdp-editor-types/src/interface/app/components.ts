@@ -1,9 +1,7 @@
 import type { ComponentPublicInstance } from 'vue';
-import type { EnumHttpMethod } from '../../enum';
 import type {
     EnumComponentType,
     EnumComponentGroup,
-    EnumApiType,
     EnumEventName,
     EnumPropsValueType,
     EnumEventType,
@@ -52,20 +50,13 @@ export interface IComponentState<P = any, C = any> {
     type: EnumComponentType | string;
     group: EnumComponentGroup;
     list?: IComponentState[];
-    apis?: IComponentApi[];
     props?: IComponentProps<P>;
     formInfo?: IFormInfo;
     isForm?: boolean; // 是否属于form组件
     css?: C;
+    dsKey?: string; // 数据源key
     classNames?: string[]; // 组件的自定义样式名
     events?: IComponentEvent[];
-}
-
-export interface IComponentApi {
-    name: string;
-    path: string;
-    method: EnumHttpMethod;
-    type: EnumApiType;
 }
 
 // 组件的事件描述对象
