@@ -25,7 +25,12 @@ function useBaseIndex(props: ISetupBaseProps) {
     // 处理后的组件属性，返回一个reactive对象，用于动态改变组件内部属性
     const c_Props = computed<any>(() => {
         return reactive(
-            propsFactory.formatProps(props.state.props!, getExpression, (() => {}) as any)
+            propsFactory.formatProps(
+                props.state.props!,
+                getExpression,
+                (() => {}) as any,
+                props.state.dsKey
+            )
         );
     });
 

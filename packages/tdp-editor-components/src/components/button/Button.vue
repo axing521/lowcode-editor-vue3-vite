@@ -6,7 +6,7 @@
         :style="allProps.css"
         v-on="eventsMap"
     >
-        {{ allProps.props.text }}
+        {{ allProps.props.text || '按钮' }}
     </a-button>
 </template>
 <script lang="ts" setup>

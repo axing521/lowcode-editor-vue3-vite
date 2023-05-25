@@ -4,6 +4,7 @@ import type { IAppVarJson } from 'tdp-editor-types/src/interface/app/vars';
 import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
 import { useAppStore } from '../stores/appStore';
 import { $error, $getUUID, $log, $warn } from '../utils';
+import { useDatasourceControler } from '.';
 
 type evalBindValueResult = {
     success: boolean;
@@ -19,7 +20,7 @@ type evalBindValueParams = {
     pageVars?: Record<string, any>;
     loopItem?: any;
     loopIndex?: number;
-    apiData?: any;
+    dsKey?: string;
 };
 
 // 创建两个map，存放变量实例
@@ -260,8 +261,12 @@ export default class AppVarController {
         const $item = params.loopItem || {};
         // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         const $index = params.loopIndex || 0;
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        const $api = params.apiData || [];
+        let $ds: any = {};
+        if (params.dsKey) {
+            const dsController = useDatasourceControler(this.$app);
+            // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+            $ds = dsController.getDatasourceStore(params.dsKey);
+        }
         try {
             result = {
                 success: true,

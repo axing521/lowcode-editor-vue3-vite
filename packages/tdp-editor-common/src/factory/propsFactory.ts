@@ -79,7 +79,7 @@ const PropsFactory: IPropsRenderFactory = {
             }
         }
     },
-    formatProps(props, getExpression, getFunction) {
+    formatProps(props, getExpression, getFunction, dsKey) {
         if (!props) return {};
         const _props = props!;
         const newProps: any = {};
@@ -87,7 +87,7 @@ const PropsFactory: IPropsRenderFactory = {
             const prop = _props[key];
             // 处理绑定数据
             if (prop.type === EnumPropsValueType.expression) {
-                newProps[key] = getExpression(prop.bindValue);
+                newProps[key] = getExpression(prop.bindValue, dsKey || '');
             } else if (prop.type === EnumPropsValueType.function) {
                 newProps[key] = getFunction(prop.value as any);
             } else {

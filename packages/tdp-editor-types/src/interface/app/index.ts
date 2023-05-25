@@ -19,6 +19,5 @@ export interface IAppSaveStruct {
     };
     globalVars?: IAppVarJson[];
     pageVars?: IAppVarJson[];
-    globalDS?: IDataSource[];
-    pageDS?: IDataSource[];
+    datasourceList?: IDataSource[];
 }

@@ -15,16 +15,18 @@ type TTriggerDatasourceResult = {
     data: any;
 };
 
-// 创建两个map，存放数据源配置
-const globalDS: IDataSource[] = [];
+// 存放数据源配置
+const allDatasource: IDataSource[] = [];
+// 缓存当前页面数据源
 let currentPageDSDirty = true;
 let currentPageDSCache: IDataSource[] = [];
-const allPageDS: IDataSource[] = [];
+// 缓存全局数据源
+let globalDSDirty = true;
+let globalDSCache: IDataSource[] = [];
 
 document.addEventListener('dblclick', function () {
-    $log(111, globalDS);
     $log(222, currentPageDSCache);
-    $log(333, allPageDS);
+    $log(333, allDatasource);
 });
 
 const getResFieldValue = (response: IFetchAsyncResult<any>, expression: string) => {
@@ -45,15 +47,15 @@ export default class DatasourceController {
         this.$pinia = pinia;
     }
 
-    initDS(_globalDS: IDataSource[], _pageDS: IDataSource[]) {
-        globalDS.splice(0, globalDS.length);
-        allPageDS.splice(0, allPageDS.length);
-        _globalDS.forEach(c => {
-            this.add(c, true);
+    initDS(datasourceList: IDataSource[]) {
+        datasourceList.forEach(c => {
+            if (c.scope === 'app') {
+                this.add(c, true);
+            } else {
+                allDatasource.push(c);
+            }
         });
-        _pageDS.forEach(c => {
-            allPageDS.push(c);
-        });
+        this.getGlobalDSList();
         this.getCurrentPageDS();
     }
 
@@ -62,8 +64,8 @@ export default class DatasourceController {
      * @param pageKey
      */
     resetTargetPageDS(pageKey: string) {
-        const pageVars = allPageDS.filter(c => c.pageKey === pageKey);
-        this.resetCurrentPageDS(pageVars);
+        const dsList = allDatasource.filter(c => c.scope === 'page' && c.pageKey === pageKey);
+        this.resetCurrentPageDS(dsList);
     }
 
     /**
@@ -173,19 +175,30 @@ export default class DatasourceController {
         return useAppStore(this.$pinia).globalDS;
     }
 
-    // 获取当前页面下所有的页面数据源
+    /**
+     * 获取当前页面下所有的页面数据源
+     * @returns 当前页面下所有的页面数据源
+     */
     getCurrentPageDSList(): IDataSource[] {
         if (currentPageDSDirty) {
             const appStore = useAppStore(this.$pinia);
             const pageKey = appStore.activePage?.key;
-            currentPageDSCache = allPageDS.filter(c => c.pageKey === pageKey);
+            currentPageDSCache = allDatasource.filter(c => c.pageKey === pageKey);
             currentPageDSDirty = false;
         }
         return currentPageDSCache;
     }
 
-    getGlobalDSLIst(): IDataSource[] {
-        return globalDS;
+    /**
+     * 获取全局数据源
+     * @returns 全局数据源
+     */
+    getGlobalDSList(): IDataSource[] {
+        if (globalDSDirty) {
+            globalDSCache = allDatasource.filter(c => c.scope === 'app');
+            globalDSDirty = false;
+        }
+        return globalDSCache;
     }
 
     /**
@@ -199,19 +212,32 @@ export default class DatasourceController {
         };
         // 非空校验
         if (dsKey) {
-            // 判断是 全局变量 还是 页面变量
-            result.index = globalDS.findIndex(c => c.key === dsKey);
+            result.index = allDatasource.findIndex(c => c.key === dsKey);
             if (result.index >= 0) {
-                result.item = globalDS[result.index];
-                return result;
-            }
-            result.index = allPageDS.findIndex(c => c.key === dsKey);
-            if (result.index >= 0) {
-                result.item = allPageDS[result.index];
+                result.item = allDatasource[result.index];
                 return result;
             }
         }
         return result;
+    }
+
+    /**
+     * 查找数据源数据
+     * @param datasourceKey 数据源key
+     * @returns 数据源对应的数据
+     */
+    getDatasourceStore(datasourceKey: string) {
+        if (!datasourceKey) return undefined;
+        const appStore = useAppStore(this.$pinia);
+        const globalDSList = this.getGlobalDSList();
+        if (globalDSList.findIndex(c => c.key === datasourceKey) > -1) {
+            return appStore.globalDS[datasourceKey];
+        }
+        const pageDSList = this.getCurrentPageDSList();
+        if (pageDSList.findIndex(c => c.key === datasourceKey) > -1) {
+            return appStore.currentPageDS[datasourceKey];
+        }
+        return undefined;
     }
 
     /**
@@ -231,8 +257,10 @@ export default class DatasourceController {
         }
         // 添加全局变量
         if (dsJson.scope === 'app') {
-            if (!globalDS.some(c => c.key === dsJson.key) || cover) {
-                globalDS.push(dsJson);
+            if (!globalDSCache.some(c => c.name === dsJson.name) || cover) {
+                allDatasource.push(dsJson);
+                appStore.globalDS[dsJson.key] = {};
+                globalDSDirty = true;
                 result.success = true;
             } else {
                 $error(`数据源： ${dsJson.name} 已存在，不能重复添加`);
@@ -243,15 +271,15 @@ export default class DatasourceController {
             // 添加页面变量
             if (dsJson.pageKey === appStore.activePage?.key) {
                 // 如果变量已经存在，则不能添加
-                if (allPageDS.some(c => c.key === dsJson.key) && !cover) {
+                if (currentPageDSCache.some(c => c.name === dsJson.name) && !cover) {
                     $error(`数据源： ${dsJson.name} 已存在，不能重复添加`);
                     result.msg = '数据源已存在，不能重复添加';
                     return result;
                 }
                 // 添加变量
                 else {
-                    allPageDS.push(dsJson);
-                    appStore.currentPageDS[dsJson.key] = this.getDatasourceDefaultValue(dsJson);
+                    allDatasource.push(dsJson);
+                    appStore.currentPageDS[dsJson.key] = {};
                     currentPageDSDirty = true;
                 }
                 result.success = true;
@@ -266,11 +294,13 @@ export default class DatasourceController {
      */
     update(dsJson: IDataSource) {
         const ds = this.getDSByKey(dsJson.key);
-        if (ds.item && ds.item.scope === 'app') {
-            globalDS[ds.index] = dsJson;
-        } else if (ds.item && ds.item.scope === 'page') {
-            allPageDS[ds.index] = dsJson;
-            currentPageDSDirty = true;
+        if (ds.item) {
+            allDatasource[ds.index] = dsJson;
+            if (ds.item.scope === 'app') {
+                globalDSDirty = true;
+            } else {
+                currentPageDSDirty = true;
+            }
         }
     }
 
@@ -287,16 +317,14 @@ export default class DatasourceController {
         // 非空校验
         if (dsKey) {
             // 判断是 全局变量 还是 页面变量
-            result.removeIndex = globalDS.findIndex(c => c.key === dsKey);
+            result.removeIndex = allDatasource.findIndex(c => c.key === dsKey);
             if (result.removeIndex >= 0) {
-                globalDS.splice(result.removeIndex, 1);
-                result.success = true;
-                return result;
-            }
-            result.removeIndex = allPageDS.findIndex(c => c.key === dsKey);
-            if (result.removeIndex >= 0) {
-                allPageDS.splice(result.removeIndex, 1);
-                currentPageDSDirty = true;
+                if (allDatasource[result.removeIndex].scope === 'app') {
+                    globalDSDirty = true;
+                } else {
+                    currentPageDSDirty = true;
+                }
+                allDatasource.splice(result.removeIndex, 1);
                 result.success = true;
                 return result;
             }
@@ -319,16 +347,9 @@ export default class DatasourceController {
     }
 
     /**
-     * 返回序列化后的全局变量集合
+     * 返回序列化后的数据源集合
      */
-    SerializeGlobalDS() {
-        return globalDS;
-    }
-
-    /**
-     * 返回序列化后的当前页面变量集合
-     */
-    SerializeAllPageDS() {
-        return allPageDS;
+    SerializeDatasourceList() {
+        return allDatasource;
     }
 }

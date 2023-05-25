@@ -50,8 +50,9 @@ export interface IPropsRenderFactory {
     ) => void;
     formatProps: <P>(
         props: IComponentProps<P>,
-        getExpression: (expression: any) => any,
-        getFunction: (value: string) => Function
+        getExpression: (expression: any, dsKey: string) => any,
+        getFunction: (value: string) => Function,
+        dsKey?: string
     ) => P;
 }
 

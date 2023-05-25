@@ -100,7 +100,7 @@ const addAction = ref<'add' | 'edit' | 'view'>('add');
 const editData = ref<IDataSource | undefined>(undefined);
 
 const dsList = ref<IDataSource[]>(
-    dsController.getGlobalDSLIst().concat(dsController.getCurrentPageDSList())
+    dsController.getGlobalDSList().concat(dsController.getCurrentPageDSList())
 );
 
 // 选择按钮单击事件
@@ -125,7 +125,7 @@ const onAddBtnClick = () => {
 // 删除按钮单击事件
 const onDeleteBtnClick = (datasource: IDataSource) => {
     dsController.removeDSByKey(datasource.key);
-    dsList.value = dsController.getGlobalDSLIst().concat(dsController.getCurrentPageDSList());
+    dsList.value = dsController.getGlobalDSList().concat(dsController.getCurrentPageDSList());
 };
 
 // 数据源创建事件
@@ -137,7 +137,7 @@ const onDatasourceCreate = (datasource: IDataSource) => {
         showAddModal.value = false;
     } else if (addAction.value === 'edit') {
         dsController.update(datasource);
-        dsList.value = dsController.getGlobalDSLIst().concat(dsController.getCurrentPageDSList());
+        dsList.value = dsController.getGlobalDSList().concat(dsController.getCurrentPageDSList());
         showAddModal.value = false;
     }
 };

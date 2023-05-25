@@ -1,9 +1,10 @@
 import { useVarControler } from 'tdp-editor-common/src/controller';
 export default function useVars() {
-    const getExpression = (expression: string) => {
+    const getExpression = (expression: string, dsKey: string) => {
         const varController = useVarControler();
         const result = varController.evalVarValue({
-            expression: expression,
+            expression,
+            dsKey,
         });
         if (result.success) {
             return result.value;

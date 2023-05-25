@@ -65,7 +65,7 @@ export default class EditorController {
         const dsController = useDatasourceControler(this.$app);
         contentStore.pages = localData.pages as IPageState[];
         varController.initVars(localData.globalVars || [], localData.pageVars || []);
-        dsController.initDS(localData.globalDS || [], localData.pageDS || []);
+        dsController.initDS(localData.datasourceList || []);
         this.setActivePage(localData.defaultPageKey);
     }
     /**
@@ -118,8 +118,7 @@ export default class EditorController {
             pages: toRaw(contentStore.pages),
             globalVars: varController.SerializeGlobalVars(),
             pageVars: varController.SerializeAllPageVars(),
-            globalDS: dsController.SerializeGlobalDS(),
-            pageDS: dsController.SerializeAllPageDS(),
+            datasourceList: dsController.SerializeDatasourceList(),
         };
     }
     // 导入配置文件
