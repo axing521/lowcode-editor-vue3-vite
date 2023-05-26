@@ -87,7 +87,7 @@
             <a-button type="primary" @click="onSubmit">
                 {{ action === 'add' ? '创建' : '确定' }}
             </a-button>
-            <a-button style="margin-left: 10px" @click="onCancel">取消</a-button>
+            <a-button style="margin-left: 10px" @click="onReset">重置</a-button>
         </div>
     </a-form>
 </template>
@@ -209,7 +209,6 @@ const onRemoveFieldMappingClick = (index: number) => {
 
 // 点击创建事件
 const onSubmit = () => {
-    datasourceOutput.fieldMapping = toRaw(fieldMapping.value);
     const dataSource: IDataSource = {
         key: props.action === 'add' ? $getUUID('ds', 10) : props.editData?.key || '',
         enable: formState.enable,
@@ -218,9 +217,12 @@ const onSubmit = () => {
         sourceType: formState.sourceType,
         desc: formState.desc,
         input: {
-            config: toRaw(urlDatasourceInput),
+            config: { ...urlDatasourceInput },
         },
-        output: toRaw(datasourceOutput),
+        output: {
+            compType: datasourceOutput.compType,
+            fieldMapping: toRaw(fieldMapping.value),
+        },
     };
     if (props.action === 'edit' && dataSource.scope === 'page' && props.editData) {
         dataSource.pageKey = props.editData.pageKey;
@@ -229,8 +231,8 @@ const onSubmit = () => {
 };
 
 // 点击取消按钮
-const onCancel = () => {
-    emits('cancel');
+const onReset = () => {
+    resetForm();
 };
 
 const watch_editData_stop = watch(

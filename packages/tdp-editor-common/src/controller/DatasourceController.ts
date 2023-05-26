@@ -73,6 +73,7 @@ export default class DatasourceController {
      * @param pageDS 要重置的变量集合
      */
     resetCurrentPageDS(pageDS: IDataSource[]) {
+        this.clearCurrentPageDS();
         currentPageDSDirty = false;
         const appStore = useAppStore(this.$pinia);
         pageDS.forEach(c => {

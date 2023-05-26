@@ -13,6 +13,7 @@
                 </div>
                 <div class="action">
                     <a-button type="link" @click="onCheckBtnClick(item)">选择</a-button>
+                    <a-button type="link" @click="onCloneBtnClick(item)">克隆</a-button>
                     <a-button type="link" @click="onEditBtnClick(item)">编辑</a-button>
                     <a-button type="link" @click="onDeleteBtnClick(item)">删除</a-button>
                 </div>
@@ -89,7 +90,7 @@ import { ref } from 'vue';
 import type { IDataSource } from 'tdp-editor-types/src/interface/app/datasource';
 import { useDatasourceControler } from 'tdp-editor-common/src/controller';
 import AddDatasource from './AddDatasource.vue';
-import { $log } from 'tdp-editor-common/src/utils';
+import { $getUUID, $log } from 'tdp-editor-common/src/utils';
 
 const emits = defineEmits<{
     (e: 'check', datasource: IDataSource): void;
@@ -122,6 +123,15 @@ const onAddBtnClick = () => {
     showAddModal.value = true;
 };
 
+// 克隆按钮单击事件
+const onCloneBtnClick = (datasource: IDataSource) => {
+    const cloneDS: IDataSource = JSON.parse(JSON.stringify(datasource));
+    cloneDS.key = $getUUID('ds', 10);
+    cloneDS.name += '_copy';
+    dsController.add(cloneDS);
+    dsList.value = dsController.getGlobalDSList().concat(dsController.getCurrentPageDSList());
+};
+
 // 删除按钮单击事件
 const onDeleteBtnClick = (datasource: IDataSource) => {
     dsController.removeDSByKey(datasource.key);
@@ -130,11 +140,12 @@ const onDeleteBtnClick = (datasource: IDataSource) => {
 
 // 数据源创建事件
 const onDatasourceCreate = (datasource: IDataSource) => {
-    $log('datasource', datasource);
+    $log('create datasource', datasource);
     if (addAction.value === 'add') {
         dsController.add(datasource);
         dsList.value.push(datasource);
         showAddModal.value = false;
+        editData.value = undefined;
     } else if (addAction.value === 'edit') {
         dsController.update(datasource);
         dsList.value = dsController.getGlobalDSList().concat(dsController.getCurrentPageDSList());
@@ -145,5 +156,6 @@ const onDatasourceCreate = (datasource: IDataSource) => {
 // 数据源取消创建事件
 const onDatasourceCancel = () => {
     showAddModal.value = false;
+    editData.value = undefined;
 };
 </script>
