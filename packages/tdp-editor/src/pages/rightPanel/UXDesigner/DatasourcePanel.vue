@@ -4,7 +4,10 @@
             <h3>选择数据源</h3>
             <div class="item">
                 <a-button type="primary" @click="showDsList = true">
-                    {{ checkedDatasource ? checkedDatasource.name : '选择' }}
+                    <template v-if="isPage"> 配置 </template>
+                    <template v-else>
+                        {{ checkedDatasource ? checkedDatasource.name : '选择' }}
+                    </template>
                 </a-button>
             </div>
         </div>
@@ -41,7 +44,11 @@ const props = defineProps<{
 }>();
 
 const show = computed(() => {
-    return props.element && props.element.type !== EnumComponentType.page;
+    return props.element;
+});
+
+const isPage = computed(() => {
+    return props.element && props.element.type === EnumComponentType.page;
 });
 
 const showDsList = ref(false);

@@ -1,21 +1,36 @@
 <template>
     <div class="datasource-list-box">
-        <div>
+        <div class="action-line">
             <a-button type="primary" @click="onAddBtnClick">添加</a-button>
         </div>
         <ul class="ds-list">
             <li v-for="item in dsList" :key="item.key">
                 <div class="info">
-                    <span class="name">{{ item.name }}</span>
-                    <span class="enabel" :class="{ 'enabel-true': item.enable }">{{
-                        item.enable ? '启用' : '停用'
-                    }}</span>
+                    <div>
+                        <span class="name">{{ item.name }}</span>
+                        <span class="enabel" :class="{ 'enabel-true': item.enable }">{{
+                            item.enable ? '启用' : '停用'
+                        }}</span>
+                    </div>
+                    <div>
+                        <span>数据来源：{{ item.sourceType }}</span>
+                        <span style="margin-left: 10px">
+                            作用域：{{ item.scope === 'app' ? '应用' : '页面' }}
+                        </span>
+                    </div>
                 </div>
                 <div class="action">
                     <a-button type="link" @click="onCheckBtnClick(item)">选择</a-button>
                     <a-button type="link" @click="onCloneBtnClick(item)">克隆</a-button>
                     <a-button type="link" @click="onEditBtnClick(item)">编辑</a-button>
-                    <a-button type="link" @click="onDeleteBtnClick(item)">删除</a-button>
+                    <a-popconfirm
+                        title="确定要删除这个数据源吗 ?"
+                        ok-text="删除"
+                        cancel-text="取消"
+                        @confirm="onDeleteBtnClick"
+                    >
+                        <a-button type="link">删除</a-button>
+                    </a-popconfirm>
                 </div>
             </li>
         </ul>
@@ -47,9 +62,13 @@
 
 .datasource-list-box {
     position: relative;
+    .action-line {
+        padding: 10px;
+    }
     ul.ds-list {
         position: relative;
         margin: 10px;
+        padding: 0;
         display: flex;
         flex-flow: row wrap;
         justify-content: flex-start;
@@ -73,6 +92,9 @@
                     &.enabel-true {
                         color: yellowgreen;
                     }
+                }
+                .name {
+                    font-weight: 600;
                 }
             }
             .action {
@@ -142,10 +164,13 @@ const onDeleteBtnClick = (datasource: IDataSource) => {
 const onDatasourceCreate = (datasource: IDataSource) => {
     $log('create datasource', datasource);
     if (addAction.value === 'add') {
-        dsController.add(datasource);
-        dsList.value.push(datasource);
-        showAddModal.value = false;
-        editData.value = undefined;
+        const addResult = dsController.add(datasource);
+        if (addResult.success) {
+            dsController.triggerDatasource(datasource);
+            dsList.value.push(datasource);
+            showAddModal.value = false;
+            editData.value = undefined;
+        }
     } else if (addAction.value === 'edit') {
         dsController.update(datasource);
         dsList.value = dsController.getGlobalDSList().concat(dsController.getCurrentPageDSList());

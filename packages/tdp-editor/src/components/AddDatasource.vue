@@ -22,8 +22,9 @@
             <a-input v-model:value="formState.desc" type="textarea" />
         </a-form-item>
 
-        <a-form-item label="url">
+        <a-form-item label="url" class="item-2row">
             <a-input v-model:value="urlDatasourceInput.url" />
+            <a-button type="primary">测试</a-button>
         </a-form-item>
         <a-form-item label="方法">
             <a-select v-model:value="urlDatasourceInput.method">
@@ -98,6 +99,18 @@
     padding-top: 20px;
     :deep(.ant-row .ant-form-item-label) {
         width: 150px;
+    }
+
+    .item-2row {
+        :deep(.ant-form-item-control-input-content) {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            .ant-btn {
+                margin-left: 10px;
+            }
+        }
     }
     .field-mapping {
         display: flex;
