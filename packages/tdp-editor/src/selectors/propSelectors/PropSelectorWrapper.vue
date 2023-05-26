@@ -15,7 +15,11 @@
                     <slot name="value"></slot>
                 </template>
                 <template v-else-if="status === 'expression'">
-                    <var-prop-bind-input :value="bindValue" @change="expressionChange" />
+                    <var-prop-bind-input
+                        :dsKey="state.dsKey"
+                        :value="bindValue"
+                        @change="expressionChange"
+                    />
                 </template>
             </div>
         </template>

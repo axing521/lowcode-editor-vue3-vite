@@ -30,6 +30,14 @@
             @blur="onACBlur"
             @search="onSearch"
         >
+            <template #option="item">
+                <template v-if="item.options">
+                    <span class="auto-group-name">{{ item.label }}</span>
+                </template>
+                <template v-else>
+                    <span class="auto-item-name">{{ item.label }}</span>
+                </template>
+            </template>
             <a-textarea
                 ref="ac-textarea"
                 placeholder="输入表达式"
@@ -44,16 +52,18 @@
 </template>
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
-import { useVarControler } from 'tdp-editor-common/src/controller';
+import { useDatasourceControler, useVarControler } from 'tdp-editor-common/src/controller';
 
-interface IData {
-    varName: string;
-    varPath: string;
+interface IOption {
+    label: string;
+    value: string;
+    options?: IOption[];
 }
 const varController = useVarControler();
 const ArrayFuncs = Object.getOwnPropertyNames(Array.prototype);
 
 const props = defineProps<{
+    dsKey?: string;
     value?: string;
 }>();
 
@@ -62,28 +72,55 @@ const emits = defineEmits<{
 }>();
 
 const inputBindValue = ref('');
-const options = ref<
-    {
-        label: string;
-        value: string;
-    }[]
->([]);
-const getSuggest = (queryString: string, cb: (data: IData[]) => void) => {
-    const result: IData[] = [];
+const options = ref<IOption[]>([]);
+const getSuggest = (queryString: string, cb: (data: IOption[]) => void) => {
+    const result: IOption[] = [];
     if (!queryString || queryString === '$') {
         const globalVars = varController.getGlobalVars();
         const pageVars = varController.getCurrentPageVars();
+        const globalVarList: IOption[] = [];
         for (const key in globalVars) {
-            result.push({
-                varPath: `$g.${key}`,
-                varName: key,
+            globalVarList.push({
+                value: `$g.${key}`,
+                label: key,
             });
         }
-        if (pageVars) {
-            for (const key in pageVars) {
+        // 添加全局变量展示
+        if (globalVarList.length) {
+            result.push({
+                value: '$g',
+                label: '全局变量',
+                options: globalVarList,
+            });
+        }
+        const pageVarList: IOption[] = [];
+        for (const key in pageVars) {
+            pageVarList.push({
+                value: `$p.${key}`,
+                label: key,
+            });
+        }
+        // 添加页面变量展示
+        if (pageVarList.length) {
+            result.push({
+                value: '$p',
+                label: '页面变量',
+                options: pageVarList,
+            });
+        }
+        if (props.dsKey) {
+            const dsController = useDatasourceControler();
+            const ds = dsController.getDSByKey(props.dsKey);
+            if (ds.item) {
                 result.push({
-                    varName: key,
-                    varPath: `$p.${key}`,
+                    value: '$ds',
+                    label: '已绑定数据源',
+                    options: [
+                        {
+                            value: '$ds',
+                            label: ds.item.name,
+                        },
+                    ],
                 });
             }
         }
@@ -91,12 +128,13 @@ const getSuggest = (queryString: string, cb: (data: IData[]) => void) => {
         const _queryString = queryString.substring(0, queryString.length - 1);
         const bindValue = varController.evalVarValue({
             expression: _queryString,
+            dsKey: props.dsKey,
         });
         if (bindValue.success && Array.isArray(bindValue.value)) {
             ArrayFuncs.forEach(k => {
                 result.push({
-                    varName: k,
-                    varPath: `${queryString}${k}`,
+                    value: `${queryString}${k}`,
+                    label: k,
                 });
             });
         } else if (
@@ -106,8 +144,8 @@ const getSuggest = (queryString: string, cb: (data: IData[]) => void) => {
         ) {
             Object.keys(bindValue.value).forEach(k => {
                 result.push({
-                    varName: k,
-                    varPath: `${queryString}${k}`,
+                    value: `${queryString}${k}`,
+                    label: k,
                 });
             });
         }
@@ -122,12 +160,7 @@ const getSuggest = (queryString: string, cb: (data: IData[]) => void) => {
  */
 const onSearch = (searchText: string) => {
     getSuggest(searchText, data => {
-        options.value = data.map(c => {
-            return {
-                label: c.varName,
-                value: c.varPath,
-            };
-        });
+        options.value = data;
     });
 };
 /**
@@ -155,12 +188,7 @@ const onTextareaClear = (e: Event) => {
 };
 const onFocus = () => {
     getSuggest(inputBindValue.value, data => {
-        options.value = data.map(c => {
-            return {
-                label: c.varName,
-                value: c.varPath,
-            };
-        });
+        options.value = data;
     });
 };
 watchEffect(() => {
@@ -170,6 +198,7 @@ watchEffect(() => {
 });
 </script>
 <style lang="less">
+@import url('/src/styles/var/color.less');
 .var-prop-wrapper {
     position: relative;
     > .ant-input-textarea-clear-icon {
@@ -185,6 +214,12 @@ watchEffect(() => {
             font-size: 14px;
         }
     }
+}
+span.auto-group-name {
+    font-weight: 600;
+}
+.ant-select-item-option-active {
+    background-color: @primary-2 !important;
 }
 .var-prop-bind-container {
     position: relative;
