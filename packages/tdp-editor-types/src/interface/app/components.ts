@@ -14,8 +14,8 @@ export interface ISetupBaseProps {
     parentId?: string;
 }
 
-export interface ICompBaseProps<P = any> {
-    state: IComponentState<P>;
+export interface ICompBaseProps<P, S extends IComponentState<P>> {
+    state: S;
     parentId?: string;
     props: P;
     css: Record<string, any>;

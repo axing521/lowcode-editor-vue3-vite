@@ -14,9 +14,9 @@ import { useBaseLifecycle } from '../../composables/base';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
-import type { ICardProps } from './interface';
+import type { ICardProps, ICardState } from './interface';
 
-const allProps = defineProps<ICompBaseProps<ICardProps>>();
+const allProps = defineProps<ICompBaseProps<ICardProps, ICardState>>();
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 const flexCardClass = computed(() => {

@@ -1,23 +1,17 @@
 <template>
-    <a-button
-        class="fd-button"
-        :id="allProps.state.key"
-        v-bind="allProps.props"
-        :style="allProps.css"
-        v-on="eventsMap"
-    >
-        {{ allProps.props.text || '按钮' }}
-    </a-button>
+    <span class="fd-text" :id="state.key" v-bind="props" :style="css" v-on="eventsMap">
+        {{ props.text }}
+    </span>
 </template>
 <script lang="ts" setup>
 import { defineComponent } from 'vue';
 import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
-import type { IButtonProps, IButtonState } from './interface';
+import type { ITextState, ITextProps } from './interface';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { useBaseEvents, useBaseLifecycle } from '../../composables/base';
 
 // 接收prop
-const allProps = defineProps<ICompBaseProps<IButtonProps, IButtonState>>();
+const allProps = defineProps<ICompBaseProps<ITextProps, ITextState>>();
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 // 获取事件对象
@@ -29,22 +23,15 @@ const { eventsMap } = useBaseEvents(allProps, () => ({
 </script>
 <script lang="ts">
 export default defineComponent({
-    name: EnumComponentType.button,
+    name: EnumComponentType.text,
 });
 </script>
 <style lang="less">
 @import '../../styles/var/index.less';
 
 @prefixName: ~'@{prefix-className}';
-.@{prefixName}-button {
+.@{prefixName}-text {
     position: relative;
-}
-.@{prefixName}-button.large {
-    height: @button-large-height;
-    line-height: @button-large-height;
-}
-.@{prefixName}-button.mini {
-    height: @button-mini-height;
-    line-height: @button-mini-height;
+    min-width: 10px;
 }
 </style>

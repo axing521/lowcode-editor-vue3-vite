@@ -7,14 +7,14 @@ export default defineComponent({
 import { EnumComponentType, EnumPropsValueType } from 'tdp-editor-types/src/enum/components';
 import { ref, defineComponent, computed, reactive } from 'vue';
 import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
-import type { IChatGPTProps, UserConfigState } from './interface';
+import type { IChatGPTProps, IChatGPTState, UserConfigState } from './interface';
 import { useBaseLifecycle } from '../../composables/base';
 import { Configuration, OpenAIApi, type ChatCompletionRequestMessage } from 'openai';
 import { $fetch } from 'tdp-editor-common/src/request';
 import { setPropValue } from 'tdp-editor-common/src/factory/propsFactory';
 
 // 接收props
-const allProps = defineProps<ICompBaseProps<IChatGPTProps>>();
+const allProps = defineProps<ICompBaseProps<IChatGPTProps, IChatGPTState>>();
 
 // 注册组件统一的生命周期事件（必须）
 useBaseLifecycle(allProps);

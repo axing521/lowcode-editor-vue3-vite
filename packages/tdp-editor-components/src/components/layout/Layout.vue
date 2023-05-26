@@ -43,6 +43,7 @@ import { useBase, useBaseInject } from '../../composables/base';
 import Draggable from 'vuedraggable';
 
 import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
+import type { ILayoutState } from './interface';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
 
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
@@ -50,7 +51,7 @@ import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import ComponentWrapper from '../componentWrapper.vue';
 
 const props = defineProps<{
-    state: IComponentState;
+    state: ILayoutState;
     designerClass?: string[]; // 处理设计时需要添加一些class保持和预览效果一致
 }>();
 

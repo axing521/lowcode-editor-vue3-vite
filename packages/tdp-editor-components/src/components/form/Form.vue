@@ -31,9 +31,9 @@ import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import type { IServiceResult } from 'tdp-editor-types/src/interface/request';
 import type { IFormField } from 'tdp-editor-types/src/interface/app/form';
 import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
-import type { IFormProps } from './interface';
+import type { IFormProps, IFormState } from './interface';
 
-const allProps = defineProps<ICompBaseProps<IFormProps>>();
+const allProps = defineProps<ICompBaseProps<IFormProps, IFormState>>();
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 const { getAppMode } = useBaseInject();

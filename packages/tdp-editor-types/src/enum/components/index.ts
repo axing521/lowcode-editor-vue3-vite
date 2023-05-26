@@ -17,8 +17,8 @@ export enum EnumComponentType {
     rate = 'FdRate',
     divider = 'FdDivider',
     select = 'FdSelect',
-    demo1 = 'FdDemo1',
     chatGPT = 'FdChatGPT',
+    text = 'FdText',
 }
 
 export enum EnumComponentGroup {

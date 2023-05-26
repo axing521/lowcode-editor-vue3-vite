@@ -20,11 +20,11 @@ export default defineComponent({
 <script lang="ts" setup>
 import { defineComponent } from 'vue';
 import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
-import type { IRateProps } from './interface';
+import type { IRateProps, IRateState } from './interface';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { useBaseLifecycle, useBaseEvents } from '../../composables/base';
 
-const allProps = defineProps<ICompBaseProps<IRateProps>>();
+const allProps = defineProps<ICompBaseProps<IRateProps, IRateState>>();
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 // 注册事件
