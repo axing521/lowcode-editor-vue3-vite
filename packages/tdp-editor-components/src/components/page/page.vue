@@ -1,6 +1,12 @@
 <template>
-    <div v-if="json" class="fd-page" :id="json.key" :style="json.css" data-app>
-        <fd-layout :state="json"></fd-layout>
+    <div v-if="json" class="fd-page editor-designer-box" :id="json.key" :style="json.css">
+        <ComponentWrapper
+            v-for="child in (json || []).list"
+            :key="child.key + '_wrapper'"
+            :state="child"
+            parentId=""
+        ></ComponentWrapper>
+        <!-- <fd-layout :state="json"></fd-layout> -->
     </div>
 </template>
 
@@ -17,6 +23,7 @@
 import { provide } from 'vue';
 import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { EnumAppMode } from 'tdp-editor-types/src/enum';
+import ComponentWrapper from '../componentWrapper.vue';
 
 import {
     addComponent,

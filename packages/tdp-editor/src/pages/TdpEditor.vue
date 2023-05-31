@@ -165,6 +165,7 @@ div.tdp-editor-container {
 import { onMounted, provide, ref, computed } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import fileSaver from 'file-saver';
+import interact from 'interactjs';
 
 // monaco配置
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
@@ -174,10 +175,15 @@ import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
-import { useAppControler, useEditorControler } from 'tdp-editor-common/src/controller';
+import {
+    useAppControler,
+    useEditorControler,
+    usePageControler,
+} from 'tdp-editor-common/src/controller';
 import { ImportOutlined, ExportOutlined, SaveOutlined } from '@ant-design/icons-vue';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import { EnumAppVarScope } from 'tdp-editor-types/src/enum/app/vars';
+import { $log } from 'tdp-editor-common/src/utils';
 
 import EditorLeftPanel from './leftPanel/EditorLeftPanel.vue';
 import DesignerRight from './rightPanel';
@@ -200,6 +206,7 @@ import AddVarModal from '../components/AddVar.vue';
 };
 
 const appController = useAppControler();
+const pageControler = usePageControler();
 const editorController = useEditorControler();
 const appStore = useAppStore();
 const contentStore = useContentStore();
@@ -210,7 +217,173 @@ const thisRefs = {} as any;
 onMounted(async () => {
     // editorStore.initDesignerPage();
     await editorController.initEditorAsync();
+    handleDrag();
 });
+
+const handleDrag = () => {
+    // 左侧菜单拖动时clone的html元素
+    const cloneElement = {
+        dx: 0,
+        dy: 0,
+        element: null as HTMLElement | null,
+    };
+    // 内容区被拖拽的对象
+    const contentDragElement = {
+        dx: 0,
+        dy: 0,
+        element: null as HTMLElement | null,
+    };
+
+    // 拖拽目标
+    const dropTargetElement = {
+        element: null as HTMLElement | null,
+    };
+
+    const getElementComp = (element: HTMLElement) => {
+        if (element && element.id) {
+            return pageControler.getComponentByKey(element.id);
+        } else {
+            return undefined;
+        }
+    };
+
+    const cloneElementReset = () => {
+        if (cloneElement.element) {
+            cloneElement.element.classList.remove('active');
+        }
+        cloneElement.element = null;
+        cloneElement.dx = 0;
+        cloneElement.dy = 0;
+    };
+
+    const contentDragElementReset = () => {
+        if (contentDragElement.element) {
+            contentDragElement.element.classList.remove('active');
+            contentDragElement.element.style.transform = '';
+        }
+        contentDragElement.element = null;
+        contentDragElement.dx = 0;
+        contentDragElement.dy = 0;
+    };
+
+    const dropTargetElementReset = () => {
+        if (dropTargetElement.element) {
+            dropTargetElement.element.classList.remove('target');
+        }
+        dropTargetElement.element = null;
+    };
+
+    // 左侧组件列表
+    const leftComps = interact('.li-component');
+    leftComps.draggable({
+        onstart(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $log('左侧组件列表开始拖拽', e);
+            cloneElement.element = e.target as HTMLElement;
+        },
+        onend() {
+            cloneElementReset();
+        },
+    });
+    // 内容区中的组件
+    const contentComps = interact('.editor-designer-comp');
+    contentComps.draggable({
+        onstart(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $log('内容设计器开始拖拽组件', e);
+            const dragedElement = e.target as HTMLElement;
+            if (dragedElement) {
+                contentDragElement.element = dragedElement;
+                contentDragElement.element.classList.add('active');
+            }
+        },
+        onmove(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const dragedElement = e.target as HTMLElement;
+            if (dragedElement) {
+                contentDragElement.dx += e.dx;
+                contentDragElement.dy += e.dy;
+
+                dragedElement.style.transform = `translate3d(${contentDragElement.dx}px, ${contentDragElement.dy}px, 20px)`;
+            }
+        },
+        autoScroll: true,
+    });
+
+    // 容器组件
+    const drops = interact('.editor-designer-comp');
+    drops.dropzone({
+        accept: '.editor-designer-comp, .li-component',
+        overlap: 0.5,
+        ondrop(e) {
+            $log('[ drops dropzone ] ondrop', e);
+            // 被拖入的元素
+            // const dragedElement = e.relatedTarget as HTMLElement;
+            // 拖入的目标元素
+            dropTargetElement.element = e.target as HTMLElement;
+            const targetComp = getElementComp(dropTargetElement.element);
+            // 设计区域内拖拽
+            if (contentDragElement.element) {
+                const dragedComp = getElementComp(contentDragElement.element);
+                if (targetComp && dragedComp) {
+                    // 同级元素排序
+                    if (!targetComp.state.box && targetComp.parentId === dragedComp.parentId) {
+                        $log('同级元素排序');
+                    }
+                    // 跨级排序
+                    else if (!targetComp.state.box && targetComp.parentId !== dragedComp.parentId) {
+                        $log('跨级排序');
+                    }
+                    // 跨级添加
+                    else if (targetComp.state.box && targetComp.state.key !== dragedComp.parentId) {
+                        $log('跨级添加');
+                    }
+                    // 同级没有变
+                    else if (targetComp.state.box && targetComp.state.key === dragedComp.parentId) {
+                        $log('不需要变更');
+                    }
+                }
+            }
+            // 左侧组件列表拖拽
+            else if (cloneElement.element) {
+                $log('新来组件了');
+            }
+
+            dropTargetElementReset();
+            contentDragElementReset();
+            cloneElementReset();
+
+            e.preventDefault();
+            e.stopPropagation();
+        },
+        ondragenter(e) {
+            $log('[ drops dropzone ] ondragenter', e);
+            // 被拖入的元素
+            // const dragedElement = e.relatedTarget as HTMLElement;
+            // 拖入的目标元素
+            dropTargetElement.element = e.target as HTMLElement;
+            if (dropTargetElement.element) {
+                dropTargetElement.element.classList.add('target');
+            }
+        },
+        ondragleave(e) {
+            $log('[ drops dropzone ] ondragleave', e);
+            // 被拖出的元素
+            // const dragedElement = e.relatedTarget as HTMLElement;
+            // 拖出的目标元素
+            dropTargetElement.element = e.target as HTMLElement;
+            if (dropTargetElement.element) {
+                dropTargetElement.element.classList.remove('target');
+            }
+        },
+        ondropmove(e) {
+            $log('[ drops dropzone ] ondropmove', e);
+        },
+    });
+};
 
 // 编辑器的所有页面
 const pages = contentStore.pages;

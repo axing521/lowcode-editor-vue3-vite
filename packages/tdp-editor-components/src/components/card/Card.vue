@@ -1,6 +1,12 @@
 <template>
     <div class="fd-card" :class="flexCardClass" :id="state.key" :style="css">
-        <fd-layout :state="state" :designerClass="flexCardClass"></fd-layout>
+        <ComponentWrapper
+            v-for="child in state.list"
+            :key="child.key + '_wrapper'"
+            :state="child"
+            :parentId="state.key"
+        ></ComponentWrapper>
+        <!-- <fd-layout :state="state" :designerClass="flexCardClass"></fd-layout> -->
     </div>
 </template>
 <script lang="ts">
@@ -15,6 +21,7 @@ import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
 import type { ICardProps, ICardState } from './interface';
+import ComponentWrapper from '../componentWrapper.vue';
 
 const allProps = defineProps<ICompBaseProps<ICardProps, ICardState>>();
 // 注册公共声明周期事件
