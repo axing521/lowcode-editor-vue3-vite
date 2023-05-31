@@ -79,8 +79,26 @@
         .editor-designer-comp {
             position: relative;
             border: 1px dashed #c8c8c8;
+            touch-action: none;
+            user-select: none;
+            transition-duration: 0ms;
+            transition-delay: 0ms;
+            &.active {
+                opacity: 0.6;
+            }
+            &.target {
+                border-top: 2px solid @primary-7;
+            }
             &:hover {
                 border-color: @primary-color;
+            }
+        }
+        // 容器组件
+        .editor-designer-box {
+            padding-bottom: 20px;
+            &.target {
+                opacity: 0.8;
+                background-color: @primary-color;
             }
         }
         /* 选中的组件 */

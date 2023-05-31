@@ -26,12 +26,16 @@ const { c_Props, c_Css, c_isDesignMode } = useBase(allProps);
 const classNames = computed(() => {
     const classNames = [];
     if (c_isDesignMode.value) {
-        classNames.push('editor-designer-comp');
+        classNames.push(
+            allProps.state.box
+                ? ['editor-designer-box', 'editor-designer-comp']
+                : 'editor-designer-comp'
+        );
     }
     (allProps.state.classNames || []).forEach(name => {
         classNames.push(name);
     });
+
     return classNames;
 });
-// useBaseWatch(allProps);
 </script>

@@ -21,7 +21,7 @@ import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
-import DesignerComponentList from './componentList';
+import DesignerComponentList from './componentList.vue';
 import './index.less';
 import NewPageModal from './newPageModal.vue';
 

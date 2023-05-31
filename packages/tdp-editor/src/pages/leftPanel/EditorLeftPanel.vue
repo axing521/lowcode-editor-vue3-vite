@@ -14,7 +14,7 @@
             </ul>
         </div>
         <div class="second-menu">
-            <div v-show="menu_pageList.selected" class="pages">
+            <div v-if="menu_pageList.selected" class="pages">
                 <h3>
                     {{ pageListChildren.find(c => c.selected === true)?.title }}
                     <div class="pages-action">
@@ -81,7 +81,7 @@
                 </ul>
             </div>
             <!-- 组件列表 -->
-            <designer-component-list v-show="menus[1].selected" />
+            <designer-component-list v-if="menus[1].selected" />
         </div>
         <new-page-modal v-model:visible="showAddPageShadow"></new-page-modal>
     </div>
@@ -265,7 +265,7 @@ import { useEditorControler } from 'tdp-editor-common/src/controller';
 import { useLeftMenuStore } from 'tdp-editor-common/src/stores/leftMenuStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { useContentStore } from 'tdp-editor-common/src/stores/contentStore';
-import DesignerComponentList from './componentList';
+import DesignerComponentList from './componentList.vue';
 import NewPageModal from './newPageModal.vue';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import type { EnumComponentType } from 'tdp-editor-types/src/enum/components';

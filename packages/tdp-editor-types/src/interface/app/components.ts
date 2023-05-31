@@ -49,6 +49,7 @@ export interface IComponentState<P = any, C = any> {
     name?: string /* 别名，一般用于用户给组件定义，方便调用 */;
     type: EnumComponentType | string;
     group: EnumComponentGroup;
+    box?: boolean; // 是否容器组件
     list?: IComponentState[];
     props?: IComponentProps<P>;
     formInfo?: IFormInfo;

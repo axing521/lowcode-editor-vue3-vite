@@ -3,7 +3,7 @@
  * 只处理editor state的相关方法，如果需要处理其他store中的数据，则要将方法放到对应的EditorController中
  */
 import { defineStore } from 'pinia';
-import { EnumComponentType, EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 
 import type { IEditorStore } from 'tdp-editor-types/src/interface/store';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
@@ -55,17 +55,11 @@ export const useEditorStore = defineStore('editorStore', {
         doubleAddComponent<C extends IDesignerComponent>(payload: { parent: C; component: C }) {
             if (payload.parent && payload.component) {
                 // 父组件是页面，并且要添加的组件是容器组件时，才可以正常添加
-                if (
-                    payload.parent.type === EnumComponentType.page &&
-                    payload.component.group === EnumComponentGroup.layout
-                ) {
+                if (payload.parent.type === EnumComponentType.page && payload.component.box) {
                     payload.parent.list?.push(payload.component);
                 }
                 // 不是页面时，需要父组件是容器组件才能添加
-                else if (
-                    payload.parent.type !== EnumComponentType.page &&
-                    payload.parent.group === EnumComponentGroup.layout
-                ) {
+                else if (payload.parent.type !== EnumComponentType.page && payload.parent.box) {
                     payload.parent.list?.push(payload.component);
                     // state.selectedComponent = payload.component;
                 }
@@ -127,7 +121,7 @@ export const newComponentJson = (originData: IDesignerComponent): IComponentStat
         newComponent.list = [];
     }
     // 容器组件，添加list
-    if (originData.group === EnumComponentGroup.layout) {
+    if (originData.box) {
         newComponent.list = [];
     }
     // 如果添加的组件是form组件，追加formInfo属性

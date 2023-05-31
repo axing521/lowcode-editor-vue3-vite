@@ -17,6 +17,7 @@ export const register: registerComponentFunc = function () {
         group: EnumComponentGroup.layout,
         type: EnumComponentType.form,
         order: 200,
+        box: true,
         list: [],
         propsConfigs: [
             { key: 'name', label: '表单名', selector: EnumSelectorName.input },

@@ -1,11 +1,10 @@
+<script lang="tsx">
 import { defineComponent } from 'vue';
 import { mapState } from 'pinia';
-import Draggable from 'vuedraggable';
+
 import { message as $message } from 'ant-design-vue/es';
 import { PlusCircleOutlined } from '@ant-design/icons-vue';
-import './componentList.less';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
-import { EnumComponentGroup } from 'tdp-editor-types/src/enum/components';
 import { useEditorStore } from 'tdp-editor-common/src/stores/editorStore';
 import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import { utils } from 'tdp-editor-common/src';
@@ -23,7 +22,6 @@ type componentMenu = {
 export default defineComponent({
     name: 'designer-component-list',
     components: {
-        draggable: Draggable,
         PlusCircleOutlined,
     },
     computed: {
@@ -68,7 +66,7 @@ export default defineComponent({
             const toDesignerPanel = e.to && e.to.className === 'main-panel-container';
             const dragElement = (e.draggedContext && e.draggedContext.element) || {};
             // 如果向容器拖入非容器组件
-            if (toDesignerPanel && dragElement.group !== EnumComponentGroup.layout) {
+            if (toDesignerPanel && !dragElement.box) {
                 delayError('请拖入容器组件');
                 return false;
             }
@@ -91,34 +89,37 @@ export default defineComponent({
                 component: newComponent,
             });
         },
-        dragableSlots_item(record: any) {
-            const c = record.element;
-            return (
-                <li
-                    class="li-component"
-                    data-compType={c.type}
-                    key={c.type}
-                    data-compGroup={c.group}
-                    title={c.label}
-                >
-                    <div class="comp-icon">
-                        <i class={`iconfont ${c.icons}`} />
-                    </div>
-                    <div class="comp-name">
-                        {c.label}
-                        <a-button
-                            class={'btn-add'}
-                            type="primary"
-                            shape="circle"
-                            v-slots={{
-                                icon: () => <plus-circle-outlined />,
-                            }}
-                            size="small"
-                            onClick={() => this.doubleClickComponent(c)}
-                        ></a-button>
-                    </div>
-                </li>
-            );
+        dragableSlots_item(records: IDesignerComponent[]) {
+            const lis: any[] = [];
+            records.forEach(c => {
+                lis.push(
+                    <li
+                        class="li-component"
+                        data-compType={c.type}
+                        key={c.type}
+                        data-compGroup={c.group}
+                        title={c.label}
+                    >
+                        <div class="comp-icon">
+                            <i class={`iconfont ${c.icons}`} />
+                        </div>
+                        <div class="comp-name">
+                            {c.label}
+                            <a-button
+                                class={'btn-add'}
+                                type="primary"
+                                shape="circle"
+                                v-slots={{
+                                    icon: () => <plus-circle-outlined />,
+                                }}
+                                size="small"
+                                onClick={() => this.doubleClickComponent(c)}
+                            ></a-button>
+                        </div>
+                    </li>
+                );
+            });
+            return lis;
         },
     },
     render() {
@@ -128,23 +129,9 @@ export default defineComponent({
                 <a-collapse activeKey={this.componentGroup.map(g => g.name)}>
                     {this.componentGroup.map(group => (
                         <a-collapse-panel key={group.name} header={this.getGroupName(group.name)}>
-                            <draggable
-                                class="components"
-                                list={group.components}
-                                itemKey="name"
-                                handle=".li-component"
-                                group={{
-                                    name: 'componentDesigner',
-                                    pull: 'clone',
-                                }}
-                                sort={false}
-                                onStart={this.dragStart}
-                                move={this.dragMove}
-                                clone={this.dragCloneData}
-                                v-slots={{
-                                    item: this.dragableSlots_item,
-                                }}
-                            ></draggable>
+                            <div class="components">
+                                {this.dragableSlots_item(group.components)}
+                            </div>
                         </a-collapse-panel>
                     ))}
                 </a-collapse>
@@ -152,3 +139,60 @@ export default defineComponent({
         );
     },
 });
+</script>
+<style lang="less">
+ul.fd-ul-component {
+    text-align: left;
+    .components {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        li.li-component {
+            padding-left: 20px;
+            position: relative;
+            height: 60px;
+            box-sizing: border-box;
+            cursor: move;
+            width: 33.33%;
+            margin-bottom: 20px;
+            padding-left: 2px;
+            padding-right: 2px;
+            text-align: center;
+            padding: 0;
+            color: #111111;
+            // background-color:rgba(38, 132, 252, 0.5);
+            border-radius: 4px;
+            &.active {
+                opacity: 0.6;
+            }
+            i.iconfont {
+                font-size: 30px;
+                color: rgba(38, 132, 252, 0.5);
+                vertical-align: middle;
+            }
+            .comp-icon {
+                height: 40px;
+                line-height: 40px;
+            }
+            .comp-name {
+                height: 20px;
+                line-height: 20px;
+            }
+            .btn-add {
+                position: absolute;
+                display: none;
+                font-size: 16px;
+                left: 50%;
+                top: 20px;
+                transform: translateX(-50%) translateY(-50%);
+            }
+            &:hover {
+                .btn-add {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+</style>

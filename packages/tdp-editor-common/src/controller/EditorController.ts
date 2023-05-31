@@ -196,6 +196,7 @@ export default class EditorController {
                 icons: rowState.icons,
                 group: rowState.group,
                 type: rowState.type,
+                box: rowState.box,
                 list: [],
             };
             for (const k in payload.data) {

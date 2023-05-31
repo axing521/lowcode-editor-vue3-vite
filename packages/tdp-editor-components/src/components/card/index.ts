@@ -18,6 +18,7 @@ export const register: registerComponentFunc = function () {
         group: EnumComponentGroup.layout,
         type: EnumComponentType.card,
         order: 200,
+        box: true,
         list: [],
         propsConfigs: [
             {
