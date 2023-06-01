@@ -171,13 +171,7 @@ provide('dragAddComponent', (component: IDesignerComponent, parent: IDesignerCom
         parent,
     });
 });
-onMounted(() => {
-    const instance = getCurrentInstance();
-    if (instance) {
-        setIndexRefs('designerMain', instance.proxy!);
-    }
-    actionBox = document.getElementById('designer-main-action-box');
-});
+
 // 组件选中代理事件
 const handleClick = (e: any): void => {
     if (appMode.value !== EnumAppMode.design) return;
@@ -268,4 +262,18 @@ const deleteComponent = () => {
         useEditorControler().deleteComponent({ id });
     }
 };
+onMounted(() => {
+    const instance = getCurrentInstance();
+    if (instance) {
+        setIndexRefs('designerMain', {
+            handleClick,
+            unselect,
+            deleteComponent,
+        } as any);
+    }
+    actionBox = document.getElementById('designer-main-action-box');
+});
+defineExpose({
+    handleClick,
+});
 </script>
