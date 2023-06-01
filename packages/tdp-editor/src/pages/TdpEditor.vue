@@ -166,6 +166,9 @@ import { onMounted, provide, ref, computed } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import fileSaver from 'file-saver';
 import interact from 'interactjs';
+import type { Interactable, InteractEvent } from '@interactjs/types/index';
+import type { Rect } from '@interactjs/core/types';
+import type { IComponentCommonProps } from 'tdp-editor-types/src/interface/app/components';
 
 // monaco配置
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
@@ -221,6 +224,11 @@ onMounted(async () => {
 });
 
 const handleDrag = () => {
+    const dragResult = {
+        type: '无变更' as '同级排序' | '跨级排序' | '跨级添加' | '新加组件' | '无变更',
+        dragSourceComp: undefined as ComponentPublicInstance<IComponentCommonProps> | undefined,
+        dropTargetComp: undefined as ComponentPublicInstance<IComponentCommonProps> | undefined,
+    };
     // 左侧菜单拖动时clone的html元素
     const cloneElement = {
         dx: 0,
@@ -229,8 +237,15 @@ const handleDrag = () => {
     };
     // 内容区被拖拽的对象
     const contentDragElement = {
-        dx: 0,
-        dy: 0,
+        newX: 0,
+        newY: 0,
+        pageX: 0,
+        pageY: 0,
+        clientX: 0,
+        clientY: 0,
+        clientX0: 0,
+        clientY0: 0,
+        rect: {} as Rect,
         element: null as HTMLElement | null,
     };
 
@@ -260,15 +275,24 @@ const handleDrag = () => {
         if (contentDragElement.element) {
             contentDragElement.element.classList.remove('active');
             contentDragElement.element.style.transform = '';
+            contentDragElement.element.style.zIndex = '';
         }
         contentDragElement.element = null;
-        contentDragElement.dx = 0;
-        contentDragElement.dy = 0;
+        contentDragElement.newX = 0;
+        contentDragElement.newY = 0;
+        contentDragElement.clientX0 = 0;
+        contentDragElement.clientY0 = 0;
+        contentDragElement.clientX = 0;
+        contentDragElement.clientY = 0;
+        contentDragElement.pageX = 0;
+        contentDragElement.pageY = 0;
+        contentDragElement.rect = {} as Rect;
     };
 
     const dropTargetElementReset = () => {
         if (dropTargetElement.element) {
             dropTargetElement.element.classList.remove('target');
+            dropTargetElement.element.classList.remove('sorting');
         }
         dropTargetElement.element = null;
     };
@@ -299,58 +323,43 @@ const handleDrag = () => {
                 contentDragElement.element.classList.add('active');
             }
         },
-        onmove(e) {
+        onmove(e: InteractEvent) {
             e.preventDefault();
             e.stopPropagation();
             const dragedElement = e.target as HTMLElement;
             if (dragedElement) {
-                contentDragElement.dx += e.dx;
-                contentDragElement.dy += e.dy;
+                contentDragElement.newX += e.dx;
+                contentDragElement.newY += e.dy;
+                contentDragElement.clientX0 = e.clientX0;
+                contentDragElement.clientY0 = e.clientY0;
+                contentDragElement.clientX = e.clientX;
+                contentDragElement.clientY = e.clientY;
+                contentDragElement.pageX = e.pageX;
+                contentDragElement.pageY = e.pageY;
+                contentDragElement.rect = e.rect;
 
-                dragedElement.style.transform = `translate3d(${contentDragElement.dx}px, ${contentDragElement.dy}px, 20px)`;
+                dragedElement.style.transform = `translate3d(${contentDragElement.newX}px, ${contentDragElement.newY}px, 200px)`;
+                dragedElement.style.zIndex = '11111';
             }
         },
         autoScroll: true,
+        onend(e: InteractEvent) {
+            dropTargetElementReset();
+            contentDragElementReset();
+            cloneElementReset();
+
+            e.preventDefault();
+            e.stopPropagation();
+        },
     });
 
     // 容器组件
-    const drops = interact('.editor-designer-comp');
+    const drops: Interactable = interact('.editor-designer-comp');
     drops.dropzone({
         accept: '.editor-designer-comp, .li-component',
-        overlap: 0.5,
         ondrop(e) {
-            $log('[ drops dropzone ] ondrop', e);
-            // 被拖入的元素
-            // const dragedElement = e.relatedTarget as HTMLElement;
-            // 拖入的目标元素
-            dropTargetElement.element = e.target as HTMLElement;
-            const targetComp = getElementComp(dropTargetElement.element);
-            // 设计区域内拖拽
-            if (contentDragElement.element) {
-                const dragedComp = getElementComp(contentDragElement.element);
-                if (targetComp && dragedComp) {
-                    // 同级元素排序
-                    if (!targetComp.state.box && targetComp.parentId === dragedComp.parentId) {
-                        $log('同级元素排序');
-                    }
-                    // 跨级排序
-                    else if (!targetComp.state.box && targetComp.parentId !== dragedComp.parentId) {
-                        $log('跨级排序');
-                    }
-                    // 跨级添加
-                    else if (targetComp.state.box && targetComp.state.key !== dragedComp.parentId) {
-                        $log('跨级添加');
-                    }
-                    // 同级没有变
-                    else if (targetComp.state.box && targetComp.state.key === dragedComp.parentId) {
-                        $log('不需要变更');
-                    }
-                }
-            }
-            // 左侧组件列表拖拽
-            else if (cloneElement.element) {
-                $log('新来组件了');
-            }
+            // $log('[ drops dropzone ] ondrop', e);
+            $log('ondrop 结果：', dragResult);
 
             dropTargetElementReset();
             contentDragElementReset();
@@ -359,28 +368,74 @@ const handleDrag = () => {
             e.preventDefault();
             e.stopPropagation();
         },
-        ondragenter(e) {
-            $log('[ drops dropzone ] ondragenter', e);
-            // 被拖入的元素
-            // const dragedElement = e.relatedTarget as HTMLElement;
-            // 拖入的目标元素
+        ondragenter(e: InteractEvent) {
+            // $log('[ drops dropzone ] ondragenter', e);
             dropTargetElement.element = e.target as HTMLElement;
+            const targetComp = getElementComp(dropTargetElement.element);
+            // 设计区域内拖拽
+            if (contentDragElement.element) {
+                const dragedComp = getElementComp(contentDragElement.element);
+                if (targetComp && dragedComp) {
+                    // 同级元素排序
+                    if (!targetComp.state.box && targetComp.parentId === dragedComp.parentId) {
+                        dragResult.type = '同级排序';
+                        dragResult.dragSourceComp = dragedComp;
+                        dragResult.dropTargetComp = targetComp;
+                    }
+                    // 跨级排序
+                    else if (!targetComp.state.box && targetComp.parentId !== dragedComp.parentId) {
+                        dragResult.type = '跨级排序';
+                        dragResult.dragSourceComp = dragedComp;
+                        dragResult.dropTargetComp = targetComp;
+                    }
+                    // 目标是容器组件，需要判断不同的情况
+                    else if (targetComp.state.box) {
+                        dragResult.type = '无变更';
+                        dragResult.dragSourceComp = dragedComp;
+                        dragResult.dropTargetComp = targetComp;
+                    }
+                }
+            }
             if (dropTargetElement.element) {
                 dropTargetElement.element.classList.add('target');
             }
         },
         ondragleave(e) {
             $log('[ drops dropzone ] ondragleave', e);
-            // 被拖出的元素
-            // const dragedElement = e.relatedTarget as HTMLElement;
-            // 拖出的目标元素
-            dropTargetElement.element = e.target as HTMLElement;
-            if (dropTargetElement.element) {
-                dropTargetElement.element.classList.remove('target');
-            }
+            dropTargetElementReset();
         },
-        ondropmove(e) {
+        ondropmove(e: any) {
             $log('[ drops dropzone ] ondropmove', e);
+            // 如果移动的目标是容器元素，需要判断是移动到容器中还是容器的前面
+            if (
+                contentDragElement.element &&
+                dropTargetElement.element &&
+                dropTargetElement.element.classList.contains('editor-designer-box') &&
+                dragResult.dragSourceComp &&
+                dragResult.dropTargetComp
+            ) {
+                const rect = dropTargetElement.element.getBoundingClientRect();
+                // 如果鼠标在目标容器的上边缘10px之内，则是排序
+                if (contentDragElement.clientY - rect.top <= 10) {
+                    // $log('是排序');
+                    dropTargetElement.element.classList.remove('target');
+                    dropTargetElement.element.classList.add('sorting');
+                    dragResult.type =
+                        dragResult.dragSourceComp.parentId === dragResult.dropTargetComp.parentId
+                            ? '同级排序'
+                            : '跨级排序';
+                }
+                // 否则则是添加
+                else {
+                    // $log('不是排序');
+                    dropTargetElement.element.classList.add('target');
+                    dropTargetElement.element.classList.remove('sorting');
+                    dragResult.type =
+                        dragResult.dragSourceComp.parentId !== dragResult.dropTargetComp.state.key
+                            ? '跨级添加'
+                            : '无变更';
+                }
+            }
         },
     });
 };

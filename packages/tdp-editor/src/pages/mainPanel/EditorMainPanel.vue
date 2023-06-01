@@ -86,11 +86,15 @@
             &.active {
                 opacity: 0.6;
             }
-            &.target {
-                border-top: 2px solid @primary-7;
-            }
             &:hover {
                 border-color: @primary-color;
+            }
+        }
+        // 非容器组件
+        .editor-designer-comp:not(.editor-designer-box) {
+            &.target {
+                border-top: 2px solid @primary-7;
+                margin-top: 5px;
             }
         }
         // 容器组件
@@ -99,6 +103,10 @@
             &.target {
                 opacity: 0.8;
                 background-color: @primary-color;
+            }
+            &.sorting {
+                border-top: 2px solid @primary-7;
+                margin-top: 5px;
             }
         }
         /* 选中的组件 */
