@@ -316,7 +316,7 @@ const handleDrag = () => {
         onstart(e) {
             e.preventDefault();
             e.stopPropagation();
-            $log('内容设计器开始拖拽组件', e);
+            // $log('内容设计器开始拖拽组件', e);
             const dragedElement = e.target as HTMLElement;
             if (dragedElement) {
                 contentDragElement.element = dragedElement;
@@ -360,6 +360,77 @@ const handleDrag = () => {
         ondrop(e) {
             // $log('[ drops dropzone ] ondrop', e);
             $log('ondrop 结果：', dragResult);
+            if (dragResult.type === '同级排序') {
+                // 找到父组件
+                const parentComp = pageControler.getComponentByKey(
+                    dragResult.dragSourceComp!.parentId
+                );
+                if (parentComp) {
+                    // 查找源组件下标
+                    const sourceIndex = parentComp.state.list!.findIndex(
+                        c => c.key === contentDragElement.element?.id
+                    );
+                    // 查找目标组件下标
+                    const targetIndex = parentComp.state.list!.findIndex(
+                        c => c.key === dropTargetElement.element?.id
+                    );
+                    if (sourceIndex > -1 && targetIndex > -1) {
+                        // 两个组件数据做交换
+                        const tempState = parentComp.state.list![targetIndex];
+                        parentComp.state.list![targetIndex] = parentComp.state.list![sourceIndex];
+                        parentComp.state.list![sourceIndex] = tempState;
+                    }
+                }
+            } else if (dragResult.type === '跨级添加') {
+                // 目标组件就是容器组件
+                // 查找源组件父元素
+                const sourceParentComp = pageControler.getComponentByKey(
+                    dragResult.dragSourceComp!.parentId
+                );
+                if (sourceParentComp && dragResult.dropTargetComp) {
+                    // 查找源组件下标
+                    const sourceIndex = sourceParentComp.state.list!.findIndex(
+                        c => c.key === contentDragElement.element?.id
+                    );
+                    if (sourceIndex > -1) {
+                        // 源组件添加到目标组件列表最后
+                        dragResult.dropTargetComp.state.list?.push(
+                            sourceParentComp.state.list![sourceIndex]
+                        );
+                        // 在源组件父组件中删除源组件
+                        sourceParentComp.state.list!.splice(sourceIndex, 1);
+                    }
+                }
+            } else if (dragResult.type === '跨级排序') {
+                // 查找源组件父元素
+                const sourceParentComp = pageControler.getComponentByKey(
+                    dragResult.dragSourceComp!.parentId
+                );
+                // 查找目标组件父元素
+                const targetParentComp = pageControler.getComponentByKey(
+                    dragResult.dropTargetComp!.parentId
+                );
+                if (sourceParentComp && targetParentComp) {
+                    // 查找源组件下标
+                    const sourceIndex = sourceParentComp.state.list!.findIndex(
+                        c => c.key === contentDragElement.element?.id
+                    );
+                    // 查找目标组件下标
+                    const targetIndex = targetParentComp.state.list!.findIndex(
+                        c => c.key === dropTargetElement.element?.id
+                    );
+                    if (sourceIndex > -1 && targetIndex > -1) {
+                        // 源组件添加到目标组件之前
+                        targetParentComp.state.list?.splice(
+                            targetIndex,
+                            0,
+                            sourceParentComp.state.list![sourceIndex]
+                        );
+                        // 在源组件父组件中删除源组件
+                        sourceParentComp.state.list!.splice(sourceIndex, 1);
+                    }
+                }
+            }
 
             dropTargetElementReset();
             contentDragElementReset();
@@ -400,12 +471,11 @@ const handleDrag = () => {
                 dropTargetElement.element.classList.add('target');
             }
         },
-        ondragleave(e) {
-            $log('[ drops dropzone ] ondragleave', e);
+        ondragleave() {
             dropTargetElementReset();
         },
-        ondropmove(e: any) {
-            $log('[ drops dropzone ] ondropmove', e);
+        ondropmove() {
+            // $log('[ drops dropzone ] ondropmove', e);
             // 如果移动的目标是容器元素，需要判断是移动到容器中还是容器的前面
             if (
                 contentDragElement.element &&
