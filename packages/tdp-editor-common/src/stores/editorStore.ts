@@ -65,6 +65,9 @@ export const useEditorStore = defineStore('editorStore', {
                 }
             }
         },
+        createNewCompJson(type: EnumComponentType) {
+            return newComponentJson(this.componentList.find(c => c.type === type)!);
+        },
         // 设置选中的拖动组件
         setDragComponent(payload: { component: IDesignerComponent }) {
             this.dragComponent = payload.component;

@@ -101,6 +101,9 @@
     border-right: 1px solid @frame-border-color;
     overflow: hidden;
     transition: all 0.3s;
+    &.drag-comp {
+        overflow: visible;
+    }
 
     &.hide {
         width: 0;
@@ -245,6 +248,11 @@
                 height: 24px;
                 line-height: 24px;
             }
+        }
+    }
+    &.drag-comp {
+        .second-menu {
+            overflow: visible;
         }
     }
 }
