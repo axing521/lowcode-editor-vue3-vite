@@ -18,13 +18,10 @@ export default class PageController {
         HTMLElement,
         ComponentPublicInstance<IComponentCommonProps>
     >();
-    // 测试组件是否释放
-    private readonly testMap = new WeakMap<ComponentPublicInstance, HTMLElement | string>();
     constructor(app: App, pinia: Pinia) {
         this.$app = app;
         this.$pinia = pinia;
         document.addEventListener('dblclick', () => {
-            $log('testMap', this.testMap);
             $log('componentsMap', this.componentsMap);
         });
     }
@@ -103,9 +100,6 @@ export default class PageController {
         const el = document.getElementById(key);
         if (el) {
             this.componentsMap.set(el, componentInstance as any);
-            this.testMap.set(componentInstance, el);
-        } else {
-            this.testMap.set(componentInstance, key);
         }
     }
 

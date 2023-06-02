@@ -1,13 +1,14 @@
 <template>
     <component
-        :is="allProps.state.type"
+        :is="state.type"
         :class="classNames"
-        :key="allProps.state.key"
-        :state="allProps.state"
-        :parentId="allProps.parentId"
-        :id="allProps.state.key"
-        :data-id="allProps.state.key"
-        :data-type="allProps.state.type"
+        :key="state.key"
+        :state="state"
+        :parentId="parentId"
+        :id="state.key"
+        :data-id="state.key"
+        :data-type="state.type"
+        :data-index="dataIndex"
         :props="c_Props"
         :css="c_Css"
     ></component>
@@ -20,6 +21,7 @@ import { useBase } from '../composables/base';
 const allProps = defineProps<{
     state: IComponentState;
     parentId: string;
+    dataIndex: number;
 }>();
 
 const { c_Props, c_Css, c_isDesignMode } = useBase(allProps);

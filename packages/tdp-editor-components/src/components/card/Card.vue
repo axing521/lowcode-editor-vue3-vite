@@ -1,12 +1,12 @@
 <template>
     <div class="fd-card" :class="flexCardClass" :id="state.key" :style="css">
         <ComponentWrapper
-            v-for="child in state.list"
+            v-for="(child, index) in state.list"
             :key="child.key + '_wrapper'"
             :state="child"
             :parentId="state.key"
+            :data-index="index"
         ></ComponentWrapper>
-        <!-- <fd-layout :state="state" :designerClass="flexCardClass"></fd-layout> -->
     </div>
 </template>
 <script lang="ts">

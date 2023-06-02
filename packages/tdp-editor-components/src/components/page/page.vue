@@ -1,12 +1,12 @@
 <template>
     <div v-if="json" class="fd-page editor-designer-box" :id="json.key" :style="json.css">
         <ComponentWrapper
-            v-for="child in (json || []).list"
+            v-for="(child, index) in json.list"
             :key="child.key + '_wrapper'"
             :state="child"
-            parentId=""
+            :parentId="json.key"
+            :data-index="index"
         ></ComponentWrapper>
-        <!-- <fd-layout :state="json"></fd-layout> -->
     </div>
 </template>
 
