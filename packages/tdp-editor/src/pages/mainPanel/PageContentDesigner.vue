@@ -3,7 +3,7 @@
         <h3>tdp editor</h3>
         <h5>请拖入容器组件</h5>
     </div>
-    <page-view :json="props.selectedPage" :appMode="props.appMode"></page-view>
+    <page-view :state="props.selectedPage" :appMode="props.appMode"></page-view>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';

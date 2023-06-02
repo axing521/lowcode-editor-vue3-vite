@@ -4,7 +4,7 @@
             'tdp-editor-runtime-wrapper': true,
         }"
     >
-        <RuntimePage v-if="pageJson" :json="pageJson" :appMode="EnumAppMode.runtime"></RuntimePage>
+        <RuntimePage v-if="pageJson" :state="pageJson" :appMode="EnumAppMode.runtime"></RuntimePage>
     </div>
 </template>
 <style lang="less">

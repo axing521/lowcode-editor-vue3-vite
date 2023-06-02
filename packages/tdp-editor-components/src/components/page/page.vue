@@ -1,10 +1,16 @@
 <template>
-    <div v-if="json" class="fd-page editor-designer-box" :id="json.key" :style="json.css">
+    <div
+        v-if="state"
+        class="fd-page editor-designer-box"
+        :id="state.key"
+        :style="state.css"
+        :data-type="EnumComponentType.page"
+    >
         <ComponentWrapper
-            v-for="(child, index) in json.list"
+            v-for="(child, index) in state.list"
             :key="child.key + '_wrapper'"
             :state="child"
-            :parentId="json.key"
+            :parentId="state.key"
             :data-index="index"
         ></ComponentWrapper>
     </div>
@@ -20,7 +26,8 @@
 </style>
 
 <script lang="ts" setup>
-import { provide } from 'vue';
+import { provide, onMounted, getCurrentInstance } from 'vue';
+import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import type { IPageState } from 'tdp-editor-types/src/interface/app/components';
 import type { EnumAppMode } from 'tdp-editor-types/src/enum';
 import ComponentWrapper from '../componentWrapper.vue';
@@ -35,7 +42,7 @@ import { usePageControler } from 'tdp-editor-common/src/controller';
 
 const pageController = usePageControler();
 const props = defineProps<{
-    json?: IPageState;
+    state?: IPageState;
     appMode: EnumAppMode;
 }>();
 
@@ -51,9 +58,14 @@ provide(removeComponent, key => {
 provide(getComponentByKey, key => {
     return pageController.getComponentByKey(key);
 });
-// provide(getComponentsMap, () => {
-//     return pageController.getComponentsMap();
-// });
+onMounted(() => {
+    if (props.state) {
+        const instance = getCurrentInstance()?.proxy;
+        if (instance) {
+            pageController.addComponent(props.state.key, instance);
+        }
+    }
+});
 
 // // 清空form组件的值
 // const resetFormFields = () => {
@@ -87,8 +99,6 @@ provide(getComponentByKey, key => {
 // provide('initFormFields', initFormFields);
 </script>
 <script lang="ts">
-import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
-
 export default {
     name: EnumComponentType.page,
 };

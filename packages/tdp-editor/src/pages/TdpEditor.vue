@@ -262,6 +262,19 @@ const handleDrag = () => {
         }
     };
 
+    // 取出html元素的下标值
+    const getElementIndex = (element?: HTMLElement | null, name = 'data-index') => {
+        if (element) {
+            const attrValue = element.getAttribute(name);
+            if (attrValue) {
+                return Number(attrValue);
+            }
+        }
+        return -1;
+    };
+
+    // 取出html元素的data-index属性值，转化成数字类型
+
     const cloneElementReset = () => {
         if (cloneElement.element) {
             cloneElement.element.classList.remove('active');
@@ -367,18 +380,13 @@ const handleDrag = () => {
                 );
                 if (parentComp) {
                     // 查找源组件下标
-                    const sourceIndex = parentComp.state.list!.findIndex(
-                        c => c.key === contentDragElement.element?.id
-                    );
+                    const sourceIndex = getElementIndex(contentDragElement.element);
                     // 查找目标组件下标
-                    const targetIndex = parentComp.state.list!.findIndex(
-                        c => c.key === dropTargetElement.element?.id
-                    );
+                    const targetIndex = getElementIndex(dropTargetElement.element);
                     if (sourceIndex > -1 && targetIndex > -1) {
-                        // 两个组件数据做交换
-                        const tempState = parentComp.state.list![targetIndex];
-                        parentComp.state.list![targetIndex] = parentComp.state.list![sourceIndex];
-                        parentComp.state.list![sourceIndex] = tempState;
+                        const sourceState = parentComp.state.list![sourceIndex];
+                        parentComp.state.list!.splice(sourceIndex, 1);
+                        parentComp.state.list!.splice(targetIndex, 0, sourceState);
                     }
                 }
             } else if (dragResult.type === '跨级添加') {
@@ -389,9 +397,7 @@ const handleDrag = () => {
                 );
                 if (sourceParentComp && dragResult.dropTargetComp) {
                     // 查找源组件下标
-                    const sourceIndex = sourceParentComp.state.list!.findIndex(
-                        c => c.key === contentDragElement.element?.id
-                    );
+                    const sourceIndex = getElementIndex(contentDragElement.element);
                     if (sourceIndex > -1) {
                         // 源组件添加到目标组件列表最后
                         dragResult.dropTargetComp.state.list?.push(
@@ -412,13 +418,9 @@ const handleDrag = () => {
                 );
                 if (sourceParentComp && targetParentComp) {
                     // 查找源组件下标
-                    const sourceIndex = sourceParentComp.state.list!.findIndex(
-                        c => c.key === contentDragElement.element?.id
-                    );
+                    const sourceIndex = getElementIndex(contentDragElement.element);
                     // 查找目标组件下标
-                    const targetIndex = targetParentComp.state.list!.findIndex(
-                        c => c.key === dropTargetElement.element?.id
-                    );
+                    const targetIndex = getElementIndex(dropTargetElement.element);
                     if (sourceIndex > -1 && targetIndex > -1) {
                         // 源组件添加到目标组件之前
                         targetParentComp.state.list?.splice(
