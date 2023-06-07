@@ -5,6 +5,7 @@ import { useAppStore } from 'tdp-editor-common/src/stores/appStore';
 import './index.less';
 import DesignerUXPanel from './UXDesigner/DesignerUxPanel.vue';
 import DatasourcePanel from './UXDesigner/DatasourcePanel.vue';
+import LoopPanel from './UXDesigner/LoopPanel.vue';
 import DesignerPropsPanel from './propsDesigner/index.vue';
 
 export default defineComponent({
@@ -34,6 +35,7 @@ export default defineComponent({
                     {/*// @ts-ignore */}
                     <DesignerUXPanel element={selectedComponent} />
                     <datasource-panel element={selectedComponent} />
+                    <LoopPanel element={selectedComponent} />
                 </a-tab-pane>
             </a-tabs>
         );
