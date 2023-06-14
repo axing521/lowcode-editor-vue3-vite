@@ -5,6 +5,9 @@ export interface ICardState extends IComponentState<ICardProps> {
 }
 export type TFlexGridLayoutValue = 'row' | 'column';
 export interface ICardProps {
+    loopData?: any;
+    itemName?: string;
+    indexName?: string;
     flexCard?: boolean;
     layout?: TFlexGridLayoutValue;
     wrap?: boolean;

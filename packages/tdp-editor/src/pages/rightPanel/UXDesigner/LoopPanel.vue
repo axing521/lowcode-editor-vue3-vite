@@ -1,12 +1,13 @@
 <script setup lang="ts">
-// import { getPropValue, setPropValue } from '@/tdp-editor-common/src/factory/propsFactory';
+// import { getPropValue, setPropValue } from 'tdp-editor-common/src/factory/propsFactory';
 import { EnumPropsValueType } from '../../../../../tdp-editor-types/src/enum/components/index';
-import type { IDesignerComponent } from '@/tdp-editor-types/src/interface/designer';
+import type { IDesignerComponent, IPropsConfig } from '@/tdp-editor-types/src/interface/designer';
 import PropSelectorWrapper from '../../../selectors/propSelectors/PropSelectorWrapper.vue';
 import { ref } from 'vue';
 
 const props = defineProps<{
     element?: IDesignerComponent;
+    prop: IPropsConfig;
 }>();
 
 const valueType = EnumPropsValueType.string;
@@ -18,7 +19,7 @@ const loop = ref([
     { label: '循环 Key', key: 'loopKey', loopKey: '', enableExpression: true },
 ]);
 
-/* const inputValue = computed<string>({
+/* const inputValueChange = computed<string>({
     get() {
         const propValue = getPropValue(props.element, _props.prop.key);
         if (propValue !== undefined) {
@@ -30,8 +31,25 @@ const loop = ref([
     set(value) {
         setPropValue(_props.state, _props.prop.key, value, valueType);
     },
+});
+
+const inputValueChange = (value: string) => {
+    setPropValue(props.element, props.prop.key, value, valueType);
+}; */
+
+/* const itemNameInputValue = computed<string>({
+    get() {
+        const propValue = getPropValue(props.element!, props.prop.key);
+        if (propValue !== undefined) {
+            return propValue;
+        } else {
+            return '';
+        }
+    },
+    set(value) {
+        setPropValue(props.element!, props.prop.key, value, valueType);
+    },
 }); */
-// 绑定的循环数据处理。。。
 </script>
 
 <template>

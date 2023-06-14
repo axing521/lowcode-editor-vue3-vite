@@ -11,10 +11,12 @@
         :data-index="dataIndex"
         :props="c_Props"
         :css="c_Css"
+        :itemName="itemName"
+        :indexName="indexName"
     ></component>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, provide } from 'vue';
 import type { IComponentState } from 'tdp-editor-types/src/interface/app/components';
 import { useBase } from '../composables/base';
 
@@ -22,7 +24,21 @@ const allProps = defineProps<{
     state: IComponentState;
     parentId: string;
     dataIndex: number;
+    item: any;
+    index: number;
+    itemName: string;
+    indexName: string;
 }>();
+
+// 注册公共props: 循环迭代项/索引
+const itemName = computed(() => {
+    return allProps.itemName || '_item';
+});
+const indexName = computed(() => {
+    return allProps.indexName || '_index';
+});
+provide(itemName.value, allProps.item);
+provide(indexName.value, allProps.index);
 
 const { c_Props, c_Css, c_isDesignMode } = useBase(allProps);
 const classNames = computed(() => {

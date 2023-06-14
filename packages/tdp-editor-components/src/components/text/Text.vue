@@ -1,10 +1,10 @@
 <template>
     <span class="fd-text" :id="state.key" v-bind="props" :style="css" v-on="eventsMap">
-        {{ props.text }}
+        {{ bindValue }}
     </span>
 </template>
 <script lang="ts" setup>
-import { defineComponent } from 'vue';
+import { defineComponent, inject, computed } from 'vue';
 import type { ICompBaseProps } from 'tdp-editor-types/src/interface/app/components';
 import type { ITextState, ITextProps } from './interface';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
@@ -20,6 +20,26 @@ const { eventsMap } = useBaseEvents(allProps, () => ({
         text: allProps.props.text,
     },
 }));
+
+// 文本组件绑定值类型是表达式 且 组件存在上下文itemName和indexName
+const loopItem = computed(() => {
+    return inject(`${allProps.itemName}`, undefined);
+});
+const loopIndex = computed(() => {
+    return inject(`${allProps.indexName}`, undefined);
+});
+
+/* eslint-disable */
+let bindValue = computed(() => {
+    return allProps.state.props?.text?.type == 'expression'
+        ? new Function(
+              `let ${allProps.itemName} = ${JSON.stringify(loopItem.value)} \n let ${
+                  allProps.indexName
+              } = ${JSON.stringify(loopIndex.value)} \n` +
+                  `return ${allProps.state.props.text.bindValue}`
+          )()
+        : allProps.props.text;
+});
 </script>
 <script lang="ts">
 export default defineComponent({

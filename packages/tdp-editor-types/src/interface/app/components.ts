@@ -19,6 +19,8 @@ export interface ICompBaseProps<P, S extends IComponentState<P>> {
     parentId?: string;
     props: P;
     css: Record<string, any>;
+    itemName?: string;
+    indexName?: string;
 }
 
 /* form组件基础属性定义 */
@@ -58,6 +60,12 @@ export interface IComponentState<P = any, C = any> {
     dsKey?: string; // 数据源key
     classNames?: string[]; // 组件的自定义样式名
     events?: IComponentEvent[];
+    loop?: {
+        loopData: string;
+        itemName: string;
+        indexName: string;
+        loopKey: string;
+    }; // 循环配置
 }
 
 // 组件的事件描述对象

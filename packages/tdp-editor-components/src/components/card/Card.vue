@@ -1,12 +1,18 @@
 <template>
     <div class="fd-card" :class="flexCardClass" :id="state.key" :style="css">
-        <ComponentWrapper
-            v-for="(child, index) in state.list"
-            :key="child.key + '_wrapper'"
-            :state="child"
-            :parentId="state.key"
-            :data-index="index"
-        ></ComponentWrapper>
+        <div v-for="(_item, _index) in loopDataVal" class="loopItem" :key="_index">
+            <ComponentWrapper
+                v-for="(child, index) in state.list"
+                :key="child.key + '_wrapper' + _index"
+                :state="child"
+                :parentId="state.key"
+                :data-index="index"
+                :item="_item"
+                :index="_index"
+                itemName="_item"
+                indexName="_index"
+            ></ComponentWrapper>
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -24,6 +30,10 @@ import type { ICardProps, ICardState } from './interface';
 import ComponentWrapper from '../componentWrapper.vue';
 
 const allProps = defineProps<ICompBaseProps<ICardProps, ICardState>>();
+
+/* eslint-disable */
+let loopDataVal = allProps.props.loopData;
+
 // 注册公共声明周期事件
 useBaseLifecycle(allProps);
 const flexCardClass = computed(() => {
