@@ -62,18 +62,12 @@ importers:
       ant-design-vue:
         specifier: ^3.2.0
         version: registry.npmmirror.com/ant-design-vue@3.2.13(vue@3.3.4)
-      classnames:
-        specifier: ^2.3.1
-        version: registry.npmmirror.com/classnames@2.3.2
       copy-to-clipboard:
         specifier: ^3.3.1
         version: registry.npmmirror.com/copy-to-clipboard@3.3.2
       core-js:
         specifier: ^3.8.3
         version: registry.npmmirror.com/core-js@3.26.0
-      dayjs:
-        specifier: ^1.10.7
-        version: registry.npmmirror.com/dayjs@1.11.6
       pinia:
         specifier: ^2.0.14
         version: registry.npmmirror.com/pinia@2.0.23(typescript@4.7.4)(vue@3.3.4)
@@ -129,9 +123,6 @@ importers:
       core-js:
         specifier: ^3.8.3
         version: registry.npmmirror.com/core-js@3.26.0
-      dayjs:
-        specifier: ^1.10.7
-        version: registry.npmmirror.com/dayjs@1.11.6
       element-resize-detector:
         specifier: ^1.2.4
         version: registry.npmmirror.com/element-resize-detector@1.2.4
@@ -141,9 +132,6 @@ importers:
       interactjs:
         specifier: ^1.10.17
         version: registry.npmmirror.com/interactjs@1.10.17
-      moment:
-        specifier: ^2.29.1
-        version: registry.npmmirror.com/moment@2.29.4
       monaco-editor:
         specifier: ^0.30.1
         version: registry.npmmirror.com/monaco-editor@0.30.1
@@ -211,12 +199,6 @@ importers:
 
   packages/tdp-editor-components:
     dependencies:
-      classnames:
-        specifier: ^2.3.1
-        version: registry.npmmirror.com/classnames@2.3.2
-      moment:
-        specifier: ^2.29.1
-        version: registry.npmmirror.com/moment@2.29.4
       openai:
         specifier: ^3.2.1
         version: registry.npmmirror.com/openai@3.2.1
@@ -229,9 +211,6 @@ importers:
       vue:
         specifier: ^3.3.4
         version: registry.npmmirror.com/vue@3.3.4
-      vuedraggable:
-        specifier: ^4.1.0
-        version: registry.npmmirror.com/vuedraggable@4.1.0(vue@3.3.4)
     devDependencies:
       '@vue/test-utils':
         specifier: ^2.0.0
@@ -3758,12 +3737,6 @@ packages:
       brace-expansion: registry.npmmirror.com/brace-expansion@1.1.11
     dev: true
 
-  registry.npmmirror.com/moment@2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/moment/-/moment-2.29.4.tgz}
-    name: moment
-    version: 2.29.4
-    dev: false
-
   registry.npmmirror.com/monaco-editor-auto-typings@0.1.1:
     resolution: {integrity: sha512-CcxG0r7sGNZb2mu3u7X4KdFXJ0KJCR88v3Cv5czt53gLr97rwWOsbF25gxH+76N+QuyALDNm2odQxSPubCEiig==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/monaco-editor-auto-typings/-/monaco-editor-auto-typings-0.1.1.tgz}
     name: monaco-editor-auto-typings
@@ -4537,12 +4510,6 @@ packages:
       is-fullwidth-code-point: registry.npmmirror.com/is-fullwidth-code-point@4.0.0
     dev: true
 
-  registry.npmmirror.com/sortablejs@1.14.0:
-    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/sortablejs/-/sortablejs-1.14.0.tgz}
-    name: sortablejs
-    version: 1.14.0
-    dev: false
-
   registry.npmmirror.com/source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/source-map-js/-/source-map-js-1.0.2.tgz}
     name: source-map-js
@@ -5073,18 +5040,6 @@ packages:
       '@vue/runtime-dom': registry.npmmirror.com/@vue/runtime-dom@3.3.4
       '@vue/server-renderer': registry.npmmirror.com/@vue/server-renderer@3.3.4(vue@3.3.4)
       '@vue/shared': registry.npmmirror.com/@vue/shared@3.3.4
-
-  registry.npmmirror.com/vuedraggable@4.1.0(vue@3.3.4):
-    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vuedraggable/-/vuedraggable-4.1.0.tgz}
-    id: registry.npmmirror.com/vuedraggable/4.1.0
-    name: vuedraggable
-    version: 4.1.0
-    peerDependencies:
-      vue: ^3.0.1
-    dependencies:
-      sortablejs: registry.npmmirror.com/sortablejs@1.14.0
-      vue: registry.npmmirror.com/vue@3.3.4
-    dev: false
 
   registry.npmmirror.com/warning@4.0.3:
     resolution: {integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/warning/-/warning-4.0.3.tgz}

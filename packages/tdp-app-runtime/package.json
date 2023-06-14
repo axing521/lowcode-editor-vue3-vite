@@ -18,10 +18,8 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^3.2.0",
-    "classnames": "^2.3.1",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.3",
-    "dayjs": "^1.10.7",
     "pinia": "^2.0.14",
     "tdp-editor-common": "workspace:^0.1.0",
     "tdp-editor-components": "workspace:*",
