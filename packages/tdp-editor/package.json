@@ -29,6 +29,7 @@
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.3",
     "dayjs": "^1.10.7",
+    "element-resize-detector": "^1.2.4",
     "file-saver": "^2.0.5",
     "interactjs": "^1.10.17",
     "moment": "^2.29.1",
@@ -40,13 +41,10 @@
     "tdp-editor-components": "workspace:*",
     "tdp-editor-types": "workspace:*",
     "vue": "^3.3.4",
-    "vue-router": "^4.0.16",
-    "vuedraggable": "^4.1.0"
+    "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.4",
-    "@types/vue-color": "^2.4.3",
-    "@types/vuedraggable": "^2.24.0",
     "@vitejs/plugin-vue": "^4.1.0",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "@vue/test-utils": "^2.0.0",
