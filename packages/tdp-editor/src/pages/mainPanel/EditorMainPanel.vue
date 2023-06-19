@@ -130,6 +130,7 @@
 import { inject, onMounted, getCurrentInstance, provide, computed } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import type { IDesignerComponent } from 'tdp-editor-types/src/interface/designer';
+import resizeDetector from 'element-resize-detector';
 import { EnumComponentType } from 'tdp-editor-types/src/enum/components';
 import { EnumAppMode } from 'tdp-editor-types/src/enum';
 import { utils } from 'tdp-editor-common/src';
@@ -162,6 +163,7 @@ const activePageMode = computed(() => editorStore.pageEditMode);
 let selectedTargetHtmlElement: HTMLElement | null = null;
 // 组件操作区
 let actionBox: HTMLElement | null = null;
+const erd: any = new resizeDetector();
 provide('getAppMode', () => {
     return appMode;
 });
@@ -186,6 +188,8 @@ const handleClick = (e: any): void => {
             const componentElement = document.getElementById(dataset.id);
             if (!componentElement) return;
             selectedTargetHtmlElement = componentElement;
+            // 监听选中元素大小变化
+            erd.listenTo(selectedTargetHtmlElement, resizeListener);
             setTargetAction();
             const currentComponent: IDesignerComponent[] =
                 utils.$findTreeItem([selectedPage.value], dataset.id) || [];
@@ -246,6 +250,8 @@ const unselect = () => {
         actionBox.style.display = 'none';
     }
     if (selectedTargetHtmlElement) {
+        // 取消监听选中元素大小变化
+        erd.uninstall(selectedTargetHtmlElement);
         selectedTargetHtmlElement.classList.remove('editor-designer-component-ck');
     }
     selectedTargetHtmlElement = null;
@@ -261,6 +267,9 @@ const deleteComponent = () => {
         selectedTargetHtmlElement = null;
         useEditorControler().deleteComponent({ id });
     }
+};
+const resizeListener = () => {
+    setTargetAction();
 };
 onMounted(() => {
     const instance = getCurrentInstance();

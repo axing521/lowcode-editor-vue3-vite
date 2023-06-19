@@ -20,6 +20,8 @@ type evalBindValueParams = {
     pageVars?: Record<string, any>;
     loopItem?: any;
     loopIndex?: number;
+    loopItemName?: string;
+    loopIndexName?: string;
     dsKey?: string;
 };
 
@@ -261,6 +263,13 @@ export default class AppVarController {
         const $item = params.loopItem || {};
         // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         const $index = params.loopIndex || 0;
+        let preparedExpression = '';
+        if (params.loopItemName) {
+            preparedExpression += `const ${params.loopItemName} = $item; \n`;
+        }
+        if (params.loopIndexName) {
+            preparedExpression += `const ${params.loopIndexName} = $index; \n`;
+        }
         let $ds: any = {};
         if (params.dsKey) {
             const dsController = useDatasourceControler(this.$app);
@@ -270,7 +279,7 @@ export default class AppVarController {
         try {
             result = {
                 success: true,
-                value: eval(`(${params.expression})`),
+                value: eval(`${preparedExpression}(${params.expression})`),
                 // value: evalFn($g, $p),
                 errMsg: '',
             };

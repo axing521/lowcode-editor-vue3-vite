@@ -6,6 +6,7 @@ declare module '*.vue' {
 }
 declare module '*.png';
 declare module '*.jpg';
+declare module 'element-resize-detector';
 
 interface Window {
     $fd: {
