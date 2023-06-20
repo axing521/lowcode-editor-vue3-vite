@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { getPropValue, setPropValue } from 'tdp-editor-common/src/factory/propsFactory';
 import { EnumPropsValueType } from '../../../../../tdp-editor-types/src/enum/components/index';
-import type { IDesignerComponent, IPropsConfig } from '@/tdp-editor-types/src/interface/designer';
+import type { IDesignerComponent, IPropsConfig } from 'tdp-editor-types/src/interface/designer';
 import PropSelectorWrapper from '../../../selectors/propSelectors/PropSelectorWrapper.vue';
 import { ref } from 'vue';
 
