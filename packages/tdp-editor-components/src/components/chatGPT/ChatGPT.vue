@@ -545,7 +545,7 @@ ul {
     width: 400px;
 
     p {
-        font-size: 1.5rem;
+        font-size: 1rem;
         text-align: left;
         margin-top: 0;
         margin-bottom: 0;
